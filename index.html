@@ -297,16 +297,37 @@
             saveToHistory(currentFileName, targetWidth, targetHeight, currentProcessedDataUrl);
         }
 
-        // Safe Download handler for WebView/AppsCreator24
+        // Safe Download handler for WebView/AppsCreator24 (Updated & Fixed)
         function downloadGridFile() {
             if (!currentProcessedDataUrl) return;
-            const link = document.createElement('a');
-            link.href = currentProcessedDataUrl;
-            link.download = `${currentFileName}_${widthSelect.value}hooks.png`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+            
+            // Method 1: Try direct anchor click
+            try {
+                const link = document.createElement('a');
+                link.href = currentProcessedDataUrl;
+                link.download = `${currentFileName}_${widthSelect.value}hooks.png`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (e) {
+                // Method 2: Fallback for strict WebView environments (Opens file viewer safely)
+                let w = window.open('about:blank');
+                if (w) {
+                    w.document.write(`
+                        <html>
+                            <head><title>Download Jacquard File</title></head>
+                            <body style="background:#0b0f19; color:white; text-align:center; font-family:sans-serif; padding:20px;">
+                                <h3>Your Jacquard Grid is Ready!</h3>
+                                <p style="font-size:12px; color:#aaa;">Long press the image below and select <b>"Download image"</b> or <b>"Save image"</b>.</p>
+                                <img src="${currentProcessedDataUrl}" style="max-width:100%; border:2px solid #7c3aed; border-radius:10px; margin-top:10px;" />
+                            </body>
+                        </html>
+                    `);
+                } else {
+                    alert("Pop-up blocked or download failed. Please check browser permissions.");
+                }
+            }
+        }       document.body.removeChil
 
         // History Management via LocalStorage
         function saveToHistory(name, width, height, dataUrl) {
