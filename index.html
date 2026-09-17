@@ -3,64 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electronic Jacquard Designer</title>
-    <!-- Tailwind CSS for clean styling -->
+    <title>Electronic Jacquard Designer - Admin Portal</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
+<body class="bg-gray-100 min-h-screen p-4 md:p-6">
 
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
-        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-2">🧵 Electronic Jacquard Designer</h1>
-        <p class="text-center text-gray-600 mb-6">Upload an image, convert it into a machine-ready grid pattern instantly in your browser.</p>
+        
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-2">🧵 Electronic Jacquard Designer</h1>
+            <p class="text-gray-600">Professional Textile Pattern Conversion & Grid Tool for Jacquard Machines.</p>
+        </div>
 
-        <!-- Controls Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border mb-6">
-            <div>
-                <label class="block font-semibold text-sm text-gray-700 mb-1">Select Jacquard Width (Hooks):</label>
-                <select id="widthSelect" class="w-full border p-2 rounded bg-white">
-                    <option value="120">120 Hooks</option>
-                    <option value="192">192 Hooks</option>
-                    <option value="240">240 Hooks</option>
-                    <option value="384" selected>384 Hooks</option>
-                    <option value="512">512 Hooks</option>
-                    <option value="768">768 Hooks</option>
-                </select>
+        <!-- Home Page Info / Introduction (Visible to Everyone) -->
+        <div id="homeInfoSection" class="bg-indigo-50 border border-indigo-200 p-5 rounded-lg mb-6">
+            <h2 class="text-xl font-bold text-indigo-900 mb-2">📌 Welcome to Jacquard Design Portal</h2>
+            <p class="text-gray-700 text-sm mb-3">
+                This platform is built for converting standard fabric and motif images into high-precision, machine-ready black-and-white grid patterns matching specific hook layouts (e.g., 192, 384, 512 hooks).
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800 mb-4">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <strong>⚙️ Features:</strong>
+                    <ul class="list-disc list-inside text-gray-600 mt-1">
+                        <li>Custom Hook Resolution Scaling</li>
+                        <li>Real-time Darkness (Threshold) Control</li>
+                        <li>Direct Machine-Ready Grid Export</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <strong>🔒 Access Policy:</strong>
+                    <p class="text-gray-600 mt-1">Pattern generation and design tools are restricted to authorized <b>Admin</b> only to protect proprietary textile drafts.</p>
+                </div>
             </div>
 
-            <div>
-                <label class="block font-semibold text-sm text-gray-700 mb-1">Threshold (Darkness): <span id="thresholdVal" class="text-indigo-600 font-bold">128</span></label>
-                <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-2 accent-indigo-600">
-            </div>
-
-            <div>
-                <label class="block font-semibold text-sm text-gray-700 mb-1">Upload Image:</label>
-                <input type="file" id="imageInput" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+            <!-- Admin Login Trigger Button -->
+            <div class="text-center">
+                <button onclick="showLoginModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow transition">
+                    🔐 Admin Login to Create Design
+                </button>
             </div>
         </div>
 
-        <!-- Preview Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-            <div class="border p-4 rounded-lg bg-gray-50">
-                <h3 class="font-bold text-gray-700 mb-2">📷 Original Image</h3>
-                <div class="flex justify-center items-center h-64 bg-white border rounded">
-                    <canvas id="origCanvas" class="max-h-full max-w-full object-contain"></canvas>
+        <!-- Designer Tool Section (Hidden by Default until Admin logs in) -->
+        <div id="designerSection" style="display:none;">
+            <div class="flex justify-between items-center bg-gray-200 px-4 py-2 rounded-lg mb-4">
+                <span class="text-sm font-bold text-green-700">🟢 Logged in as Admin</span>
+                <button onclick="logoutAdmin()" class="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Logout</button>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border mb-6">
+                <div>
+                    <label class="block font-semibold text-sm text-gray-700 mb-1">Select Jacquard Width (Hooks):</label>
+                    <select id="widthSelect" class="w-full border p-2 rounded bg-white">
+                        <option value="120">120 Hooks</option>
+                        <option value="192">192 Hooks</option>
+                        <option value="240">240 Hooks</option>
+                        <option value="384" selected>384 Hooks</option>
+                        <option value="512">512 Hooks</option>
+                        <option value="768">768 Hooks</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-sm text-gray-700 mb-1">Threshold (Darkness): <span id="thresholdVal" class="text-indigo-600 font-bold">128</span></label>
+                    <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-2 accent-indigo-600">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-sm text-gray-700 mb-1">Upload Image:</label>
+                    <input type="file" id="imageInput" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                 </div>
             </div>
 
-            <div class="border p-4 rounded-lg bg-gray-50">
-                <h3 class="font-bold text-gray-700 mb-2">🪡 Jacquard Grid Output</h3>
-                <div class="flex justify-center items-center h-64 bg-white border rounded overflow-hidden">
-                    <canvas id="outputCanvas" class="max-h-full max-w-full object-contain" style="image-rendering: pixelated;"></canvas>
+            <!-- Preview Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                <div class="border p-4 rounded-lg bg-gray-50">
+                    <h3 class="font-bold text-gray-700 mb-2">📷 Original Image</h3>
+                    <div class="flex justify-center items-center h-64 bg-white border rounded">
+                        <canvas id="origCanvas" class="max-h-full max-w-full object-contain"></canvas>
+                    </div>
                 </div>
-                <div class="mt-4">
-                    <a id="downloadBtn" style="display:none;" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer inline-block">Download Grid Pattern</a>
+
+                <div class="border p-4 rounded-lg bg-gray-50">
+                    <h3 class="font-bold text-gray-700 mb-2">🪡 Jacquard Grid Output</h3>
+                    <div class="flex justify-center items-center h-64 bg-white border rounded overflow-hidden">
+                        <canvas id="outputCanvas" class="max-h-full max-w-full object-contain" style="image-rendering: pixelated;"></canvas>
+                    </div>
+                    <div class="mt-4">
+                        <a id="downloadBtn" style="display:none;" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer inline-block">Download Grid Pattern</a>
+                    </div>
                 </div>
             </div>
+        </div>
+
+    </div>
+
+    <!-- Admin Password Modal Pop-up -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4" style="display:none;">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">🔐 Admin Authentication</h3>
+            <p class="text-xs text-gray-500 mb-4">Enter admin password to access the jacquard design generator.</p>
+            <input type="password" id="adminPassword" placeholder="Enter password" class="w-full border p-2 rounded mb-4 text-center">
+            <div class="flex justify-space gap-2">
+                <button onclick="verifyPassword()" class="w-full bg-indigo-600 text-white py-2 rounded font-bold hover:bg-indigo-700">Login</button>
+                <button onclick="closeLoginModal()" class="w-full bg-gray-300 text-gray-700 py-2 rounded font-bold hover:bg-gray-400">Cancel</button>
+            </div>
+            <p id="errorMsg" class="text-red-500 text-xs mt-2" style="display:none;">Incorrect Password!</p>
         </div>
     </div>
 
-    <!-- JavaScript Processing Logic -->
+    <!-- JavaScript Logic -->
     <script>
+        // Default Admin Password (आप चाहें तो इसे बाद में बदल सकते हैं, जैसे "jacquard123")
+        const ADMIN_PASS = "admin123"; 
+
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function verifyPassword() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === ADMIN_PASS) {
+                document.getElementById('homeInfoSection').style.display = 'none';
+                document.getElementById('designerSection').style.display = 'block';
+                closeLoginModal();
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('designerSection').style.display = 'none';
+            document.getElementById('homeInfoSection').style.display = 'block';
+        }
+
+        // Processing Logic
         const imageInput = document.getElementById('imageInput');
         const widthSelect = document.getElementById('widthSelect');
         const thresholdSlider = document.getElementById('thresholdSlider');
@@ -94,13 +180,11 @@
         function processJacquard() {
             if (!uploadedImage.src) return;
 
-            // Draw Original Preview
             const origCtx = origCanvas.getContext('2d');
             origCanvas.width = uploadedImage.width;
             origCanvas.height = uploadedImage.height;
             origCtx.drawImage(uploadedImage, 0, 0);
 
-            // Calculate Jacquard Dimensions
             const targetWidth = parseInt(widthSelect.value);
             const targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
 
@@ -108,25 +192,22 @@
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
             
-            // Pixelated crisp rendering for textile grid
             outCtx.imageSmoothingEnabled = false;
             outCtx.drawImage(uploadedImage, 0, 0, targetWidth, targetHeight);
 
-            // Apply Black & White Thresholding
             const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
             const threshold = parseInt(thresholdSlider.value);
 
             for (let i = 0; i < data.length; i += 4) {
                 let avg = (data[i] + data[i+1] + data[i+2]) / 3;
-                let val = avg > threshold ? 255 : 0; // Pure White or Black
-                data[i] = val;     // R
-                data[i+1] = val;   // G
-                data[i+2] = val;   // B
+                let val = avg > threshold ? 255 : 0;
+                data[i] = val;     
+                data[i+1] = val;   
+                data[i+2] = val;   
             }
             outCtx.putImageData(imgData, 0, 0);
 
-            // Enable Download Button
             downloadBtn.style.display = 'inline-block';
             downloadBtn.href = outputCanvas.toDataURL('image/png');
             downloadBtn.download = `jacquard_${targetWidth}_hooks.png`;
