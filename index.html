@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Jacquard Designer</title>
+    <!-- Tailwind CSS for clean styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-2">🧵 Electronic Jacquard Designer</h1>
+        <p class="text-center text-gray-600 mb-6">Upload an image, convert it into a machine-ready grid pattern instantly in your browser.</p>
+
+        <!-- Controls Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border mb-6">
+            <div>
+                <label class="block font-semibold text-sm text-gray-700 mb-1">Select Jacquard Width (Hooks):</label>
+                <select id="widthSelect" class="w-full border p-2 rounded bg-white">
+                    <option value="120">120 Hooks</option>
+                    <option value="192">192 Hooks</option>
+                    <option value="240">240 Hooks</option>
+                    <option value="384" selected>384 Hooks</option>
+                    <option value="512">512 Hooks</option>
+                    <option value="768">768 Hooks</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block font-semibold text-sm text-gray-700 mb-1">Threshold (Darkness): <span id="thresholdVal" class="text-indigo-600 font-bold">128</span></label>
+                <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-2 accent-indigo-600">
+            </div>
+
+            <div>
+                <label class="block font-semibold text-sm text-gray-700 mb-1">Upload Image:</label>
+                <input type="file" id="imageInput" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+            <div class="border p-4 rounded-lg bg-gray-50">
+                <h3 class="font-bold text-gray-700 mb-2">📷 Original Image</h3>
+                <div class="flex justify-center items-center h-64 bg-white border rounded">
+                    <canvas id="origCanvas" class="max-h-full max-w-full object-contain"></canvas>
+                </div>
+            </div>
+
+            <div class="border p-4 rounded-lg bg-gray-50">
+                <h3 class="font-bold text-gray-700 mb-2">🪡 Jacquard Grid Output</h3>
+                <div class="flex justify-center items-center h-64 bg-white border rounded overflow-hidden">
+                    <canvas id="outputCanvas" class="max-h-full max-w-full object-contain" style="image-rendering: pixelated;"></canvas>
+                </div>
+                <div class="mt-4">
+                    <a id="downloadBtn" style="display:none;" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer inline-block">Download Grid Pattern</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Processing Logic -->
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const widthSelect = document.getElementById('widthSelect');
+        const thresholdSlider = document.getElementById('thresholdSlider');
+        const thresholdVal = document.getElementById('thresholdVal');
+        const origCanvas = document.getElementById('origCanvas');
+        const outputCanvas = document.getElementById('outputCanvas');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let uploadedImage = new Image();
+
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    uploadedImage.src = event.target.result;
+                }
+                uploadedImage.onload = function() {
+                    processJacquard();
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        widthSelect.addEventListener('change', processJacquard);
+        thresholdSlider.addEventListener('input', (e) => {
+            thresholdVal.innerText = e.target.value;
+            processJacquard();
+        });
+
+        function processJacquard() {
+            if (!uploadedImage.src) return;
+
+            // Draw Original Preview
+            const origCtx = origCanvas.getContext('2d');
+            origCanvas.width = uploadedImage.width;
+            origCanvas.height = uploadedImage.height;
+            origCtx.drawImage(uploadedImage, 0, 0);
+
+            // Calculate Jacquard Dimensions
+            const targetWidth = parseInt(widthSelect.value);
+            const targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
+
+            outputCanvas.width = targetWidth;
+            outputCanvas.height = targetHeight;
+            const outCtx = outputCanvas.getContext('2d');
+            
+            // Pixelated crisp rendering for textile grid
+            outCtx.imageSmoothingEnabled = false;
+            outCtx.drawImage(uploadedImage, 0, 0, targetWidth, targetHeight);
+
+            // Apply Black & White Thresholding
+            const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
+            const data = imgData.data;
+            const threshold = parseInt(thresholdSlider.value);
+
+            for (let i = 0; i < data.length; i += 4) {
+                let avg = (data[i] + data[i+1] + data[i+2]) / 3;
+                let val = avg > threshold ? 255 : 0; // Pure White or Black
+                data[i] = val;     // R
+                data[i+1] = val;   // G
+                data[i+2] = val;   // B
+            }
+            outCtx.putImageData(imgData, 0, 0);
+
+            // Enable Download Button
+            downloadBtn.style.display = 'inline-block';
+            downloadBtn.href = outputCanvas.toDataURL('image/png');
+            downloadBtn.download = `jacquard_${targetWidth}_hooks.png`;
+        }
+    </script>
+</body>
+</html>
