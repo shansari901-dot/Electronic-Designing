@@ -3,38 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electronic Jacquard Designer - Multi-Color Portal</title>
-    <!-- Tailwind CSS -->
+    <title>Electronic Jacquard Designer - GitHub Portal</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen p-4 md:p-6">
 
-    <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
         
         <!-- Header -->
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-indigo-700 mb-2">🧵 Electronic Jacquard Designer (Multi-Color)</h1>
-            <p class="text-gray-600">Professional Textile Pattern Conversion & Multi-Pick Grid Tool.</p>
+            <h1 class="text-3xl font-bold text-indigo-700 mb-2">🧵 Electronic Jacquard Designer</h1>
+            <p class="text-gray-600">Professional Textile Pattern Conversion & Machine Grid Tool.</p>
         </div>
 
         <!-- Home Page Info / Introduction (Visible to Everyone) -->
         <div id="homeInfoSection" class="bg-indigo-50 border border-indigo-200 p-5 rounded-lg mb-6">
             <h2 class="text-xl font-bold text-indigo-900 mb-2">📌 Welcome to Jacquard Design Portal</h2>
             <p class="text-gray-700 text-sm mb-3">
-                This platform converts standard fabric motifs into high-precision, machine-ready grid patterns supporting custom hook layouts and multi-pick color layers.
+                This platform converts standard fabric and saree motifs into high-precision, machine-ready black-and-white or multi-pick grid patterns matching specific hook layouts (e.g., 192, 384, 672 hooks).
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800 mb-4">
                 <div class="bg-white p-3 rounded shadow-sm">
                     <strong>⚙️ Features:</strong>
                     <ul class="list-disc list-inside text-gray-600 mt-1">
-                        <li>Custom Hook Width Selection (192, 384, etc.)</li>
-                        <li>Multi-Color / Multi-Pick Weft Layering</li>
+                        <li>Custom Hook Width Selection</li>
+                        <li>Multi-Pick / Weft Layer Management</li>
+                        <li>Real-time Darkness (Threshold) Control</li>
                         <li>Direct Machine-Ready Grid Export</li>
                     </ul>
                 </div>
                 <div class="bg-white p-3 rounded shadow-sm">
                     <strong>🔒 Access Policy:</strong>
-                    <p class="text-gray-600 mt-1">Pattern generation and design tools are restricted to authorized <b>Admin</b> only.</p>
+                    <p class="text-gray-600 mt-1">Pattern generation and design tools are restricted to authorized <b>Admin</b> only to protect proprietary textile drafts.</p>
                 </div>
             </div>
 
@@ -54,36 +55,26 @@
             </div>
 
             <!-- Controls Section -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-gray-50 p-4 rounded-lg border mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border mb-6">
                 <div>
-                    <label class="block font-semibold text-sm text-gray-700 mb-1">Jacquard Width (Hooks):</label>
-                    <select id="widthSelect" class="w-full border p-2 rounded bg-white text-sm">
-                        <option value="120">120 Hooks</option>
+                    <label class="block font-semibold text-sm text-gray-700 mb-1">Select Jacquard Width (Hooks):</label>
+                    <select id="widthSelect" class="w-full border p-2 rounded bg-white">
                         <option value="192">192 Hooks</option>
-                        <option value="240">240 Hooks</option>
-                        <option value="384" selected>384 Hooks</option>
+                        <option value="384">384 Hooks</option>
                         <option value="512">512 Hooks</option>
+                        <option value="672" selected>672 Hooks</option>
                         <option value="768">768 Hooks</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block font-semibold text-sm text-gray-700 mb-1">Pick/Color Mode:</label>
-                    <select id="pickMode" class="w-full border p-2 rounded bg-white text-sm">
-                        <option value="1">1-Pick (Single Cloth)</option>
-                        <option value="2" selected>2-Pick (Double Layer)</option>
-                        <option value="3">3-Pick (Multi-Color)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-sm text-gray-700 mb-1">Threshold: <span id="thresholdVal" class="text-indigo-600 font-bold">128</span></label>
+                    <label class="block font-semibold text-sm text-gray-700 mb-1">Threshold (Darkness): <span id="thresholdVal" class="text-indigo-600 font-bold">128</span></label>
                     <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-2 accent-indigo-600">
                 </div>
 
                 <div>
                     <label class="block font-semibold text-sm text-gray-700 mb-1">Upload Image:</label>
-                    <input type="file" id="imageInput" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-2 file:px-3 file:rounded file:border-0 file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    <input type="file" id="imageInput" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                 </div>
             </div>
 
@@ -97,12 +88,12 @@
                 </div>
 
                 <div class="border p-4 rounded-lg bg-gray-50">
-                    <h3 id="outputTitle" class="font-bold text-gray-700 mb-2">🪡 Jacquard Grid Output (2-Pick)</h3>
+                    <h3 class="font-bold text-gray-700 mb-2">🪡 Jacquard Grid Output</h3>
                     <div class="flex justify-center items-center h-64 bg-white border rounded overflow-hidden">
                         <canvas id="outputCanvas" class="max-h-full max-w-full object-contain" style="image-rendering: pixelated;"></canvas>
                     </div>
                     <div class="mt-4">
-                        <a id="downloadBtn" style="display:none;" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer inline-block text-sm">Download Multi-Pick Grid</a>
+                        <a id="downloadBtn" style="display:none;" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow cursor-pointer inline-block">Download Grid Pattern</a>
                     </div>
                 </div>
             </div>
@@ -114,7 +105,7 @@
     <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4" style="display:none;">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
             <h3 class="text-xl font-bold text-gray-800 mb-3">🔐 Admin Authentication</h3>
-            <p class="text-xs text-gray-500 mb-4">Enter admin password to access the designer.</p>
+            <p class="text-xs text-gray-500 mb-4">Enter admin password to access the jacquard design generator.</p>
             <input type="password" id="adminPassword" placeholder="Enter password" class="w-full border p-2 rounded mb-4 text-center">
             <div class="flex space-x-2">
                 <button onclick="verifyPassword()" class="w-full bg-indigo-600 text-white py-2 rounded font-bold hover:bg-indigo-700">Login</button>
@@ -124,8 +115,9 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Processing Logic -->
     <script>
+        // यहाँ आप अपना एडमिन पासवर्ड बदल सकते हैं (जैसे "admin123" की जगह कुछ भी रख लें)
         const ADMIN_PASS = "$@150819"; 
 
         function showLoginModal() {
@@ -154,15 +146,14 @@
             document.getElementById('homeInfoSection').style.display = 'block';
         }
 
+        // Processing Logic
         const imageInput = document.getElementById('imageInput');
         const widthSelect = document.getElementById('widthSelect');
-        const pickMode = document.getElementById('pickMode');
         const thresholdSlider = document.getElementById('thresholdSlider');
         const thresholdVal = document.getElementById('thresholdVal');
         const origCanvas = document.getElementById('origCanvas');
         const outputCanvas = document.getElementById('outputCanvas');
         const downloadBtn = document.getElementById('downloadBtn');
-        const outputTitle = document.getElementById('outputTitle');
 
         let uploadedImage = new Image();
 
@@ -181,7 +172,6 @@
         });
 
         widthSelect.addEventListener('change', processJacquard);
-        pickMode.addEventListener('change', processJacquard);
         thresholdSlider.addEventListener('input', (e) => {
             thresholdVal.innerText = e.target.value;
             processJacquard();
@@ -196,7 +186,6 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
-            const mode = parseInt(pickMode.value);
             const targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
 
             outputCanvas.width = targetWidth;
@@ -210,47 +199,18 @@
             const data = imgData.data;
             const threshold = parseInt(thresholdSlider.value);
 
-            // Multi-pick processing logic simulating yarn color separation layers
             for (let i = 0; i < data.length; i += 4) {
-                let r = data[i];
-                let g = data[i+1];
-                let b = data[i+2];
-                let avg = (r + g + b) / 3;
-
-                if (mode === 1) {
-                    // 1-Pick: Pure Black & White
-                    let val = avg > threshold ? 255 : 0;
-                    data[i] = val; data[i+1] = val; data[i+2] = val;
-                } 
-                else if (mode === 2) {
-                    // 2-Pick: Dual Tone / Layer separation (Black, Grey, White mapping)
-                    if (avg < threshold / 2) {
-                        data[i] = 0; data[i+1] = 0; data[i+2] = 0; // Dark yarn
-                    } else if (avg < threshold) {
-                        data[i] = 120; data[i+1] = 120; data[i+2] = 120; // Mid-tone yarn
-                    } else {
-                        data[i] = 255; data[i+1] = 255; data[i+2] = 255; // Background
-                    }
-                } 
-                else if (mode === 3) {
-                    // 3-Pick: Multi-color separation layers
-                    if (r > g && r > b && r > threshold) {
-                        data[i] = 255; data[i+1] = 0; data[i+2] = 0; // Red Weft Layer
-                    } else if (g > r && g > b && g > threshold) {
-                        data[i] = 0; data[i+1] = 255; data[i+2] = 0; // Green Weft Layer
-                    } else {
-                        let val = avg > threshold ? 255 : 0;
-                        data[i] = val; data[i+1] = val; data[i+2] = val; // Base/Black Layer
-                    }
-                }
+                let avg = (data[i] + data[i+1] + data[i+2]) / 3;
+                let val = avg > threshold ? 255 : 0;
+                data[i] = val;     
+                data[i+1] = val;   
+                data[i+2] = val;   
             }
-
             outCtx.putImageData(imgData, 0, 0);
-            outputTitle.innerText = `🪡 Jacquard Grid Output (${mode}-Pick Layer)`;
 
             downloadBtn.style.display = 'inline-block';
             downloadBtn.href = outputCanvas.toDataURL('image/png');
-            downloadBtn.download = `jacquard_${targetWidth}_hooks_${mode}pick.png`;
+            downloadBtn.download = `jacquard_${targetWidth}_hooks.png`;
         }
     </script>
 </body>
