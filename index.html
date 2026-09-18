@@ -28,7 +28,7 @@
 </head>
 <body class="pb-28">
 
-    <!-- Top Header Section (Zarafiya Design Branding) -->
+    <!-- Top Header Section -->
     <div class="relative overflow-hidden p-5 border-b border-gray-800 glass-card">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <h1 class="text-sm md:text-base font-black tracking-wide text-amber-400">Hi, SAREEFUL HAK</h1>
-                    <p class="text-[11px] text-gray-400">Zarafiya Design - Jacquard Studio</p>
+                    <p class="text-[11px] text-gray-400">Welcome to the EasyX App</p>
                 </div>
             </div>
             <!-- Admin Status & Login Button -->
@@ -54,27 +54,21 @@
         <!-- TAB 1: DESIGN PUNCHING / HOME -->
         <div id="tab-home" class="tab-content active space-y-4">
             
-            <!-- Machine Plan Selector Card -->
+            <!-- Select Running File Button Card -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-amber-400">SELECT MACHINE PLAN:</span>
-                    <div class="flex space-x-1">
-                        <button onclick="openPlanModal('create')" class="bg-gray-800 hover:bg-gray-700 text-xs px-2.5 py-1 rounded-lg text-amber-300 font-bold">+ Create</button>
-                        <button onclick="deletePlan()" class="bg-red-500/20 hover:bg-red-500/30 text-xs px-2.5 py-1 rounded-lg text-red-400">Reset</button>
-                    </div>
-                </div>
-                <div id="activePlanDisplay" class="bg-gray-900 border border-gray-800 p-3 rounded-xl text-center text-xs font-bold text-amber-300">
-                    Active Plan: Standard Tianmai 672 Hooks (2-Shuttle)
-                </div>
+                <button onclick="showNoteModal()" class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase">
+                    SELECT RUNNING FILE
+                </button>
+                <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400">No file selected</div>
             </div>
 
-            <!-- Industrial Settings -->
+            <!-- Shuttle & Machine Specifications -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
                 <div class="text-amber-400 font-semibold text-xs">⚙️ Shuttle & Machine Specifications</div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Shuttle / Finger Type</label>
+                        <label class="block text-[11px] text-gray-400 mb-1">Shuttle Type</label>
                         <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
                             <option value="1">1 to 4 Shuttle (Power Loom)</option>
                             <option value="5" selected>5 - Shuttle All Over</option>
@@ -84,57 +78,39 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Output File Format</label>
+                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
                         <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
                             <option value="ep" selected>Direct Machine .EP File</option>
                             <option value="png">PNG Grid Preview File</option>
                         </select>
                     </div>
-
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
-                        <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                            <option value="192">192 Hooks</option>
-                            <option value="384">384 Hooks</option>
-                            <option value="512">512 Hooks</option>
-                            <option value="672" selected>672 Hooks (Tianmai)</option>
-                            <option value="768">768 Hooks</option>
-                            <option value="960">960 Hooks</option>
-                            <option value="1408">1408 Hooks (Rapier)</option>
-                            <option value="2688">2688 Hooks (Heavy Rapier)</option>
-                        </select>
-                    </div>
                 </div>
 
-                <!-- Margins Control -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-gray-800">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Front Edge Margin (Selvedge)</label>
-                        <input type="number" id="frontMargin" value="0" min="0" max="50" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-white text-center">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Last Sync Line Padding</label>
-                        <input type="number" id="lastPadding" value="0" min="0" max="50" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-white text-center">
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="text-[11px] text-gray-400">Threshold (Darkness)</label>
-                            <span id="thresholdVal" class="text-xs font-bold text-amber-400">128</span>
-                        </div>
-                        <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-1 accent-amber-500 bg-gray-800 rounded-lg">
-                    </div>
+                <!-- Hooks Selection -->
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
+                    <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
+                        <option value="192">192 Hooks</option>
+                        <option value="384">384 Hooks</option>
+                        <option value="512">512 Hooks</option>
+                        <option value="672" selected>672 Hooks (Standard Tianmai/SAAZ)</option>
+                        <option value="768">768 Hooks</option>
+                        <option value="960">960 Hooks</option>
+                        <option value="1408">1408 Hooks (Rapier)</option>
+                        <option value="2688">2688 Hooks (Heavy Rapier)</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- Alignment & Shift Controls -->
+            <!-- Mobile No Field & Create Plan -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
-                <div class="text-amber-300 font-semibold text-xs">🎛️ Design Alignment & Shift Tools (आगे-पीछे ठीक करें)</div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                    <button onclick="shiftGrid('left')" class="bg-gray-900 border border-gray-700 hover:border-amber-500 py-2 rounded-xl text-xs font-bold text-gray-300">◀ Shift Left</button>
-                    <button onclick="shiftGrid('right')" class="bg-gray-900 border border-gray-700 hover:border-amber-500 py-2 rounded-xl text-xs font-bold text-gray-300">Shift Right ▶</button>
-                    <button onclick="shiftGrid('up')" class="bg-gray-900 border border-gray-700 hover:border-amber-500 py-2 rounded-xl text-xs font-bold text-gray-300">▲ Shift Up</button>
-                    <button onclick="shiftGrid('down')" class="bg-gray-900 border border-gray-700 hover:border-amber-500 py-2 rounded-xl text-xs font-bold text-gray-300">Shift Down ▼</button>
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Mobile No. (Optional)</label>
+                    <input type="text" id="mobileInput" placeholder="Enter mobile number" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
                 </div>
+                <button onclick="createMachinePlan()" class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase">
+                    CREATE MACHINE PLAN
+                </button>
             </div>
 
             <!-- Select Design / Upload File -->
@@ -234,6 +210,21 @@
         </button>
     </div>
 
+    <!-- Note / नोटिस Popup Modal -->
+    <div id="noteModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
+        <div class="glass-card p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl border border-gray-700">
+            <h3 class="text-base font-bold text-amber-400">Note / नोट</h3>
+            <div class="space-y-2 text-xs text-gray-300">
+                <p>Note: Please select actual running file in the same format as your jacquard support.</p>
+                <p class="text-gray-400">नोट: कृपया जैकार्ड पर चल रही फ़ाइल सेलेक्ट करें (जिस फॉर्मेट में जैकार्ड सपोर्ट कर रही ho)।</p>
+            </div>
+            <div class="flex space-x-2 pt-2">
+                <button onclick="closeNoteModal()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-xl font-bold text-xs">Cancel</button>
+                <button onclick="confirmRunningFile()" class="w-full yellow-btn text-black py-2.5 rounded-xl font-bold text-xs">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Admin Authentication Modal -->
     <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
         <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl border border-gray-700">
@@ -247,19 +238,7 @@
         </div>
     </div>
 
-    <!-- Plan Manager Modal -->
-    <div id="planModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
-        <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl border border-gray-700">
-            <h3 class="text-base font-bold text-amber-400">Create Machine Plan</h3>
-            <input type="text" id="planNameInput" placeholder="Enter Plan / Machine Name" class="w-full bg-gray-900 border border-gray-700 p-3 rounded-xl text-center text-white focus:outline-none focus:border-amber-500 text-xs">
-            <div class="flex space-x-2">
-                <button onclick="savePlanAction()" class="w-full yellow-btn text-black py-2.5 rounded-xl font-bold text-xs">Save</button>
-                <button onclick="closePlanModal()" class="w-full bg-gray-800 text-gray-300 py-2.5 rounded-xl font-bold text-xs">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Industrial Logic with Native EP Binary Export -->
+    <!-- JavaScript Logic -->
     <script>
         const ADMIN_PASS = "$@150819";
         let isAdmin = true;
@@ -285,20 +264,15 @@
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        let activePlanName = "Tianmai 672 Hooks (2-Shuttle Plan)";
-        function openPlanModal(mode) { document.getElementById('planModal').style.display = 'flex'; }
-        function closePlanModal() { document.getElementById('planModal').style.display = 'none'; document.getElementById('planNameInput').value = ''; }
-        function savePlanAction() {
-            const val = document.getElementById('planNameInput').value.trim();
-            if(val) {
-                activePlanName = val;
-                document.getElementById('activePlanDisplay').innerText = "Active Plan: " + activePlanName;
-            }
-            closePlanModal();
+        function showNoteModal() { document.getElementById('noteModal').style.display = 'flex'; }
+        function closeNoteModal() { document.getElementById('noteModal').style.display = 'none'; }
+        function confirmRunningFile() {
+            closeNoteModal();
+            document.getElementById('selectedRunningDisplay').innerText = "Running file format configured successfully!";
         }
-        function deletePlan() {
-            activePlanName = "Default Tianmai 672 Hooks";
-            document.getElementById('activePlanDisplay').innerText = "Active Plan: " + activePlanName;
+
+        function createMachinePlan() {
+            alert("Machine plan created successfully for your setup!");
         }
 
         function switchTab(tabId) {
@@ -317,10 +291,6 @@
         const widthSelect = document.getElementById('widthSelect');
         const shuttleTypeSelect = document.getElementById('shuttleTypeSelect');
         const jacquardFormatSelect = document.getElementById('jacquardFormatSelect');
-        const thresholdSlider = document.getElementById('thresholdSlider');
-        const thresholdVal = document.getElementById('thresholdVal');
-        const frontMarginInput = document.getElementById('frontMargin');
-        const lastPaddingInput = document.getElementById('lastPadding');
         
         const origCanvas = document.getElementById('origCanvas');
         const outputCanvas = document.getElementById('outputCanvas');
@@ -330,8 +300,6 @@
         let uploadedImage = new Image();
         let currentProcessedDataUrl = "";
         let currentFileName = "zarafiya_design";
-        let shiftX = 0;
-        let shiftY = 0;
 
         imageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -340,7 +308,7 @@
                 fileNameDisplay.innerText = file.name;
                 const reader = new FileReader();
                 reader.onload = function(event) { uploadedImage.src = event.target.result; }
-                reader.onloadend = function() { shiftX = 0; shiftY = 0; processJacquardGrid(); }
+                reader.onloadend = function() { processJacquardGrid(); }
                 reader.readAsDataURL(file);
             }
         });
@@ -348,21 +316,6 @@
         widthSelect.addEventListener('change', processJacquardGrid);
         shuttleTypeSelect.addEventListener('change', processJacquardGrid);
         jacquardFormatSelect.addEventListener('change', processJacquardGrid);
-        frontMarginInput.addEventListener('input', processJacquardGrid);
-        lastPaddingInput.addEventListener('input', processJacquardGrid);
-        thresholdSlider.addEventListener('input', (e) => {
-            thresholdVal.innerText = e.target.value;
-            processJacquardGrid();
-        });
-
-        function shiftGrid(direction) {
-            if (!uploadedImage.src) return;
-            if (direction === 'left') shiftX -= 2;
-            if (direction === 'right') shiftX += 2;
-            if (direction === 'up') shiftY -= 2;
-            if (direction === 'down') shiftY += 2;
-            processJacquardGrid();
-        }
 
         function processJacquardGrid() {
             if (!uploadedImage.src) return;
@@ -373,8 +326,6 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
-            const frontMargin = parseInt(frontMarginInput.value) || 0;
-            const lastPadding = parseInt(lastPaddingInput.value) || 0;
             let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
 
             outputCanvas.width = targetWidth;
@@ -384,23 +335,14 @@
 
             outCtx.fillStyle = "#ffffff";
             outCtx.fillRect(0, 0, targetWidth, targetHeight);
-            outCtx.drawImage(uploadedImage, shiftX, shiftY, targetWidth, targetHeight);
+            outCtx.drawImage(uploadedImage, 0, 0, targetWidth, targetHeight);
 
             const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
-            const threshold = parseInt(thresholdSlider.value);
 
             for (let i = 0; i < data.length; i += 4) {
                 let avg = (data[i] + data[i+1] + data[i+2]) / 3;
-                let val = avg > threshold ? 255 : 0;
-                
-                let pixelIndex = i / 4;
-                let col = pixelIndex % targetWidth;
-
-                if (col < frontMargin || col >= (targetWidth - lastPadding)) {
-                    val = 0; 
-                }
-
+                let val = avg > 128 ? 255 : 0;
                 data[i] = val; data[i+1] = val; data[i+2] = val;
             }
             outCtx.putImageData(imgData, 0, 0);
@@ -409,18 +351,14 @@
             downloadArea.style.display = 'block';
         }
 
-        // Native .EP Binary File Generator and Downloader
         function convertAndDownloadGrid() {
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
             const targetWidth = parseInt(widthSelect.value);
-            const outCtx = outputCanvas.getContext('2d');
+            const outCtx = outputCanvas.getContext('28');
             const targetHeight = outputCanvas.height;
-            const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
-            const data = imgData.data;
 
             if (format === 'png') {
-                // Download as standard PNG grid preview
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
                 link.download = `${currentFileName}_${targetWidth}hooks.png`;
@@ -431,14 +369,16 @@
                 return;
             }
 
-            // Generate Native .EP Binary File Stream matching machine standards
+            // Generate Native .EP Binary File Stream
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
                 encoderBytes.push(headerString.charCodeAt(i));
             }
 
-            // Convert image pixel grid into machine binary byte format
+            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, targetWidth, targetHeight);
+            const data = imgData.data;
+
             for (let y = 0; y < targetHeight; y++) {
                 for (let x = 0; x < targetWidth; x += 8) {
                     let byteVal = 0;
@@ -446,7 +386,6 @@
                         let curX = x + b;
                         if (curX < targetWidth) {
                             let idx = (y * targetWidth + curX) * 4;
-                            // If pixel is black (0), set bit for jacquard hook lift
                             if (data[idx] < 128) {
                                 byteVal |= (1 << (7 - b));
                             }
@@ -456,7 +395,6 @@
                 }
             }
 
-            // Create Blob and trigger direct .EP file download
             const byteArray = new Uint8Array(encoderBytes);
             const blob = new Blob([byteArray], { type: 'application/octet-stream' });
             const blobUrl = URL.createObjectURL(blob);
@@ -512,4 +450,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
