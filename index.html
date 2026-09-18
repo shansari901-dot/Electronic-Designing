@@ -40,7 +40,6 @@
                     <p class="text-[11px] text-gray-400">Zarafiya Jacquard Studio</p>
                 </div>
             </div>
-            <!-- Admin Status & Login Button -->
             <div class="flex items-center space-x-2">
                 <span id="adminStatusDot" class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
                 <button onclick="toggleAdminAuth()" id="authBtn" class="bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-xl text-[10px] font-bold">Admin</button>
@@ -54,22 +53,33 @@
         <!-- TAB 1: DESIGN PUNCHING / HOME -->
         <div id="tab-home" class="tab-content active space-y-4">
             
-            <!-- Step 1: Select Running File & Setup Machine Plan -->
+            <!-- Step 1: Saved Machine Category List & Setup -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
-                <div class="text-amber-400 font-semibold text-xs">🛠️ Step 1: Machine Setup & Running File</div>
+                <div class="text-amber-400 font-semibold text-xs">🛠️ Step 1: Select or Add Machine Setup</div>
                 
+                <!-- Saved Machines Category Dropdown -->
                 <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Set Machine Name / Plan</label>
-                    <input type="text" id="machineNameInput" value="Machine 5" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
+                    <label class="block text-[11px] text-gray-400 mb-1">Select from Saved Machines Category</label>
+                    <select id="savedMachineCategory" onchange="loadSelectedMachine()" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-amber-400">
+                        <option value="">-- Choose Saved Machine --</option>
+                    </select>
                 </div>
 
-                <label class="block cursor-pointer pt-1">
-                    <div class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase text-center">
-                        📁 SELECT RUNNING MACHINE FILE
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">New Machine Name / ID</label>
+                        <input type="text" id="machineNameInput" placeholder="e.g. Machine 5" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
                     </div>
-                    <input type="file" id="runningFileInput" class="hidden">
-                </label>
-                <div id="selectedRunningDisplay" class="text-center text-[11px] text-amber-400 font-bold">No running file loaded</div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Upload Running File (.EP / .BMP)</label>
+                        <input type="file" id="runningFileInput" class="w-full bg-gray-900 border border-gray-700 p-1.5 rounded-xl text-[11px] text-gray-300">
+                    </div>
+                </div>
+
+                <button onclick="saveMachineCategory()" class="w-full bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/40 py-2.5 rounded-xl font-bold text-xs">
+                    + Save Machine to Category List
+                </button>
+                <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400 font-bold">No active machine setup loaded</div>
             </div>
 
             <!-- Step 2: Shuttle & Machine Specifications -->
@@ -96,7 +106,6 @@
                     </div>
                 </div>
 
-                <!-- Hooks Selection -->
                 <div>
                     <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
                     <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
@@ -224,7 +233,7 @@
 
     <!-- JavaScript Logic -->
     <script>
-        const ADMIN_PASS = "$@150819";
+        const ADMIN_PASS = "admin123";
         let isAdmin = true;
 
         function toggleAdminAuth() {
@@ -248,28 +257,63 @@
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        // Running File Auto-Analyzer Logic
+        // Machine Category List Logic
+        const machineNameInput = document.getElementById('machineNameInput');
         const runningFileInput = document.getElementById('runningFileInput');
         const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
-        const machineNameInput = document.getElementById('machineNameInput');
+        const savedMachineCategory = document.getElementById('savedMachineCategory');
         const widthSelect = document.getElementById('widthSelect');
 
-        runningFileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const machineName = machineNameInput.value || "Machine Setup";
-                selectedRunningDisplay.innerText = `Loaded for ${machineName}: ${file.name}`;
-                
-                // Smart auto-detection based on filename or size clues if needed
-                if(file.name.toLowerCase().includes('672')) {
-                    widthSelect.value = "672";
-                } else if(file.name.toLowerCase().includes('1408')) {
-                    widthSelect.value = "1408";
-                }
-                
-                alert(`${machineName} setup mapped successfully with running file: ${file.name}`);
+        window.onload = function() {
+            loadSavedMachinesDropdown();
+        }
+
+        function saveMachineCategory() {
+            const mName = machineNameInput.value.trim();
+            const file = runningFileInput.files[0];
+            if(!mName) {
+                alert("Please enter a machine name (e.g. Machine 5)");
+                return;
             }
-        });
+            const fileName = file ? file.name : "Default_Running.EP";
+            const currentWidth = widthSelect.value;
+
+            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
+            // check if exists, update or add
+            let existing = machines.find(m => m.name === mName);
+            if(existing) {
+                existing.fileName = fileName;
+                existing.width = currentWidth;
+            } else {
+                machines.push({ name: mName, fileName: fileName, width: currentWidth });
+            }
+
+            localStorage.setItem('zarafiya_saved_machines', JSON.stringify(machines));
+            loadSavedMachinesDropdown();
+            selectedRunningDisplay.innerText = `Active Machine Setup: ${mName} (${fileName})`;
+            alert(`Machine '${mName}' saved to category list successfully!`);
+        }
+
+        function loadSavedMachinesDropdown() {
+            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
+            let html = '<option value="">-- Choose Saved Machine --</option>';
+            machines.forEach(m => {
+                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}]</option>`;
+            });
+            savedMachineCategory.innerHTML = html;
+        }
+
+        function loadSelectedMachine() {
+            const selectedName = savedMachineCategory.value;
+            if(!selectedName) return;
+            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
+            let found = machines.find(m => m.name === selectedName);
+            if(found) {
+                machineNameInput.value = found.name;
+                widthSelect.value = found.width;
+                selectedRunningDisplay.innerText = `Active Machine Setup: ${found.name} (${found.fileName})`;
+            }
+        }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -439,7 +483,7 @@
             historyList.innerHTML = html;
         }
 
-        function clearHistory() {
+        clearHistory = function() {
             localStorage.removeItem('zarafiya_history');
             loadHistory();
         }
