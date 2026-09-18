@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyX Pro - Electronic Jacquard Studio</title>
+    <title>Zarafiya Design - Electronic Jacquard Studio</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -28,16 +28,16 @@
 </head>
 <body class="pb-28">
 
-    <!-- Top Header Section -->
+    <!-- Top Header Section (Zarafiya Design Branding) -->
     <div class="relative overflow-hidden p-5 border-b border-gray-800 glass-card">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 rounded-2xl yellow-glow flex items-center justify-center p-2 text-black font-black shadow-lg bg-amber-400">
-                    EX
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center p-2 text-black font-black shadow-lg bg-amber-400">
+                    ZD
                 </div>
                 <div>
                     <h1 class="text-sm md:text-base font-black tracking-wide text-amber-400">Hi, SAREEFUL HAK</h1>
-                    <p class="text-[11px] text-gray-400">EasyX Industrial Jacquard Studio</p>
+                    <p class="text-[11px] text-gray-400">Zarafiya Design - Jacquard Studio</p>
                 </div>
             </div>
             <!-- Admin Status & Login Button -->
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <!-- Industrial Settings (Shuttle Type, Format, Hooks) -->
+            <!-- Industrial Settings -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
                 <div class="text-amber-400 font-semibold text-xs">⚙️ Shuttle & Jacquard Specifications</div>
                 
@@ -109,7 +109,7 @@
                     </div>
                 </div>
 
-                <!-- Front & Last Line Margins Control -->
+                <!-- Margins Control -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-gray-800">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Front Edge Margin (Selvedge)</label>
@@ -129,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- Alignment & Shift Controls (Aage-Pichhe thik karne ke liye) -->
+            <!-- Alignment & Shift Controls -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
                 <div class="text-amber-300 font-semibold text-xs">🎛️ Design Alignment & Shift Tools (आगे-पीछे ठीक करें)</div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -208,9 +208,9 @@
         <!-- TAB 4: SETTINGS / INFO -->
         <div id="tab-settings" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-3 text-center py-8">
-                <div class="w-16 h-16 yellow-glow mx-auto rounded-3xl flex items-center justify-center text-black font-black text-xl mb-2 bg-amber-400">EX</div>
-                <h3 class="text-base font-bold text-amber-400">EasyX Pro Studio</h3>
-                <p class="text-xs text-gray-400">Industrial Jacquard Automation Version 4.0</p>
+                <div class="w-16 h-16 yellow-glow mx-auto rounded-3xl flex items-center justify-center text-black font-black text-xl mb-2 bg-amber-400">ZD</div>
+                <h3 class="text-base font-bold text-amber-400">Zarafiya Design Studio</h3>
+                <p class="text-xs text-gray-400">Industrial Jacquard Automation Version 4.1</p>
                 <p class="text-[11px] text-gray-500">Lohta, Varanasi Setup - Connected Successfully</p>
             </div>
         </div>
@@ -332,7 +332,7 @@
 
         let uploadedImage = new Image();
         let currentProcessedDataUrl = "";
-        let currentFileName = "easyx_design";
+        let currentFileName = "zarafiya_design";
         let shiftX = 0;
         let shiftY = 0;
 
@@ -400,7 +400,6 @@
                 let pixelIndex = i / 4;
                 let col = pixelIndex % targetWidth;
 
-                // Front & Last Line Margins Rule (Selvedge Control)
                 if (col < frontMargin || col >= (targetWidth - lastPadding)) {
                     val = 0; 
                 }
@@ -435,16 +434,16 @@
         }
 
         function saveToHistory(name, width, shuttle, format, dataUrl) {
-            let history = JSON.parse(localStorage.getItem('easyx_pro_history') || '[]');
+            let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
             const timestamp = new Date().toLocaleString();
             history.unshift({ name, width, shuttle, format, timestamp, dataUrl });
             if (history.length > 20) history.pop();
-            localStorage.setItem('easyx_pro_history', JSON.stringify(history));
+            localStorage.setItem('zarafiya_history', JSON.stringify(history));
         }
 
         function loadHistory() {
             const historyList = document.getElementById('historyList');
-            let history = JSON.parse(localStorage.getItem('easyx_pro_history') || '[]');
+            let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
             if (history.length === 0) {
                 historyList.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No records found.</p>';
                 return;
@@ -469,9 +468,9 @@
         }
 
         function clearHistory() {
-            localStorage.removeItem('easyx_pro_history');
+            localStorage.removeItem('zarafiya_history');
             loadHistory();
         }
     </script>
 </body>
-    </html>
+</html>
