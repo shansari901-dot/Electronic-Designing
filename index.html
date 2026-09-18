@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electronic Jacquard Designer</title>
+    <title>Electronic Jacquard Designer - Pro Industrial</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -13,7 +13,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .glass-card {
-            background: rgba(17, 24, 39, 0.7);
+            background: rgba(17, 24, 39, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
         }
@@ -40,10 +40,10 @@
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-black tracking-wide">Electronic <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Jacquard</span> Designer</h1>
+                        <h1 class="text-xl md:text-2xl font-black tracking-wide">Industrial <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Jacquard</span> Pro</h1>
                     </div>
                 </div>
-                <p class="text-xs text-gray-400">Professional Textile Pattern Conversion & Machine Grid Tool.</p>
+                <p class="text-xs text-gray-400">Tianmai & Rapier Heavy Loom Grid & Finger Controller Studio.</p>
             </div>
         </div>
     </div>
@@ -53,50 +53,88 @@
 
         <!-- TAB 1: HOME / DESIGNER -->
         <div id="tab-home" class="tab-content active space-y-4">
-            <!-- Admin Status Bar -->
-            <div class="glass-card p-4 rounded-2xl flex justify-between items-center shadow-lg">
+            
+            <!-- Status Bar -->
+            <div class="glass-card p-3 rounded-2xl flex justify-between items-center shadow-lg">
                 <div class="flex items-center space-x-2">
                     <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-                    <span id="adminStatusText" class="text-sm font-bold text-gray-200">Logged in as Admin</span>
+                    <span id="adminStatusText" class="text-xs font-bold text-gray-200">System Ready: Pro Mode</span>
                 </div>
-                <button onclick="toggleAdminAuth()" id="authBtn" class="neon-btn px-4 py-2 rounded-xl text-xs font-bold text-white shadow-md">Logout</button>
+                <button onclick="toggleAdminAuth()" id="authBtn" class="neon-btn px-3 py-1.5 rounded-xl text-[10px] font-bold text-white shadow-md">Admin</button>
             </div>
 
-            <!-- Jacquard Settings Card -->
-            <div class="glass-card p-5 rounded-2xl space-y-4 shadow-lg">
-                <div class="text-blue-400 font-semibold text-sm">⚙️ Jacquard Settings (Standard & Large Rapier Looms)</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Industrial Settings Card (Hooks & Fingers) -->
+            <div class="glass-card p-4 md:p-5 rounded-2xl space-y-4 shadow-lg">
+                <div class="text-blue-400 font-semibold text-xs md:text-sm">⚙️ Loom & Machine Specifications</div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Select Jacquard Width (Hooks)</label>
-                        <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-3 rounded-xl text-sm font-bold text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
+                        <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-blue-500">
                             <option value="192">192 Hooks</option>
                             <option value="384">384 Hooks</option>
                             <option value="512">512 Hooks</option>
                             <option value="672" selected>672 Hooks (Standard Tianmai)</option>
                             <option value="768">768 Hooks</option>
                             <option value="960">960 Hooks</option>
-                            <option value="1024">1024 Hooks (Large Jacquard)</option>
+                            <option value="1024">1024 Hooks</option>
                             <option value="1408">1408 Hooks (Rapier Heavy)</option>
-                            <option value="2048">2048 Hooks (Ultra High Density)</option>
-                            <option value="2688">2688 Hooks (Heavy Rapier Loom)</option>
+                            <option value="2048">2048 Hooks</option>
+                            <option value="2688">2688 Hooks (Heavy Rapier)</option>
                         </select>
                     </div>
+
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Machine Fingers / Picks Mode</label>
+                        <select id="fingersSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-purple-500">
+                            <option value="1">1 Finger (Single Pick)</option>
+                            <option value="2" selected>2 Fingers (Standard Dual)</option>
+                            <option value="3">3 Fingers Mode</option>
+                            <option value="4">4 Fingers (Power Loom Limit)</option>
+                            <option value="5">5 Fingers Mode</option>
+                            <option value="6">6 Fingers (Rapier High-End)</option>
+                        </select>
+                    </div>
+
                     <div>
                         <div class="flex justify-between items-center mb-1">
-                            <label class="text-xs text-gray-400">Threshold (Darkness)</label>
+                            <label class="text-[11px] text-gray-400">Threshold (Darkness)</label>
                             <span id="thresholdVal" class="text-xs font-bold text-blue-400">128</span>
                         </div>
                         <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="w-full mt-2 accent-purple-500 bg-gray-800 rounded-lg">
                     </div>
                 </div>
+
+                <!-- Front & Last Line Margins Control -->
+                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-800">
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Front Edge Margin (Selvedge Hooks)</label>
+                        <input type="number" id="frontMargin" value="0" min="0" max="50" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-white text-center">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Last Sync Line Padding</label>
+                        <input type="number" id="lastPadding" value="0" min="0" max="50" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-white text-center">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Shifting / Adjustment Controls (Agar aage-pichhe ho jaye) -->
+            <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
+                <div class="text-purple-400 font-semibold text-xs">🎛️ Alignment & Shift Controls (आगे-पीछे ठीक करने के लिए)</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <button onclick="shiftGrid('left')" class="bg-gray-900 border border-gray-700 hover:border-purple-500 py-2 rounded-xl text-xs font-bold text-gray-300">◀ Shift Left</button>
+                    <button onclick="shiftGrid('right')" class="bg-gray-900 border border-gray-700 hover:border-purple-500 py-2 rounded-xl text-xs font-bold text-gray-300">Shift Right ▶</button>
+                    <button onclick="shiftGrid('up')" class="bg-gray-900 border border-gray-700 hover:border-purple-500 py-2 rounded-xl text-xs font-bold text-gray-300">▲ Shift Up</button>
+                    <button onclick="shiftGrid('down')" class="bg-gray-900 border border-gray-700 hover:border-purple-500 py-2 rounded-xl text-xs font-bold text-gray-300">Shift Down ▼</button>
+                </div>
             </div>
 
             <!-- Upload Image Card -->
-            <div class="glass-card p-5 rounded-2xl space-y-3 shadow-lg">
-                <div class="text-purple-400 font-semibold text-sm">📁 Upload Image / Design Draft</div>
-                <label class="border-2 border-dashed border-gray-700 hover:border-purple-500 transition rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-gray-900/40">
-                    <span class="neon-btn px-6 py-2.5 rounded-xl text-xs font-bold text-white shadow-md mb-1">Choose File</span>
-                    <span id="fileNameDisplay" class="text-xs text-gray-500">No file chosen</span>
+            <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
+                <div class="text-purple-400 font-semibold text-xs">📁 Upload Naksa / Motif / Saree Draft</div>
+                <label class="border-2 border-dashed border-gray-700 hover:border-purple-500 transition rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-gray-900/40">
+                    <span class="neon-btn px-5 py-2 rounded-xl text-xs font-bold text-white shadow-md mb-1">Choose File</span>
+                    <span id="fileNameDisplay" class="text-[11px] text-gray-500">No file chosen</span>
                     <input type="file" id="imageInput" accept="image/*" class="hidden">
                 </label>
             </div>
@@ -104,14 +142,14 @@
             <!-- Previews -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="glass-card p-4 rounded-2xl space-y-2">
-                    <span class="text-xs font-semibold text-gray-300">Original Image</span>
-                    <div class="h-48 bg-gray-950 rounded-xl flex items-center justify-center overflow-hidden border border-gray-800">
+                    <span class="text-xs font-semibold text-gray-300">Original Source Preview</span>
+                    <div class="h-44 bg-gray-950 rounded-xl flex items-center justify-center overflow-hidden border border-gray-800">
                         <canvas id="origCanvas" class="max-h-full max-w-full object-contain"></canvas>
                     </div>
                 </div>
                 <div class="glass-card p-4 rounded-2xl space-y-2">
-                    <span class="text-xs font-semibold text-gray-300">Jacquard Grid Output</span>
-                    <div class="h-48 bg-gray-950 rounded-xl flex items-center justify-center overflow-hidden border border-gray-800">
+                    <span class="text-xs font-semibold text-gray-300">Machine Grid Output Preview</span>
+                    <div class="h-44 bg-gray-950 rounded-xl flex items-center justify-center overflow-hidden border border-gray-800">
                         <canvas id="outputCanvas" class="max-h-full max-w-full object-contain" style="image-rendering: pixelated;"></canvas>
                     </div>
                 </div>
@@ -123,34 +161,31 @@
             </div>
         </div>
 
-        <!-- TAB 2: HISTORY (Saved Designs Vault) -->
+        <!-- TAB 2: HISTORY -->
         <div id="tab-history" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-base font-bold text-blue-400">📜 Design History & Saved Files</h3>
+                    <h3 class="text-base font-bold text-blue-400">📜 Design History Vault</h3>
                     <button onclick="clearHistory()" class="text-xs bg-red-500/20 text-red-400 border border-red-500/40 px-3 py-1 rounded-lg">Clear All</button>
                 </div>
-                <p class="text-xs text-gray-400">All patterns generated in this app are automatically saved here.</p>
-                <div id="historyList" class="space-y-3 mt-3">
-                    <!-- History items will load here dynamically -->
-                </div>
+                <p class="text-xs text-gray-400">All generated machine patterns are securely saved here.</p>
+                <div id="historyList" class="space-y-3 mt-3"></div>
             </div>
         </div>
 
         <!-- TAB 3: PATTERNS -->
         <div id="tab-patterns" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-3 text-center py-10">
-                <h3 class="text-base font-bold text-purple-400">🪡 Pattern Preset Vault</h3>
-                <p class="text-xs text-gray-400">Quick templates for standard Saree and Weft motifs coming soon.</p>
+                <h3 class="text-base font-bold text-purple-400">🪡 Weave & Border Preset Vault</h3>
+                <p class="text-xs text-gray-400">Saree Pallu, Body & Rapier border templates active.</p>
             </div>
         </div>
 
         <!-- TAB 4: SETTINGS -->
         <div id="tab-settings" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-3">
-                <h3 class="text-base font-bold text-gray-200">⚙️ App Configurations</h3>
-                <p class="text-xs text-gray-400">App Version: 2.2 (Mobile WebView Optimized)</p>
-                <p class="text-xs text-gray-400">Target Machines: Tianmai Eagle & Rapier Heavy Jacquard</p>
+                <h3 class="text-base font-bold text-gray-200">⚙️ Studio Preferences</h3>
+                <p class="text-xs text-gray-400">Industrial Version: 3.0 (Multi-Finger & Shift Enabled)</p>
             </div>
         </div>
 
@@ -189,7 +224,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Industrial Logic -->
     <script>
         const ADMIN_PASS = "$@150819";
         let isAdmin = true;
@@ -197,25 +232,22 @@
         function toggleAdminAuth() {
             if (isAdmin) {
                 isAdmin = false;
-                document.getElementById('adminStatusText').innerText = "Logged out (Guest View)";
+                document.getElementById('adminStatusText').innerText = "Guest Mode";
                 document.getElementById('authBtn').innerText = "Login";
                 showLoginModal();
-            } else {
-                showLoginModal();
-            }
+            } else { showLoginModal(); }
         }
         function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
         function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; document.getElementById('adminPassword').value = ''; document.getElementById('errorMsg').style.display = 'none'; }
         function verifyPassword() {
             if (document.getElementById('adminPassword').value === ADMIN_PASS) {
                 isAdmin = true;
-                document.getElementById('adminStatusText').innerText = "Logged in as Admin";
-                document.getElementById('authBtn').innerText = "Logout";
+                document.getElementById('adminStatusText').innerText = "System Ready: Pro Mode";
+                document.getElementById('authBtn').innerText = "Admin";
                 closeLoginModal();
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        // Navigation Tabs Switching
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('nav button, .fixed button').forEach(el => el.classList.remove('text-blue-400'));
@@ -225,16 +257,17 @@
             document.getElementById('nav-' + tabId).classList.remove('text-gray-400');
             document.getElementById('nav-' + tabId).classList.add('text-blue-400');
 
-            if(tabId === 'history') {
-                loadHistory();
-            }
+            if(tabId === 'history') { loadHistory(); }
         }
 
-        // Image Processing & History Saving Logic
         const imageInput = document.getElementById('imageInput');
         const widthSelect = document.getElementById('widthSelect');
+        const fingersSelect = document.getElementById('fingersSelect');
         const thresholdSlider = document.getElementById('thresholdSlider');
         const thresholdVal = document.getElementById('thresholdVal');
+        const frontMarginInput = document.getElementById('frontMargin');
+        const lastPaddingInput = document.getElementById('lastPadding');
+        
         const origCanvas = document.getElementById('origCanvas');
         const outputCanvas = document.getElementById('outputCanvas');
         const downloadArea = document.getElementById('downloadArea');
@@ -242,7 +275,9 @@
 
         let uploadedImage = new Image();
         let currentProcessedDataUrl = "";
-        let currentFileName = "jacquard_grid.png";
+        let currentFileName = "jacquard_grid";
+        let shiftX = 0;
+        let shiftY = 0;
 
         imageInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -251,16 +286,28 @@
                 fileNameDisplay.innerText = file.name;
                 const reader = new FileReader();
                 reader.onload = function(event) { uploadedImage.src = event.target.result; }
-                reader.onloadend = function() { processJacquard(); }
+                reader.onloadend = function() { shiftX = 0; shiftY = 0; processJacquard(); }
                 reader.readAsDataURL(file);
             }
         });
 
         widthSelect.addEventListener('change', processJacquard);
+        fingersSelect.addEventListener('change', processJacquard);
+        frontMarginInput.addEventListener('input', processJacquard);
+        lastPaddingInput.addEventListener('input', processJacquard);
         thresholdSlider.addEventListener('input', (e) => {
             thresholdVal.innerText = e.target.value;
             processJacquard();
         });
+
+        function shiftGrid(direction) {
+            if (!uploadedImage.src) return;
+            if (direction === 'left') shiftX -= 2;
+            if (direction === 'right') shiftX += 2;
+            if (direction === 'up') shiftY -= 2;
+            if (direction === 'down') shiftY += 2;
+            processJacquard();
+        }
 
         function processJacquard() {
             if (!uploadedImage.src) return;
@@ -271,13 +318,24 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
-            const targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
+            const fingersCount = parseInt(fingersSelect.value);
+            const frontMargin = parseInt(frontMarginInput.value) || 0;
+            const lastPadding = parseInt(lastPaddingInput.value) || 0;
+
+            let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
+            
+            // Adjust height based on fingers multi-pick ratio
+            targetHeight = Math.ceil(targetHeight / fingersCount) * fingersCount;
 
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
             outCtx.imageSmoothingEnabled = false;
-            outCtx.drawImage(uploadedImage, 0, 0, targetWidth, targetHeight);
+
+            // Draw with shift offsets
+            outCtx.fillStyle = "#ffffff";
+            outCtx.fillRect(0, 0, targetWidth, targetHeight);
+            outCtx.drawImage(uploadedImage, shiftX, shiftY, targetWidth, targetHeight);
 
             const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
@@ -286,6 +344,16 @@
             for (let i = 0; i < data.length; i += 4) {
                 let avg = (data[i] + data[i+1] + data[i+2]) / 3;
                 let val = avg > threshold ? 255 : 0;
+                
+                // Pixel index mapping for row/col adjustments
+                let pixelIndex = i / 4;
+                let col = pixelIndex % targetWidth;
+
+                // Apply Front & Last Margins (Selvedge / Sync Lines Control)
+                if (col < frontMargin || col >= (targetWidth - lastPadding)) {
+                    val = 0; // Force border/sync edge line rules
+                }
+
                 data[i] = val; data[i+1] = val; data[i+2] = val;
             }
             outCtx.putImageData(imgData, 0, 0);
@@ -293,72 +361,50 @@
             currentProcessedDataUrl = outputCanvas.toDataURL('image/png');
             downloadArea.style.display = 'block';
 
-            // Save to Local History automatically
-            saveToHistory(currentFileName, targetWidth, targetHeight, currentProcessedDataUrl);
+            saveToHistory(currentFileName, targetWidth, targetHeight, fingersCount, currentProcessedDataUrl);
         }
 
-        // Safe Download handler for WebView/AppsCreator24 (Updated & Fixed)
         function downloadGridFile() {
             if (!currentProcessedDataUrl) return;
-            
-            // Method 1: Try direct anchor click
             try {
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${currentFileName}_${widthSelect.value}hooks.png`;
+                link.download = `${currentFileName}_${widthSelect.value}hooks_${fingersSelect.value}f.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             } catch (e) {
-                // Method 2: Fallback for strict WebView environments (Opens file viewer safely)
                 let w = window.open('about:blank');
                 if (w) {
-                    w.document.write(`
-                        <html>
-                            <head><title>Download Jacquard File</title></head>
-                            <body style="background:#0b0f19; color:white; text-align:center; font-family:sans-serif; padding:20px;">
-                                <h3>Your Jacquard Grid is Ready!</h3>
-                                <p style="font-size:12px; color:#aaa;">Long press the image below and select <b>"Download image"</b> or <b>"Save image"</b>.</p>
-                                <img src="${currentProcessedDataUrl}" style="max-width:100%; border:2px solid #7c3aed; border-radius:10px; margin-top:10px;" />
-                            </body>
-                        </html>
-                    `);
-                } else {
-                    alert("Pop-up blocked or download failed. Please check browser permissions.");
+                    w.document.write(`<html><body style="background:#0b0f19; color:white; text-align:center; padding:20px;"><h3>Grid Ready!</h3><img src="${currentProcessedDataUrl}" style="max-width:100%; border:2px solid #7c3aed;"/><p>Long press image to save.</p></body></html>`);
                 }
             }
-        }       document.body.removeChil
+        }
 
-        // History Management via LocalStorage
-        function saveToHistory(name, width, height, dataUrl) {
-            let history = JSON.parse(localStorage.getItem('jacquard_history') || '[]');
+        function saveToHistory(name, width, height, fingers, dataUrl) {
+            let history = JSON.parse(localStorage.getItem('jacquard_pro_history') || '[]');
             const timestamp = new Date().toLocaleString();
-            
-            // Avoid duplicate consecutive entries of same file
-            history.unshift({ name, width, height, timestamp, dataUrl });
-            if (history.length > 20) history.pop(); // Keep last 20 items
-
-            localStorage.setItem('jacquard_history', JSON.stringify(history));
+            history.unshift({ name, width, height, fingers, timestamp, dataUrl });
+            if (history.length > 20) history.pop();
+            localStorage.setItem('jacquard_pro_history', JSON.stringify(history));
         }
 
         function loadHistory() {
             const historyList = document.getElementById('historyList');
-            let history = JSON.parse(localStorage.getItem('jacquard_history') || '[]');
-            
+            let history = JSON.parse(localStorage.getItem('jacquard_pro_history') || '[]');
             if (history.length === 0) {
-                historyList.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No design history found yet.</p>';
+                historyList.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No history records found.</p>';
                 return;
             }
-
             let html = '';
-            history.forEach((item, index) => {
+            history.forEach((item) => {
                 html += `
                     <div class="bg-gray-900 border border-gray-800 p-3 rounded-xl flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
                                 <h4 class="text-xs font-bold text-white">${item.name}</h4>
-                                <p class="text-[10px] text-blue-400">Hooks: ${item.width} | Size: ${item.width}x${item.height}</p>
+                                <p class="text-[10px] text-blue-400">Hooks: ${item.width} | Fingers: ${item.fingers} | Size: ${item.width}x${item.height}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
@@ -370,7 +416,7 @@
         }
 
         function clearHistory() {
-            localStorage.removeItem('jacquard_history');
+            localStorage.removeItem('jacquard_pro_history');
             loadHistory();
         }
     </script>
