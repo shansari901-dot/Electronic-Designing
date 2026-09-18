@@ -70,7 +70,7 @@
 
             <!-- Industrial Settings -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">⚙️ Shuttle & Jacquard Specifications</div>
+                <div class="text-amber-400 font-semibold text-xs">⚙️ Shuttle & Machine Specifications</div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
@@ -78,19 +78,16 @@
                         <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
                             <option value="1">1 to 4 Shuttle (Power Loom)</option>
                             <option value="5" selected>5 - Shuttle All Over</option>
-                            <option value="5_cust">5 - Shuttle Customized</option>
                             <option value="6">6 - Shuttle All Over (Rapier)</option>
-                            <option value="6_cust">6 - Shuttle Customized</option>
                             <option value="7">7 - Shuttle All Over</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
+                        <label class="block text-[11px] text-gray-400 mb-1">Output File Format</label>
                         <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
-                            <option value="ep" selected>EP (Electronic Pattern)</option>
-                            <option value="ejc">EJC (Compressed Format)</option>
-                            <option value="png" selected>PNG Grid Standard</option>
+                            <option value="ep" selected>Direct Machine .EP File</option>
+                            <option value="png">PNG Grid Preview File</option>
                         </select>
                     </div>
 
@@ -168,7 +165,7 @@
 
             <!-- Convert / Download Button -->
             <div id="downloadArea" style="display:none;" class="pt-2">
-                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT NOW & DOWNLOAD MACHINE FILE</button>
+                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD .EP MACHINE FILE</button>
             </div>
         </div>
 
@@ -181,7 +178,7 @@
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Select Task</label>
                         <select class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
-                            <option>BMP / PNG to EP Converter</option>
+                            <option>Image to Native .EP Converter</option>
                             <option>EP to Standard Grid Format</option>
                         </select>
                     </div>
@@ -210,7 +207,7 @@
             <div class="glass-card p-5 rounded-2xl space-y-3 text-center py-8">
                 <div class="w-16 h-16 yellow-glow mx-auto rounded-3xl flex items-center justify-center text-black font-black text-xl mb-2 bg-amber-400">ZD</div>
                 <h3 class="text-base font-bold text-amber-400">Zarafiya Design Studio</h3>
-                <p class="text-xs text-gray-400">Industrial Jacquard Automation Version 4.1</p>
+                <p class="text-xs text-gray-400">Industrial Jacquard Automation Version 5.0 (.EP Native Support)</p>
                 <p class="text-[11px] text-gray-500">Lohta, Varanasi Setup - Connected Successfully</p>
             </div>
         </div>
@@ -262,7 +259,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Industrial Logic -->
+    <!-- JavaScript Industrial Logic with Native EP Binary Export -->
     <script>
         const ADMIN_PASS = "$@150819";
         let isAdmin = true;
@@ -410,27 +407,69 @@
 
             currentProcessedDataUrl = outputCanvas.toDataURL('image/png');
             downloadArea.style.display = 'block';
-
-            saveToHistory(currentFileName, targetWidth, shuttleTypeSelect.value, jacquardFormatSelect.value, currentProcessedDataUrl);
         }
 
+        // Native .EP Binary File Generator and Downloader
         function convertAndDownloadGrid() {
-            if (!currentProcessedDataUrl) return;
-            const formatExt = jacquardFormatSelect.value;
-            const shuttleVal = shuttleTypeSelect.value;
-            try {
+            if (!uploadedImage.src) return;
+            const format = jacquardFormatSelect.value;
+            const targetWidth = parseInt(widthSelect.value);
+            const outCtx = outputCanvas.getContext('2d');
+            const targetHeight = outputCanvas.height;
+            const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
+            const data = imgData.data;
+
+            if (format === 'png') {
+                // Download as standard PNG grid preview
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${currentFileName}_${widthSelect.value}h_${shuttleVal}s.${formatExt}`;
+                link.download = `${currentFileName}_${targetWidth}hooks.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-            } catch (e) {
-                let w = window.open('about:blank');
-                if (w) {
-                    w.document.write(`<html><body style="background:#0b0f19; color:white; text-align:center; padding:20px;"><h3>Grid Ready!</h3><img src="${currentProcessedDataUrl}" style="max-width:100%; border:2px solid #f59e0b;"/><p>Long press image to save file.</p></body></html>`);
+                saveToHistory(currentFileName, targetWidth, shuttleTypeSelect.value, 'png', currentProcessedDataUrl);
+                return;
+            }
+
+            // Generate Native .EP Binary File Stream matching machine standards
+            let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
+            let encoderBytes = [];
+            for(let i=0; i<headerString.length; i++) {
+                encoderBytes.push(headerString.charCodeAt(i));
+            }
+
+            // Convert image pixel grid into machine binary byte format
+            for (let y = 0; y < targetHeight; y++) {
+                for (let x = 0; x < targetWidth; x += 8) {
+                    let byteVal = 0;
+                    for (let b = 0; b < 8; b++) {
+                        let curX = x + b;
+                        if (curX < targetWidth) {
+                            let idx = (y * targetWidth + curX) * 4;
+                            // If pixel is black (0), set bit for jacquard hook lift
+                            if (data[idx] < 128) {
+                                byteVal |= (1 << (7 - b));
+                            }
+                        }
+                    }
+                    encoderBytes.push(byteVal);
                 }
             }
+
+            // Create Blob and trigger direct .EP file download
+            const byteArray = new Uint8Array(encoderBytes);
+            const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+            const blobUrl = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = `${currentFileName}_${targetWidth}hooks.EP`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+
+            saveToHistory(currentFileName, targetWidth, shuttleTypeSelect.value, 'ep', currentProcessedDataUrl);
         }
 
         function saveToHistory(name, width, shuttle, format, dataUrl) {
@@ -460,7 +499,7 @@
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
-                        <a href="${item.dataUrl}" download="${item.name}_${item.width}hooks.${item.format}" class="yellow-btn text-black text-[10px] font-bold px-3 py-2 rounded-lg shadow">Download</a>
+                        <span class="text-[10px] text-gray-400 bg-gray-800 px-2.5 py-1 rounded-lg">Saved</span>
                     </div>
                 `;
             });
@@ -473,4 +512,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
