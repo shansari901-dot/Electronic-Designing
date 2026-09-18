@@ -54,25 +54,32 @@
         <!-- TAB 1: DESIGN PUNCHING / HOME -->
         <div id="tab-home" class="tab-content active space-y-4">
             
-            <!-- Select Running File Button Card (Now with real file picker) -->
+            <!-- Step 1: Select Running File & Setup Machine Plan -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
-                <label class="block cursor-pointer">
+                <div class="text-amber-400 font-semibold text-xs">🛠️ Step 1: Machine Setup & Running File</div>
+                
+                <div>
+                    <label class="block text-[11px] text-gray-400 mb-1">Set Machine Name / Plan</label>
+                    <input type="text" id="machineNameInput" value="Machine 5" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
+                </div>
+
+                <label class="block cursor-pointer pt-1">
                     <div class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase text-center">
                         📁 SELECT RUNNING MACHINE FILE
                     </div>
                     <input type="file" id="runningFileInput" class="hidden">
                 </label>
-                <div id="selectedRunningDisplay" class="text-center text-[11px] text-amber-400 font-bold">No running file selected yet</div>
+                <div id="selectedRunningDisplay" class="text-center text-[11px] text-amber-400 font-bold">No running file loaded</div>
             </div>
 
-            <!-- Shuttle & Machine Specifications -->
+            <!-- Step 2: Shuttle & Machine Specifications -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">⚙️ Shuttle & Machine Specifications</div>
+                <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle & Jacquard Specifications</div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Shuttle Type</label>
-                        <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
+                        <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
                             <option value="1">1 to 4 Shuttle (Power Loom)</option>
                             <option value="5" selected>5 - Shuttle All Over</option>
                             <option value="6">6 - Shuttle All Over (Rapier)</option>
@@ -82,7 +89,7 @@
 
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
-                        <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-amber-500">
+                        <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
                             <option value="ep" selected>Direct Machine .EP File</option>
                             <option value="png">PNG Grid Preview File</option>
                         </select>
@@ -105,23 +112,12 @@
                 </div>
             </div>
 
-            <!-- Mobile No Field & Create Plan -->
+            <!-- Step 3: Select Design / Upload File -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
-                <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Mobile No. / Machine ID (Optional)</label>
-                    <input type="text" id="mobileInput" placeholder="Enter machine number or mobile no (e.g., Machine 3)" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
-                </div>
-                <button onclick="createMachinePlan()" class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase">
-                    SAVE MACHINE SETUP
-                </button>
-            </div>
-
-            <!-- Select Design / Upload File -->
-            <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">📁 Select Naksa / Design Image</div>
+                <div class="text-amber-400 font-semibold text-xs">🎨 Step 3: Select Naksa / Design Image</div>
                 <label class="border-2 border-dashed border-gray-700 hover:border-amber-500 transition rounded-2xl p-5 flex flex-col items-center justify-center cursor-pointer bg-gray-900/40">
                     <span class="yellow-btn px-5 py-2.5 rounded-xl text-xs font-bold text-black shadow-md mb-1">CHOOSE DESIGN FILE</span>
-                    <span id="fileNameDisplay" class="text-[11px] text-gray-400">No file selected</span>
+                    <span id="fileNameDisplay" class="text-[11px] text-gray-400">No design file selected</span>
                     <input type="file" id="imageInput" accept="image/*" class="hidden">
                 </label>
             </div>
@@ -144,7 +140,7 @@
 
             <!-- Convert / Download Button -->
             <div id="downloadArea" style="display:none;" class="pt-2">
-                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD .EP MACHINE FILE</button>
+                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD FOR SELECTED MACHINE</button>
             </div>
         </div>
 
@@ -252,22 +248,28 @@
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        // Running File Selection Logic
+        // Running File Auto-Analyzer Logic
         const runningFileInput = document.getElementById('runningFileInput');
         const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
+        const machineNameInput = document.getElementById('machineNameInput');
+        const widthSelect = document.getElementById('widthSelect');
 
         runningFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
-                selectedRunningDisplay.innerText = "Running File Loaded: " + file.name;
-                alert("Running machine file selected successfully! Setup is now mapped to this machine format.");
+                const machineName = machineNameInput.value || "Machine Setup";
+                selectedRunningDisplay.innerText = `Loaded for ${machineName}: ${file.name}`;
+                
+                // Smart auto-detection based on filename or size clues if needed
+                if(file.name.toLowerCase().includes('672')) {
+                    widthSelect.value = "672";
+                } else if(file.name.toLowerCase().includes('1408')) {
+                    widthSelect.value = "1408";
+                }
+                
+                alert(`${machineName} setup mapped successfully with running file: ${file.name}`);
             }
         });
-
-        function createMachinePlan() {
-            const machineId = document.getElementById('mobileInput').value.trim() || "Machine Setup";
-            alert(machineId + " plan saved successfully!");
-        }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -282,7 +284,6 @@
         }
 
         const imageInput = document.getElementById('imageInput');
-        const widthSelect = document.getElementById('widthSelect');
         const shuttleTypeSelect = document.getElementById('shuttleTypeSelect');
         const jacquardFormatSelect = document.getElementById('jacquardFormatSelect');
         
@@ -350,15 +351,16 @@
             const format = jacquardFormatSelect.value;
             const targetWidth = parseInt(widthSelect.value);
             const targetHeight = outputCanvas.height;
+            const activeMachine = machineNameInput.value || "Machine_Setup";
 
             if (format === 'png') {
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${currentFileName}_${targetWidth}hooks.png`;
+                link.download = `${activeMachine}_${currentFileName}_${targetWidth}hooks.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                saveToHistory(currentFileName, targetWidth, shuttleTypeSelect.value, 'png', currentProcessedDataUrl);
+                saveToHistory(activeMachine, currentFileName, targetWidth, shuttleTypeSelect.value, 'png', currentProcessedDataUrl);
                 return;
             }
 
@@ -394,19 +396,19 @@
 
             const link = document.createElement('a');
             link.href = blobUrl;
-            link.download = `${currentFileName}_${targetWidth}hooks.EP`;
+            link.download = `${activeMachine}_${currentFileName}.EP`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(blobUrl);
 
-            saveToHistory(currentFileName, targetWidth, shuttleTypeSelect.value, 'ep', currentProcessedDataUrl);
+            saveToHistory(activeMachine, currentFileName, targetWidth, shuttleTypeSelect.value, 'ep', currentProcessedDataUrl);
         }
 
-        function saveToHistory(name, width, shuttle, format, dataUrl) {
+        function saveToHistory(machine, name, width, shuttle, format, dataUrl) {
             let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
             const timestamp = new Date().toLocaleString();
-            history.unshift({ name, width, shuttle, format, timestamp, dataUrl });
+            history.unshift({ machine, name, width, shuttle, format, timestamp, dataUrl });
             if (history.length > 20) history.pop();
             localStorage.setItem('zarafiya_history', JSON.stringify(history));
         }
@@ -425,7 +427,7 @@
                         <div class="flex items-center space-x-3">
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
-                                <h4 class="text-xs font-bold text-white">${item.name}</h4>
+                                <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
                                 <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Shuttle: ${item.shuttle} | Format: ${item.format.toUpperCase()}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
