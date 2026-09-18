@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <h1 class="text-sm md:text-base font-black tracking-wide text-amber-400">Hi, SAREEFUL HAK</h1>
-                    <p class="text-[11px] text-gray-400">Welcome to the EasyX App</p>
+                    <p class="text-[11px] text-gray-400">Zarafiya Jacquard Studio</p>
                 </div>
             </div>
             <!-- Admin Status & Login Button -->
@@ -54,12 +54,15 @@
         <!-- TAB 1: DESIGN PUNCHING / HOME -->
         <div id="tab-home" class="tab-content active space-y-4">
             
-            <!-- Select Running File Button Card -->
+            <!-- Select Running File Button Card (Now with real file picker) -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
-                <button onclick="showNoteModal()" class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase">
-                    SELECT RUNNING FILE
-                </button>
-                <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400">No file selected</div>
+                <label class="block cursor-pointer">
+                    <div class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase text-center">
+                        📁 SELECT RUNNING MACHINE FILE
+                    </div>
+                    <input type="file" id="runningFileInput" class="hidden">
+                </label>
+                <div id="selectedRunningDisplay" class="text-center text-[11px] text-amber-400 font-bold">No running file selected yet</div>
             </div>
 
             <!-- Shuttle & Machine Specifications -->
@@ -105,11 +108,11 @@
             <!-- Mobile No Field & Create Plan -->
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
                 <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Mobile No. (Optional)</label>
-                    <input type="text" id="mobileInput" placeholder="Enter mobile number" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
+                    <label class="block text-[11px] text-gray-400 mb-1">Mobile No. / Machine ID (Optional)</label>
+                    <input type="text" id="mobileInput" placeholder="Enter machine number or mobile no (e.g., Machine 3)" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
                 </div>
                 <button onclick="createMachinePlan()" class="w-full yellow-btn py-3.5 rounded-xl font-black text-xs text-black shadow-lg tracking-wide uppercase">
-                    CREATE MACHINE PLAN
+                    SAVE MACHINE SETUP
                 </button>
             </div>
 
@@ -210,21 +213,6 @@
         </button>
     </div>
 
-    <!-- Note / नोटिस Popup Modal -->
-    <div id="noteModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
-        <div class="glass-card p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl border border-gray-700">
-            <h3 class="text-base font-bold text-amber-400">Note / नोट</h3>
-            <div class="space-y-2 text-xs text-gray-300">
-                <p>Note: Please select actual running file in the same format as your jacquard support.</p>
-                <p class="text-gray-400">नोट: कृपया जैकार्ड पर चल रही फ़ाइल सेलेक्ट करें (जिस फॉर्मेट में जैकार्ड सपोर्ट कर रही ho)।</p>
-            </div>
-            <div class="flex space-x-2 pt-2">
-                <button onclick="closeNoteModal()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-xl font-bold text-xs">Cancel</button>
-                <button onclick="confirmRunningFile()" class="w-full yellow-btn text-black py-2.5 rounded-xl font-bold text-xs">OK</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Admin Authentication Modal -->
     <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
         <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl border border-gray-700">
@@ -264,15 +252,21 @@
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        function showNoteModal() { document.getElementById('noteModal').style.display = 'flex'; }
-        function closeNoteModal() { document.getElementById('noteModal').style.display = 'none'; }
-        function confirmRunningFile() {
-            closeNoteModal();
-            document.getElementById('selectedRunningDisplay').innerText = "Running file format configured successfully!";
-        }
+        // Running File Selection Logic
+        const runningFileInput = document.getElementById('runningFileInput');
+        const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
+
+        runningFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                selectedRunningDisplay.innerText = "Running File Loaded: " + file.name;
+                alert("Running machine file selected successfully! Setup is now mapped to this machine format.");
+            }
+        });
 
         function createMachinePlan() {
-            alert("Machine plan created successfully for your setup!");
+            const machineId = document.getElementById('mobileInput').value.trim() || "Machine Setup";
+            alert(machineId + " plan saved successfully!");
         }
 
         function switchTab(tabId) {
@@ -355,7 +349,6 @@
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
             const targetWidth = parseInt(widthSelect.value);
-            const outCtx = outputCanvas.getContext('28');
             const targetHeight = outputCanvas.height;
 
             if (format === 'png') {
