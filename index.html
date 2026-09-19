@@ -3,1447 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#111827">
-
 <title>Electronic Designing</title>
-
 <style>
-*{
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#eef1f5;
-    color:#111827;
-}
-
-.hidden{
-    display:none!important;
-}
-
-button,
-input,
-select{
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app-header{
-    background:linear-gradient(135deg,#111827,#26364f,#111827);
-    color:white;
-    position:sticky;
-    top:0;
-    z-index:100;
-    box-shadow:0 4px 18px #0004;
-}
-
-.header-inner{
-    max-width:1200px;
-    margin:auto;
-    padding:13px 16px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:11px;
-}
-
-.brand-logo{
-    width:44px;
-    height:44px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#38bdf8,#2563eb,#7c3aed);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    box-shadow:0 5px 15px #0004;
-}
-
-.brand-text{
-    font-size:18px;
-    font-weight:800;
-}
-
-.brand-sub{
-    font-size:11px;
-    opacity:.75;
-    margin-top:2px;
-}
-
-.logout{
-    width:auto!important;
-    padding:9px 14px!important;
-    background:#ffffff18!important;
-    border:1px solid #ffffff25!important;
-}
-
-.login-page{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:
-        radial-gradient(circle at top left,#2563eb22,transparent 35%),
-        radial-gradient(circle at bottom right,#7c3aed22,transparent 35%),
-        #eef1f5;
-}
-
-.login-box{
-    width:100%;
-    max-width:400px;
-    background:white;
-    border-radius:24px;
-    padding:28px;
-    box-shadow:0 15px 50px #0002;
-}
-
-.login-logo{
-    width:72px;
-    height:72px;
-    margin:0 auto 14px;
-    border-radius:20px;
-    background:linear-gradient(135deg,#38bdf8,#2563eb,#7c3aed);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:34px;
-    box-shadow:0 10px 25px #2563eb44;
-}
-
-.login-title{
-    text-align:center;
-    margin:0;
-}
-
-.login-sub{
-    text-align:center;
-    color:#6b7280;
-    font-size:13px;
-    margin:7px 0 22px;
-}
-
-label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    margin:10px 0 6px;
-}
-
-input,
-select{
-    width:100%;
-    padding:12px 13px;
-    border:1px solid #d1d5db;
-    border-radius:11px;
-    outline:none;
-    background:white;
-    font-size:14px;
-}
-
-input:focus,
-select:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px #2563eb18;
-}
-
-button{
-    width:100%;
-    border:0;
-    border-radius:11px;
-    padding:12px 14px;
-    background:#111827;
-    color:white;
-    font-weight:700;
-    font-size:14px;
-    transition:.15s;
-}
-
-button:hover{
-    transform:translateY(-1px);
-    filter:brightness(1.05);
-}
-
-.btn-blue{
-    background:#2563eb;
-}
-
-.btn-green{
-    background:#15803d;
-}
-
-.btn-red{
-    background:#b91c1c;
-}
-
-.btn-orange{
-    background:#c2410c;
-}
-
-.btn-purple{
-    background:#6d28d9;
-}
-
-.btn-gray{
-    background:#e5e7eb;
-    color:#111827;
-}
-
-.btn-small{
-    width:auto!important;
-    padding:9px 12px!important;
-    font-size:12px!important;
-}
-
-.info{
-    background:#eff6ff;
-    border:1px solid #bfdbfe;
-    color:#1e40af;
-    padding:12px;
-    border-radius:11px;
-    margin-top:10px;
-    font-size:13px;
-}
-
-.success{
-    background:#ecfdf5;
-    border:1px solid #a7f3d0;
-    color:#065f46;
-    padding:12px;
-    border-radius:11px;
-}
-
-.error{
-    background:#fef2f2;
-    border:1px solid #fecaca;
-    color:#991b1b;
-    padding:12px;
-    border-radius:11px;
-}
-
-.warning{
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    color:#9a3412;
-    padding:12px;
-    border-radius:11px;
-}
-
-.small{
-    font-size:12px;
-    color:#6b7280;
-    line-height:1.5;
-}
-
-.main{
-    max-width:1200px;
-    margin:auto;
-    padding:16px;
-}
-
-.card{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    margin:14px 0;
-    box-shadow:0 4px 18px #00000010;
-}
-
-.card-title{
-    margin:0 0 5px;
-    font-size:19px;
-}
-
-.card-subtitle{
-    margin:0 0 14px;
-    font-size:12px;
-    color:#6b7280;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:12px;
-}
-
-.two{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.three{
-    grid-template-columns:repeat(3,1fr);
-}
-
-.row{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-.row>*{
-    flex:1;
-    min-width:130px;
-}
-
-.home-hero{
-    background:
-        radial-gradient(circle at 15% 15%,#38bdf833,transparent 30%),
-        radial-gradient(circle at 85% 80%,#7c3aed44,transparent 30%),
-        linear-gradient(135deg,#111827,#1e293b,#172554);
-    color:white;
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 8px 25px #0003;
-}
-
-.hero-title{
-    font-size:25px;
-    font-weight:900;
-    margin:0;
-}
-
-.hero-sub{
-    color:#cbd5e1;
-    font-size:13px;
-    margin-top:7px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:18px;
-}
-
-.stat{
-    background:#ffffff12;
-    border:1px solid #ffffff1c;
-    border-radius:14px;
-    padding:13px;
-}
-
-.stat-number{
-    font-size:21px;
-    font-weight:900;
-}
-
-.stat-label{
-    font-size:11px;
-    color:#cbd5e1;
-    margin-top:3px;
-}
-
-.section-nav{
-    display:flex;
-    gap:8px;
-    overflow:auto;
-    padding:5px 0 10px;
-}
-
-.section-nav button{
-    min-width:120px;
-    width:auto;
-    white-space:nowrap;
-    background:white;
-    color:#111827;
-    border:1px solid #e5e7eb;
-}
-
-.section-nav button.active{
-    background:#111827;
-    color:white;
-}
-
-.category-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:12px;
-}
-
-.category{
-    border:1px solid #e5e7eb;
-    background:#fff;
-    border-radius:17px;
-    padding:16px;
-    text-align:left;
-    transition:.15s;
-}
-
-.category:hover{
-    border-color:#2563eb;
-    box-shadow:0 5px 18px #2563eb18;
-}
-
-.category-icon{
-    width:48px;
-    height:48px;
-    border-radius:14px;
-    background:#eff6ff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:24px;
-    margin-bottom:10px;
-}
-
-.category-name{
-    font-weight:800;
-    font-size:14px;
-}
-
-.category-detail{
-    font-size:11px;
-    color:#6b7280;
-    margin-top:4px;
-}
-
-.machine-card{
-    border:1px solid #e5e7eb;
-    border-radius:17px;
-    padding:15px;
-    background:#fff;
-}
-
-.machine-card.selected{
-    border:2px solid #2563eb;
-    box-shadow:0 6px 20px #2563eb18;
-}
-
-.machine-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-}
-
-.machine-name{
-    font-size:16px;
-    font-weight:900;
-}
-
-.machine-badge{
-    display:inline-block;
-    padding:4px 8px;
-    background:#eff6ff;
-    color:#1d4ed8;
-    border-radius:20px;
-    font-size:10px;
-    font-weight:800;
-}
-
-.machine-meta{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
-    margin:12px 0;
-}
-
-.meta{
-    background:#f8fafc;
-    padding:9px;
-    border-radius:9px;
-}
-
-.meta-label{
-    font-size:10px;
-    color:#6b7280;
-}
-
-.meta-value{
-    font-size:13px;
-    font-weight:800;
-    margin-top:2px;
-}
-
-.preview{
-    max-width:100%;
-    max-height:350px;
-    display:block;
-    margin:12px auto;
-    border-radius:12px;
-    border:1px solid #d1d5db;
-}
-
-.preview-box{
-    background:#f8fafc;
-    border:1px dashed #cbd5e1;
-    border-radius:13px;
-    padding:12px;
-    text-align:center;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:800;
-    background:#f1f5f9;
-    color:#334155;
-}
-
-.badge.green{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.badge.blue{
-    background:#dbeafe;
-    color:#1d4ed8;
-}
-
-.badge.orange{
-    background:#ffedd5;
-    color:#9a3412;
-}
-
-hr{
-    border:0;
-    border-top:1px solid #e5e7eb;
-    margin:18px 0;
-}
-
-pre{
-    background:#0f172a;
-    color:#d1fae5;
-    border-radius:12px;
-    padding:13px;
-    overflow:auto;
-    white-space:pre-wrap;
-    word-break:break-all;
-    font-size:11px;
-    line-height:1.5;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:12px;
-}
-
-th,
-td{
-    padding:9px;
-    border-bottom:1px solid #e5e7eb;
-    text-align:left;
-}
-
-th{
-    background:#f8fafc;
-}
-
-.empty{
-    padding:25px;
-    text-align:center;
-    color:#6b7280;
-    border:1px dashed #cbd5e1;
-    border-radius:13px;
-}
-
-.modal-bg{
-    position:fixed;
-    inset:0;
-    background:#0008;
-    z-index:500;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-}
-
-.modal{
-    width:100%;
-    max-width:600px;
-    max-height:90vh;
-    overflow:auto;
-    background:white;
-    border-radius:20px;
-    padding:20px;
-}
-
-.modal-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
-
-.close{
-    width:auto!important;
-    background:#e5e7eb!important;
-    color:#111827!important;
-    padding:7px 11px!important;
-}
-
-.footer{
-    text-align:center;
-    color:#6b7280;
-    font-size:11px;
-    padding:25px 10px;
-}
-
-@media(max-width:600px){
-    .main{
-        padding:10px;
-    }
-
-    .card{
-        padding:14px;
-        border-radius:15px;
-    }
-
-    .two,
-    .three{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr 1fr;
-    }
-
-    .hero-title{
-        font-size:21px;
-    }
-
-    .category-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .category{
-        padding:12px;
-    }
-
-    .category-icon{
-        width:42px;
-        height:42px;
-    }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
+.hidden{display:none!important}
+.card{background:#fff;border-radius:16px;padding:18px;margin:14px auto;max-width:1050px;box-shadow:0 3px 15px #00000012}
+h1,h2,h3{margin-top:0}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.loginbox{width:100%;max-width:390px;background:#fff;padding:28px;border-radius:20px;box-shadow:0 8px 30px #0002}
+input,select,button{width:100%;padding:12px;margin:6px 0;border:1px solid #d1d5db;border-radius:10px;font-size:15px}
+button{background:#111827;color:#fff;border:0;cursor:pointer;font-weight:700}
+button.secondary{background:#e5e7eb;color:#111827}
+button.green{background:#16803c}
+button.red{background:#b91c1c}
+label{font-size:13px;font-weight:700;display:block;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.badge{display:inline-block;padding:6px 10px;background:#e5e7eb;border-radius:999px;font-size:13px;margin:3px}
+.info{background:#eff6ff;padding:12px;border-radius:10px;margin-top:10px}
+.ok{background:#ecfdf5;color:#065f46;padding:12px;border-radius:10px}
+.err{background:#fef2f2;color:#991b1b;padding:12px;border-radius:10px}
+.preview{max-width:100%;max-height:350px;border:1px solid #ddd;border-radius:10px;margin-top:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1;min-width:140px}
+.small{font-size:12px;color:#6b7280}
+pre{white-space:pre-wrap;word-break:break-all;background:#111827;color:#d1fae5;padding:12px;border-radius:10px;overflow:auto}
+header{background:#111827;color:white;padding:16px}
+header .inside{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+header button{width:auto;margin:0;background:#374151}
+.backmsg{
+position:fixed;
+left:50%;
+bottom:25px;
+transform:translateX(-50%);
+background:#111827;
+color:#fff;
+padding:12px 18px;
+border-radius:12px;
+z-index:9999;
+box-shadow:0 5px 20px #0005;
+font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================================================
-     LOGIN
-========================================================= -->
+<section id="loginPage" class="login">
+<div class="loginbox">
+<h1>Electronic Designing</h1>
+<p class="small">Admin Login</p>
 
-<section id="loginPage" class="login-page">
+<label>Admin ID</label>
+<input id="adminId" type="text" autocomplete="username" placeholder="Admin ID">
 
-    <div class="login-box">
+<label>Password</label>
+<input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password">
 
-        <div class="login-logo">⚡</div>
+<label style="font-weight:400">
+<input id="showPass" type="checkbox" style="width:auto">
+Show password
+</label>
 
-        <h1 class="login-title">
-            Electronic Designing
-        </h1>
+<button id="loginBtn">LOGIN</button>
 
-        <div class="login-sub">
-            Electronic Jacquard Design & EP Converter
-        </div>
+<div id="loginMsg" class="err hidden"></div>
 
-        <label>Admin ID</label>
-
-        <input
-            id="adminId"
-            type="text"
-            placeholder="admin"
-            autocomplete="username"
-        >
-
-        <label>Password</label>
-
-        <input
-            id="adminPassword"
-            type="password"
-            placeholder="123456"
-            autocomplete="current-password"
-        >
-
-        <label style="font-weight:400">
-            <input
-                id="showPassword"
-                type="checkbox"
-                style="width:auto"
-            >
-            Show Password
-        </label>
-
-        <button
-            id="loginBtn"
-            class="btn-blue"
-            style="margin-top:10px"
-        >
-            🔐 LOGIN
-        </button>
-
-        <div
-            id="loginMessage"
-            class="error hidden"
-        ></div>
-
-        <div class="info">
-            <b>Default Admin Login</b><br><br>
-            ID: <b>admin</b><br>
-            Password: <b>123456</b>
-        </div>
-
-    </div>
-
+</div>
 </section>
 
-
-<!-- =========================================================
-     APPLICATION
-========================================================= -->
 
 <section id="appPage" class="hidden">
 
-<header class="app-header">
-
-    <div class="header-inner">
-
-        <div class="brand">
-
-            <div class="brand-logo">
-                ⚡
-            </div>
-
-            <div>
-                <div class="brand-text">
-                    Electronic Designing
-                </div>
-
-                <div class="brand-sub">
-                    Jacquard Design System
-                </div>
-            </div>
-
-        </div>
-
-        <button
-            id="logoutBtn"
-            class="logout btn-small"
-        >
-            Logout
-        </button>
-
-    </div>
-
+<header>
+<div class="inside">
+<b>Electronic Designing</b>
+<button id="logoutBtn">Logout</button>
+</div>
 </header>
 
 
-<main class="main">
+<div class="card">
+<h2>1. Machine / Running EP</h2>
 
-<!-- =========================================================
-     HOME
-========================================================= -->
+<p class="small">
+Apni original working .EP file upload karein.
+Website uske binary structure ko template ke roop mein use karegi.
+</p>
 
-<div id="homeSection">
+<input id="runningFile" type="file" accept=".ep,.EP">
 
-    <div class="home-hero">
-
-        <h1 class="hero-title">
-            Electronic Designing
-        </h1>
-
-        <div class="hero-sub">
-            Running file save karein, machine profile banayein
-            aur design ko selected Jacquard setup ke hisab se
-            prepare karein.
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <div
-                    id="machineCount"
-                    class="stat-number"
-                >
-                    0
-                </div>
-                <div class="stat-label">
-                    Saved Jacquards
-                </div>
-            </div>
-
-            <div class="stat">
-                <div
-                    id="historyCount"
-                    class="stat-number"
-                >
-                    0
-                </div>
-                <div class="stat-label">
-                    Designs
-                </div>
-            </div>
-
-            <div class="stat">
-                <div
-                    id="selectedHooks"
-                    class="stat-number"
-                >
-                    -
-                </div>
-                <div class="stat-label">
-                    Selected Hooks
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+<div id="runningInfo" class="info">
+No running file selected.
+</div>
+</div>
 
 
-    <div class="section-nav">
+<div class="card">
 
-        <button
-            class="active"
-            data-section="homeSection"
-        >
-            🏠 Home
-        </button>
+<h2>2. Machine Settings</h2>
 
-        <button
-            data-section="machinesSection"
-        >
-            ⚙️ Jacquard
-        </button>
+<div class="grid">
 
-        <button
-            data-section="designSection"
-        >
-            🎨 Design
-        </button>
+<div>
+<label>Hooks</label>
+<input id="hooks" type="number" value="672" min="8" step="8">
+</div>
 
-        <button
-            data-section="historySection"
-        >
-            📜 History
-        </button>
+<div>
+<label>Target Picks</label>
+<input id="targetPicks" type="number" value="972" min="1">
+</div>
 
-        <button
-            data-section="settingsSection"
-        >
-            ⚙️ Settings
-        </button>
+<div>
+<label>Threshold (0-255)</label>
+<input id="threshold" type="number" value="128" min="0" max="255">
+</div>
 
-    </div>
+<div>
+<label>Left Padding</label>
+<input id="leftPad" type="number" value="0" min="0">
+</div>
 
+<div>
+<label>Right Padding</label>
+<input id="rightPad" type="number" value="0" min="0">
+</div>
 
-    <!-- MACHINE CATEGORIES -->
+</div>
 
-    <div class="card">
-
-        <h2 class="card-title">
-            📁 Jacquard Categories
-        </h2>
-
-        <p class="card-subtitle">
-            Apni saved machine category select karein.
-        </p>
-
-        <div
-            id="categoryGrid"
-            class="category-grid"
-        ></div>
-
-    </div>
-
-
-    <!-- QUICK ACTION -->
-
-    <div class="card">
-
-        <h2 class="card-title">
-            ⚡ Quick Start
-        </h2>
-
-        <p class="card-subtitle">
-            Pehli baar machine hai to Running EP save karein.
-            Saved machine hai to seedha design par ja sakte hain.
-        </p>
-
-        <div class="row">
-
-            <button
-                id="addMachineHomeBtn"
-                class="btn-blue"
-            >
-                ➕ Add New Jacquard
-            </button>
-
-            <button
-                id="designHomeBtn"
-                class="btn-green"
-            >
-                🎨 Create Design
-            </button>
-
-        </div>
-
-    </div>
+<div class="row">
+<button id="invertBtn" class="secondary">Invert: OFF</button>
+<button id="mirrorBtn" class="secondary">Mirror: OFF</button>
+<button id="flipBtn" class="secondary">Flip: OFF</button>
+</div>
 
 </div>
 
 
-<!-- =========================================================
-     MACHINES
-========================================================= -->
+<div class="card">
 
-<div
-    id="machinesSection"
-    class="hidden"
->
+<h2>3. Design File</h2>
 
-    <div class="card">
+<input id="designFile"
+type="file"
+accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg">
 
-        <h2 class="card-title">
-            ⚙️ Jacquard / Machine Setup
-        </h2>
+<div id="designInfo" class="info">
+No design selected.
+</div>
 
-        <p class="card-subtitle">
-            Har Jacquard ka running EP sirf pehli baar upload
-            karein. Uske baad setup save rahega.
-        </p>
-
-        <button
-            id="newMachineBtn"
-            class="btn-blue"
-        >
-            ➕ Add New Jacquard
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2 class="card-title">
-            📁 Saved Jacquards
-        </h2>
-
-        <div
-            id="machineList"
-            class="grid"
-        ></div>
-
-    </div>
+<img id="preview" class="preview hidden">
 
 </div>
 
 
-<!-- =========================================================
-     DESIGN
-========================================================= -->
+<div class="card">
 
-<div
-    id="designSection"
-    class="hidden"
->
+<h2>4. Create Native EP</h2>
 
-    <div class="card">
+<button id="createBtn" class="green">
+CREATE EP FILE
+</button>
 
-        <h2 class="card-title">
-            🎨 Design Converter
-        </h2>
+<div id="status" class="info">
+Ready.
+</div>
 
-        <p class="card-subtitle">
-            Pehle Jacquard select karein, phir BMP/PNG/JPG design
-            upload karke Pick setup karein.
-        </p>
-
-        <div
-            id="selectedMachineBox"
-            class="info"
-        >
-            No Jacquard selected.
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2 class="card-title">
-            1. Design File
-        </h2>
-
-        <input
-            id="designFile"
-            type="file"
-            accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
-        >
-
-        <div
-            id="designInfo"
-            class="info"
-        >
-            No design selected.
-        </div>
-
-        <div class="preview-box">
-            <img
-                id="designPreview"
-                class="preview hidden"
-            >
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2 class="card-title">
-            2. Pick Setup
-        </h2>
-
-        <div class="grid">
-
-            <div>
-
-                <label>
-                    Target Picks
-                </label>
-
-                <input
-                    id="targetPicks"
-                    type="number"
-                    min="1"
-                    value="972"
-                >
-
-            </div>
-
-            <div>
-
-                <label>
-                    Threshold
-                </label>
-
-                <input
-                    id="threshold"
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="128"
-                >
-
-            </div>
-
-            <div>
-
-                <label>
-                    Left Padding
-                </label>
-
-                <input
-                    id="leftPadding"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-            <div>
-
-                <label>
-                    Right Padding
-                </label>
-
-                <input
-                    id="rightPadding"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <button
-                id="invertBtn"
-                class="btn-gray"
-            >
-                Invert: OFF
-            </button>
-
-            <button
-                id="mirrorBtn"
-                class="btn-gray"
-            >
-                Mirror: OFF
-            </button>
-
-            <button
-                id="flipBtn"
-                class="btn-gray"
-            >
-                Flip: OFF
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2 class="card-title">
-            3. Create EP
-        </h2>
-
-        <div
-            id="createWarning"
-            class="warning"
-        >
-            Jacquard select karke design upload karein.
-        </div>
-
-        <button
-            id="createEPBtn"
-            class="btn-green"
-            style="margin-top:10px"
-        >
-            ⚡ CREATE NATIVE EP
-        </button>
-
-        <div
-            id="createStatus"
-            class="info"
-        >
-            Ready.
-        </div>
-
-        <a
-            id="downloadLink"
-            class="hidden"
-            style="
-                display:block;
-                margin-top:12px;
-                padding:13px;
-                background:#ecfdf5;
-                color:#065f46;
-                border-radius:11px;
-                text-decoration:none;
-                font-weight:800;
-                text-align:center;
-            "
-        ></a>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2 class="card-title">
-            🔍 Binary Check
-        </h2>
-
-        <pre id="hexPreview">No EP generated yet.</pre>
-
-    </div>
+<a id="downloadLink"
+class="hidden"
+style="display:block;margin-top:10px;font-weight:bold">
+</a>
 
 </div>
 
 
-<!-- =========================================================
-     HISTORY
-========================================================= -->
+<div class="card">
 
-<div
-    id="historySection"
-    class="hidden"
->
+<h2>5. Binary Check</h2>
 
-    <div class="card">
-
-        <div class="row">
-
-            <div>
-                <h2 class="card-title">
-                    📜 Conversion History
-                </h2>
-
-                <p class="card-subtitle">
-                    Browser mein save hui recent conversions.
-                </p>
-            </div>
-
-            <button
-                id="clearHistoryBtn"
-                class="btn-red btn-small"
-            >
-                Clear History
-            </button>
-
-        </div>
-
-        <div id="historyList"></div>
-
-    </div>
+<pre id="hexPreview">
+No EP generated yet.
+</pre>
 
 </div>
 
 
-<!-- =========================================================
-     SETTINGS
-========================================================= -->
+<div class="card">
 
-<div
-    id="settingsSection"
-    class="hidden"
->
+<h2>Important</h2>
 
-    <div class="card">
-
-        <h2 class="card-title">
-            ⚙️ Settings
-        </h2>
-
-        <div class="info">
-            Saved Jacquard profiles browser ke IndexedDB
-            storage mein rakhe jaate hain.
-        </div>
-
-        <hr>
-
-        <h3>
-            Current Selected Machine
-        </h3>
-
-        <div id="settingsMachineInfo"></div>
-
-        <hr>
-
-        <button
-            id="resetAppBtn"
-            class="btn-red"
-        >
-            Reset Local App Data
-        </button>
-
-    </div>
+<p class="small">
+This version uses your uploaded working EP as the machine-format template.
+The original header structure is preserved as far as the template permits.
+</p>
 
 </div>
-
-
-<div class="footer">
-    Electronic Designing • Jacquard Design System
-</div>
-
-</main>
 
 </section>
 
 
-<!-- =========================================================
-     MACHINE MODAL
-========================================================= -->
+<div id="backMsg" class="backmsg hidden"></div>
 
-<div
-    id="machineModal"
-    class="modal-bg hidden"
->
-
-    <div class="modal">
-
-        <div class="modal-head">
-
-            <div>
-                <h2 style="margin:0">
-                    ➕ Add Jacquard
-                </h2>
-
-                <div class="small">
-                    Running EP se machine profile save karein.
-                </div>
-            </div>
-
-            <button
-                id="closeMachineModal"
-                class="close btn-small"
-            >
-                ✕
-            </button>
-
-        </div>
-
-
-        <hr>
-
-
-        <label>
-            Machine / Jacquard Name
-        </label>
-
-        <input
-            id="machineName"
-            type="text"
-            placeholder="Example: 672 Hook TIANMAI"
-        >
-
-
-        <label>
-            Category
-        </label>
-
-        <select id="machineCategory">
-
-            <option value="672 Hooks">
-                672 Hooks
-            </option>
-
-            <option value="1344 Hooks">
-                1344 Hooks
-            </option>
-
-            <option value="2688 Hooks">
-                2688 Hooks
-            </option>
-
-            <option value="Other">
-                Other
-            </option>
-
-        </select>
-
-
-        <label>
-            Original Running EP
-        </label>
-
-        <input
-            id="machineRunningFile"
-            type="file"
-            accept=".ep,.EP"
-        >
-
-
-        <div
-            id="machineFileInfo"
-            class="info"
-        >
-            Running EP select karein.
-        </div>
-
-
-        <label>
-            Hooks
-        </label>
-
-        <input
-            id="machineHooks"
-            type="number"
-            value="672"
-            min="8"
-            step="8"
-        >
-
-
-        <label>
-            Default Picks
-        </label>
-
-        <input
-            id="machinePicks"
-            type="number"
-            value="972"
-            min="1"
-        >
-
-
-        <div
-            id="machineAnalysis"
-            class="info"
-        >
-            File upload hone par automatic analysis yahan aayega.
-        </div>
-
-
-        <div class="row">
-
-            <button
-                id="cancelMachineBtn"
-                class="btn-gray"
-            >
-                Cancel
-            </button>
-
-            <button
-                id="saveMachineBtn"
-                class="btn-blue"
-            >
-                💾 SAVE JACQUARD
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     CANVAS
-========================================================= -->
-
-<canvas
-    id="workCanvas"
-    class="hidden"
-></canvas>
+<canvas id="workCanvas" class="hidden"></canvas>
 
 
 <script>
 
+(function(){
+
 "use strict";
 
-
-/* =========================================================
-   CONSTANTS
-========================================================= */
-
-const ADMIN_ID = "admin";
-const ADMIN_PASSWORD = "123456";
-
-const DB_NAME = "ElectronicDesigningDB";
-const DB_VERSION = 1;
-
-let db = null;
-
-
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let machines = [];
-let history = [];
-
-let selectedMachineId = null;
+const $ = id => document.getElementById(id);
 
 let runningBytes = null;
 let runningHeader = null;
+let runningPicks = 0;
 
 let designImage = null;
 
@@ -1451,3016 +226,993 @@ let invert = false;
 let mirror = false;
 let flip = false;
 
-let generatedURL = null;
+
+/* =========================
+   LOGIN SETTINGS
+========================= */
+
+const DEFAULT_ADMIN_ID = "admin";
+const DEFAULT_ADMIN_PASSWORD = "123456";
+
+const LOGIN_KEY = "electronic_admin";
 
 
-/* =========================================================
-   SHORTCUT
-========================================================= */
-
-function $(id){
-    return document.getElementById(id);
-}
-
-
-/* =========================================================
-   UI HELPERS
-========================================================= */
 
 function show(id){
-    const el = $(id);
-    if(el) el.classList.remove("hidden");
+$(id).classList.remove("hidden");
 }
 
 function hide(id){
-    const el = $(id);
-    if(el) el.classList.add("hidden");
-}
-
-function escapeHTML(value){
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+$(id).classList.add("hidden");
 }
 
 
-/* =========================================================
-   LOGIN
-========================================================= */
-
-function openLogin(){
-    hide("appPage");
-    show("loginPage");
-}
 
 function openApp(){
-    hide("loginPage");
-    show("appPage");
-    loadAllData();
+
+hide("loginPage");
+show("appPage");
+
+window.scrollTo(0,0);
+
+initBackNavigation();
+
 }
+
+
+
+function openLogin(){
+
+hide("appPage");
+show("loginPage");
+
+}
+
+
+
+/* =========================
+   BACK BUTTON SYSTEM
+========================= */
+
+let backNavigationReady = false;
+let backMessageTimer = null;
+
+
+function initBackNavigation(){
+
+if(backNavigationReady)return;
+
+backNavigationReady = true;
+
+/*
+   Ek extra history entry banayi ja rahi hai.
+   Isse Android/browser Back directly GitHub page par
+   nahi jayega.
+*/
+
+history.replaceState(
+{electronicDesigning:true},
+"",
+location.href
+);
+
+history.pushState(
+{electronicDesigning:true},
+"",
+location.href
+);
+
+}
+
+
+
+function showBackMessage(){
+
+const box = $("backMsg");
+
+box.textContent = "Electronic Designing app mein hi hain.";
+
+box.classList.remove("hidden");
+
+clearTimeout(backMessageTimer);
+
+backMessageTimer = setTimeout(function(){
+
+box.classList.add("hidden");
+
+},1800);
+
+}
+
+
+
+/*
+   Android / Browser Back
+*/
+
+window.addEventListener("popstate",function(){
+
+if(localStorage.getItem(LOGIN_KEY) !== "1"){
+return;
+}
+
+if($("appPage").classList.contains("hidden")){
+return;
+}
+
+
+/*
+   User ko app ke andar hi rakho.
+*/
+
+history.pushState(
+{electronicDesigning:true},
+"",
+location.href
+);
+
+showBackMessage();
+
+});
+
+
+
+/* =========================
+   SHOW PASSWORD
+========================= */
+
+$("showPass").addEventListener("change",function(){
+
+$("adminPassword").type =
+this.checked ? "text" : "password";
+
+});
+
+
+
+/* =========================
+   LOGIN
+========================= */
 
 function doLogin(){
 
-    const id = $("adminId").value.trim();
-    const pass = $("adminPassword").value;
+const id = $("adminId").value.trim();
 
-    if(
-        id === ADMIN_ID &&
-        pass === ADMIN_PASSWORD
-    ){
+const pass = $("adminPassword").value;
 
-        sessionStorage.setItem(
-            "electronic_admin",
-            "1"
-        );
 
-        $("loginMessage").classList.add("hidden");
+/*
+   Default login:
+   admin
+   123456
+*/
 
-        openApp();
+if(
+id === DEFAULT_ADMIN_ID &&
+pass === DEFAULT_ADMIN_PASSWORD
+){
 
-    }else{
+localStorage.setItem(LOGIN_KEY,"1");
 
-        $("loginMessage").textContent =
-            "Admin ID ya password galat hai.";
+$("loginMsg").classList.add("hidden");
 
-        $("loginMessage").classList.remove("hidden");
+openApp();
 
-    }
+}else{
+
+$("loginMsg").textContent =
+"Admin ID ya password galat hai.";
+
+$("loginMsg").classList.remove("hidden");
+
 }
+
+}
+
 
 
 $("loginBtn").addEventListener(
-    "click",
-    doLogin
+"click",
+doLogin
 );
+
 
 
 $("adminPassword").addEventListener(
-    "keydown",
-    function(e){
-        if(e.key === "Enter"){
-            doLogin();
-        }
-    }
+"keydown",
+function(e){
+
+if(e.key === "Enter"){
+doLogin();
+}
+
+}
 );
+
 
 
 $("adminId").addEventListener(
-    "keydown",
-    function(e){
-        if(e.key === "Enter"){
-            $("adminPassword").focus();
-        }
-    }
+"keydown",
+function(e){
+
+if(e.key === "Enter"){
+$("adminPassword").focus();
+}
+
+}
 );
 
 
-$("showPassword").addEventListener(
-    "change",
-    function(){
 
-        $("adminPassword").type =
-            this.checked ? "text" : "password";
-
-    }
-);
-
+/* =========================
+   LOGOUT
+========================= */
 
 $("logoutBtn").addEventListener(
-    "click",
-    function(){
+"click",
+function(){
 
-        sessionStorage.removeItem(
-            "electronic_admin"
-        );
+localStorage.removeItem(LOGIN_KEY);
 
-        openLogin();
+backNavigationReady = false;
 
-    }
+history.replaceState(
+{electronicDesigningLogin:true},
+"",
+location.href
+);
+
+openLogin();
+
+}
 );
 
 
-/* =========================================================
-   INDEXED DB
-========================================================= */
 
-function openDatabase(){
+/* =========================
+   DESIGN CONTROLS
+========================= */
 
-    return new Promise(
-        function(resolve,reject){
+$("invertBtn").onclick=function(){
 
-            const request =
-                indexedDB.open(
-                    DB_NAME,
-                    DB_VERSION
-                );
+invert=!invert;
 
-            request.onupgradeneeded =
-                function(event){
+$("invertBtn").textContent =
+"Invert: "+(invert?"ON":"OFF");
 
-                    const database =
-                        event.target.result;
-
-                    if(!database.objectStoreNames.contains("machines")){
-
-                        database.createObjectStore(
-                            "machines",
-                            {
-                                keyPath:"id"
-                            }
-                        );
-
-                    }
-
-                    if(!database.objectStoreNames.contains("history")){
-
-                        database.createObjectStore(
-                            "history",
-                            {
-                                keyPath:"id"
-                            }
-                        );
-
-                    }
-
-                };
+};
 
 
-            request.onsuccess =
-                function(event){
 
-                    db = event.target.result;
+$("mirrorBtn").onclick=function(){
 
-                    resolve(db);
+mirror=!mirror;
 
-                };
+$("mirrorBtn").textContent =
+"Mirror: "+(mirror?"ON":"OFF");
+
+};
 
 
-            request.onerror =
-                function(){
 
-                    reject(
-                        request.error
-                    );
+$("flipBtn").onclick=function(){
 
-                };
+flip=!flip;
 
-        }
-    );
+$("flipBtn").textContent =
+"Flip: "+(flip?"ON":"OFF");
+
+};
+
+
+
+/* =========================
+   24 BIT NUMBER
+========================= */
+
+function u24(n){
+
+return new Uint8Array([
+n&255,
+(n>>8)&255,
+(n>>16)&255
+]);
 
 }
 
 
-function dbPut(storeName,data){
 
-    return new Promise(
-        function(resolve,reject){
+/* =========================
+   RUNNING EP
+========================= */
 
-            const tx =
-                db.transaction(
-                    storeName,
-                    "readwrite"
-                );
+$("runningFile").addEventListener(
+"change",
+async function(){
 
-            tx.objectStore(storeName)
-                .put(data);
+const file=this.files[0];
 
-            tx.oncomplete =
-                function(){
-                    resolve();
-                };
+if(!file)return;
 
-            tx.onerror =
-                function(){
-                    reject(tx.error);
-                };
+try{
 
-        }
-    );
+runningBytes =
+new Uint8Array(
+await file.arrayBuffer()
+);
 
-}
+const hooks =
+parseInt($("hooks").value)||672;
 
+const bytesPerPick =
+Math.ceil(hooks/8);
 
-function dbDelete(storeName,id){
+let headerLen=34;
+let picks=0;
 
-    return new Promise(
-        function(resolve,reject){
 
-            const tx =
-                db.transaction(
-                    storeName,
-                    "readwrite"
-                );
+/*
+   34 byte header structure
+*/
 
-            tx.objectStore(storeName)
-                .delete(id);
-
-            tx.oncomplete =
-                function(){
-                    resolve();
-                };
-
-            tx.onerror =
-                function(){
-                    reject(tx.error);
-                };
-
-        }
-    );
-
-}
-
-
-function dbClear(storeName){
-
-    return new Promise(
-        function(resolve,reject){
-
-            const tx =
-                db.transaction(
-                    storeName,
-                    "readwrite"
-                );
-
-            tx.objectStore(storeName)
-                .clear();
-
-            tx.oncomplete =
-                function(){
-                    resolve();
-                };
-
-            tx.onerror =
-                function(){
-                    reject(tx.error);
-                };
-
-        }
-    );
-
-}
-
-
-function dbGetAll(storeName){
-
-    return new Promise(
-        function(resolve,reject){
-
-            const tx =
-                db.transaction(
-                    storeName,
-                    "readonly"
-                );
-
-            const request =
-                tx.objectStore(storeName)
-                    .getAll();
-
-            request.onsuccess =
-                function(){
-                    resolve(
-                        request.result || []
-                    );
-                };
-
-            request.onerror =
-                function(){
-                    reject(request.error);
-                };
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-async function loadAllData(){
-
-    try{
-
-        if(!db){
-            await openDatabase();
-        }
-
-        machines =
-            await dbGetAll("machines");
-
-        history =
-            await dbGetAll("history");
-
-        machines.sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-        history.sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-        if(
-            selectedMachineId &&
-            !machines.some(
-                m => m.id === selectedMachineId
-            )
-        ){
-            selectedMachineId = null;
-        }
-
-        renderEverything();
-
-    }catch(error){
-
-        console.error(error);
-
-        $("createStatus").textContent =
-            "Database error: " +
-            error.message;
-
-    }
-
-}
-
-
-/* =========================================================
-   MACHINE ID
-========================================================= */
-
-function makeId(prefix){
-
-    return (
-        prefix +
-        "_" +
-        Date.now() +
-        "_" +
-        Math.random()
-            .toString(36)
-            .slice(2,9)
-    );
-
-}
-
-
-/* =========================================================
-   MACHINE CATEGORIES
-========================================================= */
-
-function getCategories(){
-
-    const categoryMap = {};
-
-    machines.forEach(
-        function(machine){
-
-            const cat =
-                machine.category ||
-                "Other";
-
-            if(!categoryMap[cat]){
-                categoryMap[cat] = 0;
-            }
-
-            categoryMap[cat]++;
-
-        }
-    );
-
-    const defaults = [
-        "672 Hooks",
-        "1344 Hooks",
-        "2688 Hooks",
-        "Other"
-    ];
-
-    defaults.forEach(
-        function(cat){
-
-            if(!categoryMap[cat]){
-                categoryMap[cat] = 0;
-            }
-
-        }
-    );
-
-    return categoryMap;
-
-}
-
-
-function renderCategories(){
-
-    const grid =
-        $("categoryGrid");
-
-    const categoryMap =
-        getCategories();
-
-    const icons = {
-        "672 Hooks":"⚙️",
-        "1344 Hooks":"🔧",
-        "2688 Hooks":"🏭",
-        "Other":"🧩"
-    };
-
-    let html = "";
-
-    Object.keys(categoryMap)
-        .forEach(
-            function(category){
-
-                html += `
-                    <button
-                        class="category"
-                        data-category="${escapeHTML(category)}"
-                    >
-
-                        <div class="category-icon">
-                            ${icons[category] || "⚙️"}
-                        </div>
-
-                        <div class="category-name">
-                            ${escapeHTML(category)}
-                        </div>
-
-                        <div class="category-detail">
-                            ${categoryMap[category]}
-                            saved machine
-                            ${categoryMap[category] === 1 ? "" : "s"}
-                        </div>
-
-                    </button>
-                `;
-
-            }
-        );
-
-    grid.innerHTML = html;
-
-    grid.querySelectorAll(".category")
-        .forEach(
-            function(button){
-
-                button.addEventListener(
-                    "click",
-                    function(){
-
-                        const category =
-                            this.dataset.category;
-
-                        openMachineCategory(
-                            category
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-function openMachineCategory(category){
-
-    showSection("machinesSection");
-
-    const filtered =
-        machines.filter(
-            m =>
-                (m.category || "Other") ===
-                category
-        );
-
-    const list =
-        $("machineList");
-
-    if(!filtered.length){
-
-        list.innerHTML = `
-            <div class="empty">
-                Is category mein abhi koi
-                Jacquard saved nahi hai.
-                <br><br>
-                <button
-                    id="categoryAddMachine"
-                    class="btn-blue"
-                >
-                    ➕ Add New Jacquard
-                </button>
-            </div>
-        `;
-
-        $("categoryAddMachine")
-            .onclick =
-            openMachineModal;
-
-        return;
-
-    }
-
-    renderMachineCards(filtered);
-
-}
-
-
-/* =========================================================
-   MACHINE CARDS
-========================================================= */
-
-function renderMachines(){
-
-    renderMachineCards(
-        machines
-    );
-
-}
-
-
-function renderMachineCards(list){
-
-    const container =
-        $("machineList");
-
-    if(!list.length){
-
-        container.innerHTML = `
-            <div class="empty">
-                Koi Jacquard saved nahi hai.
-                <br><br>
-                Pehli machine ke liye
-                "Add New Jacquard" dabayein.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    let html = "";
-
-    list.forEach(
-        function(machine){
-
-            const selected =
-                machine.id === selectedMachineId;
-
-            html += `
-
-                <div
-                    class="machine-card
-                    ${selected ? "selected" : ""}"
-                >
-
-                    <div class="machine-top">
-
-                        <div>
-
-                            <div class="machine-name">
-                                ${escapeHTML(machine.name)}
-                            </div>
-
-                            <span class="machine-badge">
-                                ${escapeHTML(machine.category || "Other")}
-                            </span>
-
-                        </div>
-
-                        ${
-                            selected
-                            ? `<span class="badge green">
-                                SELECTED
-                               </span>`
-                            : ""
-                        }
-
-                    </div>
-
-
-                    <div class="machine-meta">
-
-                        <div class="meta">
-                            <div class="meta-label">
-                                Hooks
-                            </div>
-
-                            <div class="meta-value">
-                                ${machine.hooks}
-                            </div>
-                        </div>
-
-
-                        <div class="meta">
-                            <div class="meta-label">
-                                Running Picks
-                            </div>
-
-                            <div class="meta-value">
-                                ${machine.runningPicks}
-                            </div>
-                        </div>
-
-
-                        <div class="meta">
-                            <div class="meta-label">
-                                Header
-                            </div>
-
-                            <div class="meta-value">
-                                ${machine.headerLength} B
-                            </div>
-                        </div>
-
-
-                        <div class="meta">
-                            <div class="meta-label">
-                                Bytes/Pick
-                            </div>
-
-                            <div class="meta-value">
-                                ${machine.bytesPerPick}
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="small">
-                        Running file:
-                        ${escapeHTML(machine.fileName)}
-                    </div>
-
-
-                    <div class="row" style="margin-top:10px">
-
-                        <button
-                            class="btn-blue select-machine"
-                            data-id="${machine.id}"
-                        >
-                            ${
-                                selected
-                                ? "✓ Selected"
-                                : "Select"
-                            }
-                        </button>
-
-                        <button
-                            class="btn-green create-machine"
-                            data-id="${machine.id}"
-                        >
-                            🎨 Design
-                        </button>
-
-                        <button
-                            class="btn-red delete-machine"
-                            data-id="${machine.id}"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-    container.innerHTML = html;
-
-
-    container
-        .querySelectorAll(".select-machine")
-        .forEach(
-            button => {
-
-                button.onclick =
-                    function(){
-
-                        selectMachine(
-                            this.dataset.id
-                        );
-
-                    };
-
-            }
-        );
-
-
-    container
-        .querySelectorAll(".create-machine")
-        .forEach(
-            button => {
-
-                button.onclick =
-                    function(){
-
-                        selectMachine(
-                            this.dataset.id
-                        );
-
-                        showSection(
-                            "designSection"
-                        );
-
-                    };
-
-            }
-        );
-
-
-    container
-        .querySelectorAll(".delete-machine")
-        .forEach(
-            button => {
-
-                button.onclick =
-                    function(){
-
-                        deleteMachine(
-                            this.dataset.id
-                        );
-
-                    };
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   SELECT MACHINE
-========================================================= */
-
-function getSelectedMachine(){
-
-    return machines.find(
-        machine =>
-            machine.id === selectedMachineId
-    ) || null;
-
-}
-
-
-function selectMachine(id){
-
-    const machine =
-        machines.find(
-            m => m.id === id
-        );
-
-    if(!machine){
-        return;
-    }
-
-    selectedMachineId =
-        machine.id;
-
-    runningBytes =
-        new Uint8Array(
-            machine.runningBytes
-        );
-
-    runningHeader =
-        new Uint8Array(
-            machine.runningHeader
-        );
-
-
-    $("targetPicks").value =
-        machine.defaultPicks ||
-        machine.runningPicks ||
-        1;
-
-
-    $("createWarning").className =
-        "success";
-
-
-    $("createWarning").innerHTML =
-        `
-            <b>✓ ${escapeHTML(machine.name)}</b>
-            selected.<br>
-            Hooks: ${machine.hooks}
-            &nbsp; • &nbsp;
-            Saved Running EP: ${escapeHTML(machine.fileName)}
-        `;
-
-
-    renderSelectedMachine();
-
-    renderMachines();
-
-    renderSettings();
-
-    updateStats();
-
-}
-
-
-function renderSelectedMachine(){
-
-    const machine =
-        getSelectedMachine();
-
-    if(!machine){
-
-        $("selectedMachineBox").className =
-            "warning";
-
-        $("selectedMachineBox").textContent =
-            "No Jacquard selected.";
-
-        return;
-
-    }
-
-    $("selectedMachineBox").className =
-        "success";
-
-    $("selectedMachineBox").innerHTML =
-        `
-            <b>✓ Selected Jacquard:
-            ${escapeHTML(machine.name)}</b><br>
-            Category:
-            ${escapeHTML(machine.category || "Other")}
-            <br>
-            Hooks:
-            ${machine.hooks}
-            <br>
-            Running Picks:
-            ${machine.runningPicks}
-            <br>
-            Header:
-            ${machine.headerLength} bytes
-        `;
-
-}
-
-
-/* =========================================================
-   MACHINE MODAL
-========================================================= */
-
-function openMachineModal(){
-
-    $("machineName").value = "";
-    $("machineCategory").value = "672 Hooks";
-    $("machineRunningFile").value = "";
-    $("machineHooks").value = "672";
-    $("machinePicks").value = "972";
-
-    $("machineFileInfo").textContent =
-        "Running EP select karein.";
-
-    $("machineAnalysis").textContent =
-        "File upload hone par automatic analysis yahan aayega.";
-
-    show("machineModal");
-
-}
-
-
-function closeMachineModal(){
-    hide("machineModal");
-}
-
-
-$("newMachineBtn").onclick =
-    openMachineModal;
-
-$("addMachineHomeBtn").onclick =
-    openMachineModal;
-
-$("closeMachineModal").onclick =
-    closeMachineModal;
-
-$("cancelMachineBtn").onclick =
-    closeMachineModal;
-
-
-/* =========================================================
-   ANALYZE RUNNING FILE
-========================================================= */
-
-function analyzeRunningFile(
-    bytes,
-    hooks
+if(
+runningBytes.length >= 34 &&
+(runningBytes.length-34)%bytesPerPick===0
 ){
 
-    const bytesPerPick =
-        Math.ceil(
-            hooks / 8
-        );
+headerLen=34;
 
-    let headerLength = 34;
-    let picks = 0;
-
-
-    /*
-        ORIGINAL FORMAT EXAMPLE:
-
-        34 byte header
-        84 bytes/pick
-        672 hooks
-    */
-
-    if(
-        bytes.length >= 34 &&
-        (bytes.length - 34) %
-        bytesPerPick === 0
-    ){
-
-        headerLength = 34;
-
-        picks =
-            (
-                bytes.length -
-                headerLength
-            ) /
-            bytesPerPick;
-
-    }
-
-    /*
-        SECOND FORMAT
-    */
-
-    else if(
-        bytes.length >= 81 &&
-        (bytes.length - 81) %
-        bytesPerPick === 0
-    ){
-
-        headerLength = 81;
-
-        picks =
-            (
-                bytes.length -
-                headerLength
-            ) /
-            bytesPerPick;
-
-    }
-
-    /*
-        FALLBACK
-    */
-
-    else{
-
-        headerLength = 34;
-
-        picks =
-            Math.floor(
-                (
-                    bytes.length -
-                    headerLength
-                ) /
-                bytesPerPick
-            );
-
-    }
-
-
-    return {
-        headerLength,
-        bytesPerPick,
-        picks
-    };
+picks=
+(runningBytes.length-headerLen)/
+bytesPerPick;
 
 }
 
 
-/* =========================================================
-   MACHINE FILE CHANGE
-========================================================= */
-
-$("machineRunningFile")
-.addEventListener(
-    "change",
-    async function(){
-
-        const file =
-            this.files[0];
-
-        if(!file){
-            return;
-        }
-
-        try{
-
-            const bytes =
-                new Uint8Array(
-                    await file.arrayBuffer()
-                );
-
-            const hooks =
-                Math.max(
-                    8,
-                    parseInt(
-                        $("machineHooks").value
-                    ) || 672
-                );
-
-            if(hooks % 8 !== 0){
-
-                $("machineAnalysis")
-                    .className =
-                    "error";
-
-                $("machineAnalysis")
-                    .textContent =
-                    "Hooks 8 ke multiple mein hona chahiye.";
-
-                return;
-
-            }
-
-
-            const analysis =
-                analyzeRunningFile(
-                    bytes,
-                    hooks
-                );
-
-
-            $("machineFileInfo")
-                .className =
-                "success";
-
-            $("machineFileInfo")
-                .innerHTML =
-                `
-                    <b>✓ Running EP loaded</b><br>
-                    File:
-                    ${escapeHTML(file.name)}
-                    <br>
-                    Size:
-                    ${bytes.length.toLocaleString()}
-                    bytes
-                `;
-
-
-            $("machinePicks").value =
-                analysis.picks ||
-                $("machinePicks").value;
-
-
-            $("machineAnalysis")
-                .className =
-                "info";
-
-            $("machineAnalysis")
-                .innerHTML =
-                `
-                    <b>Automatic Analysis</b><br>
-                    Header:
-                    ${analysis.headerLength} bytes
-                    <br>
-                    Bytes / Pick:
-                    ${analysis.bytesPerPick}
-                    <br>
-                    Detected Picks:
-                    ${analysis.picks}
-                    <br>
-                    Hooks:
-                    ${hooks}
-                `;
-
-        }catch(error){
-
-            $("machineAnalysis")
-                .className =
-                "error";
-
-            $("machineAnalysis")
-                .textContent =
-                "File read error: " +
-                error.message;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   MACHINE HOOK CHANGE
-========================================================= */
-
-$("machineHooks")
-.addEventListener(
-    "change",
-    async function(){
-
-        const fileInput =
-            $("machineRunningFile");
-
-        const file =
-            fileInput.files[0];
-
-        if(!file){
-            return;
-        }
-
-        try{
-
-            const bytes =
-                new Uint8Array(
-                    await file.arrayBuffer()
-                );
-
-            const hooks =
-                parseInt(
-                    this.value
-                ) || 672;
-
-            const analysis =
-                analyzeRunningFile(
-                    bytes,
-                    hooks
-                );
-
-            $("machinePicks").value =
-                analysis.picks || 1;
-
-            $("machineAnalysis")
-                .innerHTML =
-                `
-                    Header:
-                    ${analysis.headerLength} bytes<br>
-                    Bytes/Pick:
-                    ${analysis.bytesPerPick}<br>
-                    Detected Picks:
-                    ${analysis.picks}
-                `;
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SAVE MACHINE
-========================================================= */
-
-$("saveMachineBtn")
-.addEventListener(
-    "click",
-    async function(){
-
-        try{
-
-            const name =
-                $("machineName")
-                    .value
-                    .trim();
-
-            const category =
-                $("machineCategory")
-                    .value;
-
-            const file =
-                $("machineRunningFile")
-                    .files[0];
-
-            const hooks =
-                Math.max(
-                    8,
-                    parseInt(
-                        $("machineHooks").value
-                    ) || 672
-                );
-
-            const defaultPicks =
-                Math.max(
-                    1,
-                    parseInt(
-                        $("machinePicks").value
-                    ) || 1
-                );
-
-
-            if(!name){
-
-                alert(
-                    "Machine / Jacquard ka naam dijiye."
-                );
-
-                return;
-
-            }
-
-
-            if(!file){
-
-                alert(
-                    "Original running .EP file upload karein."
-                );
-
-                return;
-
-            }
-
-
-            if(hooks % 8 !== 0){
-
-                alert(
-                    "Hooks 8 ke multiple mein hona chahiye."
-                );
-
-                return;
-
-            }
-
-
-            const bytes =
-                new Uint8Array(
-                    await file.arrayBuffer()
-                );
-
-
-            const analysis =
-                analyzeRunningFile(
-                    bytes,
-                    hooks
-                );
-
-
-            const header =
-                bytes.slice(
-                    0,
-                    analysis.headerLength
-                );
-
-
-            const machine = {
-
-                id:
-                    makeId("machine"),
-
-                name:
-                    name,
-
-                category:
-                    category,
-
-                hooks:
-                    hooks,
-
-                defaultPicks:
-                    defaultPicks,
-
-                runningPicks:
-                    analysis.picks,
-
-                headerLength:
-                    analysis.headerLength,
-
-                bytesPerPick:
-                    analysis.bytesPerPick,
-
-                fileName:
-                    file.name,
-
-                runningBytes:
-                    bytes,
-
-                runningHeader:
-                    header,
-
-                createdAt:
-                    Date.now()
-
-            };
-
-
-            await dbPut(
-                "machines",
-                machine
-            );
-
-
-            machines.push(
-                machine
-            );
-
-
-            selectedMachineId =
-                machine.id;
-
-
-            runningBytes =
-                new Uint8Array(
-                    machine.runningBytes
-                );
-
-            runningHeader =
-                new Uint8Array(
-                    machine.runningHeader
-                );
-
-
-            closeMachineModal();
-
-            renderEverything();
-
-            showSection(
-                "machinesSection"
-            );
-
-
-            alert(
-                "✓ Jacquard setup save ho gaya.\n\n" +
-                "Ab is running file ko dobara upload karne ki zarurat nahi hai."
-            );
-
-
-        }catch(error){
-
-            alert(
-                "Machine save error:\n" +
-                error.message
-            );
-
-            console.error(error);
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   DELETE MACHINE
-========================================================= */
-
-async function deleteMachine(id){
-
-    const machine =
-        machines.find(
-            m => m.id === id
-        );
-
-    if(!machine){
-        return;
-    }
-
-    const ok =
-        confirm(
-            "Kya aap " +
-            machine.name +
-            " ko delete karna chahte hain?"
-        );
-
-    if(!ok){
-        return;
-    }
-
-
-    await dbDelete(
-        "machines",
-        id
-    );
-
-
-    machines =
-        machines.filter(
-            m => m.id !== id
-        );
-
-
-    if(selectedMachineId === id){
-
-        selectedMachineId = null;
-
-        runningBytes = null;
-
-        runningHeader = null;
-
-    }
-
-
-    renderEverything();
+/*
+   81 byte header structure
+*/
+
+else if(
+runningBytes.length >= 81 &&
+(runningBytes.length-81)%bytesPerPick===0
+){
+
+headerLen=81;
+
+picks=
+(runningBytes.length-headerLen)/
+bytesPerPick;
 
 }
 
 
-/* =========================================================
-   DESIGN FILE
-========================================================= */
+/*
+   Fallback
+*/
 
-$("designFile")
-.addEventListener(
-    "change",
-    function(){
+else{
 
-        const file =
-            this.files[0];
+headerLen=34;
 
-        if(!file){
-            return;
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(event){
-
-                const img =
-                    new Image();
-
-
-                img.onload =
-                    function(){
-
-                        designImage =
-                            img;
-
-
-                        $("designInfo")
-                            .className =
-                            "success";
-
-
-                        $("designInfo")
-                            .innerHTML =
-                            `
-                                <b>✓ Design loaded</b><br>
-                                File:
-                                ${escapeHTML(file.name)}
-                                <br>
-                                Original Size:
-                                ${img.width}
-                                ×
-                                ${img.height}
-                            `;
-
-
-                        $("designPreview").src =
-                            event.target.result;
-
-                        show("designPreview");
-
-                    };
-
-
-                img.onerror =
-                    function(){
-
-                        $("designInfo")
-                            .className =
-                            "error";
-
-                        $("designInfo")
-                            .textContent =
-                            "Image read nahi ho payi.";
-
-                    };
-
-
-                img.src =
-                    event.target.result;
-
-            };
-
-
-        reader.readAsDataURL(file);
-
-    }
+picks=
+Math.floor(
+Math.max(
+0,
+runningBytes.length-headerLen
+)/bytesPerPick
 );
-
-
-/* =========================================================
-   DESIGN OPTIONS
-========================================================= */
-
-$("invertBtn").onclick =
-    function(){
-
-        invert =
-            !invert;
-
-        this.textContent =
-            "Invert: " +
-            (invert ? "ON" : "OFF");
-
-    };
-
-
-$("mirrorBtn").onclick =
-    function(){
-
-        mirror =
-            !mirror;
-
-        this.textContent =
-            "Mirror: " +
-            (mirror ? "ON" : "OFF");
-
-    };
-
-
-$("flipBtn").onclick =
-    function(){
-
-        flip =
-            !flip;
-
-        this.textContent =
-            "Flip: " +
-            (flip ? "ON" : "OFF");
-
-    };
-
-
-/* =========================================================
-   24 BIT NUMBER
-========================================================= */
-
-function u24(number){
-
-    return new Uint8Array([
-
-        number & 255,
-
-        (number >> 8) & 255,
-
-        (number >> 16) & 255
-
-    ]);
 
 }
 
 
-/* =========================================================
+runningHeader =
+runningBytes.slice(
+0,
+headerLen
+);
+
+runningPicks=picks;
+
+
+/*
+   Target picks automatically set
+*/
+
+if(picks>0){
+
+$("targetPicks").value=picks;
+
+}
+
+
+$("runningInfo").innerHTML=
+
+"<b>"+file.name+"</b><br>"+
+"Size: "+
+runningBytes.length.toLocaleString()+
+" bytes<br>"+
+"Header: "+
+headerLen+
+" bytes<br>"+
+"Bytes/Pick: "+
+bytesPerPick+
+"<br>"+
+"Detected Picks: "+
+picks;
+
+
+$("status").textContent=
+"Running EP loaded successfully.";
+
+}
+
+catch(e){
+
+$("runningInfo").textContent=
+"EP read error: "+e.message;
+
+}
+
+}
+);
+
+
+
+/* =========================
+   DESIGN IMAGE
+========================= */
+
+$("designFile").addEventListener(
+"change",
+function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+
+reader.onload=function(e){
+
+const img=new Image();
+
+
+img.onload=function(){
+
+designImage=img;
+
+
+$("designInfo").innerHTML=
+
+"<b>"+file.name+"</b><br>"+
+"Original size: "+
+img.width+
+" × "+
+img.height;
+
+
+$("preview").src=e.target.result;
+
+show("preview");
+
+};
+
+
+img.onerror=function(){
+
+$("designInfo").textContent=
+"Image read nahi ho payi.";
+
+};
+
+
+img.src=e.target.result;
+
+};
+
+
+reader.readAsDataURL(file);
+
+}
+);
+
+
+
+/* =========================
    PACK DESIGN
-========================================================= */
+========================= */
 
 function packDesign(){
 
-    const machine =
-        getSelectedMachine();
+const hooks=
+Math.max(
+8,
+parseInt($("hooks").value)||672
+);
 
-    if(!machine){
 
-        throw new Error(
-            "Pehle Jacquard select karein."
-        );
+const picks=
+Math.max(
+1,
+parseInt($("targetPicks").value)||1
+);
 
-    }
 
+const threshold=
+Math.min(
+255,
+Math.max(
+0,
+parseInt($("threshold").value)||128
+)
+);
 
-    if(!designImage){
 
-        throw new Error(
-            "Pehle design file upload karein."
-        );
+const left=
+Math.max(
+0,
+parseInt($("leftPad").value)||0
+);
 
-    }
 
+const right=
+Math.max(
+0,
+parseInt($("rightPad").value)||0
+);
 
-    const hooks =
-        parseInt(
-            machine.hooks
-        );
 
 
-    const picks =
-        Math.max(
-            1,
-            parseInt(
-                $("targetPicks").value
-            ) ||
-            machine.defaultPicks ||
-            1
-        );
+if(!designImage){
 
-
-    const threshold =
-        Math.min(
-            255,
-            Math.max(
-                0,
-                parseInt(
-                    $("threshold").value
-                ) || 128
-            )
-        );
-
-
-    const left =
-        Math.max(
-            0,
-            parseInt(
-                $("leftPadding").value
-            ) || 0
-        );
-
-
-    const right =
-        Math.max(
-            0,
-            parseInt(
-                $("rightPadding").value
-            ) || 0
-        );
-
-
-    if(hooks % 8 !== 0){
-
-        throw new Error(
-            "Hooks 8 ke multiple mein hona chahiye."
-        );
-
-    }
-
-
-    if(left + right >= hooks){
-
-        throw new Error(
-            "Left + Right padding hooks se kam hona chahiye."
-        );
-
-    }
-
-
-    const canvas =
-        $("workCanvas");
-
-
-    canvas.width =
-        hooks;
-
-    canvas.height =
-        picks;
-
-
-    const ctx =
-        canvas.getContext(
-            "2d",
-            {
-                willReadFrequently:true
-            }
-        );
-
-
-    ctx.fillStyle =
-        "white";
-
-
-    ctx.fillRect(
-        0,
-        0,
-        hooks,
-        picks
-    );
-
-
-    ctx.save();
-
-
-    ctx.translate(
-        mirror ? hooks : 0,
-        flip ? picks : 0
-    );
-
-
-    ctx.scale(
-        mirror ? -1 : 1,
-        flip ? -1 : 1
-    );
-
-
-    const usableWidth =
-        hooks -
-        left -
-        right;
-
-
-    const scale =
-        Math.min(
-            usableWidth /
-                designImage.width,
-            picks /
-                designImage.height
-        );
-
-
-    const drawWidth =
-        Math.max(
-            1,
-            Math.round(
-                designImage.width *
-                scale
-            )
-        );
-
-
-    const drawHeight =
-        Math.max(
-            1,
-            Math.round(
-                designImage.height *
-                scale
-            )
-        );
-
-
-    const x =
-        left +
-        Math.floor(
-            (
-                usableWidth -
-                drawWidth
-            ) / 2
-        );
-
-
-    const y =
-        Math.floor(
-            (
-                picks -
-                drawHeight
-            ) / 2
-        );
-
-
-    ctx.drawImage(
-        designImage,
-        x,
-        y,
-        drawWidth,
-        drawHeight
-    );
-
-
-    ctx.restore();
-
-
-    const imageData =
-        ctx.getImageData(
-            0,
-            0,
-            hooks,
-            picks
-        ).data;
-
-
-    const bytesPerPick =
-        hooks / 8;
-
-
-    const output =
-        new Uint8Array(
-            picks *
-            bytesPerPick
-        );
-
-
-    for(
-        let y = 0;
-        y < picks;
-        y++
-    ){
-
-        for(
-            let x = 0;
-            x < hooks;
-            x++
-        ){
-
-            const index =
-                (
-                    y *
-                    hooks +
-                    x
-                ) * 4;
-
-
-            const gray =
-                (
-                    imageData[index] +
-                    imageData[index + 1] +
-                    imageData[index + 2]
-                ) / 3;
-
-
-            let on =
-                gray <
-                threshold;
-
-
-            if(invert){
-                on = !on;
-            }
-
-
-            if(on){
-
-                const byteIndex =
-                    y *
-                    bytesPerPick +
-                    Math.floor(
-                        x / 8
-                    );
-
-
-                const bit =
-                    7 -
-                    (
-                        x % 8
-                    );
-
-
-                output[byteIndex] |=
-                    1 << bit;
-
-            }
-
-        }
-
-    }
-
-
-    return {
-
-        output:
-            output,
-
-        hooks:
-            hooks,
-
-        picks:
-            picks,
-
-        bytesPerPick:
-            bytesPerPick
-
-    };
+throw new Error(
+"Design file upload karein."
+);
 
 }
 
 
-/* =========================================================
+
+if(hooks%8!==0){
+
+throw new Error(
+"Hooks 8 ke multiple mein hona chahiye."
+);
+
+}
+
+
+
+if(left+right>hooks){
+
+throw new Error(
+"Left + Right padding hooks se zyada hai."
+);
+
+}
+
+
+
+const canvas=$("workCanvas");
+
+canvas.width=hooks;
+canvas.height=picks;
+
+
+const ctx=
+canvas.getContext(
+"2d",
+{willReadFrequently:true}
+);
+
+
+ctx.fillStyle="white";
+
+ctx.fillRect(
+0,
+0,
+hooks,
+picks
+);
+
+
+
+ctx.save();
+
+
+ctx.translate(
+mirror ? hooks : 0,
+flip ? picks : 0
+);
+
+
+ctx.scale(
+mirror ? -1 : 1,
+flip ? -1 : 1
+);
+
+
+
+const usableW=
+hooks-left-right;
+
+
+const scale=
+Math.min(
+usableW/designImage.width,
+picks/designImage.height
+);
+
+
+const dw=
+Math.max(
+1,
+Math.round(
+designImage.width*scale
+)
+);
+
+
+const dh=
+Math.max(
+1,
+Math.round(
+designImage.height*scale
+)
+);
+
+
+const x=
+left+
+Math.floor(
+(usableW-dw)/2
+);
+
+
+const y=
+Math.floor(
+(picks-dh)/2
+);
+
+
+ctx.drawImage(
+designImage,
+x,
+y,
+dw,
+dh
+);
+
+
+ctx.restore();
+
+
+
+const data=
+ctx.getImageData(
+0,
+0,
+hooks,
+picks
+).data;
+
+
+const bytesPerPick=
+hooks/8;
+
+
+const out=
+new Uint8Array(
+picks*bytesPerPick
+);
+
+
+
+for(
+let y=0;
+y<picks;
+y++
+){
+
+for(
+let x=0;
+x<hooks;
+x++
+){
+
+const i=
+(y*hooks+x)*4;
+
+
+const gray=
+(
+data[i]+
+data[i+1]+
+data[i+2]
+)/3;
+
+
+let on=
+gray<threshold;
+
+
+if(invert){
+
+on=!on;
+
+}
+
+
+if(on){
+
+const byteIndex=
+y*bytesPerPick+
+Math.floor(x/8);
+
+
+const bit=
+7-(x%8);
+
+
+out[byteIndex] |=
+(1<<bit);
+
+}
+
+}
+
+}
+
+
+
+return {
+out,
+hooks,
+picks,
+bytesPerPick
+};
+
+}
+
+
+
+/* =========================
    BUILD EP
-========================================================= */
+========================= */
 
 function buildEP(){
 
-    const machine =
-        getSelectedMachine();
+if(
+!runningBytes ||
+!runningHeader
+){
 
-
-    if(!machine){
-
-        throw new Error(
-            "Jacquard select nahi hai."
-        );
-
-    }
-
-
-    if(
-        !runningBytes ||
-        !runningHeader
-    ){
-
-        /*
-            Selected saved machine se running bytes
-            dobara load karne ki koshish.
-        */
-
-        if(machine.runningBytes){
-
-            runningBytes =
-                new Uint8Array(
-                    machine.runningBytes
-                );
-
-            runningHeader =
-                new Uint8Array(
-                    machine.runningHeader
-                );
-
-        }else{
-
-            throw new Error(
-                "Running EP available nahi hai."
-            );
-
-        }
-
-    }
-
-
-    const result =
-        packDesign();
-
-
-    /*
-        IMPORTANT:
-        Original running file ka header
-        template ke roop mein use kiya ja raha hai.
-    */
-
-    const header =
-        new Uint8Array(
-            runningHeader
-        );
-
-
-    /*
-        Original example mein
-        bytes 3-5 pick count tha.
-    */
-
-    if(header.length >= 6){
-
-        const picks =
-            u24(
-                result.picks
-            );
-
-        header[3] =
-            picks[0];
-
-        header[4] =
-            picks[1];
-
-        header[5] =
-            picks[2];
-
-    }
-
-
-    const finalBytes =
-        new Uint8Array(
-            header.length +
-            result.output.length
-        );
-
-
-    finalBytes.set(
-        header,
-        0
-    );
-
-
-    finalBytes.set(
-        result.output,
-        header.length
-    );
-
-
-    return {
-
-        bytes:
-            finalBytes,
-
-        result:
-            result,
-
-        machine:
-            machine
-
-    };
+throw new Error(
+"Pehle original working EP upload karein."
+);
 
 }
 
 
-/* =========================================================
+const result=
+packDesign();
+
+
+const header=
+new Uint8Array(
+runningHeader
+);
+
+
+
+/*
+   Original 78 A structure:
+   pick count bytes 3,4,5
+*/
+
+if(header.length>=6){
+
+const p=
+u24(result.picks);
+
+header[3]=p[0];
+header[4]=p[1];
+header[5]=p[2];
+
+}
+
+
+
+const finalBytes=
+new Uint8Array(
+header.length+
+result.out.length
+);
+
+
+finalBytes.set(
+header,
+0
+);
+
+
+finalBytes.set(
+result.out,
+header.length
+);
+
+
+
+return {
+bytes:finalBytes,
+result
+};
+
+}
+
+
+
+/* =========================
    CREATE EP
-========================================================= */
+========================= */
 
-$("createEPBtn")
-.addEventListener(
-    "click",
-    async function(){
+$("createBtn").addEventListener(
+"click",
+function(){
 
-        try{
+try{
 
-            $("createStatus")
-                .className =
-                "info";
+$("status").className="info";
 
-            $("createStatus")
-                .textContent =
-                "EP create ho rahi hai...";
+$("status").textContent=
+"EP create ho rahi hai...";
 
 
-            const built =
-                buildEP();
+const built=
+buildEP();
 
 
-            const blob =
-                new Blob(
-                    [built.bytes],
-                    {
-                        type:
-                            "application/octet-stream"
-                    }
-                );
-
-
-            if(generatedURL){
-                URL.revokeObjectURL(
-                    generatedURL
-                );
-            }
-
-
-            generatedURL =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const designFile =
-                $("designFile")
-                    .files[0];
-
-
-            const originalName =
-                designFile
-                ? designFile.name
-                : "Design";
-
-
-            const baseName =
-                originalName.replace(
-                    /\.[^.]+$/,
-                    ""
-                );
-
-
-            const machineName =
-                built.machine.name
-                    .replace(
-                        /[^a-zA-Z0-9_-]+/g,
-                        "_"
-                    );
-
-
-            const filename =
-                baseName +
-                "_" +
-                machineName +
-                "_Native.EP";
-
-
-            const link =
-                $("downloadLink");
-
-
-            link.href =
-                generatedURL;
-
-            link.download =
-                filename;
-
-            link.textContent =
-                "⬇ DOWNLOAD " +
-                filename;
-
-
-            link.classList.remove(
-                "hidden"
-            );
-
-
-            $("createStatus")
-                .className =
-                "success";
-
-
-            $("createStatus")
-                .innerHTML =
-                `
-                    <b>✓ EP Ready</b><br>
-                    Machine:
-                    ${escapeHTML(built.machine.name)}
-                    <br>
-                    Hooks:
-                    ${built.result.hooks}
-                    <br>
-                    Picks:
-                    ${built.result.picks}
-                    <br>
-                    File Size:
-                    ${built.bytes.length.toLocaleString()}
-                    bytes
-                `;
-
-
-            renderHex(
-                built.bytes
-            );
-
-
-            await saveHistory(
-                {
-                    machineName:
-                        built.machine.name,
-
-                    machineId:
-                        built.machine.id,
-
-                    hooks:
-                        built.result.hooks,
-
-                    picks:
-                        built.result.picks,
-
-                    fileName:
-                        filename,
-
-                    size:
-                        built.bytes.length
-                }
-            );
-
-
-            renderEverything();
-
-
-        }catch(error){
-
-            $("createStatus")
-                .className =
-                "error";
-
-            $("createStatus")
-                .textContent =
-                error.message;
-
-            console.error(error);
-
-        }
-
-    }
+const blob=
+new Blob(
+[built.bytes],
+{
+type:"application/octet-stream"
+}
 );
 
 
-/* =========================================================
+const url=
+URL.createObjectURL(blob);
+
+
+const nameBase=
+(
+$("designFile").files[0]?.name ||
+"Design"
+)
+.replace(
+/\.[^.]+$/,
+""
+);
+
+
+const a=
+$("downloadLink");
+
+
+a.href=url;
+
+
+a.download=
+nameBase+"_Native.EP";
+
+
+a.textContent=
+"⬇ Download "+
+a.download;
+
+
+a.classList.remove(
+"hidden"
+);
+
+
+
+$("status").className="ok";
+
+
+$("status").innerHTML=
+
+"<b>EP ready.</b><br>"+
+"Size: "+
+built.bytes.length.toLocaleString()+
+" bytes<br>"+
+"Hooks: "+
+built.result.hooks+
+"<br>"+
+"Picks: "+
+built.result.picks;
+
+
+
+/* =========================
    HEX PREVIEW
-========================================================= */
+========================= */
 
-function renderHex(bytes){
+let hex="";
 
-    let hex = "";
-
-    const max =
-        Math.min(
-            256,
-            bytes.length
-        );
-
-
-    for(
-        let i = 0;
-        i < max;
-        i++
-    ){
-
-        hex +=
-            bytes[i]
-                .toString(16)
-                .padStart(
-                    2,
-                    "0"
-                )
-                .toUpperCase() +
-            " ";
-
-
-        if(
-            (i + 1) % 16 === 0
-        ){
-
-            hex += "\n";
-
-        }
-
-    }
-
-
-    $("hexPreview")
-        .textContent =
-        hex;
-
-}
-
-
-/* =========================================================
-   HISTORY
-========================================================= */
-
-async function saveHistory(item){
-
-    const record = {
-
-        id:
-            makeId("history"),
-
-        createdAt:
-            Date.now(),
-
-        ...item
-
-    };
-
-
-    await dbPut(
-        "history",
-        record
-    );
-
-
-    history.push(
-        record
-    );
-
-}
-
-
-function renderHistory(){
-
-    const container =
-        $("historyList");
-
-
-    if(!history.length){
-
-        container.innerHTML =
-            `
-                <div class="empty">
-                    Abhi koi conversion history nahi hai.
-                </div>
-            `;
-
-        return;
-
-    }
-
-
-    let html = `
-        <div style="overflow:auto">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Design</th>
-                        <th>Machine</th>
-                        <th>Hooks</th>
-                        <th>Picks</th>
-                        <th>Size</th>
-                        <th>Date</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-    `;
-
-
-    history.forEach(
-        function(item){
-
-            html += `
-                <tr>
-
-                    <td>
-                        ${escapeHTML(item.fileName)}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(item.machineName)}
-                    </td>
-
-                    <td>
-                        ${item.hooks}
-                    </td>
-
-                    <td>
-                        ${item.picks}
-                    </td>
-
-                    <td>
-                        ${Number(item.size || 0)
-                            .toLocaleString()}
-                        B
-                    </td>
-
-                    <td>
-                        ${new Date(
-                            item.createdAt
-                        ).toLocaleString()}
-                    </td>
-
-                </tr>
-            `;
-
-        }
-    );
-
-
-    html += `
-                </tbody>
-
-            </table>
-
-        </div>
-    `;
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/* =========================================================
-   CLEAR HISTORY
-========================================================= */
-
-$("clearHistoryBtn")
-.addEventListener(
-    "click",
-    async function(){
-
-        const ok =
-            confirm(
-                "Kya conversion history clear karni hai?"
-            );
-
-        if(!ok){
-            return;
-        }
-
-
-        await dbClear(
-            "history"
-        );
-
-
-        history = [];
-
-        renderHistory();
-
-        updateStats();
-
-    }
+const n=
+Math.min(
+128,
+built.bytes.length
 );
 
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+for(
+let i=0;
+i<n;
+i++
+){
 
-const allSections = [
-    "homeSection",
-    "machinesSection",
-    "designSection",
-    "historySection",
-    "settingsSection"
-];
-
-
-function showSection(sectionId){
-
-    allSections.forEach(
-        function(id){
-
-            if(id === sectionId){
-                show(id);
-            }else{
-                hide(id);
-            }
-
-        }
-    );
+hex+=
+built.bytes[i]
+.toString(16)
+.padStart(2,"0")
+.toUpperCase()+
+" ";
 
 
-    document
-        .querySelectorAll(
-            ".section-nav button"
-        )
-        .forEach(
-            function(button){
+if(
+(i+1)%16===0
+){
 
-                button.classList.toggle(
-                    "active",
-                    button.dataset.section ===
-                    sectionId
-                );
+hex+="\n";
 
-            }
-        );
-
-
-    if(sectionId === "machinesSection"){
-        renderMachines();
-    }
-
-
-    if(sectionId === "historySection"){
-        renderHistory();
-    }
-
-
-    if(sectionId === "settingsSection"){
-        renderSettings();
-    }
-
-
-    if(sectionId === "designSection"){
-        renderSelectedMachine();
-    }
-
-
-    window.scrollTo(
-        {
-            top:0,
-            behavior:"smooth"
-        }
-    );
+}
 
 }
 
 
-document
-    .querySelectorAll(
-        ".section-nav button"
-    )
-    .forEach(
-        function(button){
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    showSection(
-                        this.dataset.section
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-$("designHomeBtn").onclick =
-    function(){
-
-        if(!getSelectedMachine()){
-
-            alert(
-                "Pehle ek Jacquard select karein."
-            );
-
-            showSection(
-                "machinesSection"
-            );
-
-            return;
-
-        }
-
-        showSection(
-            "designSection"
-        );
-
-    };
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-function renderSettings(){
-
-    const machine =
-        getSelectedMachine();
-
-
-    if(!machine){
-
-        $("settingsMachineInfo")
-            .innerHTML =
-            `
-                <div class="empty">
-                    Koi Jacquard selected nahi hai.
-                </div>
-            `;
-
-        return;
-
-    }
-
-
-    $("settingsMachineInfo")
-        .innerHTML =
-        `
-            <div class="machine-card selected">
-
-                <div class="machine-name">
-                    ${escapeHTML(machine.name)}
-                </div>
-
-                <br>
-
-                Category:
-                <b>
-                    ${escapeHTML(machine.category)}
-                </b>
-
-                <br>
-
-                Hooks:
-                <b>
-                    ${machine.hooks}
-                </b>
-
-                <br>
-
-                Running Picks:
-                <b>
-                    ${machine.runningPicks}
-                </b>
-
-                <br>
-
-                Header:
-                <b>
-                    ${machine.headerLength}
-                    bytes
-                </b>
-
-                <br>
-
-                Running File:
-                <b>
-                    ${escapeHTML(machine.fileName)}
-                </b>
-
-            </div>
-        `;
+$("hexPreview").textContent=
+hex;
 
 }
 
+catch(e){
 
-/* =========================================================
-   RESET APP
-========================================================= */
+$("status").className="err";
 
-$("resetAppBtn")
-.addEventListener(
-    "click",
-    async function(){
+$("status").textContent=
+e.message;
 
-        const ok =
-            confirm(
-                "WARNING!\n\n" +
-                "Isse saved Jacquard profiles aur history delete ho jayegi.\n\n" +
-                "Kya aap continue karna chahte hain?"
-            );
+}
 
-        if(!ok){
-            return;
-        }
-
-
-        await dbClear(
-            "machines"
-        );
-
-        await dbClear(
-            "history"
-        );
-
-
-        machines = [];
-        history = [];
-
-        selectedMachineId = null;
-
-        runningBytes = null;
-        runningHeader = null;
-
-
-        renderEverything();
-
-        alert(
-            "Local app data reset ho gaya."
-        );
-
-    }
+}
 );
 
 
-/* =========================================================
-   STATS
-========================================================= */
 
-function updateStats(){
+/* =========================
+   AUTO LOGIN
+========================= */
 
-    $("machineCount")
-        .textContent =
-        machines.length;
+if(
+localStorage.getItem(LOGIN_KEY)==="1"
+){
 
+openApp();
 
-    $("historyCount")
-        .textContent =
-        history.length;
+}else{
 
-
-    const machine =
-        getSelectedMachine();
-
-
-    $("selectedHooks")
-        .textContent =
-        machine
-        ? machine.hooks
-        : "-";
+openLogin();
 
 }
 
 
-/* =========================================================
-   RENDER EVERYTHING
-========================================================= */
-
-function renderEverything(){
-
-    renderCategories();
-
-    renderMachines();
-
-    renderHistory();
-
-    renderSelectedMachine();
-
-    renderSettings();
-
-    updateStats();
-
-}
-
-
-/* =========================================================
-   AUTO MACHINE PICK DEFAULTS
-========================================================= */
-
-function updateDesignDefaults(){
-
-    const machine =
-        getSelectedMachine();
-
-    if(!machine){
-        return;
-    }
-
-
-    $("targetPicks").value =
-        machine.defaultPicks ||
-        machine.runningPicks ||
-        1;
-
-
-    $("selectedMachineBox")
-        .innerHTML =
-        `
-            <b>✓ ${escapeHTML(machine.name)}</b>
-            <br>
-            Hooks:
-            ${machine.hooks}
-            <br>
-            Default Picks:
-            ${machine.defaultPicks}
-        `;
-
-}
-
-
-/* =========================================================
-   DESIGN VALIDATION
-========================================================= */
-
-$("targetPicks")
-.addEventListener(
-    "change",
-    function(){
-
-        const machine =
-            getSelectedMachine();
-
-        if(!machine){
-            return;
-        }
-
-
-        const value =
-            parseInt(
-                this.value
-            );
-
-
-        if(!value || value < 1){
-
-            this.value =
-                machine.defaultPicks ||
-                1;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIAL START
-========================================================= */
-
-async function initialize(){
-
-    try{
-
-        await openDatabase();
-
-        machines =
-            await dbGetAll(
-                "machines"
-            );
-
-        history =
-            await dbGetAll(
-                "history"
-            );
-
-
-        machines.sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-
-        history.sort(
-            (a,b) =>
-                (b.createdAt || 0) -
-                (a.createdAt || 0)
-        );
-
-
-        /*
-            Agar pehle se machine saved hai
-            to automatically first machine select
-            nahi kar rahe hain.
-            User khud machine select karega.
-        */
-
-
-        if(
-            sessionStorage.getItem(
-                "electronic_admin"
-            ) === "1"
-        ){
-
-            openApp();
-
-        }else{
-
-            openLogin();
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Initialization error:",
-            error
-        );
-
-        /*
-            Login ko database se dependent
-            nahi banaya gaya hai.
-        */
-
-        if(
-            sessionStorage.getItem(
-                "electronic_admin"
-            ) === "1"
-        ){
-
-            openApp();
-
-        }else{
-
-            openLogin();
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   IMPORTANT MACHINE CATEGORY SHORTCUTS
-========================================================= */
-
-function filterMachinesByCategory(category){
-
-    const filtered =
-        machines.filter(
-            machine =>
-                (machine.category || "Other") ===
-                category
-        );
-
-    showSection(
-        "machinesSection"
-    );
-
-    renderMachineCards(
-        filtered
-    );
-
-}
-
-
-/* =========================================================
-   SAVE SELECTED MACHINE IN SESSION
-========================================================= */
-
-function rememberSelectedMachine(){
-
-    if(selectedMachineId){
-
-        sessionStorage.setItem(
-            "selected_machine_id",
-            selectedMachineId
-        );
-
-    }
-
-}
-
-
-function restoreSelectedMachine(){
-
-    const saved =
-        sessionStorage.getItem(
-            "selected_machine_id"
-        );
-
-
-    if(!saved){
-        return;
-    }
-
-
-    const machine =
-        machines.find(
-            m => m.id === saved
-        );
-
-
-    if(machine){
-
-        selectedMachineId =
-            machine.id;
-
-        runningBytes =
-            new Uint8Array(
-                machine.runningBytes
-            );
-
-        runningHeader =
-            new Uint8Array(
-                machine.runningHeader
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   PATCH SELECT MACHINE TO REMEMBER
-========================================================= */
-
-const originalSelectMachine =
-    selectMachine;
-
-selectMachine =
-    function(id){
-
-        originalSelectMachine(id);
-
-        rememberSelectedMachine();
-
-        updateDesignDefaults();
-
-    };
-
-
-/* =========================================================
-   PATCH DELETE SELECTED
-========================================================= */
-
-const originalDeleteMachine =
-    deleteMachine;
-
-deleteMachine =
-    async function(id){
-
-        await originalDeleteMachine(id);
-
-        if(
-            selectedMachineId === id
-        ){
-
-            sessionStorage.removeItem(
-                "selected_machine_id"
-            );
-
-        }
-
-    };
-
-
-/* =========================================================
-   START
-========================================================= */
-
-initialize();
-
+})();
 </script>
 
 </body>
-  </html>
+</html>
