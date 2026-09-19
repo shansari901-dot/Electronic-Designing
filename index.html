@@ -194,18 +194,16 @@ font-size:14px;
 white-space:nowrap
 }
 
-canvas{
-image-rendering:pixelated
+.readonly{
+background:#f3f4f6;
+font-weight:700
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+<!-- ================= LOGIN ================= -->
 
 <section id="loginPage" class="login">
 
@@ -256,13 +254,9 @@ LOGIN
 </section>
 
 
-
-<!-- =====================================================
-     MAIN APP
-===================================================== -->
+<!-- ================= MAIN APP ================= -->
 
 <section id="appPage" class="hidden">
-
 
 <header>
 
@@ -279,10 +273,7 @@ Logout
 </header>
 
 
-
-<!-- =====================================================
-     RUNNING EP
-===================================================== -->
+<!-- ================= RUNNING EP ================= -->
 
 <div class="card">
 
@@ -290,8 +281,8 @@ Logout
 
 <p class="small">
 Apni machine mein jo EP file already sahi chal rahi hai,
-use yahan upload karein. Ye file machine-format template
-ke roop mein use hogi.
+use yahan upload karein. Iska header/template preserve
+kiya jayega. Iske purane picks output ke picks nahi honge.
 </p>
 
 <input
@@ -307,10 +298,7 @@ No running EP selected.
 </div>
 
 
-
-<!-- =====================================================
-     MACHINE SETTINGS
-===================================================== -->
+<!-- ================= MACHINE SETTINGS ================= -->
 
 <div class="card">
 
@@ -335,18 +323,19 @@ step="8"
 
 <div>
 
-<label>Target Picks</label>
+<label>Target Picks — AUTO</label>
 
 <input
 id="targetPicks"
+class="readonly"
 type="number"
 value="378"
-min="1"
+readonly
 >
 
 <p class="small">
-Design upload karne par picks automatically
-design ratio se calculate honge.
+Picks design ke original ratio se automatically
+calculate honge. Running EP ke picks use nahi honge.
 </p>
 
 </div>
@@ -363,10 +352,6 @@ value="180"
 min="0"
 max="255"
 >
-
-<p class="small">
-Default 180 — design ke white/grey pattern ke liye.
-</p>
 
 </div>
 
@@ -429,10 +414,7 @@ Flip: OFF
 </div>
 
 
-
-<!-- =====================================================
-     DESIGN
-===================================================== -->
+<!-- ================= DESIGN ================= -->
 
 <div class="card">
 
@@ -456,10 +438,7 @@ class="preview hidden"
 </div>
 
 
-
-<!-- =====================================================
-     CREATE EP
-===================================================== -->
+<!-- ================= CREATE EP ================= -->
 
 <div class="card">
 
@@ -479,7 +458,6 @@ class="info"
 Ready.
 </div>
 
-
 <a
 id="downloadLink"
 class="downloadBtn hidden"
@@ -491,10 +469,7 @@ download
 </div>
 
 
-
-<!-- =====================================================
-     BINARY CHECK
-===================================================== -->
+<!-- ================= BINARY CHECK ================= -->
 
 <div class="card">
 
@@ -507,27 +482,34 @@ No EP generated yet.
 </div>
 
 
+<!-- ================= RESULT CHECK ================= -->
 
-<!-- =====================================================
-     IMPORTANT
-===================================================== -->
+<div class="card">
+
+<h2>6. Output Check</h2>
+
+<div id="outputCheck" class="info">
+No output generated yet.
+</div>
+
+</div>
+
+
+<!-- ================= IMPORTANT ================= -->
 
 <div class="card">
 
 <h2>Important</h2>
 
 <p class="small">
-Original working EP ka header preserve kiya jayega.
-81-byte template EP mein original 81-byte header ko
-change nahi kiya jayega. Design data ko calculated
-hooks × picks ke according banaya jayega.
+Running EP ke purane picks ko output picks ke liye use
+nahi kiya jayega. Design ke width/height ratio se picks
+calculate honge.
 </p>
 
 </div>
 
-
 </section>
-
 
 
 <div
@@ -542,7 +524,6 @@ class="hidden"
 ></canvas>
 
 
-
 <script>
 
 (function(){
@@ -550,17 +531,15 @@ class="hidden"
 "use strict";
 
 
-
 /* =====================================================
-   ELEMENT HELPER
+   ELEMENT
 ===================================================== */
 
 const $ = id => document.getElementById(id);
 
 
-
 /* =====================================================
-   LOGIN SETTINGS
+   LOGIN
 ===================================================== */
 
 const DEFAULT_ADMIN_ID = "admin";
@@ -570,35 +549,33 @@ const DEFAULT_ADMIN_PASSWORD = "123456";
 const LOGIN_KEY = "electronic_admin";
 
 
-
 /* =====================================================
-   WORKING VARIABLES
+   VARIABLES
 ===================================================== */
 
-let runningBytes = null;
+let runningBytes=null;
 
-let runningHeader = null;
+let runningHeader=null;
 
-let runningHeaderLength = 0;
+let runningHeaderLength=0;
 
-let runningPicks = 0;
+let runningPicks=0;
 
-let runningBytesPerPick = 0;
+let runningBytesPerPick=0;
 
-let runningFileName = "";
+let runningFileName="";
 
-let designImage = null;
+let designImage=null;
 
-let designFileName = "";
+let designFileName="";
 
-let invert = false;
+let invert=false;
 
-let mirror = false;
+let mirror=false;
 
-let flip = false;
+let flip=false;
 
-let lastObjectUrl = null;
-
+let lastObjectUrl=null;
 
 
 /* =====================================================
@@ -611,13 +588,11 @@ $(id).classList.remove("hidden");
 
 }
 
-
 function hide(id){
 
 $(id).classList.add("hidden");
 
 }
-
 
 
 /* =====================================================
@@ -637,7 +612,6 @@ initBackNavigation();
 }
 
 
-
 /* =====================================================
    OPEN LOGIN
 ===================================================== */
@@ -651,14 +625,13 @@ show("loginPage");
 }
 
 
-
 /* =====================================================
-   BACK BUTTON FIX
+   BACK BUTTON
 ===================================================== */
 
-let backNavigationReady = false;
+let backNavigationReady=false;
 
-let backMessageTimer = null;
+let backMessageTimer=null;
 
 
 function initBackNavigation(){
@@ -673,18 +646,14 @@ backNavigationReady=true;
 
 
 history.replaceState(
-{
-electronicDesigning:true
-},
+{electronicDesigning:true},
 "",
 location.href
 );
 
 
 history.pushState(
-{
-electronicDesigning:true
-},
+{electronicDesigning:true},
 "",
 location.href
 );
@@ -737,15 +706,8 @@ return;
 }
 
 
-/*
-   Browser / Android Back ko app page se
-   bahar jaane se roka ja raha hai.
-*/
-
 history.pushState(
-{
-electronicDesigning:true
-},
+{electronicDesigning:true},
 "",
 location.href
 );
@@ -756,9 +718,8 @@ showBackMessage();
 );
 
 
-
 /* =====================================================
-   PASSWORD SHOW
+   SHOW PASSWORD
 ===================================================== */
 
 $("showPass").addEventListener(
@@ -776,18 +737,15 @@ this.checked
 );
 
 
-
 /* =====================================================
    LOGIN
 ===================================================== */
 
 function doLogin(){
 
-const id=
-$("adminId").value.trim();
+const id=$("adminId").value.trim();
 
-const pass=
-$("adminPassword").value;
+const pass=$("adminPassword").value;
 
 
 if(
@@ -800,9 +758,7 @@ LOGIN_KEY,
 "1"
 );
 
-$("loginMsg").classList.add(
-"hidden"
-);
+$("loginMsg").classList.add("hidden");
 
 openApp();
 
@@ -813,9 +769,7 @@ else{
 $("loginMsg").textContent=
 "Admin ID ya password galat hai.";
 
-$("loginMsg").classList.remove(
-"hidden"
-);
+$("loginMsg").classList.remove("hidden");
 
 }
 
@@ -842,21 +796,6 @@ doLogin();
 );
 
 
-$("adminId").addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="Enter"){
-
-$("adminPassword").focus();
-
-}
-
-}
-);
-
-
-
 /* =====================================================
    LOGOUT
 ===================================================== */
@@ -865,16 +804,12 @@ $("logoutBtn").addEventListener(
 "click",
 function(){
 
-localStorage.removeItem(
-LOGIN_KEY
-);
+localStorage.removeItem(LOGIN_KEY);
 
 backNavigationReady=false;
 
 history.replaceState(
-{
-electronicDesigningLogin:true
-},
+{login:true},
 "",
 location.href
 );
@@ -885,78 +820,53 @@ openLogin();
 );
 
 
-
 /* =====================================================
    INVERT
 ===================================================== */
 
-$("invertBtn").onclick=
-function(){
+$("invertBtn").onclick=function(){
 
 invert=!invert;
 
 $("invertBtn").textContent=
 "Invert: "+
-(
-invert
-?
-"ON"
-:
-"OFF"
-);
+(invert?"ON":"OFF");
 
 };
-
 
 
 /* =====================================================
    MIRROR
 ===================================================== */
 
-$("mirrorBtn").onclick=
-function(){
+$("mirrorBtn").onclick=function(){
 
 mirror=!mirror;
 
 $("mirrorBtn").textContent=
 "Mirror: "+
-(
-mirror
-?
-"ON"
-:
-"OFF"
-);
+(mirror?"ON":"OFF");
 
 };
-
 
 
 /* =====================================================
    FLIP
 ===================================================== */
 
-$("flipBtn").onclick=
-function(){
+$("flipBtn").onclick=function(){
 
 flip=!flip;
 
 $("flipBtn").textContent=
 "Flip: "+
-(
-flip
-?
-"ON"
-:
-"OFF"
-);
+(flip?"ON":"OFF");
 
 };
 
 
-
 /* =====================================================
-   24-BIT NUMBER
+   24 BIT
 ===================================================== */
 
 function u24(n){
@@ -965,24 +875,89 @@ return new Uint8Array([
 
 n & 255,
 
-(n>>8) & 255,
+(n>>8)&255,
 
-(n>>16) & 255
+(n>>16)&255
 
 ]);
 
 }
 
 
+/* =====================================================
+   EXACT PICK CALCULATION
+===================================================== */
+
+/*
+   THIS IS THE MAIN FIX.
+
+   Example:
+
+   Design = 1536 × 864
+   Hooks  = 672
+
+   Picks =
+   672 × 864 / 1536
+
+   = 378
+
+   Running EP ke 192 picks ka yahan koi use nahi.
+*/
+
+function calculateDesignPicks(){
+
+if(!designImage){
+
+return 0;
+
+}
+
+
+const hooks=Math.max(
+8,
+parseInt($("hooks").value)||672
+);
+
+
+const width=designImage.naturalWidth ||
+designImage.width;
+
+
+const height=designImage.naturalHeight ||
+designImage.height;
+
+
+if(
+!width ||
+!height
+){
+
+return 0;
+
+}
+
+
+const picks=Math.round(
+(hooks*height)/width
+);
+
+
+return Math.max(
+1,
+picks
+);
+
+}
+
 
 /* =====================================================
-   DETECT EP STRUCTURE
+   DETECT RUNNING EP
 ===================================================== */
 
 function detectEPStructure(bytes,hooks){
 
 const bytesPerPick=
-Math.ceil(hooks/8);
+hooks/8;
 
 
 let headerLength=0;
@@ -991,32 +966,16 @@ let picks=0;
 
 
 /*
-   First try 81-byte header.
-   Your 31942 working EP:
+   IMPORTANT:
 
-   81 + 84 × 378
-   = 31,833 bytes
+   First test 34-byte format.
+   79A.EP:
+
+   34 + 84×192
+   = 16162
 */
 
 if(
-bytes.length>=81 &&
-(bytes.length-81)%bytesPerPick===0
-){
-
-headerLength=81;
-
-picks=
-(bytes.length-81)/
-bytesPerPick;
-
-}
-
-
-/*
-   Then try 34-byte header.
-*/
-
-else if(
 bytes.length>=34 &&
 (bytes.length-34)%bytesPerPick===0
 ){
@@ -1024,8 +983,24 @@ bytes.length>=34 &&
 headerLength=34;
 
 picks=
-(bytes.length-34)/
-bytesPerPick;
+(bytes.length-34)/bytesPerPick;
+
+}
+
+
+/*
+   Then test 81-byte format.
+*/
+
+else if(
+bytes.length>=81 &&
+(bytes.length-81)%bytesPerPick===0
+){
+
+headerLength=81;
+
+picks=
+(bytes.length-81)/bytesPerPick;
 
 }
 
@@ -1036,39 +1011,16 @@ bytesPerPick;
 
 else{
 
-/*
-   Prefer 81-byte format when file
-   looks like the supplied native EP.
-*/
-
-if(bytes.length>81){
-
-headerLength=81;
-
-picks=
-Math.floor(
-(bytes.length-81)/
-bytesPerPick
-);
-
-}
-
-else{
-
 headerLength=34;
 
-picks=
-Math.floor(
-(bytes.length-34)/
-bytesPerPick
+picks=Math.floor(
+(bytes.length-34)/bytesPerPick
 );
 
 }
 
-}
 
-
-return {
+return{
 
 headerLength,
 
@@ -1081,7 +1033,6 @@ bytesPerPick
 }
 
 
-
 /* =====================================================
    RUNNING EP UPLOAD
 ===================================================== */
@@ -1091,7 +1042,6 @@ $("runningFile").addEventListener(
 async function(){
 
 const file=this.files[0];
-
 
 if(!file){
 
@@ -1113,9 +1063,7 @@ runningFileName=file.name;
 const hooks=
 Math.max(
 8,
-parseInt(
-$("hooks").value
-)||672
+parseInt($("hooks").value)||672
 );
 
 
@@ -1152,9 +1100,12 @@ runningHeaderLength
 );
 
 
+$("runningInfo").className="ok";
+
+
 $("runningInfo").innerHTML=
 
-"<b>✅ Running EP Loaded</b><br><br>"+
+"<b>✅ Original Running EP Loaded</b><br><br>"+
 
 "File: "+
 file.name+
@@ -1168,31 +1119,23 @@ runningBytes.length.toLocaleString()+
 runningHeaderLength+
 " bytes<br>"+
 
-"Bytes/Pick: "+
+"Bytes / Pick: "+
 runningBytesPerPick+
 "<br>"+
 
-"Detected Picks: "+
+"Running EP Picks: "+
 runningPicks+
 "<br><br>"+
 
-(
-runningHeaderLength===81
-?
-"81-byte native header detected. Header preserve rahega."
-:
-"34-byte EP header detected."
-);
+"<b>⚠ Running EP Picks output mein use nahi honge.</b>";
 
 
 $("status").className="ok";
 
-
 $("status").textContent=
-"Original working EP successfully loaded.";
+"Running EP ready. Ab design upload karein.";
 
 }
-
 catch(e){
 
 runningBytes=null;
@@ -1210,7 +1153,6 @@ $("runningInfo").textContent=
 );
 
 
-
 /* =====================================================
    DESIGN UPLOAD
 ===================================================== */
@@ -1221,67 +1163,47 @@ function(){
 
 const file=this.files[0];
 
-
 if(!file){
 
 return;
 
 }
 
-
 designFileName=file.name;
 
 
-const reader=
-new FileReader();
+const reader=new FileReader();
 
 
-reader.onload=
-function(e){
+reader.onload=function(e){
 
-const img=
-new Image();
+const img=new Image();
 
 
-img.onload=
-function(){
+img.onload=function(){
 
 designImage=img;
 
 
-/*
-   IMPORTANT FIX:
-
-   Picks = Hooks × Design Height / Design Width
-
-   Example:
-
-   672 × 940 / 1672
-   ≈ 378 picks
-*/
-
 const hooks=
 Math.max(
 8,
-parseInt(
-$("hooks").value
-)||672
+parseInt($("hooks").value)||672
 );
 
 
-const calculatedPicks=
-Math.max(
-1,
-Math.round(
-hooks*
-img.height/
-img.width
-)
-);
+/*
+   EXACT AUTO PICK.
+
+   1536×864 + 672 hooks
+   = 378 picks
+*/
+
+const picks=
+calculateDesignPicks();
 
 
-$("targetPicks").value=
-calculatedPicks;
+$("targetPicks").value=picks;
 
 
 $("designInfo").className="ok";
@@ -1301,42 +1223,48 @@ img.width+
 img.height+
 "<br>"+
 
-"Aspect Ratio: "+
-(
-img.width/img.height
-).toFixed(4)+
-"<br><br>"+
-
-"<b>Machine Width:</b> "+
+"Hooks: "+
 hooks+
-" hooks<br>"+
+"<br>"+
 
-"<b>Calculated Picks:</b> "+
-calculatedPicks+
-"<br><br>"+
+"<b>Automatic Picks: "+
+picks+
+"</b><br><br>"+
 
-"Output area: "+
+"Output Design Area: "+
 hooks+
 " × "+
-calculatedPicks;
+picks+
+"<br><br>"+
+
+"Calculation: "+
+hooks+
+" × "+
+img.height+
+" ÷ "+
+img.width+
+" = "+
+picks;
 
 
-$("preview").src=
-e.target.result;
+$("preview").src=e.target.result;
 
 show("preview");
 
 
 $("status").className="ok";
 
-$("status").textContent=
-"Design ratio se target picks automatically calculate ho gaye.";
+$("status").innerHTML=
+"✅ Design ready: "+
+hooks+
+" × "+
+picks+
+" hooks/picks.";
 
 };
 
 
-img.onerror=
-function(){
+img.onerror=function(){
 
 $("designInfo").className="err";
 
@@ -1357,7 +1285,6 @@ reader.readAsDataURL(file);
 );
 
 
-
 /* =====================================================
    HOOK CHANGE
 ===================================================== */
@@ -1376,13 +1303,16 @@ return;
 const hooks=
 Math.max(
 8,
-parseInt(
-$("hooks").value
-)||672
+parseInt(this.value)||672
 );
 
 
 if(hooks%8!==0){
+
+$("designInfo").className="err";
+
+$("designInfo").textContent=
+"Hooks 8 ke multiple mein hona chahiye.";
 
 return;
 
@@ -1390,14 +1320,7 @@ return;
 
 
 const picks=
-Math.max(
-1,
-Math.round(
-hooks*
-designImage.height/
-designImage.width
-)
-);
+calculateDesignPicks();
 
 
 $("targetPicks").value=picks;
@@ -1405,16 +1328,15 @@ $("targetPicks").value=picks;
 
 $("designInfo").innerHTML=
 
-"<b>Design settings updated</b><br>"+
+"<b>Design dimensions updated</b><br>"+
 "Hooks: "+
 hooks+
 "<br>"+
-"Auto Picks: "+
+"Automatic Picks: "+
 picks;
 
 }
 );
-
 
 
 /* =====================================================
@@ -1432,12 +1354,22 @@ throw new Error(
 }
 
 
+if(
+!runningBytes ||
+!runningHeader
+){
+
+throw new Error(
+"Original working running EP upload karein."
+);
+
+}
+
+
 const hooks=
 Math.max(
 8,
-parseInt(
-$("hooks").value
-)||672
+parseInt($("hooks").value)||672
 );
 
 
@@ -1451,34 +1383,27 @@ throw new Error(
 
 
 /*
-   ALWAYS calculate picks from
-   actual design ratio.
+   VERY IMPORTANT:
 
-   User's 31942 design:
+   User target picks ko manually use nahi karna.
 
-   1672 × 940
-
-   672 × 940 / 1672
-   = 377.99
-   = 378
+   Always calculate from image ratio.
 */
 
-const autoPicks=
-Math.max(
-1,
-Math.round(
-hooks*
-designImage.height/
-designImage.width
-)
+const picks=
+calculateDesignPicks();
+
+
+if(!picks){
+
+throw new Error(
+"Design ke picks calculate nahi ho paaye."
 );
 
-
-$("targetPicks").value=
-autoPicks;
+}
 
 
-const picks=autoPicks;
+$("targetPicks").value=picks;
 
 
 const threshold=
@@ -1486,9 +1411,7 @@ Math.min(
 255,
 Math.max(
 0,
-parseInt(
-$("threshold").value
-)
+parseInt($("threshold").value)
 ||180
 )
 );
@@ -1497,34 +1420,31 @@ $("threshold").value
 const left=
 Math.max(
 0,
-parseInt(
-$("leftPad").value
-)||0
+parseInt($("leftPad").value)
+||0
 );
 
 
 const right=
 Math.max(
 0,
-parseInt(
-$("rightPad").value
-)||0
+parseInt($("rightPad").value)
+||0
 );
 
 
 if(
-left+right>hooks
+left+right>=hooks
 ){
 
 throw new Error(
-"Left + Right padding hooks se zyada hai."
+"Left + Right padding invalid hai."
 );
 
 }
 
 
-const canvas=
-$("workCanvas");
+const canvas=$("workCanvas");
 
 
 canvas.width=hooks;
@@ -1542,11 +1462,10 @@ willReadFrequently:true
 
 
 /*
-   White background
+   WHITE BACKGROUND
 */
 
-ctx.fillStyle=
-"white";
+ctx.fillStyle="white";
 
 ctx.fillRect(
 0,
@@ -1556,9 +1475,8 @@ picks
 );
 
 
-
 /*
-   Transform
+   TRANSFORM
 */
 
 ctx.save();
@@ -1595,9 +1513,10 @@ ctx.scale(
 
 
 /*
-   FIT IMAGE EXACTLY
-   into available area while
-   maintaining original ratio.
+   IMPORTANT:
+
+   Image ko available area mein
+   EXACT RATIO ke saath fit karna.
 */
 
 const usableW=
@@ -1654,9 +1573,8 @@ dh
 ctx.restore();
 
 
-
 /*
-   Convert image into binary
+   IMAGE → BINARY
 */
 
 const data=
@@ -1678,7 +1596,6 @@ picks*bytesPerPick
 );
 
 
-
 for(
 let y=0;
 y<picks;
@@ -1691,22 +1608,15 @@ x<hooks;
 x++
 ){
 
-const index=
+const i=
 (y*hooks+x)*4;
-
-
-const r=data[index];
-
-const g=data[index+1];
-
-const b=data[index+2];
 
 
 const gray=
 (
-r+
-g+
-b
+data[i]+
+data[i+1]+
+data[i+2]
 )/3;
 
 
@@ -1732,8 +1642,8 @@ const bit=
 7-(x%8);
 
 
-out[byteIndex]
-|=(1<<bit);
+out[byteIndex]|=
+(1<<bit);
 
 }
 
@@ -1742,8 +1652,7 @@ out[byteIndex]
 }
 
 
-
-return {
+return{
 
 out,
 
@@ -1760,9 +1669,8 @@ threshold
 }
 
 
-
 /* =====================================================
-   BUILD NATIVE EP
+   BUILD EP
 ===================================================== */
 
 function buildEP(){
@@ -1773,11 +1681,10 @@ if(
 ){
 
 throw new Error(
-"Pehle original working running EP upload karein."
+"Original working EP upload karein."
 );
 
 }
-
 
 
 const result=
@@ -1785,12 +1692,9 @@ packDesign();
 
 
 /*
-   IMPORTANT:
+   COPY ONLY HEADER.
 
-   We DO NOT copy old pick data.
-
-   We use ONLY the original HEADER
-   + newly generated design data.
+   Old running data NEVER copy hoga.
 */
 
 const header=
@@ -1800,34 +1704,25 @@ runningHeader
 
 
 /*
-   81-byte header:
+   34-BYTE FORMAT
 
-   DO NOT change bytes 3,4,5.
+   79A.EP ke case mein:
 
-   Your supplied working EP:
+   byte 3,4,5 = pick count.
 
-   81-byte header
-   + 84 × 378
-   = 31,833 bytes
+   378 decimal =
+   0x017A
 
-   Original header must remain intact.
+   bytes =
+   7A 01 00
 */
-
 
 if(
 runningHeaderLength===34
 ){
 
-/*
-   34-byte format:
-
-   Pick count stored at bytes 3,4,5.
-*/
-
 const p=
-u24(
-result.picks
-);
+u24(result.picks);
 
 
 header[3]=p[0];
@@ -1840,9 +1735,9 @@ header[5]=p[2];
 
 
 /*
-   Final:
+   81-BYTE FORMAT
 
-   header + NEW design data
+   Header completely unchanged.
 */
 
 const finalBytes=
@@ -1864,7 +1759,7 @@ header.length
 );
 
 
-return {
+return{
 
 bytes:finalBytes,
 
@@ -1875,7 +1770,6 @@ headerLength:header.length
 };
 
 }
-
 
 
 /* =====================================================
@@ -1907,6 +1801,33 @@ const built=
 buildEP();
 
 
+/*
+   EXACT EXPECTED SIZE
+
+   672 hooks / 8
+   = 84 bytes per pick
+
+   378 picks
+   = 31,752 data bytes
+
+   34 header
+   = 31,786 final bytes
+*/
+
+const expectedDataBytes=
+built.result.bytesPerPick*
+built.result.picks;
+
+
+const expectedFinalBytes=
+built.headerLength+
+expectedDataBytes;
+
+
+/*
+   BLOB
+*/
+
 const blob=
 new Blob(
 [built.bytes],
@@ -1918,7 +1839,7 @@ type:
 
 
 /*
-   Old URL release
+   OLD URL RELEASE
 */
 
 if(lastObjectUrl){
@@ -1931,13 +1852,11 @@ lastObjectUrl
 
 
 lastObjectUrl=
-URL.createObjectURL(
-blob
-);
+URL.createObjectURL(blob);
 
 
 /*
-   Filename
+   FILE NAME
 */
 
 let nameBase="Design";
@@ -1959,7 +1878,7 @@ nameBase+"_Native.EP";
 
 
 /*
-   DOWNLOAD BUTTON
+   DOWNLOAD
 */
 
 const link=
@@ -1980,77 +1899,13 @@ link.classList.remove(
 );
 
 
-
 /*
-   Expected size check
-*/
-
-const expectedSize=
-built.headerLength+
-(
-built.result.hooks/8
-)*
-built.result.picks;
-
-
-
-/*
-   SUCCESS
-*/
-
-$("status").className="ok";
-
-
-$("status").innerHTML=
-
-"<b>✅ EP FILE READY</b><br><br>"+
-
-"File: "+
-fileName+
-"<br>"+
-
-"Size: "+
-built.bytes.length.toLocaleString()+
-" bytes<br>"+
-
-"Hooks: "+
-built.result.hooks+
-"<br>"+
-
-"Picks: "+
-built.result.picks+
-"<br>"+
-
-"Header: "+
-built.headerLength+
-" bytes<br>"+
-
-"Design Data: "+
-built.result.out.length.toLocaleString()+
-" bytes<br><br>"+
-
-(
-built.bytes.length===expectedSize
-?
-"✅ Binary size check OK"
-:
-"⚠ Size check different"
-)+
-
-"<br><br>"+
-
-"<b>⬇ Neeche green DOWNLOAD NATIVE EP button dabayein.</b>";
-
-
-
-/*
-   HEX PREVIEW
+   HEX
 */
 
 let hex="";
 
-
-const n=
+const hexCount=
 Math.min(
 256,
 built.bytes.length
@@ -2059,7 +1914,7 @@ built.bytes.length
 
 for(
 let i=0;
-i<n;
+i<hexCount;
 i++
 ){
 
@@ -2086,9 +1941,114 @@ $("hexPreview").textContent=
 hex;
 
 
+/*
+   RESULT CHECK
+*/
+
+const sizeOK=
+built.bytes.length===
+expectedFinalBytes;
+
+
+$("outputCheck").className=
+sizeOK
+?
+"ok"
+:
+"err";
+
+
+$("outputCheck").innerHTML=
+
+"<b>"+
+(
+sizeOK
+?
+"✅ OUTPUT SIZE CORRECT"
+:
+"⚠ OUTPUT SIZE CHECK"
+)+
+"</b><br><br>"+
+
+"Hooks: "+
+built.result.hooks+
+"<br>"+
+
+"Picks: "+
+built.result.picks+
+"<br>"+
+
+"Bytes / Pick: "+
+built.result.bytesPerPick+
+"<br>"+
+
+"Header: "+
+built.headerLength+
+" bytes<br>"+
+
+"Design Data: "+
+expectedDataBytes.toLocaleString()+
+" bytes<br>"+
+
+"Final File: "+
+built.bytes.length.toLocaleString()+
+" bytes<br><br>"+
+
+(
+built.headerLength===34
+?
+"34-byte EP header preserved + pick count updated."
+:
+"81-byte EP header preserved unchanged."
+);
+
 
 /*
-   Scroll to download button
+   SUCCESS MESSAGE
+*/
+
+$("status").className="ok";
+
+
+$("status").innerHTML=
+
+"<b>✅ EP FILE READY</b><br><br>"+
+
+"File: "+
+fileName+
+"<br>"+
+
+"Hooks: "+
+built.result.hooks+
+"<br>"+
+
+"<b>Picks: "+
+built.result.picks+
+"</b><br>"+
+
+"Header: "+
+built.headerLength+
+" bytes<br>"+
+
+"File Size: "+
+built.bytes.length.toLocaleString()+
+" bytes<br><br>"+
+
+(
+sizeOK
+?
+"✅ Binary size check OK"
+:
+"⚠ Please check output"
+)+
+
+"<br><br>"+
+
+"<b>⬇ Neeche green DOWNLOAD NATIVE EP button dabayein.</b>";
+
+
+/*
+   SCROLL TO DOWNLOAD
 */
 
 setTimeout(
@@ -2104,11 +2064,9 @@ block:"center"
 );
 
 }
-
 catch(e){
 
 $("status").className="err";
-
 
 $("status").innerHTML=
 "<b>❌ Error</b><br><br>"+
@@ -2120,15 +2078,12 @@ e.message;
 );
 
 
-
 /* =====================================================
    AUTO LOGIN
 ===================================================== */
 
 if(
-localStorage.getItem(
-LOGIN_KEY
-)==="1"
+localStorage.getItem(LOGIN_KEY)==="1"
 ){
 
 openApp();
