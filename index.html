@@ -102,7 +102,7 @@
                             <option value="192">192 Hooks</option>
                             <option value="384">384 Hooks</option>
                             <option value="512">512 Hooks</option>
-                            <option value="672" selected>672 Hooks</option>
+                            <option value="672" selected>672 Hooks (Matched)</option>
                             <option value="768">768 Hooks</option>
                             <option value="960">960 Hooks</option>
                             <option value="1408">1408 Hooks</option>
@@ -175,7 +175,7 @@
         <div id="tab-converter" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-4">
                 <h3 class="text-base font-bold text-amber-400">🔄 EP & EJC File Converter</h3>
-                <p class="text-xs text-gray-400">Note: Please select actual running file in the same format as your jacquard support.</p>
+                <p class="text-xs text-gray-400">Note: Please select actual running file in the same format as your jacquard support[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span).</p>
                 <div class="space-y-3">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Select Task</label>
@@ -410,7 +410,7 @@
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
-            outCtx.imageSmoothingEnabled = false; // Ensures sharp pixel grid like EasyX
+            outCtx.imageSmoothingEnabled = false;
 
             outCtx.fillStyle = "#ffffff";
             outCtx.fillRect(0, 0, targetWidth, targetHeight);
@@ -453,7 +453,7 @@
                 return;
             }
 
-            // Precise Tianmai/SAAZ Binary Header Structure with Exact Pick Alignment
+            // Standard Tianmai/SAAZ Running File Binary Header Match
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
@@ -464,6 +464,7 @@
             const data = imgData.data;
             const bytesPerRow = Math.ceil(targetWidth / 8);
 
+            // Exact 672/8 byte row iteration matching standard running files
             for (let y = 0; y < targetHeight; y++) {
                 for (let x = 0; x < targetWidth; x += 8) {
                     let byteVal = 0;
