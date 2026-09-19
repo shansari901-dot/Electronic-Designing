@@ -110,8 +110,9 @@ border-radius:10px
 }
 
 .preview{
+display:block;
 max-width:100%;
-max-height:350px;
+max-height:400px;
 border:1px solid #ddd;
 border-radius:10px;
 margin-top:10px
@@ -171,7 +172,7 @@ text-align:center;
 text-decoration:none;
 background:#16803c;
 color:#fff;
-padding:15px;
+padding:16px;
 border-radius:12px;
 font-size:17px;
 font-weight:700;
@@ -192,13 +193,19 @@ box-shadow:0 5px 20px #0005;
 font-size:14px;
 white-space:nowrap
 }
+
+canvas{
+image-rendering:pixelated
+}
 </style>
 </head>
 
 <body>
 
 
-<!-- ================= LOGIN ================= -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
 <section id="loginPage" class="login">
 
@@ -250,7 +257,9 @@ LOGIN
 
 
 
-<!-- ================= MAIN APP ================= -->
+<!-- =====================================================
+     MAIN APP
+===================================================== -->
 
 <section id="appPage" class="hidden">
 
@@ -271,17 +280,18 @@ Logout
 
 
 
-<!-- ================= RUNNING EP ================= -->
+<!-- =====================================================
+     RUNNING EP
+===================================================== -->
 
 <div class="card">
 
-<h2>1. Machine / Running EP</h2>
+<h2>1. Original Working Running EP</h2>
 
 <p class="small">
-
-Apni original working .EP file upload karein.
-Website uske binary structure ko template ke roop mein use karegi.
-
+Apni machine mein jo EP file already sahi chal rahi hai,
+use yahan upload karein. Ye file machine-format template
+ke roop mein use hogi.
 </p>
 
 <input
@@ -291,16 +301,16 @@ accept=".ep,.EP"
 >
 
 <div id="runningInfo" class="info">
-
-No running file selected.
-
+No running EP selected.
 </div>
 
 </div>
 
 
 
-<!-- ================= MACHINE SETTINGS ================= -->
+<!-- =====================================================
+     MACHINE SETTINGS
+===================================================== -->
 
 <div class="card">
 
@@ -330,24 +340,33 @@ step="8"
 <input
 id="targetPicks"
 type="number"
-value="972"
+value="378"
 min="1"
 >
+
+<p class="small">
+Design upload karne par picks automatically
+design ratio se calculate honge.
+</p>
 
 </div>
 
 
 <div>
 
-<label>Threshold (0-255)</label>
+<label>Threshold</label>
 
 <input
 id="threshold"
 type="number"
-value="128"
+value="180"
 min="0"
 max="255"
 >
+
+<p class="small">
+Default 180 — design ke white/grey pattern ke liye.
+</p>
 
 </div>
 
@@ -411,7 +430,9 @@ Flip: OFF
 
 
 
-<!-- ================= DESIGN ================= -->
+<!-- =====================================================
+     DESIGN
+===================================================== -->
 
 <div class="card">
 
@@ -424,9 +445,7 @@ accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg"
 >
 
 <div id="designInfo" class="info">
-
 No design selected.
-
 </div>
 
 <img
@@ -438,7 +457,9 @@ class="preview hidden"
 
 
 
-<!-- ================= CREATE EP ================= -->
+<!-- =====================================================
+     CREATE EP
+===================================================== -->
 
 <div class="card">
 
@@ -448,67 +469,58 @@ class="preview hidden"
 id="createBtn"
 class="green"
 >
-
 CREATE EP FILE
-
 </button>
-
 
 <div
 id="status"
 class="info"
 >
-
 Ready.
-
 </div>
 
-
-<!-- DOWNLOAD BUTTON -->
 
 <a
 id="downloadLink"
 class="downloadBtn hidden"
 download
 >
-
 ⬇ DOWNLOAD NATIVE EP
-
 </a>
-
 
 </div>
 
 
 
-<!-- ================= BINARY CHECK ================= -->
+<!-- =====================================================
+     BINARY CHECK
+===================================================== -->
 
 <div class="card">
 
 <h2>5. Binary Check</h2>
 
 <pre id="hexPreview">
-
 No EP generated yet.
-
 </pre>
 
 </div>
 
 
 
-<!-- ================= IMPORTANT ================= -->
+<!-- =====================================================
+     IMPORTANT
+===================================================== -->
 
 <div class="card">
 
 <h2>Important</h2>
 
 <p class="small">
-
-This version uses your uploaded working EP as the
-machine-format template. The original header structure
-is preserved as far as the template permits.
-
+Original working EP ka header preserve kiya jayega.
+81-byte template EP mein original 81-byte header ko
+change nahi kiya jayega. Design data ko calculated
+hooks × picks ke according banaya jayega.
 </p>
 
 </div>
@@ -538,32 +550,18 @@ class="hidden"
 "use strict";
 
 
-/* =========================
-   BASIC VARIABLES
-========================= */
+
+/* =====================================================
+   ELEMENT HELPER
+===================================================== */
 
 const $ = id => document.getElementById(id);
 
 
-let runningBytes = null;
 
-let runningHeader = null;
-
-let runningPicks = 0;
-
-let designImage = null;
-
-let invert = false;
-
-let mirror = false;
-
-let flip = false;
-
-
-
-/* =========================
-   LOGIN
-========================= */
+/* =====================================================
+   LOGIN SETTINGS
+===================================================== */
 
 const DEFAULT_ADMIN_ID = "admin";
 
@@ -573,9 +571,39 @@ const LOGIN_KEY = "electronic_admin";
 
 
 
-/* =========================
+/* =====================================================
+   WORKING VARIABLES
+===================================================== */
+
+let runningBytes = null;
+
+let runningHeader = null;
+
+let runningHeaderLength = 0;
+
+let runningPicks = 0;
+
+let runningBytesPerPick = 0;
+
+let runningFileName = "";
+
+let designImage = null;
+
+let designFileName = "";
+
+let invert = false;
+
+let mirror = false;
+
+let flip = false;
+
+let lastObjectUrl = null;
+
+
+
+/* =====================================================
    SHOW / HIDE
-========================= */
+===================================================== */
 
 function show(id){
 
@@ -592,9 +620,9 @@ $(id).classList.add("hidden");
 
 
 
-/* =========================
+/* =====================================================
    OPEN APP
-========================= */
+===================================================== */
 
 function openApp(){
 
@@ -610,9 +638,9 @@ initBackNavigation();
 
 
 
-/* =========================
+/* =====================================================
    OPEN LOGIN
-========================= */
+===================================================== */
 
 function openLogin(){
 
@@ -624,14 +652,13 @@ show("loginPage");
 
 
 
-/* =========================
-   BACK NAVIGATION
-========================= */
+/* =====================================================
+   BACK BUTTON FIX
+===================================================== */
 
 let backNavigationReady = false;
 
 let backMessageTimer = null;
-
 
 
 function initBackNavigation(){
@@ -642,19 +669,22 @@ return;
 
 }
 
-
-backNavigationReady = true;
+backNavigationReady=true;
 
 
 history.replaceState(
-{electronicDesigning:true},
+{
+electronicDesigning:true
+},
 "",
 location.href
 );
 
 
 history.pushState(
-{electronicDesigning:true},
+{
+electronicDesigning:true
+},
 "",
 location.href
 );
@@ -662,34 +692,28 @@ location.href
 }
 
 
-
 function showBackMessage(){
 
-const box = $("backMsg");
+const box=$("backMsg");
 
-
-box.textContent =
+box.textContent=
 "Electronic Designing app mein hi hain.";
-
 
 box.classList.remove("hidden");
 
-
 clearTimeout(backMessageTimer);
 
-
-backMessageTimer =
-setTimeout(function(){
+backMessageTimer=setTimeout(
+function(){
 
 box.classList.add("hidden");
 
-},1800);
+},
+1800
+);
 
 }
 
-
-
-/* Android / Browser BACK */
 
 window.addEventListener(
 "popstate",
@@ -714,15 +738,17 @@ return;
 
 
 /*
-   Back ko app ke andar block rakho.
+   Browser / Android Back ko app page se
+   bahar jaane se roka ja raha hai.
 */
 
 history.pushState(
-{electronicDesigning:true},
+{
+electronicDesigning:true
+},
 "",
 location.href
 );
-
 
 showBackMessage();
 
@@ -731,39 +757,42 @@ showBackMessage();
 
 
 
-/* =========================
-   SHOW PASSWORD
-========================= */
+/* =====================================================
+   PASSWORD SHOW
+===================================================== */
 
 $("showPass").addEventListener(
 "change",
 function(){
 
-$("adminPassword").type =
-this.checked ? "text" : "password";
+$("adminPassword").type=
+this.checked
+?
+"text"
+:
+"password";
 
 }
 );
 
 
 
-/* =========================
-   LOGIN FUNCTION
-========================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 function doLogin(){
 
-const id =
+const id=
 $("adminId").value.trim();
 
-
-const pass =
+const pass=
 $("adminPassword").value;
 
 
 if(
-id === DEFAULT_ADMIN_ID &&
-pass === DEFAULT_ADMIN_PASSWORD
+id===DEFAULT_ADMIN_ID &&
+pass===DEFAULT_ADMIN_PASSWORD
 ){
 
 localStorage.setItem(
@@ -771,11 +800,9 @@ LOGIN_KEY,
 "1"
 );
 
-
 $("loginMsg").classList.add(
 "hidden"
 );
-
 
 openApp();
 
@@ -783,9 +810,8 @@ openApp();
 
 else{
 
-$("loginMsg").textContent =
+$("loginMsg").textContent=
 "Admin ID ya password galat hai.";
-
 
 $("loginMsg").classList.remove(
 "hidden"
@@ -796,12 +822,10 @@ $("loginMsg").classList.remove(
 }
 
 
-
 $("loginBtn").addEventListener(
 "click",
 doLogin
 );
-
 
 
 $("adminPassword").addEventListener(
@@ -816,7 +840,6 @@ doLogin();
 
 }
 );
-
 
 
 $("adminId").addEventListener(
@@ -834,9 +857,9 @@ $("adminPassword").focus();
 
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
 $("logoutBtn").addEventListener(
 "click",
@@ -846,16 +869,15 @@ localStorage.removeItem(
 LOGIN_KEY
 );
 
-
 backNavigationReady=false;
 
-
 history.replaceState(
-{electronicDesigningLogin:true},
+{
+electronicDesigningLogin:true
+},
 "",
 location.href
 );
-
 
 openLogin();
 
@@ -864,66 +886,78 @@ openLogin();
 
 
 
-/* =========================
+/* =====================================================
    INVERT
-========================= */
+===================================================== */
 
-$("invertBtn").onclick =
+$("invertBtn").onclick=
 function(){
 
 invert=!invert;
 
-
-$("invertBtn").textContent =
-"Invert: "+(
-invert ? "ON" : "OFF"
+$("invertBtn").textContent=
+"Invert: "+
+(
+invert
+?
+"ON"
+:
+"OFF"
 );
 
 };
 
 
 
-/* =========================
+/* =====================================================
    MIRROR
-========================= */
+===================================================== */
 
-$("mirrorBtn").onclick =
+$("mirrorBtn").onclick=
 function(){
 
 mirror=!mirror;
 
-
-$("mirrorBtn").textContent =
-"Mirror: "+(
-mirror ? "ON" : "OFF"
+$("mirrorBtn").textContent=
+"Mirror: "+
+(
+mirror
+?
+"ON"
+:
+"OFF"
 );
 
 };
 
 
 
-/* =========================
+/* =====================================================
    FLIP
-========================= */
+===================================================== */
 
-$("flipBtn").onclick =
+$("flipBtn").onclick=
 function(){
 
 flip=!flip;
 
-
-$("flipBtn").textContent =
-"Flip: "+(
-flip ? "ON" : "OFF"
+$("flipBtn").textContent=
+"Flip: "+
+(
+flip
+?
+"ON"
+:
+"OFF"
 );
 
 };
 
 
 
-/* =========================
-   24 BIT NUMBER
-========================= */
+/* =====================================================
+   24-BIT NUMBER
+===================================================== */
 
 function u24(n){
 
@@ -931,9 +965,9 @@ return new Uint8Array([
 
 n & 255,
 
-(n >> 8) & 255,
+(n>>8) & 255,
 
-(n >> 16) & 255
+(n>>16) & 255
 
 ]);
 
@@ -941,9 +975,116 @@ n & 255,
 
 
 
-/* =========================
+/* =====================================================
+   DETECT EP STRUCTURE
+===================================================== */
+
+function detectEPStructure(bytes,hooks){
+
+const bytesPerPick=
+Math.ceil(hooks/8);
+
+
+let headerLength=0;
+
+let picks=0;
+
+
+/*
+   First try 81-byte header.
+   Your 31942 working EP:
+
+   81 + 84 × 378
+   = 31,833 bytes
+*/
+
+if(
+bytes.length>=81 &&
+(bytes.length-81)%bytesPerPick===0
+){
+
+headerLength=81;
+
+picks=
+(bytes.length-81)/
+bytesPerPick;
+
+}
+
+
+/*
+   Then try 34-byte header.
+*/
+
+else if(
+bytes.length>=34 &&
+(bytes.length-34)%bytesPerPick===0
+){
+
+headerLength=34;
+
+picks=
+(bytes.length-34)/
+bytesPerPick;
+
+}
+
+
+/*
+   Fallback
+*/
+
+else{
+
+/*
+   Prefer 81-byte format when file
+   looks like the supplied native EP.
+*/
+
+if(bytes.length>81){
+
+headerLength=81;
+
+picks=
+Math.floor(
+(bytes.length-81)/
+bytesPerPick
+);
+
+}
+
+else{
+
+headerLength=34;
+
+picks=
+Math.floor(
+(bytes.length-34)/
+bytesPerPick
+);
+
+}
+
+}
+
+
+return {
+
+headerLength,
+
+picks,
+
+bytesPerPick
+
+};
+
+}
+
+
+
+/* =====================================================
    RUNNING EP UPLOAD
-========================= */
+===================================================== */
 
 $("runningFile").addEventListener(
 "change",
@@ -961,130 +1102,106 @@ return;
 
 try{
 
-runningBytes =
+runningBytes=
 new Uint8Array(
 await file.arrayBuffer()
 );
 
+runningFileName=file.name;
 
-const hooks =
+
+const hooks=
+Math.max(
+8,
 parseInt(
 $("hooks").value
-) || 672;
+)||672
+);
 
 
-const bytesPerPick =
-Math.ceil(hooks/8);
+if(hooks%8!==0){
 
-
-let headerLen=34;
-
-let picks=0;
-
-
-
-/* 34 BYTE HEADER */
-
-if(
-runningBytes.length >= 34 &&
-(runningBytes.length-34)
-% bytesPerPick === 0
-){
-
-headerLen=34;
-
-picks=
-(runningBytes.length-headerLen)
-/
-bytesPerPick;
-
-}
-
-
-
-/* 81 BYTE HEADER */
-
-else if(
-runningBytes.length >= 81 &&
-(runningBytes.length-81)
-% bytesPerPick === 0
-){
-
-headerLen=81;
-
-picks=
-(runningBytes.length-headerLen)
-/
-bytesPerPick;
-
-}
-
-
-
-/* FALLBACK */
-
-else{
-
-headerLen=34;
-
-picks=
-Math.floor(
-Math.max(
-0,
-runningBytes.length-headerLen
-)
-/
-bytesPerPick
+throw new Error(
+"Hooks 8 ke multiple mein hona chahiye."
 );
 
 }
 
 
+const detected=
+detectEPStructure(
+runningBytes,
+hooks
+);
 
-runningHeader =
+
+runningHeaderLength=
+detected.headerLength;
+
+runningPicks=
+detected.picks;
+
+runningBytesPerPick=
+detected.bytesPerPick;
+
+
+runningHeader=
 runningBytes.slice(
 0,
-headerLen
+runningHeaderLength
 );
 
 
-runningPicks=picks;
+$("runningInfo").innerHTML=
 
+"<b>✅ Running EP Loaded</b><br><br>"+
 
+"File: "+
+file.name+
+"<br>"+
 
-if(picks>0){
-
-$("targetPicks").value=picks;
-
-}
-
-
-
-$("runningInfo").innerHTML =
-
-"<b>"+file.name+"</b><br>"+
 "Size: "+
 runningBytes.length.toLocaleString()+
 " bytes<br>"+
+
 "Header: "+
-headerLen+
+runningHeaderLength+
 " bytes<br>"+
+
 "Bytes/Pick: "+
-bytesPerPick+
+runningBytesPerPick+
 "<br>"+
+
 "Detected Picks: "+
-picks;
+runningPicks+
+"<br><br>"+
+
+(
+runningHeaderLength===81
+?
+"81-byte native header detected. Header preserve rahega."
+:
+"34-byte EP header detected."
+);
 
 
+$("status").className="ok";
 
-$("status").textContent =
-"Running EP loaded successfully.";
+
+$("status").textContent=
+"Original working EP successfully loaded.";
 
 }
 
 catch(e){
 
-$("runningInfo").textContent =
+runningBytes=null;
+
+runningHeader=null;
+
+$("runningInfo").className="err";
+
+$("runningInfo").textContent=
 "EP read error: "+e.message;
 
 }
@@ -1094,9 +1211,9 @@ $("runningInfo").textContent =
 
 
 
-/* =========================
-   DESIGN FILE
-========================= */
+/* =====================================================
+   DESIGN UPLOAD
+===================================================== */
 
 $("designFile").addEventListener(
 "change",
@@ -1112,46 +1229,118 @@ return;
 }
 
 
-const reader =
+designFileName=file.name;
+
+
+const reader=
 new FileReader();
 
 
-reader.onload =
+reader.onload=
 function(e){
 
-const img =
+const img=
 new Image();
 
 
-img.onload =
+img.onload=
 function(){
 
 designImage=img;
 
 
-$("designInfo").innerHTML =
+/*
+   IMPORTANT FIX:
 
-"<b>"+file.name+"</b><br>"+
-"Original size: "+
+   Picks = Hooks × Design Height / Design Width
+
+   Example:
+
+   672 × 940 / 1672
+   ≈ 378 picks
+*/
+
+const hooks=
+Math.max(
+8,
+parseInt(
+$("hooks").value
+)||672
+);
+
+
+const calculatedPicks=
+Math.max(
+1,
+Math.round(
+hooks*
+img.height/
+img.width
+)
+);
+
+
+$("targetPicks").value=
+calculatedPicks;
+
+
+$("designInfo").className="ok";
+
+
+$("designInfo").innerHTML=
+
+"<b>✅ Design Loaded</b><br><br>"+
+
+"File: "+
+file.name+
+"<br>"+
+
+"Original Size: "+
 img.width+
 " × "+
-img.height;
+img.height+
+"<br>"+
+
+"Aspect Ratio: "+
+(
+img.width/img.height
+).toFixed(4)+
+"<br><br>"+
+
+"<b>Machine Width:</b> "+
+hooks+
+" hooks<br>"+
+
+"<b>Calculated Picks:</b> "+
+calculatedPicks+
+"<br><br>"+
+
+"Output area: "+
+hooks+
+" × "+
+calculatedPicks;
 
 
-$("preview").src =
+$("preview").src=
 e.target.result;
 
-
 show("preview");
+
+
+$("status").className="ok";
+
+$("status").textContent=
+"Design ratio se target picks automatically calculate ho gaye.";
 
 };
 
 
-
-img.onerror =
+img.onerror=
 function(){
 
-$("designInfo").textContent =
+$("designInfo").className="err";
+
+$("designInfo").textContent=
 "Image read nahi ho payi.";
 
 };
@@ -1169,60 +1358,70 @@ reader.readAsDataURL(file);
 
 
 
-/* =========================
-   PACK DESIGN
-========================= */
+/* =====================================================
+   HOOK CHANGE
+===================================================== */
 
-function packDesign(){
+$("hooks").addEventListener(
+"change",
+function(){
 
-const hooks =
+if(!designImage){
+
+return;
+
+}
+
+
+const hooks=
 Math.max(
 8,
 parseInt(
 $("hooks").value
-) || 672
+)||672
 );
 
 
-const picks =
+if(hooks%8!==0){
+
+return;
+
+}
+
+
+const picks=
 Math.max(
 1,
-parseInt(
-$("targetPicks").value
-) || 1
-);
-
-
-const threshold =
-Math.min(
-255,
-Math.max(
-0,
-parseInt(
-$("threshold").value
-) || 128
+Math.round(
+hooks*
+designImage.height/
+designImage.width
 )
 );
 
 
-const left =
-Math.max(
-0,
-parseInt(
-$("leftPad").value
-) || 0
+$("targetPicks").value=picks;
+
+
+$("designInfo").innerHTML=
+
+"<b>Design settings updated</b><br>"+
+"Hooks: "+
+hooks+
+"<br>"+
+"Auto Picks: "+
+picks;
+
+}
 );
 
 
-const right =
-Math.max(
-0,
-parseInt(
-$("rightPad").value
-) || 0
-);
 
+/* =====================================================
+   PACK DESIGN
+===================================================== */
 
+function packDesign(){
 
 if(!designImage){
 
@@ -1232,6 +1431,14 @@ throw new Error(
 
 }
 
+
+const hooks=
+Math.max(
+8,
+parseInt(
+$("hooks").value
+)||672
+);
 
 
 if(hooks%8!==0){
@@ -1243,8 +1450,71 @@ throw new Error(
 }
 
 
+/*
+   ALWAYS calculate picks from
+   actual design ratio.
 
-if(left+right>hooks){
+   User's 31942 design:
+
+   1672 × 940
+
+   672 × 940 / 1672
+   = 377.99
+   = 378
+*/
+
+const autoPicks=
+Math.max(
+1,
+Math.round(
+hooks*
+designImage.height/
+designImage.width
+)
+);
+
+
+$("targetPicks").value=
+autoPicks;
+
+
+const picks=autoPicks;
+
+
+const threshold=
+Math.min(
+255,
+Math.max(
+0,
+parseInt(
+$("threshold").value
+)
+||180
+)
+);
+
+
+const left=
+Math.max(
+0,
+parseInt(
+$("leftPad").value
+)||0
+);
+
+
+const right=
+Math.max(
+0,
+parseInt(
+$("rightPad").value
+)||0
+);
+
+
+if(
+left+right>hooks
+){
 
 throw new Error(
 "Left + Right padding hooks se zyada hai."
@@ -1253,8 +1523,7 @@ throw new Error(
 }
 
 
-
-const canvas =
+const canvas=
 $("workCanvas");
 
 
@@ -1263,7 +1532,7 @@ canvas.width=hooks;
 canvas.height=picks;
 
 
-const ctx =
+const ctx=
 canvas.getContext(
 "2d",
 {
@@ -1272,8 +1541,12 @@ willReadFrequently:true
 );
 
 
-ctx.fillStyle="white";
+/*
+   White background
+*/
 
+ctx.fillStyle=
+"white";
 
 ctx.fillRect(
 0,
@@ -1284,38 +1557,61 @@ picks
 
 
 
+/*
+   Transform
+*/
+
 ctx.save();
 
 
+if(mirror){
 
 ctx.translate(
-mirror ? hooks : 0,
-flip ? picks : 0
+hooks,
+0
 );
-
-
 
 ctx.scale(
-mirror ? -1 : 1,
-flip ? -1 : 1
+-1,
+1
 );
 
+}
 
 
-const usableW =
+if(flip){
+
+ctx.translate(
+0,
+picks
+);
+
+ctx.scale(
+1,
+-1
+);
+
+}
+
+
+/*
+   FIT IMAGE EXACTLY
+   into available area while
+   maintaining original ratio.
+*/
+
+const usableW=
 hooks-left-right;
 
 
-
-const scale =
+const scale=
 Math.min(
 usableW/designImage.width,
 picks/designImage.height
 );
 
 
-
-const dw =
+const dw=
 Math.max(
 1,
 Math.round(
@@ -1324,8 +1620,7 @@ designImage.width*scale
 );
 
 
-
-const dh =
+const dh=
 Math.max(
 1,
 Math.round(
@@ -1334,20 +1629,17 @@ designImage.height*scale
 );
 
 
-
-const x =
+const x=
 left+
 Math.floor(
 (usableW-dw)/2
 );
 
 
-
-const y =
+const y=
 Math.floor(
 (picks-dh)/2
 );
-
 
 
 ctx.drawImage(
@@ -1359,12 +1651,15 @@ dh
 );
 
 
-
 ctx.restore();
 
 
 
-const data =
+/*
+   Convert image into binary
+*/
+
+const data=
 ctx.getImageData(
 0,
 0,
@@ -1373,13 +1668,11 @@ picks
 ).data;
 
 
-
-const bytesPerPick =
+const bytesPerPick=
 hooks/8;
 
 
-
-const out =
+const out=
 new Uint8Array(
 picks*bytesPerPick
 );
@@ -1398,19 +1691,26 @@ x<hooks;
 x++
 ){
 
-const i =
+const index=
 (y*hooks+x)*4;
 
 
-const gray =
+const r=data[index];
+
+const g=data[index+1];
+
+const b=data[index+2];
+
+
+const gray=
 (
-data[i]+
-data[i+1]+
-data[i+2]
+r+
+g+
+b
 )/3;
 
 
-let on =
+let on=
 gray<threshold;
 
 
@@ -1423,17 +1723,17 @@ on=!on;
 
 if(on){
 
-const byteIndex =
+const byteIndex=
 y*bytesPerPick+
 Math.floor(x/8);
 
 
-const bit =
+const bit=
 7-(x%8);
 
 
-out[byteIndex] |=
-(1<<bit);
+out[byteIndex]
+|=(1<<bit);
 
 }
 
@@ -1451,7 +1751,9 @@ hooks,
 
 picks,
 
-bytesPerPick
+bytesPerPick,
+
+threshold
 
 };
 
@@ -1459,9 +1761,9 @@ bytesPerPick
 
 
 
-/* =========================
-   BUILD EP
-========================= */
+/* =====================================================
+   BUILD NATIVE EP
+===================================================== */
 
 function buildEP(){
 
@@ -1471,33 +1773,58 @@ if(
 ){
 
 throw new Error(
-"Pehle original working EP upload karein."
+"Pehle original working running EP upload karein."
 );
 
 }
 
 
 
-const result =
+const result=
 packDesign();
 
 
+/*
+   IMPORTANT:
 
-const header =
+   We DO NOT copy old pick data.
+
+   We use ONLY the original HEADER
+   + newly generated design data.
+*/
+
+const header=
 new Uint8Array(
 runningHeader
 );
 
 
-
 /*
-   Original EP structure:
-   Pick count = byte 3,4,5
+   81-byte header:
+
+   DO NOT change bytes 3,4,5.
+
+   Your supplied working EP:
+
+   81-byte header
+   + 84 × 378
+   = 31,833 bytes
+
+   Original header must remain intact.
 */
 
-if(header.length>=6){
 
-const p =
+if(
+runningHeaderLength===34
+){
+
+/*
+   34-byte format:
+
+   Pick count stored at bytes 3,4,5.
+*/
+
+const p=
 u24(
 result.picks
 );
@@ -1512,13 +1839,17 @@ header[5]=p[2];
 }
 
 
+/*
+   Final:
 
-const finalBytes =
+   header + NEW design data
+*/
+
+const finalBytes=
 new Uint8Array(
 header.length+
 result.out.length
 );
-
 
 
 finalBytes.set(
@@ -1533,12 +1864,13 @@ header.length
 );
 
 
-
 return {
 
 bytes:finalBytes,
 
-result
+result,
+
+headerLength:header.length
 
 };
 
@@ -1546,9 +1878,9 @@ result
 
 
 
-/* =========================
+/* =====================================================
    CREATE EP
-========================= */
+===================================================== */
 
 $("createBtn").addEventListener(
 "click",
@@ -1556,42 +1888,26 @@ function(){
 
 try{
 
-/* OLD DOWNLOAD URL CLEAN */
-
-const oldLink =
-$("downloadLink");
+$("downloadLink")
+.classList.add("hidden");
 
 
-oldLink.classList.add(
-"hidden"
-);
+$("downloadLink")
+.removeAttribute("href");
 
 
-oldLink.removeAttribute(
-"href"
-);
+$("status").className="info";
 
 
-
-$("status").className =
-"info";
-
-
-$("status").textContent =
-"EP create ho rahi hai...";
+$("status").innerHTML=
+"⏳ EP create ho rahi hai...";
 
 
-
-/* BUILD */
-
-const built =
+const built=
 buildEP();
 
 
-
-/* BLOB */
-
-const blob =
+const blob=
 new Blob(
 [built.bytes],
 {
@@ -1601,29 +1917,36 @@ type:
 );
 
 
+/*
+   Old URL release
+*/
 
-/* DOWNLOAD URL */
+if(lastObjectUrl){
 
-const url =
+URL.revokeObjectURL(
+lastObjectUrl
+);
+
+}
+
+
+lastObjectUrl=
 URL.createObjectURL(
 blob
 );
 
 
-
-/* FILE NAME */
-
-const selectedFile =
-$("designFile").files[0];
-
+/*
+   Filename
+*/
 
 let nameBase="Design";
 
 
-if(selectedFile){
+if(designFileName){
 
-nameBase =
-selectedFile.name.replace(
+nameBase=
+designFileName.replace(
 /\.[^.]+$/,
 ""
 );
@@ -1631,69 +1954,107 @@ selectedFile.name.replace(
 }
 
 
-
-const fileName =
+const fileName=
 nameBase+"_Native.EP";
 
 
-
-/* =========================
+/*
    DOWNLOAD BUTTON
-========================= */
+*/
 
-const downloadLink =
+const link=
 $("downloadLink");
 
 
-downloadLink.href=url;
+link.href=
+lastObjectUrl;
 
-downloadLink.download=fileName;
+link.download=
+fileName;
 
-downloadLink.textContent =
+link.textContent=
 "⬇ DOWNLOAD NATIVE EP";
 
-downloadLink.classList.remove(
+link.classList.remove(
 "hidden"
 );
 
 
 
-/* SUCCESS MESSAGE */
+/*
+   Expected size check
+*/
+
+const expectedSize=
+built.headerLength+
+(
+built.result.hooks/8
+)*
+built.result.picks;
+
+
+
+/*
+   SUCCESS
+*/
 
 $("status").className="ok";
 
 
-$("status").innerHTML =
+$("status").innerHTML=
 
 "<b>✅ EP FILE READY</b><br><br>"+
-"File: "+fileName+
+
+"File: "+
+fileName+
 "<br>"+
+
 "Size: "+
 built.bytes.length.toLocaleString()+
 " bytes<br>"+
+
 "Hooks: "+
 built.result.hooks+
 "<br>"+
+
 "Picks: "+
 built.result.picks+
+"<br>"+
+
+"Header: "+
+built.headerLength+
+" bytes<br>"+
+
+"Design Data: "+
+built.result.out.length.toLocaleString()+
+" bytes<br><br>"+
+
+(
+built.bytes.length===expectedSize
+?
+"✅ Binary size check OK"
+:
+"⚠ Size check different"
+)+
+
 "<br><br>"+
-"<b>Neeche green DOWNLOAD button dabayein.</b>";
+
+"<b>⬇ Neeche green DOWNLOAD NATIVE EP button dabayein.</b>";
 
 
 
-/* =========================
+/*
    HEX PREVIEW
-========================= */
+*/
 
 let hex="";
 
 
-const n =
+const n=
 Math.min(
-128,
+256,
 built.bytes.length
 );
-
 
 
 for(
@@ -1702,8 +2063,7 @@ i<n;
 i++
 ){
 
-hex +=
-
+hex+=
 built.bytes[i]
 .toString(16)
 .padStart(2,"0")
@@ -1722,27 +2082,25 @@ hex+="\n";
 }
 
 
-
-$("hexPreview").textContent =
+$("hexPreview").textContent=
 hex;
 
 
 
 /*
-   Download button screen par
-   automatically scroll karwa do
+   Scroll to download button
 */
 
 setTimeout(
 function(){
 
-downloadLink.scrollIntoView({
+link.scrollIntoView({
 behavior:"smooth",
 block:"center"
 });
 
 },
-200
+250
 );
 
 }
@@ -1751,8 +2109,9 @@ catch(e){
 
 $("status").className="err";
 
-$("status").innerHTML =
-"<b>❌ Error</b><br>"+
+
+$("status").innerHTML=
+"<b>❌ Error</b><br><br>"+
 e.message;
 
 }
@@ -1762,9 +2121,9 @@ e.message;
 
 
 
-/* =========================
+/* =====================================================
    AUTO LOGIN
-========================= */
+===================================================== */
 
 if(
 localStorage.getItem(
@@ -1781,7 +2140,6 @@ else{
 openLogin();
 
 }
-
 
 })();
 </script>
