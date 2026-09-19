@@ -81,9 +81,9 @@
                 <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400 font-bold">No active machine setup loaded</div>
             </div>
 
-            <!-- Step 2: Shuttle & Machine Specifications -->
+            <!-- Step 2: Shuttle & Machine Specifications + EasyX Dadha/Finger Padding -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle & Jacquard Specifications</div>
+                <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle, Hooks & Dadha/Finger Padding</div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
@@ -102,7 +102,7 @@
                             <option value="192">192 Hooks</option>
                             <option value="384">384 Hooks</option>
                             <option value="512">512 Hooks</option>
-                            <option value="672" selected>672 Hooks (Matched)</option>
+                            <option value="672" selected>672 Hooks</option>
                             <option value="768">768 Hooks</option>
                             <option value="960">960 Hooks</option>
                             <option value="1408">1408 Hooks</option>
@@ -112,6 +112,18 @@
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Target Picks (Height)</label>
                         <input type="number" id="picksInput" value="672" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
+                    </div>
+                </div>
+
+                <!-- EasyX Style Border Padding for Dadha / Finger -->
+                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-800">
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Left Dadha/Finger Hook Padding</label>
+                        <input type="number" id="leftPadInput" value="0" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-white text-center">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Right Dadha/Finger Hook Padding</label>
+                        <input type="number" id="rightPadInput" value="0" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-white text-center">
                     </div>
                 </div>
 
@@ -149,7 +161,7 @@
                 </div>
             </div>
 
-            <!-- Previews (Bade size ke boxes - h-80) -->
+            <!-- Previews -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="glass-card p-4 rounded-2xl space-y-2">
                     <span class="text-xs font-semibold text-gray-300">Original Source Preview</span>
@@ -175,7 +187,7 @@
         <div id="tab-converter" class="tab-content space-y-4">
             <div class="glass-card p-5 rounded-2xl space-y-4">
                 <h3 class="text-base font-bold text-amber-400">🔄 EP & EJC File Converter</h3>
-                <p class="text-xs text-gray-400">Note: Please select actual running file in the same format as your jacquard support[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span).</p>
+                <p class="text-xs text-gray-400">Note: Please select actual running file in the same format as your jacquard support.</p>
                 <div class="space-y-3">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Select Task</label>
@@ -281,6 +293,8 @@
         const savedMachineCategory = document.getElementById('savedMachineCategory');
         const widthSelect = document.getElementById('widthSelect');
         const picksInput = document.getElementById('picksInput');
+        const leftPadInput = document.getElementById('leftPadInput');
+        const rightPadInput = document.getElementById('rightPadInput');
         const thresholdSlider = document.getElementById('thresholdSlider');
         const threshVal = document.getElementById('threshVal');
         const invertSelect = document.getElementById('invertSelect');
@@ -297,6 +311,8 @@
         invertSelect.addEventListener('change', processJacquardGrid);
         widthSelect.addEventListener('change', processJacquardGrid);
         picksInput.addEventListener('input', processJacquardGrid);
+        leftPadInput.addEventListener('input', processJacquardGrid);
+        rightPadInput.addEventListener('input', processJacquardGrid);
 
         function saveMachineCategory() {
             const mName = machineNameInput.value.trim();
@@ -308,6 +324,8 @@
             const fileName = file ? file.name : "Default_Running.EP";
             const currentWidth = widthSelect.value;
             const currentPicks = picksInput.value;
+            const lPad = leftPadInput.value;
+            const rPad = rightPadInput.value;
 
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
             let existing = machines.find(m => m.name === mName);
@@ -315,8 +333,10 @@
                 existing.fileName = fileName;
                 existing.width = currentWidth;
                 existing.picks = currentPicks;
+                existing.lPad = lPad;
+                existing.rPad = rPad;
             } else {
-                machines.push({ name: mName, fileName: fileName, width: currentWidth, picks: currentPicks });
+                machines.push({ name: mName, fileName: fileName, width: currentWidth, picks: currentPicks, lPad, rPad });
             }
 
             localStorage.setItem('zarafiya_saved_machines', JSON.stringify(machines));
@@ -343,6 +363,8 @@
                 machineNameInput.value = found.name;
                 widthSelect.value = found.width;
                 if(found.picks) picksInput.value = found.picks;
+                if(found.lPad !== undefined) leftPadInput.value = found.lPad;
+                if(found.rPad !== undefined) rightPadInput.value = found.rPad;
                 selectedRunningDisplay.innerText = `Active Machine Setup: ${found.name} (${found.fileName})`;
                 processJacquardGrid();
             }
@@ -381,9 +403,9 @@
                 const reader = new FileReader();
                 reader.onload = function(event) { uploadedImage.src = event.target.result; }
                 reader.onloadend = function() {
-                    const targetWidth = parseInt(widthSelect.value);
+                    const baseWidth = parseInt(widthSelect.value);
                     if (uploadedImage.width > 0) {
-                        let calculatedPicks = Math.round(targetWidth * (uploadedImage.height / uploadedImage.width));
+                        let calculatedPicks = Math.round(baseWidth * (uploadedImage.height / uploadedImage.width));
                         if (calculatedPicks < 100) calculatedPicks = 672;
                         picksInput.value = calculatedPicks;
                     }
@@ -404,19 +426,25 @@
             origCanvas.height = uploadedImage.height;
             origCtx.drawImage(uploadedImage, 0, 0);
 
-            const targetWidth = parseInt(widthSelect.value);
-            let targetHeight = parseInt(picksInput.value) || 672;
+            const baseWidth = parseInt(widthSelect.value);
+            const lPad = parseInt(leftPadInput.value) || 0;
+            const rPad = parseInt(rightPadInput.value) || 0;
+            const totalWidth = baseWidth + lPad + rPad;
+            const targetHeight = parseInt(picksInput.value) || 672;
 
-            outputCanvas.width = targetWidth;
+            outputCanvas.width = totalWidth;
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
             outCtx.imageSmoothingEnabled = false;
 
+            // Fill background white for padding
             outCtx.fillStyle = "#ffffff";
-            outCtx.fillRect(0, 0, targetWidth, targetHeight);
-            outCtx.drawImage(uploadedImage, 0, 0, targetWidth, targetHeight);
+            outCtx.fillRect(0, 0, totalWidth, targetHeight);
 
-            const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
+            // Draw image shifted by left padding so border hooks are left empty for Dadha/Finger
+            outCtx.drawImage(uploadedImage, lPad, 0, baseWidth, targetHeight);
+
+            const imgData = outCtx.getImageData(0, 0, totalWidth, targetHeight);
             const data = imgData.data;
             const threshold = parseInt(thresholdSlider.value);
             const isInvert = invertSelect.value === 'invert';
@@ -438,40 +466,42 @@
         function convertAndDownloadGrid() {
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
-            const targetWidth = parseInt(widthSelect.value);
+            const baseWidth = parseInt(widthSelect.value);
+            const lPad = parseInt(leftPadInput.value) || 0;
+            const rPad = parseInt(rightPadInput.value) || 0;
+            const totalWidth = baseWidth + lPad + rPad;
             const targetHeight = parseInt(picksInput.value) || 672;
             const activeMachine = machineNameInput.value || "Machine_Setup";
 
             if (format === 'png') {
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${activeMachine}_${currentFileName}_${targetWidth}hooks_${targetHeight}picks.png`;
+                link.download = `${activeMachine}_${currentFileName}_${totalWidth}hooks_${targetHeight}picks.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                saveToHistory(activeMachine, currentFileName, targetWidth, targetHeight, 'png', currentProcessedDataUrl);
+                saveToHistory(activeMachine, currentFileName, totalWidth, targetHeight, 'png', currentProcessedDataUrl);
                 return;
             }
 
-            // Standard Tianmai/SAAZ Running File Binary Header Match
+            // Standard Tianmai/SAAZ Binary Header Structure matching total width with padding
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
                 encoderBytes.push(headerString.charCodeAt(i));
             }
 
-            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, targetWidth, targetHeight);
+            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, totalWidth, targetHeight);
             const data = imgData.data;
-            const bytesPerRow = Math.ceil(targetWidth / 8);
+            const bytesPerRow = Math.ceil(totalWidth / 8);
 
-            // Exact 672/8 byte row iteration matching standard running files
             for (let y = 0; y < targetHeight; y++) {
-                for (let x = 0; x < targetWidth; x += 8) {
+                for (let x = 0; x < totalWidth; x += 8) {
                     let byteVal = 0;
                     for (let b = 0; b < 8; b++) {
                         let curX = x + b;
-                        if (curX < targetWidth) {
-                            let idx = (y * targetWidth + curX) * 4;
+                        if (curX < totalWidth) {
+                            let idx = (y * totalWidth + curX) * 4;
                             if (data[idx] < 128) {
                                 byteVal |= (1 << (7 - b));
                             }
@@ -496,7 +526,7 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(blobUrl);
 
-            saveToHistory(activeMachine, currentFileName, targetWidth, targetHeight, 'ep', currentProcessedDataUrl);
+            saveToHistory(activeMachine, currentFileName, totalWidth, targetHeight, 'ep', currentProcessedDataUrl);
         }
 
         function saveToHistory(machine, name, width, picks, format, dataUrl) {
@@ -522,7 +552,7 @@
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
                                 <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
-                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 672} | Format: ${item.format.toUpperCase()}</p>
+                                <p class="text-[10px] text-amber-400">Total Hooks: ${item.width} | Picks: ${item.picks || 672} | Format: ${item.format.toUpperCase()}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
