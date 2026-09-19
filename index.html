@@ -57,7 +57,6 @@
             <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
                 <div class="text-amber-400 font-semibold text-xs">🛠️ Step 1: Select or Add Machine Setup</div>
                 
-                <!-- Saved Machines Category Dropdown -->
                 <div>
                     <label class="block text-[11px] text-gray-400 mb-1">Select from Saved Machines Category</label>
                     <select id="savedMachineCategory" onchange="loadSelectedMachine()" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-amber-400">
@@ -149,7 +148,7 @@
 
             <!-- Convert / Download Button -->
             <div id="downloadArea" style="display:none;" class="pt-2">
-                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD FOR SELECTED MACHINE</button>
+                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD CLEAN .EP FILE</button>
             </div>
         </div>
 
@@ -257,7 +256,6 @@
             } else { document.getElementById('errorMsg').style.display = 'block'; }
         }
 
-        // Machine Category List Logic
         const machineNameInput = document.getElementById('machineNameInput');
         const runningFileInput = document.getElementById('runningFileInput');
         const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
@@ -279,7 +277,6 @@
             const currentWidth = widthSelect.value;
 
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
-            // check if exists, update or add
             let existing = machines.find(m => m.name === mName);
             if(existing) {
                 existing.fileName = fileName;
@@ -365,7 +362,9 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
+            // Maintaining exact row-column aspect ratio to avoid distortion on machine screen
             let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
+            if (targetHeight % 2 !== 0) targetHeight++; // Keep it even for proper byte alignment
 
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
@@ -379,10 +378,13 @@
             const imgData = outCtx.getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
 
+            // Strict Clean Thresholding for Tianmai/SAAZ Jacquard Controllers
             for (let i = 0; i < data.length; i += 4) {
-                let avg = (data[i] + data[i+1] + data[i+2]) / 3;
-                let val = avg > 128 ? 255 : 0;
-                data[i] = val; data[i+1] = val; data[i+2] = val;
+                let avg = (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
+                let val = avg > 120 ? 255 : 0; // optimized threshold for sharp punch lines
+                data[i] = val; 
+                data[i+1] = val; 
+                data[i+2] = val;
             }
             outCtx.putImageData(imgData, 0, 0);
 
@@ -408,7 +410,7 @@
                 return;
             }
 
-            // Generate Native .EP Binary File Stream
+            // Standardized Tianmai/SAAZ Header Structure with Proper Alignment
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
@@ -418,6 +420,7 @@
             const imgData = outputCanvas.getContext('2d').getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
 
+            // Accurate Byte Matrix Mapping (MSB First per row hook alignment)
             for (let y = 0; y < targetHeight; y++) {
                 for (let x = 0; x < targetWidth; x += 8) {
                     let byteVal = 0;
@@ -483,7 +486,7 @@
             historyList.innerHTML = html;
         }
 
-        clearHistory = function() {
+        function clearHistory() {
             localStorage.removeItem('zarafiya_history');
             loadHistory();
         }
