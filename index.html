@@ -111,7 +111,7 @@
 
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Target Picks (Height)</label>
-                        <input type="number" id="picksInput" value="672" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
+                        <input type="number" id="picksInput" value="160" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
                     </div>
                 </div>
 
@@ -349,7 +349,7 @@
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
             let html = '<option value="">-- Choose Saved Machine --</option>';
             machines.forEach(m => {
-                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 672}]</option>`;
+                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 160}]</option>`;
             });
             savedMachineCategory.innerHTML = html;
         }
@@ -406,7 +406,7 @@
                     const baseWidth = parseInt(widthSelect.value);
                     if (uploadedImage.width > 0) {
                         let calculatedPicks = Math.round(baseWidth * (uploadedImage.height / uploadedImage.width));
-                        if (calculatedPicks < 100) calculatedPicks = 672;
+                        if (calculatedPicks < 50) calculatedPicks = 160;
                         picksInput.value = calculatedPicks;
                     }
                     processJacquardGrid();
@@ -426,25 +426,28 @@
             origCanvas.height = uploadedImage.height;
             origCtx.drawImage(uploadedImage, 0, 0);
 
-            const baseWidth = parseInt(widthSelect.value);
+            const machineHooks = parseInt(widthSelect.value) || 672;
             const lPad = parseInt(leftPadInput.value) || 0;
             const rPad = parseInt(rightPadInput.value) || 0;
-            const totalWidth = baseWidth + lPad + rPad;
-            const targetHeight = parseInt(picksInput.value) || 672;
+            
+            // Actual design width mapped precisely inside machine hooks accounting for padding
+            const designWidth = Math.max(50, machineHooks - (lPad + rPad));
+            const targetHeight = parseInt(picksInput.value) || 160;
 
-            outputCanvas.width = totalWidth;
+            // Total width written to binary file must exactly match machineHooks (e.g. 672)
+            outputCanvas.width = machineHooks;
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
             outCtx.imageSmoothingEnabled = false;
 
-            // Fill background white for padding
+            // Fill background white
             outCtx.fillStyle = "#ffffff";
-            outCtx.fillRect(0, 0, totalWidth, targetHeight);
+            outCtx.fillRect(0, 0, machineHooks, targetHeight);
 
-            // Draw image shifted by left padding so border hooks are left empty for Dadha/Finger
-            outCtx.drawImage(uploadedImage, lPad, 0, baseWidth, targetHeight);
+            // Draw image scaled to designWidth and shifted by lPad
+            outCtx.drawImage(uploadedImage, lPad, 0, designWidth, targetHeight);
 
-            const imgData = outCtx.getImageData(0, 0, totalWidth, targetHeight);
+            const imgData = outCtx.getImageData(0, 0, machineHooks, targetHeight);
             const data = imgData.data;
             const threshold = parseInt(thresholdSlider.value);
             const isInvert = invertSelect.value === 'invert';
@@ -466,42 +469,39 @@
         function convertAndDownloadGrid() {
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
-            const baseWidth = parseInt(widthSelect.value);
-            const lPad = parseInt(leftPadInput.value) || 0;
-            const rPad = parseInt(rightPadInput.value) || 0;
-            const totalWidth = baseWidth + lPad + rPad;
-            const targetHeight = parseInt(picksInput.value) || 672;
+            const machineHooks = parseInt(widthSelect.value) || 672;
+            const targetHeight = parseInt(picksInput.value) || 160;
             const activeMachine = machineNameInput.value || "Machine_Setup";
 
             if (format === 'png') {
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${activeMachine}_${currentFileName}_${totalWidth}hooks_${targetHeight}picks.png`;
+                link.download = `${activeMachine}_${currentFileName}_${machineHooks}hooks_${targetHeight}picks.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                saveToHistory(activeMachine, currentFileName, totalWidth, targetHeight, 'png', currentProcessedDataUrl);
+                saveToHistory(activeMachine, currentFileName, machineHooks, targetHeight, 'png', currentProcessedDataUrl);
                 return;
             }
 
-            // Standard Tianmai/SAAZ Binary Header Structure matching total width with padding
+            // Exact Tianmai/SAAZ Binary Header Structure matching machineHooks
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
                 encoderBytes.push(headerString.charCodeAt(i));
             }
 
-            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, totalWidth, targetHeight);
+            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, machineHooks, targetHeight);
             const data = imgData.data;
-            const bytesPerRow = Math.ceil(totalWidth / 8);
+            const bytesPerRow = Math.ceil(machineHooks / 8);
 
             for (let y = 0; y < targetHeight; y++) {
-                for (let x = 0; x < totalWidth; x += 8) {
+                for (let x = 0; x < machineHooks; x += 8) {
                     let byteVal = 0;
                     for (let b = 0; b < 8; b++) {
                         let curX = x + b;
-                        if (curX < totalWidth) {
-                            let idx = (y * totalWidth + curX) * 4;
+                        if (curX < machineHooks) {
+                            let idx = (y * machineHooks + curX) * 4;
                             if (data[idx] < 128) {
                                 byteVal |= (1 << (7 - b));
                             }
@@ -526,7 +526,7 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(blobUrl);
 
-            saveToHistory(activeMachine, currentFileName, totalWidth, targetHeight, 'ep', currentProcessedDataUrl);
+            saveToHistory(activeMachine, currentFileName, machineHooks, targetHeight, 'ep', currentProcessedDataUrl);
         }
 
         function saveToHistory(machine, name, width, picks, format, dataUrl) {
@@ -552,7 +552,7 @@
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
                                 <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
-                                <p class="text-[10px] text-amber-400">Total Hooks: ${item.width} | Picks: ${item.picks || 672} | Format: ${item.format.toUpperCase()}</p>
+                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 160} | Format: ${item.format.toUpperCase()}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
