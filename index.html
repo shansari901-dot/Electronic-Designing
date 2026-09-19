@@ -145,7 +145,7 @@
                 </div>
             </div>
 
-            <!-- Previews (Updated to fit container cleanly without side black borders) -->
+            <!-- Previews -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="glass-card p-4 rounded-2xl space-y-2">
                     <span class="text-xs font-semibold text-gray-300">Original Source Preview</span>
@@ -387,11 +387,9 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
-            let aspectRatio = uploadedImage.height / uploadedImage.width;
-            let targetHeight = Math.round(targetWidth * aspectRatio);
-            
-            if (targetHeight < 100) targetHeight = 384;
-            if (targetHeight > 2000) targetHeight = 768;
+            // Strict constraint to match controller grid lines properly without overflowing picks
+            let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
+            if (targetHeight > 1500) targetHeight = 672; // cap height to standard readable range for machine controller
 
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
@@ -439,6 +437,7 @@
                 return;
             }
 
+            // Standard Tianmai/SAAZ Binary Header Structure with Exact Pick Mapping
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
