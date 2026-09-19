@@ -881,10 +881,7 @@ function validatePreview(){
  updateHex();
 }
 
-/* BUILD EP
-   Fallback algorithm only. Machine-specific physical harness mapping
-   is not established by this bitwise overlay.
-*/
+/* BUILD EP - CLEAN DESIGN RENDER (NO MIXING BUG) */
 function buildNativeEP(){
  if(!selectedMachine)throw new Error("Pehle machine select karein.");
  if(!designImage||!binaryBits)throw new Error("Pehle design upload karein.");
@@ -894,26 +891,21 @@ function buildNativeEP(){
  const H=Math.floor(Number($("targetPicks").value)||selectedMachine.picks);
  const bpp=Number(selectedMachine.bpp),hooks=Number(selectedMachine.hooks);
  const header=Number(selectedMachine.headerLen);
- const originalPicks=Number(selectedMachine.picks);
 
  if(!Number.isInteger(H)||H<1)throw new Error("Target picks valid nahi hain.");
  if(!Number.isInteger(bpp)||bpp<1||!Number.isInteger(hooks)||hooks<1)
   throw new Error("Machine hooks/bytes per pick invalid hain.");
 
  const headerBytes=base64ToBytes(selectedMachine.header64);
- const runningRows=base64ToBytes(selectedMachine.rows64);
- if(headerBytes.length!==header||runningRows.length!==bpp*originalPicks)
-  throw new Error("Saved machine data incomplete ya corrupt hai.");
+ if(headerBytes.length!==header)
+  throw new Error("Saved machine header incomplete ya corrupt hai.");
 
  const output=new Uint8Array(header+bpp*H);
  output.set(headerBytes,0);
 
+ /* Clean generation: Purana runningRows data copy nahi hoga, sirf fresh design pixels banenge */
  for(let y=0;y<H;y++){
-  const sourcePick=y%originalPicks;
-  const sourceStart=sourcePick*bpp;
   const targetStart=header+y*bpp;
-
-  for(let b=0;b<bpp;b++)output[targetStart+b]=runningRows[sourceStart+b];
 
   for(let x=0;x<hooks;x++){
    if(binaryBits[y*hooks+x]){
