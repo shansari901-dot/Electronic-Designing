@@ -4,33 +4,180 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Electronic Designing</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f4f6;
+color:#111827
+}
+
 .hidden{display:none!important}
-.card{background:#fff;border-radius:16px;padding:18px;margin:14px auto;max-width:1050px;box-shadow:0 3px 15px #00000012}
+
+.card{
+background:#fff;
+border-radius:16px;
+padding:18px;
+margin:14px auto;
+max-width:1050px;
+box-shadow:0 3px 15px #00000012
+}
+
 h1,h2,h3{margin-top:0}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.loginbox{width:100%;max-width:390px;background:#fff;padding:28px;border-radius:20px;box-shadow:0 8px 30px #0002}
-input,select,button{width:100%;padding:12px;margin:6px 0;border:1px solid #d1d5db;border-radius:10px;font-size:15px}
-button{background:#111827;color:#fff;border:0;cursor:pointer;font-weight:700}
-button.secondary{background:#e5e7eb;color:#111827}
-button.green{background:#16803c}
-button.red{background:#b91c1c}
-label{font-size:13px;font-weight:700;display:block;margin-top:8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.badge{display:inline-block;padding:6px 10px;background:#e5e7eb;border-radius:999px;font-size:13px;margin:3px}
-.info{background:#eff6ff;padding:12px;border-radius:10px;margin-top:10px}
-.ok{background:#ecfdf5;color:#065f46;padding:12px;border-radius:10px}
-.err{background:#fef2f2;color:#991b1b;padding:12px;border-radius:10px}
-.preview{max-width:100%;max-height:350px;border:1px solid #ddd;border-radius:10px;margin-top:10px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row>*{flex:1;min-width:140px}
-.small{font-size:12px;color:#6b7280}
-pre{white-space:pre-wrap;word-break:break-all;background:#111827;color:#d1fae5;padding:12px;border-radius:10px;overflow:auto}
-header{background:#111827;color:white;padding:16px}
-header .inside{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-header button{width:auto;margin:0;background:#374151}
+
+.login{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px
+}
+
+.loginbox{
+width:100%;
+max-width:390px;
+background:#fff;
+padding:28px;
+border-radius:20px;
+box-shadow:0 8px 30px #0002
+}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin:6px 0;
+border:1px solid #d1d5db;
+border-radius:10px;
+font-size:15px
+}
+
+button{
+background:#111827;
+color:#fff;
+border:0;
+cursor:pointer;
+font-weight:700
+}
+
+button.secondary{
+background:#e5e7eb;
+color:#111827
+}
+
+button.green{
+background:#16803c
+}
+
+button.red{
+background:#b91c1c
+}
+
+label{
+font-size:13px;
+font-weight:700;
+display:block;
+margin-top:8px
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px
+}
+
+.info{
+background:#eff6ff;
+padding:12px;
+border-radius:10px;
+margin-top:10px
+}
+
+.ok{
+background:#ecfdf5;
+color:#065f46;
+padding:12px;
+border-radius:10px
+}
+
+.err{
+background:#fef2f2;
+color:#991b1b;
+padding:12px;
+border-radius:10px
+}
+
+.preview{
+max-width:100%;
+max-height:350px;
+border:1px solid #ddd;
+border-radius:10px;
+margin-top:10px
+}
+
+.row{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+
+.row>*{
+flex:1;
+min-width:140px
+}
+
+.small{
+font-size:12px;
+color:#6b7280
+}
+
+pre{
+white-space:pre-wrap;
+word-break:break-all;
+background:#111827;
+color:#d1fae5;
+padding:12px;
+border-radius:10px;
+overflow:auto
+}
+
+header{
+background:#111827;
+color:white;
+padding:16px
+}
+
+header .inside{
+max-width:1050px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px
+}
+
+header button{
+width:auto;
+margin:0;
+background:#374151
+}
+
+.downloadBtn{
+display:block;
+width:100%;
+text-align:center;
+text-decoration:none;
+background:#16803c;
+color:#fff;
+padding:15px;
+border-radius:12px;
+font-size:17px;
+font-weight:700;
+margin-top:12px
+}
+
 .backmsg{
 position:fixed;
 left:50%;
@@ -43,61 +190,117 @@ border-radius:12px;
 z-index:9999;
 box-shadow:0 5px 20px #0005;
 font-size:14px;
+white-space:nowrap
 }
 </style>
 </head>
 
 <body>
 
+
+<!-- ================= LOGIN ================= -->
+
 <section id="loginPage" class="login">
+
 <div class="loginbox">
+
 <h1>Electronic Designing</h1>
+
 <p class="small">Admin Login</p>
 
 <label>Admin ID</label>
-<input id="adminId" type="text" autocomplete="username" placeholder="Admin ID">
+
+<input
+id="adminId"
+type="text"
+autocomplete="username"
+placeholder="Admin ID"
+>
 
 <label>Password</label>
-<input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password">
+
+<input
+id="adminPassword"
+type="password"
+autocomplete="current-password"
+placeholder="Password"
+>
 
 <label style="font-weight:400">
-<input id="showPass" type="checkbox" style="width:auto">
+
+<input
+id="showPass"
+type="checkbox"
+style="width:auto"
+>
+
 Show password
+
 </label>
 
-<button id="loginBtn">LOGIN</button>
+<button id="loginBtn">
+LOGIN
+</button>
 
 <div id="loginMsg" class="err hidden"></div>
 
 </div>
+
 </section>
 
 
+
+<!-- ================= MAIN APP ================= -->
+
 <section id="appPage" class="hidden">
 
+
 <header>
+
 <div class="inside">
+
 <b>Electronic Designing</b>
-<button id="logoutBtn">Logout</button>
+
+<button id="logoutBtn">
+Logout
+</button>
+
 </div>
+
 </header>
 
 
+
+<!-- ================= RUNNING EP ================= -->
+
 <div class="card">
+
 <h2>1. Machine / Running EP</h2>
 
 <p class="small">
+
 Apni original working .EP file upload karein.
 Website uske binary structure ko template ke roop mein use karegi.
+
 </p>
 
-<input id="runningFile" type="file" accept=".ep,.EP">
+<input
+id="runningFile"
+type="file"
+accept=".ep,.EP"
+>
 
 <div id="runningInfo" class="info">
+
 No running file selected.
-</div>
+
 </div>
 
+</div>
+
+
+
+<!-- ================= MACHINE SETTINGS ================= -->
 
 <div class="card">
 
@@ -106,106 +309,226 @@ No running file selected.
 <div class="grid">
 
 <div>
+
 <label>Hooks</label>
-<input id="hooks" type="number" value="672" min="8" step="8">
+
+<input
+id="hooks"
+type="number"
+value="672"
+min="8"
+step="8"
+>
+
 </div>
 
+
 <div>
+
 <label>Target Picks</label>
-<input id="targetPicks" type="number" value="972" min="1">
+
+<input
+id="targetPicks"
+type="number"
+value="972"
+min="1"
+>
+
 </div>
 
+
 <div>
+
 <label>Threshold (0-255)</label>
-<input id="threshold" type="number" value="128" min="0" max="255">
+
+<input
+id="threshold"
+type="number"
+value="128"
+min="0"
+max="255"
+>
+
 </div>
 
+
 <div>
+
 <label>Left Padding</label>
-<input id="leftPad" type="number" value="0" min="0">
+
+<input
+id="leftPad"
+type="number"
+value="0"
+min="0"
+>
+
 </div>
+
 
 <div>
+
 <label>Right Padding</label>
-<input id="rightPad" type="number" value="0" min="0">
+
+<input
+id="rightPad"
+type="number"
+value="0"
+min="0"
+>
+
 </div>
 
 </div>
+
 
 <div class="row">
-<button id="invertBtn" class="secondary">Invert: OFF</button>
-<button id="mirrorBtn" class="secondary">Mirror: OFF</button>
-<button id="flipBtn" class="secondary">Flip: OFF</button>
-</div>
+
+<button
+id="invertBtn"
+class="secondary"
+>
+Invert: OFF
+</button>
+
+<button
+id="mirrorBtn"
+class="secondary"
+>
+Mirror: OFF
+</button>
+
+<button
+id="flipBtn"
+class="secondary"
+>
+Flip: OFF
+</button>
 
 </div>
 
+</div>
+
+
+
+<!-- ================= DESIGN ================= -->
 
 <div class="card">
 
 <h2>3. Design File</h2>
 
-<input id="designFile"
+<input
+id="designFile"
 type="file"
-accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg">
+accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg"
+>
 
 <div id="designInfo" class="info">
+
 No design selected.
-</div>
-
-<img id="preview" class="preview hidden">
 
 </div>
 
+<img
+id="preview"
+class="preview hidden"
+>
+
+</div>
+
+
+
+<!-- ================= CREATE EP ================= -->
 
 <div class="card">
 
 <h2>4. Create Native EP</h2>
 
-<button id="createBtn" class="green">
+<button
+id="createBtn"
+class="green"
+>
+
 CREATE EP FILE
+
 </button>
 
-<div id="status" class="info">
+
+<div
+id="status"
+class="info"
+>
+
 Ready.
+
 </div>
 
-<a id="downloadLink"
-class="hidden"
-style="display:block;margin-top:10px;font-weight:bold">
+
+<!-- DOWNLOAD BUTTON -->
+
+<a
+id="downloadLink"
+class="downloadBtn hidden"
+download
+>
+
+⬇ DOWNLOAD NATIVE EP
+
 </a>
 
+
 </div>
 
+
+
+<!-- ================= BINARY CHECK ================= -->
 
 <div class="card">
 
 <h2>5. Binary Check</h2>
 
 <pre id="hexPreview">
+
 No EP generated yet.
+
 </pre>
 
 </div>
 
+
+
+<!-- ================= IMPORTANT ================= -->
 
 <div class="card">
 
 <h2>Important</h2>
 
 <p class="small">
-This version uses your uploaded working EP as the machine-format template.
-The original header structure is preserved as far as the template permits.
+
+This version uses your uploaded working EP as the
+machine-format template. The original header structure
+is preserved as far as the template permits.
+
 </p>
 
 </div>
 
+
 </section>
 
 
-<div id="backMsg" class="backmsg hidden"></div>
 
-<canvas id="workCanvas" class="hidden"></canvas>
+<div
+id="backMsg"
+class="backmsg hidden"
+></div>
+
+
+<canvas
+id="workCanvas"
+class="hidden"
+></canvas>
+
 
 
 <script>
@@ -214,43 +537,69 @@ The original header structure is preserved as far as the template permits.
 
 "use strict";
 
+
+/* =========================
+   BASIC VARIABLES
+========================= */
+
 const $ = id => document.getElementById(id);
 
+
 let runningBytes = null;
+
 let runningHeader = null;
+
 let runningPicks = 0;
 
 let designImage = null;
 
 let invert = false;
+
 let mirror = false;
+
 let flip = false;
 
 
+
 /* =========================
-   LOGIN SETTINGS
+   LOGIN
 ========================= */
 
 const DEFAULT_ADMIN_ID = "admin";
+
 const DEFAULT_ADMIN_PASSWORD = "123456";
 
 const LOGIN_KEY = "electronic_admin";
 
 
 
+/* =========================
+   SHOW / HIDE
+========================= */
+
 function show(id){
+
 $(id).classList.remove("hidden");
+
 }
+
 
 function hide(id){
+
 $(id).classList.add("hidden");
+
 }
 
 
+
+/* =========================
+   OPEN APP
+========================= */
 
 function openApp(){
 
 hide("loginPage");
+
 show("appPage");
 
 window.scrollTo(0,0);
@@ -261,9 +610,14 @@ initBackNavigation();
 
 
 
+/* =========================
+   OPEN LOGIN
+========================= */
+
 function openLogin(){
 
 hide("appPage");
+
 show("loginPage");
 
 }
@@ -271,30 +625,33 @@ show("loginPage");
 
 
 /* =========================
-   BACK BUTTON SYSTEM
+   BACK NAVIGATION
 ========================= */
 
 let backNavigationReady = false;
+
 let backMessageTimer = null;
+
 
 
 function initBackNavigation(){
 
-if(backNavigationReady)return;
+if(backNavigationReady){
+
+return;
+
+}
+
 
 backNavigationReady = true;
 
-/*
-   Ek extra history entry banayi ja rahi hai.
-   Isse Android/browser Back directly GitHub page par
-   nahi jayega.
-*/
 
 history.replaceState(
 {electronicDesigning:true},
 "",
 location.href
 );
+
 
 history.pushState(
 {electronicDesigning:true},
@@ -310,13 +667,19 @@ function showBackMessage(){
 
 const box = $("backMsg");
 
-box.textContent = "Electronic Designing app mein hi hain.";
+
+box.textContent =
+"Electronic Designing app mein hi hain.";
+
 
 box.classList.remove("hidden");
 
+
 clearTimeout(backMessageTimer);
 
-backMessageTimer = setTimeout(function(){
+
+backMessageTimer =
+setTimeout(function(){
 
 box.classList.add("hidden");
 
@@ -326,23 +689,32 @@ box.classList.add("hidden");
 
 
 
-/*
-   Android / Browser Back
-*/
+/* Android / Browser BACK */
 
-window.addEventListener("popstate",function(){
+window.addEventListener(
+"popstate",
+function(){
 
-if(localStorage.getItem(LOGIN_KEY) !== "1"){
+if(
+localStorage.getItem(LOGIN_KEY)!=="1"
+){
+
 return;
+
 }
 
-if($("appPage").classList.contains("hidden")){
+
+if(
+$("appPage").classList.contains("hidden")
+){
+
 return;
+
 }
 
 
 /*
-   User ko app ke andar hi rakho.
+   Back ko app ke andar block rakho.
 */
 
 history.pushState(
@@ -351,9 +723,11 @@ history.pushState(
 location.href
 );
 
+
 showBackMessage();
 
-});
+}
+);
 
 
 
@@ -361,49 +735,61 @@ showBackMessage();
    SHOW PASSWORD
 ========================= */
 
-$("showPass").addEventListener("change",function(){
+$("showPass").addEventListener(
+"change",
+function(){
 
 $("adminPassword").type =
 this.checked ? "text" : "password";
 
-});
+}
+);
 
 
 
 /* =========================
-   LOGIN
+   LOGIN FUNCTION
 ========================= */
 
 function doLogin(){
 
-const id = $("adminId").value.trim();
+const id =
+$("adminId").value.trim();
 
-const pass = $("adminPassword").value;
 
+const pass =
+$("adminPassword").value;
 
-/*
-   Default login:
-   admin
-   123456
-*/
 
 if(
 id === DEFAULT_ADMIN_ID &&
 pass === DEFAULT_ADMIN_PASSWORD
 ){
 
-localStorage.setItem(LOGIN_KEY,"1");
+localStorage.setItem(
+LOGIN_KEY,
+"1"
+);
 
-$("loginMsg").classList.add("hidden");
+
+$("loginMsg").classList.add(
+"hidden"
+);
+
 
 openApp();
 
-}else{
+}
+
+else{
 
 $("loginMsg").textContent =
 "Admin ID ya password galat hai.";
 
-$("loginMsg").classList.remove("hidden");
+
+$("loginMsg").classList.remove(
+"hidden"
+);
 
 }
 
@@ -422,8 +808,10 @@ $("adminPassword").addEventListener(
 "keydown",
 function(e){
 
-if(e.key === "Enter"){
+if(e.key==="Enter"){
+
 doLogin();
+
 }
 
 }
@@ -435,8 +823,10 @@ $("adminId").addEventListener(
 "keydown",
 function(e){
 
-if(e.key === "Enter"){
+if(e.key==="Enter"){
+
 $("adminPassword").focus();
+
 }
 
 }
@@ -452,15 +842,20 @@ $("logoutBtn").addEventListener(
 "click",
 function(){
 
-localStorage.removeItem(LOGIN_KEY);
+localStorage.removeItem(
+LOGIN_KEY
+);
 
-backNavigationReady = false;
+
+backNavigationReady=false;
+
 
 history.replaceState(
 {electronicDesigningLogin:true},
 "",
 location.href
 );
+
 
 openLogin();
 
@@ -470,37 +865,57 @@ openLogin();
 
 
 /* =========================
-   DESIGN CONTROLS
+   INVERT
 ========================= */
 
-$("invertBtn").onclick=function(){
+$("invertBtn").onclick =
+function(){
 
 invert=!invert;
 
+
 $("invertBtn").textContent =
-"Invert: "+(invert?"ON":"OFF");
+"Invert: "+(
+invert ? "ON" : "OFF"
+);
 
 };
 
 
 
-$("mirrorBtn").onclick=function(){
+/* =========================
+   MIRROR
+========================= */
+
+$("mirrorBtn").onclick =
+function(){
 
 mirror=!mirror;
 
+
 $("mirrorBtn").textContent =
-"Mirror: "+(mirror?"ON":"OFF");
+"Mirror: "+(
+mirror ? "ON" : "OFF"
+);
 
 };
 
 
 
-$("flipBtn").onclick=function(){
+/* =========================
+   FLIP
+========================= */
+
+$("flipBtn").onclick =
+function(){
 
 flip=!flip;
 
+
 $("flipBtn").textContent =
-"Flip: "+(flip?"ON":"OFF");
+"Flip: "+(
+flip ? "ON" : "OFF"
+);
 
 };
 
@@ -513,9 +928,13 @@ $("flipBtn").textContent =
 function u24(n){
 
 return new Uint8Array([
-n&255,
-(n>>8)&255,
-(n>>16)&255
+
+n & 255,
+
+(n >> 8) & 255,
+
+(n >> 16) & 255
+
 ]);
 
 }
@@ -523,7 +942,7 @@ n&255,
 
 
 /* =========================
-   RUNNING EP
+   RUNNING EP UPLOAD
 ========================= */
 
 $("runningFile").addEventListener(
@@ -532,7 +951,13 @@ async function(){
 
 const file=this.files[0];
 
-if(!file)return;
+
+if(!file){
+
+return;
+
+}
+
 
 try{
 
@@ -541,55 +966,62 @@ new Uint8Array(
 await file.arrayBuffer()
 );
 
+
 const hooks =
-parseInt($("hooks").value)||672;
+parseInt(
+$("hooks").value
+) || 672;
+
 
 const bytesPerPick =
 Math.ceil(hooks/8);
 
+
 let headerLen=34;
+
 let picks=0;
 
 
-/*
-   34 byte header structure
-*/
+
+/* 34 BYTE HEADER */
 
 if(
 runningBytes.length >= 34 &&
-(runningBytes.length-34)%bytesPerPick===0
+(runningBytes.length-34)
+% bytesPerPick === 0
 ){
 
 headerLen=34;
 
 picks=
-(runningBytes.length-headerLen)/
+(runningBytes.length-headerLen)
+/
 bytesPerPick;
 
 }
 
 
-/*
-   81 byte header structure
-*/
+
+/* 81 BYTE HEADER */
 
 else if(
 runningBytes.length >= 81 &&
-(runningBytes.length-81)%bytesPerPick===0
+(runningBytes.length-81)
+% bytesPerPick === 0
 ){
 
 headerLen=81;
 
 picks=
-(runningBytes.length-headerLen)/
+(runningBytes.length-headerLen)
+/
 bytesPerPick;
 
 }
 
 
-/*
-   Fallback
-*/
+
+/* FALLBACK */
 
 else{
 
@@ -600,10 +1032,13 @@ Math.floor(
 Math.max(
 0,
 runningBytes.length-headerLen
-)/bytesPerPick
+)
+/
+bytesPerPick
 );
 
 }
+
 
 
 runningHeader =
@@ -612,12 +1047,10 @@ runningBytes.slice(
 headerLen
 );
 
+
 runningPicks=picks;
 
 
-/*
-   Target picks automatically set
-*/
 
 if(picks>0){
 
@@ -626,7 +1059,8 @@ $("targetPicks").value=picks;
 }
 
 
-$("runningInfo").innerHTML=
+
+$("runningInfo").innerHTML =
 
 "<b>"+file.name+"</b><br>"+
 "Size: "+
@@ -642,14 +1076,15 @@ bytesPerPick+
 picks;
 
 
-$("status").textContent=
+
+$("status").textContent =
 "Running EP loaded successfully.";
 
 }
 
 catch(e){
 
-$("runningInfo").textContent=
+$("runningInfo").textContent =
 "EP read error: "+e.message;
 
 }
@@ -660,7 +1095,7 @@ $("runningInfo").textContent=
 
 
 /* =========================
-   DESIGN IMAGE
+   DESIGN FILE
 ========================= */
 
 $("designFile").addEventListener(
@@ -669,22 +1104,32 @@ function(){
 
 const file=this.files[0];
 
-if(!file)return;
 
-const reader=new FileReader();
+if(!file){
 
+return;
 
-reader.onload=function(e){
-
-const img=new Image();
+}
 
 
-img.onload=function(){
+const reader =
+new FileReader();
+
+
+reader.onload =
+function(e){
+
+const img =
+new Image();
+
+
+img.onload =
+function(){
 
 designImage=img;
 
 
-$("designInfo").innerHTML=
+$("designInfo").innerHTML =
 
 "<b>"+file.name+"</b><br>"+
 "Original size: "+
@@ -693,16 +1138,20 @@ img.width+
 img.height;
 
 
-$("preview").src=e.target.result;
+$("preview").src =
+e.target.result;
+
 
 show("preview");
 
 };
 
 
-img.onerror=function(){
 
-$("designInfo").textContent=
+img.onerror =
+function(){
+
+$("designInfo").textContent =
 "Image read nahi ho payi.";
 
 };
@@ -726,41 +1175,51 @@ reader.readAsDataURL(file);
 
 function packDesign(){
 
-const hooks=
+const hooks =
 Math.max(
 8,
-parseInt($("hooks").value)||672
+parseInt(
+$("hooks").value
+) || 672
 );
 
 
-const picks=
+const picks =
 Math.max(
 1,
-parseInt($("targetPicks").value)||1
+parseInt(
+$("targetPicks").value
+) || 1
 );
 
 
-const threshold=
+const threshold =
 Math.min(
 255,
 Math.max(
 0,
-parseInt($("threshold").value)||128
+parseInt(
+$("threshold").value
+) || 128
 )
 );
 
 
-const left=
+const left =
 Math.max(
 0,
-parseInt($("leftPad").value)||0
+parseInt(
+$("leftPad").value
+) || 0
 );
 
 
-const right=
+const right =
 Math.max(
 0,
-parseInt($("rightPad").value)||0
+parseInt(
+$("rightPad").value
+) || 0
 );
 
 
@@ -795,20 +1254,26 @@ throw new Error(
 
 
 
-const canvas=$("workCanvas");
+const canvas =
+$("workCanvas");
+
 
 canvas.width=hooks;
+
 canvas.height=picks;
 
 
-const ctx=
+const ctx =
 canvas.getContext(
 "2d",
-{willReadFrequently:true}
+{
+willReadFrequently:true
+}
 );
 
 
 ctx.fillStyle="white";
+
 
 ctx.fillRect(
 0,
@@ -822,10 +1287,12 @@ picks
 ctx.save();
 
 
+
 ctx.translate(
 mirror ? hooks : 0,
 flip ? picks : 0
 );
+
 
 
 ctx.scale(
@@ -835,18 +1302,20 @@ flip ? -1 : 1
 
 
 
-const usableW=
+const usableW =
 hooks-left-right;
 
 
-const scale=
+
+const scale =
 Math.min(
 usableW/designImage.width,
 picks/designImage.height
 );
 
 
-const dw=
+
+const dw =
 Math.max(
 1,
 Math.round(
@@ -855,7 +1324,8 @@ designImage.width*scale
 );
 
 
-const dh=
+
+const dh =
 Math.max(
 1,
 Math.round(
@@ -864,17 +1334,20 @@ designImage.height*scale
 );
 
 
-const x=
+
+const x =
 left+
 Math.floor(
 (usableW-dw)/2
 );
 
 
-const y=
+
+const y =
 Math.floor(
 (picks-dh)/2
 );
+
 
 
 ctx.drawImage(
@@ -886,11 +1359,12 @@ dh
 );
 
 
+
 ctx.restore();
 
 
 
-const data=
+const data =
 ctx.getImageData(
 0,
 0,
@@ -899,11 +1373,13 @@ picks
 ).data;
 
 
-const bytesPerPick=
+
+const bytesPerPick =
 hooks/8;
 
 
-const out=
+
+const out =
 new Uint8Array(
 picks*bytesPerPick
 );
@@ -922,11 +1398,11 @@ x<hooks;
 x++
 ){
 
-const i=
+const i =
 (y*hooks+x)*4;
 
 
-const gray=
+const gray =
 (
 data[i]+
 data[i+1]+
@@ -934,7 +1410,7 @@ data[i+2]
 )/3;
 
 
-let on=
+let on =
 gray<threshold;
 
 
@@ -947,12 +1423,12 @@ on=!on;
 
 if(on){
 
-const byteIndex=
+const byteIndex =
 y*bytesPerPick+
 Math.floor(x/8);
 
 
-const bit=
+const bit =
 7-(x%8);
 
 
@@ -968,10 +1444,15 @@ out[byteIndex] |=
 
 
 return {
+
 out,
+
 hooks,
+
 picks,
+
 bytesPerPick
+
 };
 
 }
@@ -996,11 +1477,13 @@ throw new Error(
 }
 
 
-const result=
+
+const result =
 packDesign();
 
 
-const header=
+
+const header =
 new Uint8Array(
 runningHeader
 );
@@ -1008,28 +1491,34 @@ runningHeader
 
 
 /*
-   Original 78 A structure:
-   pick count bytes 3,4,5
+   Original EP structure:
+   Pick count = byte 3,4,5
 */
 
 if(header.length>=6){
 
-const p=
-u24(result.picks);
+const p =
+u24(
+result.picks
+);
+
 
 header[3]=p[0];
+
 header[4]=p[1];
+
 header[5]=p[2];
 
 }
 
 
 
-const finalBytes=
+const finalBytes =
 new Uint8Array(
 header.length+
 result.out.length
 );
+
 
 
 finalBytes.set(
@@ -1046,8 +1535,11 @@ header.length
 
 
 return {
+
 bytes:finalBytes,
+
 result
+
 };
 
 }
@@ -1064,68 +1556,118 @@ function(){
 
 try{
 
-$("status").className="info";
+/* OLD DOWNLOAD URL CLEAN */
 
-$("status").textContent=
+const oldLink =
+$("downloadLink");
+
+
+oldLink.classList.add(
+"hidden"
+);
+
+
+oldLink.removeAttribute(
+"href"
+);
+
+
+
+$("status").className =
+"info";
+
+
+$("status").textContent =
 "EP create ho rahi hai...";
 
 
-const built=
+
+/* BUILD */
+
+const built =
 buildEP();
 
 
-const blob=
+
+/* BLOB */
+
+const blob =
 new Blob(
 [built.bytes],
 {
-type:"application/octet-stream"
+type:
+"application/octet-stream"
 }
 );
 
 
-const url=
-URL.createObjectURL(blob);
+
+/* DOWNLOAD URL */
+
+const url =
+URL.createObjectURL(
+blob
+);
 
 
-const nameBase=
-(
-$("designFile").files[0]?.name ||
-"Design"
-)
-.replace(
+
+/* FILE NAME */
+
+const selectedFile =
+$("designFile").files[0];
+
+
+let nameBase="Design";
+
+
+if(selectedFile){
+
+nameBase =
+selectedFile.name.replace(
 /\.[^.]+$/,
 ""
 );
 
-
-const a=
-$("downloadLink");
+}
 
 
-a.href=url;
 
-
-a.download=
+const fileName =
 nameBase+"_Native.EP";
 
 
-a.textContent=
-"⬇ Download "+
-a.download;
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+const downloadLink =
+$("downloadLink");
 
 
-a.classList.remove(
+downloadLink.href=url;
+
+downloadLink.download=fileName;
+
+downloadLink.textContent =
+"⬇ DOWNLOAD NATIVE EP";
+
+downloadLink.classList.remove(
 "hidden"
 );
 
 
 
+/* SUCCESS MESSAGE */
+
 $("status").className="ok";
 
 
-$("status").innerHTML=
+$("status").innerHTML =
 
-"<b>EP ready.</b><br>"+
+"<b>✅ EP FILE READY</b><br><br>"+
+"File: "+fileName+
+"<br>"+
 "Size: "+
 built.bytes.length.toLocaleString()+
 " bytes<br>"+
@@ -1133,7 +1675,9 @@ built.bytes.length.toLocaleString()+
 built.result.hooks+
 "<br>"+
 "Picks: "+
-built.result.picks;
+built.result.picks+
+"<br><br>"+
+"<b>Neeche green DOWNLOAD button dabayein.</b>";
 
 
 
@@ -1143,11 +1687,13 @@ built.result.picks;
 
 let hex="";
 
-const n=
+
+const n =
 Math.min(
 128,
 built.bytes.length
 );
+
 
 
 for(
@@ -1156,12 +1702,13 @@ i<n;
 i++
 ){
 
-hex+=
+hex +=
+
 built.bytes[i]
 .toString(16)
 .padStart(2,"0")
-.toUpperCase()+
-" ";
+.toUpperCase()
++" ";
 
 
 if(
@@ -1175,8 +1722,28 @@ hex+="\n";
 }
 
 
-$("hexPreview").textContent=
+
+$("hexPreview").textContent =
 hex;
+
+
+
+/*
+   Download button screen par
+   automatically scroll karwa do
+*/
+
+setTimeout(
+function(){
+
+downloadLink.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+},
+200
+);
 
 }
 
@@ -1184,7 +1751,8 @@ catch(e){
 
 $("status").className="err";
 
-$("status").textContent=
+$("status").innerHTML =
+"<b>❌ Error</b><br>"+
 e.message;
 
 }
@@ -1199,12 +1767,16 @@ e.message;
 ========================= */
 
 if(
-localStorage.getItem(LOGIN_KEY)==="1"
+localStorage.getItem(
+LOGIN_KEY
+)==="1"
 ){
 
 openApp();
 
-}else{
+}
+
+else{
 
 openLogin();
 
