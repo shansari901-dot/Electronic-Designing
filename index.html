@@ -85,37 +85,41 @@
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
                 <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle & Jacquard Specifications</div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Shuttle Type</label>
                         <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                            <option value="1">1 to 4 Shuttle (Power Loom)</option>
-                            <option value="5" selected>5 - Shuttle All Over</option>
-                            <option value="6">6 - Shuttle All Over (Rapier)</option>
-                            <option value="7">7 - Shuttle All Over</option>
+                            <option value="1">1 to 4 Shuttle</option>
+                            <option value="5" selected>5 - Shuttle</option>
+                            <option value="6">6 - Shuttle</option>
+                            <option value="7">7 - Shuttle</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
-                        <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                            <option value="ep" selected>Direct Machine .EP File</option>
-                            <option value="png">PNG Grid Preview File</option>
+                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
+                        <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
+                            <option value="192">192 Hooks</option>
+                            <option value="384">384 Hooks</option>
+                            <option value="512">512 Hooks</option>
+                            <option value="672" selected>672 Hooks</option>
+                            <option value="768">768 Hooks</option>
+                            <option value="960">960 Hooks</option>
+                            <option value="1408">1408 Hooks</option>
                         </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] text-gray-400 mb-1">Target Picks (Height)</label>
+                        <input type="number" id="picksInput" value="672" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
-                    <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                        <option value="192">192 Hooks</option>
-                        <option value="384">384 Hooks</option>
-                        <option value="512">512 Hooks</option>
-                        <option value="672" selected>672 Hooks (Standard Tianmai/SAAZ)</option>
-                        <option value="768">768 Hooks</option>
-                        <option value="960">960 Hooks</option>
-                        <option value="1408">1408 Hooks (Rapier)</option>
-                        <option value="2688">2688 Hooks (Heavy Rapier)</option>
+                    <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
+                    <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
+                        <option value="ep" selected>Direct Machine .EP File</option>
+                        <option value="png">PNG Grid Preview File</option>
                     </select>
                 </div>
             </div>
@@ -276,6 +280,7 @@
         const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
         const savedMachineCategory = document.getElementById('savedMachineCategory');
         const widthSelect = document.getElementById('widthSelect');
+        const picksInput = document.getElementById('picksInput');
         const thresholdSlider = document.getElementById('thresholdSlider');
         const threshVal = document.getElementById('threshVal');
         const invertSelect = document.getElementById('invertSelect');
@@ -291,6 +296,7 @@
 
         invertSelect.addEventListener('change', processJacquardGrid);
         widthSelect.addEventListener('change', processJacquardGrid);
+        picksInput.addEventListener('input', processJacquardGrid);
 
         function saveMachineCategory() {
             const mName = machineNameInput.value.trim();
@@ -301,27 +307,29 @@
             }
             const fileName = file ? file.name : "Default_Running.EP";
             const currentWidth = widthSelect.value;
+            const currentPicks = picksInput.value;
 
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
             let existing = machines.find(m => m.name === mName);
             if(existing) {
                 existing.fileName = fileName;
                 existing.width = currentWidth;
+                existing.picks = currentPicks;
             } else {
-                machines.push({ name: mName, fileName: fileName, width: currentWidth });
+                machines.push({ name: mName, fileName: fileName, width: currentWidth, picks: currentPicks });
             }
 
             localStorage.setItem('zarafiya_saved_machines', JSON.stringify(machines));
             loadSavedMachinesDropdown();
-            selectedRunningDisplay.innerText = `Active Machine Setup: ${mName} (${fileName})`;
-            alert(`Machine '${mName}' saved to category list successfully!`);
+            selectedRunningDisplay.innerText = `Active Machine Setup: ${mName} (${fileName}) [Picks: ${currentPicks}]`;
+            alert(`Machine '${mName}' saved successfully!`);
         }
 
         function loadSavedMachinesDropdown() {
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
             let html = '<option value="">-- Choose Saved Machine --</option>';
             machines.forEach(m => {
-                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}]</option>`;
+                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 672}]</option>`;
             });
             savedMachineCategory.innerHTML = html;
         }
@@ -334,7 +342,9 @@
             if(found) {
                 machineNameInput.value = found.name;
                 widthSelect.value = found.width;
+                if(found.picks) picksInput.value = found.picks;
                 selectedRunningDisplay.innerText = `Active Machine Setup: ${found.name} (${found.fileName})`;
+                processJacquardGrid();
             }
         }
 
@@ -387,9 +397,8 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
-            // Strict constraint to match controller grid lines properly without overflowing picks
-            let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
-            if (targetHeight > 1500) targetHeight = 672; // cap height to standard readable range for machine controller
+            // Use user-defined target picks strictly to prevent weft overflow on machine
+            let targetHeight = parseInt(picksInput.value) || 672;
 
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
@@ -423,21 +432,21 @@
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
             const targetWidth = parseInt(widthSelect.value);
-            const targetHeight = outputCanvas.height;
+            const targetHeight = parseInt(picksInput.value) || 672;
             const activeMachine = machineNameInput.value || "Machine_Setup";
 
             if (format === 'png') {
                 const link = document.createElement('a');
                 link.href = currentProcessedDataUrl;
-                link.download = `${activeMachine}_${currentFileName}_${targetWidth}hooks.png`;
+                link.download = `${activeMachine}_${currentFileName}_${targetWidth}hooks_${targetHeight}picks.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                saveToHistory(activeMachine, currentFileName, targetWidth, shuttleTypeSelect.value, 'png', currentProcessedDataUrl);
+                saveToHistory(activeMachine, currentFileName, targetWidth, targetHeight, 'png', currentProcessedDataUrl);
                 return;
             }
 
-            // Standard Tianmai/SAAZ Binary Header Structure with Exact Pick Mapping
+            // Fixed Tianmai/SAAZ Binary Header Structure matching exact picks
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
@@ -479,13 +488,13 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(blobUrl);
 
-            saveToHistory(activeMachine, currentFileName, targetWidth, shuttleTypeSelect.value, 'ep', currentProcessedDataUrl);
+            saveToHistory(activeMachine, currentFileName, targetWidth, targetHeight, 'ep', currentProcessedDataUrl);
         }
 
-        function saveToHistory(machine, name, width, shuttle, format, dataUrl) {
+        function saveToHistory(machine, name, width, picks, format, dataUrl) {
             let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
             const timestamp = new Date().toLocaleString();
-            history.unshift({ machine, name, width, shuttle, format, timestamp, dataUrl });
+            history.unshift({ machine, name, width, picks, format, timestamp, dataUrl });
             if (history.length > 20) history.pop();
             localStorage.setItem('zarafiya_history', JSON.stringify(history));
         }
@@ -505,7 +514,7 @@
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
                                 <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
-                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Shuttle: ${item.shuttle} | Format: ${item.format.toUpperCase()}</p>
+                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 672} | Format: ${item.format.toUpperCase()}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
