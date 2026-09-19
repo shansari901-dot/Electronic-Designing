@@ -1,577 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zarafiya Design - Electronic Jacquard Studio</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .glass-card {
-            background: rgba(17, 24, 39, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-        }
-        .yellow-btn {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            color: #000000;
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Electronic Designing - Jacquard EP Converter</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+}
+
+.card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.btn{
+    border-radius:12px;
+    padding:12px 16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+input,select{
+    outline:none;
+}
+
+canvas{
+    image-rendering:pixelated;
+}
+</style>
 </head>
-<body class="pb-28">
 
-    <!-- Top Header Section -->
-    <div class="relative overflow-hidden p-5 border-b border-gray-800 glass-card">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center p-2 text-black font-black shadow-lg bg-amber-400">
-                    ZD
-                </div>
-                <div>
-                    <h1 class="text-sm md:text-base font-black tracking-wide text-amber-400">Hi, SAREEFUL HAK</h1>
-                    <p class="text-[11px] text-gray-400">Zarafiya Jacquard Studio</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span id="adminStatusDot" class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
-                <button onclick="toggleAdminAuth()" id="authBtn" class="bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-xl text-[10px] font-bold">Admin</button>
-            </div>
-        </div>
-    </div>
+<body>
 
-    <!-- Main Container -->
-    <div class="max-w-4xl mx-auto p-4 space-y-4">
+<!-- ================= HEADER ================= -->
 
-        <!-- TAB 1: DESIGN PUNCHING / HOME -->
-        <div id="tab-home" class="tab-content active space-y-4">
-            
-            <!-- Step 1: Saved Machine Category List & Setup -->
-            <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg border border-amber-500/20">
-                <div class="text-amber-400 font-semibold text-xs">🛠️ Step 1: Select or Add Machine Setup</div>
-                
-                <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Select from Saved Machines Category</label>
-                    <select id="savedMachineCategory" onchange="loadSelectedMachine()" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-amber-400">
-                        <option value="">-- Choose Saved Machine --</option>
-                    </select>
-                </div>
+<header class="bg-slate-950 text-white">
+<div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">New Machine Name / ID</label>
-                        <input type="text" id="machineNameInput" placeholder="e.g. Machine 5" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Upload Running File (.EP / .BMP)</label>
-                        <input type="file" id="runningFileInput" class="w-full bg-gray-900 border border-gray-700 p-1.5 rounded-xl text-[11px] text-gray-300">
-                    </div>
-                </div>
+<div>
+<h1 class="text-xl md:text-2xl font-black">
+Electronic Designing
+</h1>
 
-                <button onclick="saveMachineCategory()" class="w-full bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/40 py-2.5 rounded-xl font-bold text-xs">
-                    + Save Machine to Category List
-                </button>
-                <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400 font-bold">No active machine setup loaded</div>
-            </div>
+<p class="text-xs text-slate-300">
+Jacquard Design • Running File • EP Converter
+</p>
+</div>
 
-            <!-- Step 2: Shuttle & Machine Specifications + Dadha/Finger Padding -->
-            <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle, Hooks & Dadha/Finger Padding</div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Shuttle Type</label>
-                        <select id="shuttleTypeSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                            <option value="1">1 to 4 Shuttle</option>
-                            <option value="5" selected>5 - Shuttle</option>
-                            <option value="6">6 - Shuttle</option>
-                            <option value="7">7 - Shuttle</option>
-                        </select>
-                    </div>
+<button id="logoutBtn"
+class="hidden bg-slate-800 px-4 py-2 rounded-lg text-sm">
+Logout
+</button>
 
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Jacquard Width (Hooks)</label>
-                        <select id="widthSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                            <option value="192">192 Hooks</option>
-                            <option value="384">384 Hooks</option>
-                            <option value="512">512 Hooks</option>
-                            <option value="672" selected>672 Hooks</option>
-                            <option value="768">768 Hooks</option>
-                            <option value="960">960 Hooks</option>
-                            <option value="1408">1408 Hooks</option>
-                        </select>
-                    </div>
+</div>
+</header>
 
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Target Picks (Height)</label>
-                        <input type="number" id="picksInput" value="372" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
-                    </div>
-                </div>
 
-                <!-- Dadha / Finger Hook Padding -->
-                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-800">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Left Dadha/Finger Hook Padding</label>
-                        <input type="number" id="leftPadInput" value="0" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-white text-center">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Right Dadha/Finger Hook Padding</label>
-                        <input type="number" id="rightPadInput" value="0" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-white text-center">
-                    </div>
-                </div>
+<!-- ================= MAIN ================= -->
 
-                <div>
-                    <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
-                    <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                        <option value="ep" selected>Direct Machine 79A .EP File</option>
-                        <option value="png">PNG Grid Preview File</option>
-                    </select>
-                </div>
-            </div>
+<main class="max-w-6xl mx-auto p-4">
 
-            <!-- Step 3: Select Design / Upload File & Fine-tuning controls -->
-            <div class="glass-card p-4 rounded-2xl space-y-3 shadow-lg">
-                <div class="text-amber-400 font-semibold text-xs">🎨 Step 3: Select Naksa & Adjust Black/White Matrix</div>
-                <label class="border-2 border-dashed border-gray-700 hover:border-amber-500 transition rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer bg-gray-900/40 mb-3">
-                    <span class="yellow-btn px-5 py-2.5 rounded-xl text-xs font-bold text-black shadow-md mb-1">CHOOSE DESIGN FILE</span>
-                    <span id="fileNameDisplay" class="text-[11px] text-gray-400">No design file selected</span>
-                    <input type="file" id="imageInput" accept="image/*" class="hidden">
-                </label>
 
-                <!-- Adjustment Controls -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-gray-800">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Darkness / Threshold (<span id="threshVal">130</span>)</label>
-                        <input type="range" id="thresholdSlider" min="50" max="220" value="130" class="w-full accent-amber-400">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Color Mode</label>
-                        <select id="invertSelect" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-white">
-                            <option value="normal">Normal (Dark on Light)</option>
-                            <option value="invert">Inverted (Light on Dark)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+<!-- ================= LOGIN ================= -->
 
-            <!-- Previews -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="glass-card p-4 rounded-2xl space-y-2">
-                    <span class="text-xs font-semibold text-gray-300">Original Source Preview</span>
-                    <div class="bg-gray-950 rounded-xl p-3 h-80 flex items-center justify-center overflow-hidden border border-gray-800">
-                        <canvas id="origCanvas" class="max-h-full max-w-full object-contain rounded-lg"></canvas>
-                    </div>
-                </div>
-                <div class="glass-card p-4 rounded-2xl space-y-2">
-                    <span class="text-xs font-semibold text-gray-300">EasyX Style Matrix Grid Preview</span>
-                    <div class="bg-gray-950 rounded-xl p-3 h-80 flex items-center justify-center overflow-hidden border border-gray-800">
-                        <canvas id="outputCanvas" class="max-h-full max-w-full object-contain rounded-lg" style="image-rendering: pixelated;"></canvas>
-                    </div>
-                </div>
-            </div>
+<section id="loginSection"
+class="max-w-md mx-auto mt-10">
 
-            <!-- Convert / Download Button -->
-            <div id="downloadArea" style="display:none;" class="pt-2">
-                <button onclick="convertAndDownloadGrid()" class="w-full text-center yellow-btn font-black py-4 rounded-xl shadow-lg cursor-pointer text-sm">⚡ CONVERT & DOWNLOAD CLEAN .EP FILE</button>
-            </div>
-        </div>
+<div class="card p-6">
 
-        <!-- TAB 2: EP CONVERTER -->
-        <div id="tab-converter" class="tab-content space-y-4">
-            <div class="glass-card p-5 rounded-2xl space-y-4">
-                <h3 class="text-base font-bold text-amber-400">🔄 EP & EJC File Converter</h3>
-                <p class="text-xs text-gray-400">Note: Please select actual running file in the same format as your jacquard support.</p>
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Select Task</label>
-                        <select class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs text-white">
-                            <option>Image to Native .EP Converter</option>
-                            <option>EP to Standard Grid Format</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-gray-400 mb-1">Select File</label>
-                        <input type="file" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs text-gray-300">
-                    </div>
-                    <button class="w-full yellow-btn py-3 rounded-xl font-bold text-xs text-black">PROCESS FILE CONVERSION</button>
-                </div>
-            </div>
-        </div>
+<h2 class="text-2xl font-black mb-2">
+Admin Login
+</h2>
 
-        <!-- TAB 3: HISTORY -->
-        <div id="tab-history" class="tab-content space-y-4">
-            <div class="glass-card p-5 rounded-2xl space-y-3">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-base font-bold text-amber-400">📜 Design History Vault</h3>
-                    <button onclick="clearHistory()" class="text-xs bg-red-500/20 text-red-400 border border-red-500/40 px-3 py-1 rounded-lg">Clear All</button>
-                </div>
-                <div id="historyList" class="space-y-3 mt-3"></div>
-            </div>
-        </div>
+<p class="text-sm text-slate-500 mb-6">
+Admin panel access
+</p>
 
-        <!-- TAB 4: SETTINGS / INFO -->
-        <div id="tab-settings" class="tab-content space-y-4">
-            <div class="glass-card p-5 rounded-2xl space-y-3 text-center py-8">
-                <div class="w-16 h-16 yellow-glow mx-auto rounded-3xl flex items-center justify-center text-black font-black text-xl mb-2 bg-amber-400">ZD</div>
-                <h3 class="text-base font-bold text-amber-400">Zarafiya Design Studio</h3>
-                <p class="text-xs text-gray-400">Industrial Jacquard Automation Version 5.0 (.EP Native Support)</p>
-                <p class="text-[11px] text-gray-500">Lohta, Varanasi Setup - Connected Successfully</p>
-            </div>
-        </div>
+<label class="text-sm font-bold">
+Admin ID
+</label>
 
-    </div>
+<input
+id="adminId"
+type="text"
+placeholder="Enter Admin ID"
+class="w-full border border-slate-300 rounded-xl p-3 mt-2 mb-4"
+>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="fixed bottom-0 left-0 right-0 glass-card border-t border-gray-800 py-3 px-6 flex justify-around items-center z-50">
-        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-amber-400">
-            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span class="text-[10px] font-bold">Punching</span>
-        </button>
-        <button onclick="switchTab('converter')" id="nav-converter" class="flex flex-col items-center text-gray-400 hover:text-gray-200">
-            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-            <span class="text-[10px]">EP Converter</span>
-        </button>
-        <button onclick="switchTab('history')" id="nav-history" class="flex flex-col items-center text-gray-400 hover:text-gray-200">
-            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="text-[10px]">History</span>
-        </button>
-        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center text-gray-400 hover:text-gray-200">
-            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="text-[10px]">Info</span>
-        </button>
-    </div>
+<label class="text-sm font-bold">
+Password
+</label>
 
-    <!-- Admin Authentication Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex justify-center items-center p-4 z-50" style="display:none;">
-        <div class="glass-card p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl border border-gray-700">
-            <h3 class="text-base font-bold text-amber-400">🔐 Admin Authentication</h3>
-            <input type="password" id="adminPassword" placeholder="Enter admin password" class="w-full bg-gray-900 border border-gray-700 p-3 rounded-xl text-center text-white focus:outline-none focus:border-amber-500 text-xs">
-            <div class="flex space-x-2">
-                <button onclick="verifyPassword()" class="w-full yellow-btn text-black py-2.5 rounded-xl font-bold text-xs">Login</button>
-                <button onclick="closeLoginModal()" class="w-full bg-gray-800 text-gray-300 py-2.5 rounded-xl font-bold text-xs">Cancel</button>
-            </div>
-            <p id="errorMsg" class="text-red-400 text-xs font-semibold" style="display:none;">Incorrect Password!</p>
-        </div>
-    </div>
+<input
+id="adminPassword"
+type="password"
+placeholder="Enter Password"
+class="w-full border border-slate-300 rounded-xl p-3 mt-2 mb-5"
+>
 
-    <!-- JavaScript Logic -->
-    <script>
-        const ADMIN_PASS = "admin123";
-        let isAdmin = true;
+<button
+id="loginBtn"
+class="btn bg-slate-950 text-white w-full">
+LOGIN
+</button>
 
-        function toggleAdminAuth() {
-            if (isAdmin) {
-                isAdmin = false;
-                document.getElementById('adminStatusDot').classList.remove('bg-green-500');
-                document.getElementById('adminStatusDot').classList.add('bg-red-500');
-                document.getElementById('authBtn').innerText = "Login";
-                showLoginModal();
-            } else { showLoginModal(); }
-        }
-        function showLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
-        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; document.getElementById('adminPassword').value = ''; document.getElementById('errorMsg').style.display = 'none'; }
-        function verifyPassword() {
-            if (document.getElementById('adminPassword').value === ADMIN_PASS) {
-                isAdmin = true;
-                document.getElementById('adminStatusDot').classList.remove('bg-red-500');
-                document.getElementById('adminStatusDot').classList.add('bg-green-500');
-                document.getElementById('authBtn').innerText = "Admin";
-                closeLoginModal();
-            } else { document.getElementById('errorMsg').style.display = 'block'; }
-        }
+<p
+id="loginMessage"
+class="text-red-600 text-sm mt-4">
+</p>
 
-        const machineNameInput = document.getElementById('machineNameInput');
-        const runningFileInput = document.getElementById('runningFileInput');
-        const selectedRunningDisplay = document.getElementById('selectedRunningDisplay');
-        const savedMachineCategory = document.getElementById('savedMachineCategory');
-        const widthSelect = document.getElementById('widthSelect');
-        const picksInput = document.getElementById('picksInput');
-        const leftPadInput = document.getElementById('leftPadInput');
-        const rightPadInput = document.getElementById('rightPadInput');
-        const thresholdSlider = document.getElementById('thresholdSlider');
-        const threshVal = document.getElementById('threshVal');
-        const invertSelect = document.getElementById('invertSelect');
+</div>
 
-        window.onload = function() {
-            loadSavedMachinesDropdown();
-        }
+</section>
 
-        thresholdSlider.addEventListener('input', (e) => {
-            threshVal.innerText = e.target.value;
-            processJacquardGrid();
-        });
 
-        invertSelect.addEventListener('change', processJacquardGrid);
-        widthSelect.addEventListener('change', processJacquardGrid);
-        picksInput.addEventListener('input', processJacquardGrid);
-        leftPadInput.addEventListener('input', processJacquardGrid);
-        rightPadInput.addEventListener('input', processJacquardGrid);
+<!-- ================= APP ================= -->
 
-        function saveMachineCategory() {
-            const mName = machineNameInput.value.trim();
-            const file = runningFileInput.files[0];
-            if(!mName) {
-                alert("Please enter a machine name (e.g. Machine 5)");
-                return;
-            }
-            const fileName = file ? file.name : "Default_Running.EP";
-            const currentWidth = widthSelect.value;
-            const currentPicks = picksInput.value;
-            const lPad = leftPadInput.value;
-            const rPad = rightPadInput.value;
+<section id="appSection" class="hidden">
 
-            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
-            let existing = machines.find(m => m.name === mName);
-            if(existing) {
-                existing.fileName = fileName;
-                existing.width = currentWidth;
-                existing.picks = currentPicks;
-                existing.lPad = lPad;
-                existing.rPad = rPad;
-            } else {
-                machines.push({ name: mName, fileName: fileName, width: currentWidth, picks: currentPicks, lPad, rPad });
-            }
+<div class="grid lg:grid-cols-3 gap-5">
 
-            localStorage.setItem('zarafiya_saved_machines', JSON.stringify(machines));
-            loadSavedMachinesDropdown();
-            selectedRunningDisplay.innerText = `Active Machine Setup: ${mName} (${fileName}) [Picks: ${currentPicks}]`;
-            alert(`Machine '${mName}' saved successfully!`);
-        }
 
-        function loadSavedMachinesDropdown() {
-            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
-            let html = '<option value="">-- Choose Saved Machine --</option>';
-            machines.forEach(m => {
-                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 372}]</option>`;
-            });
-            savedMachineCategory.innerHTML = html;
-        }
+<!-- ================= LEFT ================= -->
 
-        function loadSelectedMachine() {
-            const selectedName = savedMachineCategory.value;
-            if(!selectedName) return;
-            let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
-            let found = machines.find(m => m.name === selectedName);
-            if(found) {
-                machineNameInput.value = found.name;
-                widthSelect.value = found.width;
-                if(found.picks) picksInput.value = found.picks;
-                if(found.lPad !== undefined) leftPadInput.value = found.lPad;
-                if(found.rPad !== undefined) rightPadInput.value = found.rPad;
-                selectedRunningDisplay.innerText = `Active Machine Setup: ${found.name} (${found.fileName})`;
-                processJacquardGrid();
-            }
-        }
+<div class="space-y-5">
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.fixed button').forEach(el => el.classList.remove('text-amber-400'));
-            document.querySelectorAll('.fixed button').forEach(el => el.classList.add('text-gray-400'));
-            
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('nav-' + tabId).classList.remove('text-gray-400');
-            document.getElementById('nav-' + tabId).classList.add('text-amber-400');
 
-            if(tabId === 'history') { loadHistory(); }
-        }
+<!-- RUNNING FILE -->
 
-        const imageInput = document.getElementById('imageInput');
-        const shuttleTypeSelect = document.getElementById('shuttleTypeSelect');
-        const jacquardFormatSelect = document.getElementById('jacquardFormatSelect');
-        
-        const origCanvas = document.getElementById('origCanvas');
-        const outputCanvas = document.getElementById('outputCanvas');
-        const downloadArea = document.getElementById('downloadArea');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
+<div class="card p-5">
 
-        let uploadedImage = new Image();
-        let currentProcessedDataUrl = "";
-        let currentFileName = "zarafiya_design";
+<h2 class="text-lg font-black">
+1. Running EP / Machine File
+</h2>
 
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                currentFileName = file.name.substring(0, file.name.lastIndexOf('.')) || "jacquard";
-                fileNameDisplay.innerText = file.name;
-                const reader = new FileReader();
-                reader.onload = function(event) { uploadedImage.src = event.target.result; }
-                reader.onloadend = function() {
-                    const baseWidth = parseInt(widthSelect.value);
-                    if (uploadedImage.width > 0) {
-                        let calculatedPicks = Math.round(baseWidth * (uploadedImage.height / uploadedImage.width));
-                        if (calculatedPicks < 50) calculatedPicks = 372;
-                        picksInput.value = calculatedPicks;
-                    }
-                    processJacquardGrid();
-                }
-                reader.readAsDataURL(file);
-            }
-        });
+<p class="text-xs text-slate-500 mt-1 mb-4">
 
-        shuttleTypeSelect.addEventListener('change', processJacquardGrid);
-        jacquardFormatSelect.addEventListener('change', processJacquardGrid);
+Upload the original working machine EP file.
 
-        function processJacquardGrid() {
-            if (!uploadedImage.src) return;
+</p>
 
-            const origCtx = origCanvas.getContext('2d');
-            origCanvas.width = uploadedImage.width;
-            origCanvas.height = uploadedImage.height;
-            origCtx.drawImage(uploadedImage, 0, 0);
+<input
+id="runningFile"
+type="file"
+accept=".EP,.ep"
+class="w-full text-sm"
+>
 
-            const machineHooks = parseInt(widthSelect.value) || 672;
-            const lPad = parseInt(leftPadInput.value) || 0;
-            const rPad = parseInt(rightPadInput.value) || 0;
-            
-            const designWidth = Math.max(50, machineHooks - (lPad + rPad));
-            const targetHeight = parseInt(picksInput.value) || 372;
+<div
+id="runningInfo"
+class="hidden mt-4 bg-slate-50 rounded-xl p-3 text-sm">
+</div>
 
-            outputCanvas.width = machineHooks;
-            outputCanvas.height = targetHeight;
-            const outCtx = outputCanvas.getContext('2d');
-            outCtx.imageSmoothingEnabled = false;
+<button
+id="analyzeBtn"
+disabled
+class="btn bg-indigo-600 text-white w-full mt-4 opacity-40">
 
-            outCtx.fillStyle = "#ffffff";
-            outCtx.fillRect(0, 0, machineHooks, targetHeight);
-            outCtx.drawImage(uploadedImage, lPad, 0, designWidth, targetHeight);
+ANALYZE MACHINE FILE
 
-            const imgData = outCtx.getImageData(0, 0, machineHooks, targetHeight);
-            const data = imgData.data;
-            const threshold = parseInt(thresholdSlider.value);
-            const isInvert = invertSelect.value === 'invert';
+</button>
 
-            for (let i = 0; i < data.length; i += 4) {
-                let avg = (data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114);
-                let val = avg > threshold ? 255 : 0;
-                if (isInvert) val = val === 255 ? 0 : 255;
-                data[i] = val; 
-                data[i+1] = val; 
-                data[i+2] = val;
-            }
-            outCtx.putImageData(imgData, 0, 0);
+</div>
 
-            currentProcessedDataUrl = outputCanvas.toDataURL('image/png');
-            downloadArea.style.display = 'block';
-        }
 
-        function convertAndDownloadGrid() {
-            if (!uploadedImage.src) return;
-            const format = jacquardFormatSelect.value;
-            const machineHooks = parseInt(widthSelect.value) || 672;
-            const targetHeight = parseInt(picksInput.value) || 372;
-            const activeMachine = machineNameInput.value || "Machine_Setup";
+<!-- MACHINE PLAN -->
 
-            if (format === 'png') {
-                const link = document.createElement('a');
-                link.href = currentProcessedDataUrl;
-                link.download = `${activeMachine}_${currentFileName}_${machineHooks}hooks_${targetHeight}picks.png`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                saveToHistory(activeMachine, currentFileName, machineHooks, targetHeight, 'png', currentProcessedDataUrl);
-                return;
-            }
+<div class="card p-5">
 
-            // Exactly matching the 79A.EP Binary Header Format Structure
-            const headerBytes = new Uint8Array(128);
-            headerBytes.fill(32); // Space padding
-            
-            const sig = `   À  79A                       € ÿÿ_UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU`;
-            for(let i=0; i<Math.min(sig.length, 128); i++) {
-                headerBytes[i] = sig.charCodeAt(i);
-            }
+<h2 class="text-lg font-black mb-4">
+2. Machine Plan
+</h2>
 
-            // Exact 16-bit little-endian embedding for Width and Height matching 79A
-            headerBytes[64] = machineHooks & 0xFF;
-            headerBytes[65] = (machineHooks >> 8) & 0xFF;
-            headerBytes[66] = targetHeight & 0xFF;
-            headerBytes[67] = (targetHeight >> 8) & 0xFF;
 
-            let encoderBytes = Array.from(headerBytes);
+<div class="grid grid-cols-2 gap-3">
 
-            const imgData = outputCanvas.getContext('2d').getImageData(0, 0, machineHooks, targetHeight);
-            const data = imgData.data;
-            const bytesPerRow = Math.ceil(machineHooks / 8);
 
-            for (let y = 0; y < targetHeight; y++) {
-                for (let x = 0; x < machineHooks; x += 8) {
-                    let byteVal = 0;
-                    for (let b = 0; b < 8; b++) {
-                        let curX = x + b;
-                        if (curX < machineHooks) {
-                            let idx = (y * machineHooks + curX) * 4;
-                            if (data[idx] < 128) {
-                                byteVal |= (1 << (7 - b));
-                            }
-                        }
-                    }
-                    encoderBytes.push(byteVal);
-                }
-                for (let p = 0; p < (bytesPerRow % 2); p++) {
-                    encoderBytes.push(0);
-                }
-            }
+<div>
 
-            const byteArray = new Uint8Array(encoderBytes);
-            const blob = new Blob([byteArray], { type: 'application/octet-stream' });
-            const blobUrl = URL.createObjectURL(blob);
+<label class="text-xs font-bold">
+Hooks
+</label>
 
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = `${activeMachine}_${currentFileName}.EP`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(blobUrl);
+<input
+id="hooks"
+type="number"
+value="672"
+class="w-full border rounded-xl p-3 mt-1">
 
-            saveToHistory(activeMachine, currentFileName, machineHooks, targetHeight, 'ep', currentProcessedDataUrl);
-        }
+</div>
 
-        function saveToHistory(machine, name, width, picks, format, dataUrl) {
-            let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
-            const timestamp = new Date().toLocaleString();
-            history.unshift({ machine, name, width, picks, format, timestamp, dataUrl });
-            if (history.length > 20) history.pop();
-            localStorage.setItem('zarafiya_history', JSON.stringify(history));
-        }
 
-        function loadHistory() {
-            const historyList = document.getElementById('historyList');
-            let history = JSON.parse(localStorage.getItem('zarafiya_history') || '[]');
-            if (history.length === 0) {
-                historyList.innerHTML = '<p class="text-xs text-gray-500 text-center py-4">No records found.</p>';
-                return;
-            }
-            let html = '';
-            history.forEach((item) => {
-                html += `
-                    <div class="bg-gray-900 border border-gray-800 p-3 rounded-xl flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
-                            <div>
-                                <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
-                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 372} | Format: ${item.format.toUpperCase()}</p>
-                                <span class="text-[9px] text-gray-500">${item.timestamp}</span>
-                            </div>
-                        </div>
-                        <span class="text-[10px] text-gray-400 bg-gray-800 px-2.5 py-1 rounded-lg">Saved</span>
-                    </div>
-                `;
-            });
-            historyList.innerHTML = html;
-        }
+<div>
 
-        function clearHistory() {
-            localStorage.removeItem('zarafiya_history');
-            loadHistory();
-        }
-    </script>
-</body>
-</html>
+<label class="text-xs font-bold">
+Header Bytes
+</label>
+
+<input
+id="headerLength"
+type="number"
+value="34"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Bytes / Pick
+</label>
+
+<input
+id="bytesPerPick"
+type="number"
+value="84"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Original Picks
+</label>
+
+<input
+id="originalPicks"
+type="number"
+value="972"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Target Picks
+</label>
+
+<input
+id="targetPicks"
+type="number"
+value="972"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Threshold
+</label>
+
+<input
+id="threshold"
+type="number"
+value="128"
+min="0"
+max="255"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Left Padding
+</label>
+
+<input
+id="leftPadding"
+type="number"
+value="0"
+min="0"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+
+<div>
+
+<label class="text-xs font-bold">
+Right Padding
+</label>
+
+<input
+id="rightPadding"
+type="number"
+value="0"
+min="0"
+class="w-full border rounded-xl p-3 mt-1">
+
+</div>
+
+</div>
+
+
+<div class="mt-4 space-y-2 text-sm">
+
+<label class="flex gap-2">
+<input id="invertDesign" type="checkbox">
+Invert Design
+</label>
+
+<label class="flex gap-2">
+<input id="mirrorDesign" type="checkbox">
+Mirror Left / Right
+</label>
+
+<label class="flex gap-2">
+<input id="flipDesign" type="checkbox">
+Flip Top / Bottom
+</label>
+
+</div>
+
+
+<button
+id="savePlanBtn"
+class="btn bg-emerald-600 text-white w-full mt-4">
+
+SAVE MACHINE PLAN
+
+</button>
+
+</div>
+
+
+<!-- DESIGN FILE -->
+
+<div class="card p-5">
+
+<h2 class="text-lg font-black">
+3. Design File
+</h2>
+
+<p class="text-xs text-slate-500 mt-1 mb-4">
+
+BMP / PNG / JPG design upload karein.
+
+</p>
+
+<input
+id="designFile"
+type="file"
+accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
+class="w-full text-sm"
+>
+
+<div
+id="designInfo"
+class="text-xs text-slate-500 mt-3">
+</div>
+
+</div>
+
+
+<!-- CHECK -->
+
+<div class="card p-5">
+
+<h2 class="font-black mb-3">
+Conversion Check
+</h2>
+
+<div
+id="conversionCheck"
+class="text-sm text-slate-500">
+
+Running EP aur design upload karein.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= RIGHT ================= -->
+
+<div class="lg:col-span-2 space-y-5">
+
+
+<!-- PREVIEW -->
+
+<div class="card p-5">
+
+<div class="flex flex-wrap justify-between gap-3 items-center">
+
+<div>
+
+<h2 class="text-xl font-black">
+Design Preview
+</h2>
+
+<p
+id="previewInfo"
+class="text-xs text-slate-500 mt-1">
+
+No design loaded
+
+</p>
+
+</div>
+
+
+<button
+id="convertBtn"
+disabled
+class="btn bg-slate-950 text-white opacity-40">
+
+CONVERT & DOWNLOAD EP
+
+</button>
+
+</div>
+
+
+<div class="grid md:grid-cols-2 gap-4 mt-5">
+
+
+<!-- ORIGINAL -->
+
+<div>
+
+<div class="text-xs font-bold mb-2">
+Original Design
+</div>
+
+<div
+class="bg-slate-950 rounded-xl p-3 min-h-[300px] flex justify-center items-center overflow-auto">
+
+<img
+id="originalPreview"
+class="max-w-full max-h-[450px] hidden"
+>
+
+<span
+id="originalMessage"
+class="text-slate-500 text-sm">
+
+Upload design
+
+</span>
+
+</div>
+
+</div>
+
+
+<!-- BINARY -->
+
+<div>
+
+<div class="text-xs font-bold mb-2">
+Machine Binary Preview
+</div>
+
+<div
+class="bg-white border rounded-xl p-3 min-h-[300px] flex justify-center items-center overflow-auto">
+
+<canvas id="binaryCanvas"></canvas>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- VALIDATION -->
+
+<div class="card p-5">
+
+<h2 class="text-lg font-black mb-4">
+EP Validation
+</h2>
+
+<div
+id="validation"
+class="grid md:grid-cols-2 gap-3 text-sm">
+
+</div>
+
+
+<details class="mt-4">
+
+<summary class="font-bold cursor-pointer">
+Header Hex Preview
+</summary>
+
+<pre
+id="hexPreview"
+class="bg-slate-950 text-green-400 rounded-xl p-4 mt-3 text-xs overflow-auto">
+</pre>
+
+</details>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="card p-5">
+
+<div class="flex justify-between">
+
+<h2 class="text-lg font-black">
+Recent Conversions
+</h2>
+
+<button
+id="clearHistory"
+class="text-red-600 text-xs font-bold">
+
+Clear
+
+</button>
+
+</div>
+
+<div
+id="history"
+class="mt-4 space-y-2">
+
+</div>
+
+</div>
+
+
+<!-- WARNING -->
+
+<div class="card p-5 bg-amber-50 border-amber-200">
+
+<h3 class="font-black">
+Important
+</h3>
+
+<p class="text-sm text-amber-900 mt-2">
+
+Original running EP ka machine header preserve kiya jayega.
+672 hooks ke liye 84 bytes per pick use honge.
+Website khud se random 128-byte header create nahi karegi.
+
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   ADMIN LOGIN
+   ===================================================== */
+
+const ADMIN_ID = "admin";
+const ADMIN_PASSWORD = "123456";
+
+
+/* =====================================================
+   GLOBAL VARIABLES
+   ===================================================== */
+
+let runningEP = null;
+
+let runningFileName = "";
+
+let designImage = null;
+
+let binaryData = null;
+
+let database = null;
+
+
+/* =====================================================
+   ELEMENT HELPER
+   ===================================================== */
+
+function $(id){
+    return document.getElementById(id);
+}
+
+
+/* =====================================================
+   INDEXED DB
+   ===================================================== */
+
+const DB_NAME = "ElectronicDesigningDB";
+
+const STORE_NAME = "data";
+
+
+function openDatabase(){
+
+    return new Promise((resolve,reject)=>{
+
+        const request =
+            indexedDB.open(DB_NAME,1);
+
+
+        request.onupgradeneeded = function(){
+
+            request.result
+            .createObjectStore(STORE_NAME);
+
+        };
+
+
+        request.onsuccess = function(){
+
+            database=request.result;
+
+            resolve();
+
+        };
+
+
+        request.onerror=function(){
+
+            reject(request.error);
+
+        };
+
+    });
+
+}
+
+
+function saveDB(key,value){
+
+    return new Promise((resolve,reject)=>{
+
+        const transaction =
+            database.transaction(
+                STORE_NAME,
+                "readwrite"
+            );
+
+        transaction
+        .objectStore(STORE_NAME)
+        .put(value,key);
+
+        transaction.oncomplete=resolve;
+
+        transaction.onerror=()=>{
+            reject(transaction.error);
+        };
+
+    });
+
+}
+
+
+function getDB(key){
+
+    return new Promise((resolve,reject)=>{
+
+        const transaction =
+            database.transaction(
+                STORE_NAME,
+                "readonly"
+            );
+
+        const request =
+            transaction
+            .objectStore(STORE_NAME)
+            .get(key);
+
+        request.onsuccess=()=>{
+            resolve(request.result);
+        };
+
+        request.onerror=()=>{
+            reject(request.error);
+        };
+
+    });
+
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+$("loginBtn").onclick=function(){
+
+    const id=$("adminId").value.trim();
+
+    const password=$("adminPassword").value;
+
+
+    if(
+        id===ADMIN_ID &&
+        password===ADMIN_PASSWORD
+    ){
+
+        sessionStorage.setItem(
+            "electronic_admin",
+            "true"
+        );
+
+        showApplication();
+
+    }else{
+
+        $("loginMessage").textContent=
+            "Admin ID ya password galat hai
