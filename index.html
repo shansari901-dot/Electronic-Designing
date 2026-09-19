@@ -430,21 +430,16 @@
             const lPad = parseInt(leftPadInput.value) || 0;
             const rPad = parseInt(rightPadInput.value) || 0;
             
-            // Actual design width mapped precisely inside machine hooks accounting for padding
             const designWidth = Math.max(50, machineHooks - (lPad + rPad));
             const targetHeight = parseInt(picksInput.value) || 160;
 
-            // Total width written to binary file must exactly match machineHooks (e.g. 672)
             outputCanvas.width = machineHooks;
             outputCanvas.height = targetHeight;
             const outCtx = outputCanvas.getContext('2d');
             outCtx.imageSmoothingEnabled = false;
 
-            // Fill background white
             outCtx.fillStyle = "#ffffff";
             outCtx.fillRect(0, 0, machineHooks, targetHeight);
-
-            // Draw image scaled to designWidth and shifted by lPad
             outCtx.drawImage(uploadedImage, lPad, 0, designWidth, targetHeight);
 
             const imgData = outCtx.getImageData(0, 0, machineHooks, targetHeight);
@@ -484,12 +479,23 @@
                 return;
             }
 
-            // Exact Tianmai/SAAZ Binary Header Structure matching machineHooks
-            let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
-            let encoderBytes = [];
-            for(let i=0; i<headerString.length; i++) {
-                encoderBytes.push(headerString.charCodeAt(i));
+            // Exact 79A / Tianmai Compatible Binary Header Structure with Strict Metadata Offsets
+            const headerBytes = new Uint8Array(128);
+            headerBytes.fill(32); // fill with spaces
+            
+            // Write standard header signature matching 79A setup
+            const sig = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  79A`;
+            for(let i=0; i<Math.min(sig.length, 128); i++) {
+                headerBytes[i] = sig.charCodeAt(i);
             }
+
+            // Embed exact width and height as little-endian 16-bit words at standard Tianmai offsets
+            headerBytes[64] = machineHooks & 0xFF;
+            headerBytes[65] = (machineHooks >> 8) & 0xFF;
+            headerBytes[66] = targetHeight & 0xFF;
+            headerBytes[67] = (targetHeight >> 8) & 0xFF;
+
+            let encoderBytes = Array.from(headerBytes);
 
             const imgData = outputCanvas.getContext('2d').getImageData(0, 0, machineHooks, targetHeight);
             const data = imgData.data;
