@@ -11,22 +11,42 @@
 body{
 margin:0;
 font-family:Arial,sans-serif;
-background:#f3f4f6;
+background:#eef2f7;
 color:#111827
 }
 
 .hidden{display:none!important}
 
-.card{
-background:#fff;
-border-radius:16px;
-padding:18px;
-margin:14px auto;
-max-width:1050px;
-box-shadow:0 3px 15px #00000012
+header{
+background:#071426;
+color:#fff;
+padding:15px;
+position:sticky;
+top:0;
+z-index:50;
+box-shadow:0 3px 15px #0004
 }
 
-h1,h2,h3{margin-top:0}
+.headerIn{
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px
+}
+
+.headerIn button{
+width:auto;
+margin:0;
+background:#26364d
+}
+
+.logo{
+font-size:19px;
+font-weight:800;
+letter-spacing:.3px
+}
 
 .login{
 min-height:100vh;
@@ -36,86 +56,88 @@ justify-content:center;
 padding:20px
 }
 
-.loginbox{
-width:100%;
-max-width:390px;
+.loginBox{
 background:#fff;
+width:100%;
+max-width:400px;
 padding:28px;
-border-radius:20px;
-box-shadow:0 8px 30px #0002
+border-radius:22px;
+box-shadow:0 10px 40px #0002
+}
+
+.loginBox h1{
+margin-bottom:5px
 }
 
 input,select,button{
 width:100%;
 padding:12px;
-margin:6px 0;
-border:1px solid #d1d5db;
 border-radius:10px;
-font-size:15px
+border:1px solid #cbd5e1;
+font-size:15px;
+margin:5px 0
 }
 
 button{
-background:#111827;
-color:#fff;
 border:0;
-cursor:pointer;
-font-weight:700
-}
-
-button.secondary{
-background:#e5e7eb;
-color:#111827
+background:#0f172a;
+color:#fff;
+font-weight:700;
+cursor:pointer
 }
 
 button.green{
-background:#16803c
+background:#138a43
+}
+
+button.blue{
+background:#075fc7
 }
 
 button.red{
 background:#b91c1c
 }
 
+button.gray{
+background:#e5e7eb;
+color:#111827
+}
+
 label{
+display:block;
 font-size:13px;
 font-weight:700;
-display:block;
-margin-top:8px
+margin-top:9px
+}
+
+.small{
+font-size:12px;
+color:#64748b;
+line-height:1.5
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:10px
+}
+
+.card{
+background:#fff;
+border-radius:17px;
+padding:18px;
+margin:14px 0;
+box-shadow:0 4px 18px #00000012
+}
+
+.card h2{
+margin-top:0
 }
 
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:12px
-}
-
-.info{
-background:#eff6ff;
-padding:12px;
-border-radius:10px;
-margin-top:10px
-}
-
-.ok{
-background:#ecfdf5;
-color:#065f46;
-padding:12px;
-border-radius:10px
-}
-
-.err{
-background:#fef2f2;
-color:#991b1b;
-padding:12px;
-border-radius:10px
-}
-
-.preview{
-display:block;
-max-width:100%;
-max-height:400px;
-border:1px solid #ddd;
-border-radius:10px;
-margin-top:10px
+gap:10px
 }
 
 .row{
@@ -129,57 +151,98 @@ flex:1;
 min-width:140px
 }
 
-.small{
-font-size:12px;
-color:#6b7280
+.info{
+background:#eff6ff;
+border-radius:12px;
+padding:13px;
+margin-top:10px;
+line-height:1.55
 }
 
-pre{
-white-space:pre-wrap;
-word-break:break-all;
-background:#111827;
-color:#d1fae5;
-padding:12px;
-border-radius:10px;
-overflow:auto
+.ok{
+background:#ecfdf5;
+color:#065f46;
+border-radius:12px;
+padding:13px;
+line-height:1.55
 }
 
-header{
-background:#111827;
-color:white;
-padding:16px
+.err{
+background:#fef2f2;
+color:#991b1b;
+border-radius:12px;
+padding:13px;
+line-height:1.55
 }
 
-header .inside{
-max-width:1050px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px
+.warn{
+background:#fff7ed;
+color:#9a3412;
+border-radius:12px;
+padding:13px;
+line-height:1.55
 }
 
-header button{
-width:auto;
-margin:0;
-background:#374151
+.machine{
+border:2px solid #dbeafe;
+border-radius:14px;
+padding:14px;
+margin-top:10px
 }
 
-.downloadBtn{
+.machineTitle{
+font-weight:800;
+font-size:17px
+}
+
+.preview{
 display:block;
-width:100%;
+max-width:100%;
+max-height:430px;
+margin:12px auto;
+border-radius:12px;
+border:1px solid #cbd5e1;
+background:#fff
+}
+
+canvas{
+image-rendering:pixelated
+}
+
+.download{
+display:block;
 text-align:center;
 text-decoration:none;
-background:#16803c;
-color:#fff;
-padding:16px;
-border-radius:12px;
+background:#138a43;
+color:white;
+font-weight:800;
 font-size:17px;
-font-weight:700;
+padding:16px;
+border-radius:13px;
 margin-top:12px
 }
 
-.backmsg{
+pre{
+background:#0b1220;
+color:#b7f7d2;
+border-radius:12px;
+padding:13px;
+overflow:auto;
+font-size:12px
+}
+
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:20px;
+background:#dbeafe;
+color:#075985;
+font-size:12px;
+font-weight:700;
+margin:2px
+}
+
+.backMsg{
 position:fixed;
 left:50%;
 bottom:25px;
@@ -189,29 +252,106 @@ color:#fff;
 padding:12px 18px;
 border-radius:12px;
 z-index:9999;
-box-shadow:0 5px 20px #0005;
-font-size:14px;
-white-space:nowrap
+box-shadow:0 5px 25px #0005;
+font-size:14px
 }
 
-.readonly{
-background:#f3f4f6;
+.tabs{
+display:flex;
+gap:7px;
+overflow:auto;
+padding:8px 0
+}
+
+.tabs button{
+white-space:nowrap;
+width:auto;
+padding:10px 15px
+}
+
+.tabs button.active{
+background:#075fc7
+}
+
+.section{
+display:none
+}
+
+.section.active{
+display:block
+}
+
+.machineList{
+margin-top:10px
+}
+
+.machineItem{
+background:#f8fafc;
+border:1px solid #e2e8f0;
+border-radius:12px;
+padding:12px;
+margin:8px 0
+}
+
+.machineItem b{
+display:block;
+margin-bottom:4px
+}
+
+.fileBox{
+background:#f8fafc;
+border:1px dashed #94a3b8;
+padding:12px;
+border-radius:12px
+}
+
+.stat{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+margin-top:10px
+}
+
+.stat div{
+background:#f8fafc;
+border-radius:10px;
+padding:10px
+}
+
+.stat b{
+display:block;
+font-size:18px
+}
+
+.toggle{
+display:flex;
+align-items:center;
+gap:8px;
 font-weight:700
+}
+
+.toggle input{
+width:auto;
+margin:0
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =========================================================
+LOGIN
+========================================================= -->
 
 <section id="loginPage" class="login">
 
-<div class="loginbox">
+<div class="loginBox">
 
 <h1>Electronic Designing</h1>
 
-<p class="small">Admin Login</p>
+<p class="small">
+Admin Login
+</p>
 
 <label>Admin ID</label>
 
@@ -231,13 +371,9 @@ autocomplete="current-password"
 placeholder="Password"
 >
 
-<label style="font-weight:400">
+<label class="toggle">
 
-<input
-id="showPass"
-type="checkbox"
-style="width:auto"
->
+<input id="showPassword" type="checkbox">
 
 Show password
 
@@ -247,22 +383,26 @@ Show password
 LOGIN
 </button>
 
-<div id="loginMsg" class="err hidden"></div>
+<div id="loginError" class="err hidden"></div>
 
 </div>
 
 </section>
 
 
-<!-- ================= MAIN APP ================= -->
+<!-- =========================================================
+APP
+========================================================= -->
 
 <section id="appPage" class="hidden">
 
 <header>
 
-<div class="inside">
+<div class="headerIn">
 
-<b>Electronic Designing</b>
+<div class="logo">
+Electronic Designing
+</div>
 
 <button id="logoutBtn">
 Logout
@@ -273,36 +413,79 @@ Logout
 </header>
 
 
-<!-- ================= RUNNING EP ================= -->
+<div class="container">
 
-<div class="card">
 
-<h2>1. Original Working Running EP</h2>
+<!-- =======================================================
+TABS
+======================================================= -->
 
-<p class="small">
-Apni machine mein jo EP file already sahi chal rahi hai,
-use yahan upload karein. Iska header/template preserve
-kiya jayega. Iske purane picks output ke picks nahi honge.
-</p>
+<div class="tabs">
 
-<input
-id="runningFile"
-type="file"
-accept=".ep,.EP"
+<button
+id="tabMachine"
+class="active"
+>
+Machine Setup
+</button>
+
+<button id="tabDesign">
+Create Design EP
+</button>
+
+<button id="tabSettings">
+Settings
+</button>
+
+</div>
+
+
+<!-- =======================================================
+MACHINE SETUP
+======================================================= -->
+
+<section
+id="machineSection"
+class="section active"
 >
 
-<div id="runningInfo" class="info">
-No running EP selected.
-</div>
-
-</div>
-
-
-<!-- ================= MACHINE SETTINGS ================= -->
-
 <div class="card">
 
-<h2>2. Machine Settings</h2>
+<h2>1. Machine / Running EP Setup</h2>
+
+<div class="info">
+
+<b>Ek baar running EP set kijiye.</b><br>
+
+Uska naam save hone ke baad future mein baar-baar
+running EP upload karne ki zarurat nahi hogi.
+
+<br><br>
+
+Running EP se machine ka asli header aur
+ground / border / direction template preserve kiya jayega.
+
+</div>
+
+<label>Machine / Running File ka Naam</label>
+
+<input
+id="machineName"
+type="text"
+placeholder="Example: 79A - 672 Hook"
+>
+
+<label>Original Working Running EP</label>
+
+<input
+id="machineFile"
+type="file"
+accept=".EP,.ep"
+>
+
+<div id="machineFileInfo" class="info">
+Running EP select kijiye.
+</div>
 
 <div class="grid">
 
@@ -311,100 +494,263 @@ No running EP selected.
 <label>Hooks</label>
 
 <input
-id="hooks"
+id="machineHooks"
 type="number"
 value="672"
-min="8"
 step="8"
+min="8"
 >
 
 </div>
 
-
 <div>
 
-<label>Target Picks — AUTO</label>
+<label>Baver Dori</label>
 
 <input
-id="targetPicks"
+id="baverDori"
 class="readonly"
-type="number"
-value="378"
+value="8 Dori"
 readonly
 >
 
-<p class="small">
-Picks design ke original ratio se automatically
-calculate honge. Running EP ke picks use nahi honge.
-</p>
+</div>
+
+<div>
+
+<label>Baver Direction</label>
+
+<input
+class="readonly"
+value="4 Forward + 4 Return"
+readonly
+>
+
+</div>
+
+<div>
+
+<label>Dadha Dori</label>
+
+<input
+class="readonly"
+value="4 Dori"
+readonly
+>
+
+</div>
+
+<div>
+
+<label>Dadha Direction</label>
+
+<input
+class="readonly"
+value="2 Forward + 2 Return"
+readonly
+>
+
+</div>
+
+</div>
+
+<div class="warn">
+
+<b>Auto Machine Plan</b><br>
+
+Baver: 8 dori → 4 forward + 4 return<br>
+Dadha: 4 dori → 2 forward + 2 return<br><br>
+
+Running EP ke andar ka actual machine template
+preserve kiya jayega. Isliye har design ke waqt
+ye setting dobara nahi karni padegi.
+
+</div>
+
+<button
+id="saveMachineBtn"
+class="blue"
+>
+SAVE MACHINE / RUNNING EP
+</button>
+
+<div id="saveMachineMsg"></div>
 
 </div>
 
 
-<div>
+<div class="card">
 
-<label>Threshold</label>
+<h2>Saved Machines</h2>
+
+<div id="machineList">
+Loading...
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+DESIGN SECTION
+======================================================= -->
+
+<section
+id="designSection"
+class="section"
+>
+
+<div class="card">
+
+<h2>2. Select Machine</h2>
+
+<label>Saved Machine / Running EP</label>
+
+<select id="machineSelect">
+
+<option value="">
+-- Select Machine --
+</option>
+
+</select>
+
+<div id="selectedMachineInfo" class="info">
+
+Pehle saved machine select kijiye.
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>3. Design File</h2>
+
+<div class="fileBox">
 
 <input
-id="threshold"
-type="number"
-value="180"
-min="0"
-max="255"
+id="designFile"
+type="file"
+accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
+>
+
+</div>
+
+<div id="designInfo" class="info">
+
+Design select kijiye.
+
+</div>
+
+<img
+id="designPreview"
+class="preview hidden"
 >
 
 </div>
 
 
+<div class="card">
+
+<h2>4. Automatic Machine Conversion</h2>
+
+<div class="grid">
+
 <div>
 
-<label>Left Padding</label>
+<label>Hooks</label>
 
 <input
-id="leftPad"
-type="number"
+id="outHooks"
+class="readonly"
+readonly
+value="672"
+>
+
+</div>
+
+<div>
+
+<label>Design Picks</label>
+
+<input
+id="outPicks"
+class="readonly"
+readonly
 value="0"
-min="0"
 >
 
 </div>
-
 
 <div>
 
-<label>Right Padding</label>
+<label>Baver</label>
 
 <input
-id="rightPad"
-type="number"
-value="0"
-min="0"
+class="readonly"
+readonly
+value="8 Dori / 4 + 4"
+>
+
+</div>
+
+<div>
+
+<label>Dadha</label>
+
+<input
+class="readonly"
+readonly
+value="4 Dori / 2 + 2"
 >
 
 </div>
 
 </div>
 
+<div class="ok">
+
+<b>Important automatic setup</b><br><br>
+
+• Background / Zameen ke liye running EP ka
+ground template use hoga.<br>
+
+• Border ke liye running EP ka machine template
+preserve hoga.<br>
+
+• Baver direction 4 + 4 preserve hoga.<br>
+
+• Dadha direction 2 + 2 preserve hoga.<br>
+
+• Design ke dark/working area ko machine template
+ke upar apply kiya jayega.<br>
+
+• Running EP ke purane design ko output mein
+copy nahi kiya jayega.
+
+</div>
 
 <div class="row">
 
 <button
 id="invertBtn"
-class="secondary"
+class="gray"
 >
-Invert: OFF
+Design Polarity: DARK = LIFT
 </button>
 
 <button
 id="mirrorBtn"
-class="secondary"
+class="gray"
 >
 Mirror: OFF
 </button>
 
 <button
 id="flipBtn"
-class="secondary"
+class="gray"
 >
 Flip: OFF
 </button>
@@ -414,53 +760,24 @@ Flip: OFF
 </div>
 
 
-<!-- ================= DESIGN ================= -->
-
 <div class="card">
 
-<h2>3. Design File</h2>
-
-<input
-id="designFile"
-type="file"
-accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg"
->
-
-<div id="designInfo" class="info">
-No design selected.
-</div>
-
-<img
-id="preview"
-class="preview hidden"
->
-
-</div>
-
-
-<!-- ================= CREATE EP ================= -->
-
-<div class="card">
-
-<h2>4. Create Native EP</h2>
+<h2>5. Create Native EP</h2>
 
 <button
 id="createBtn"
 class="green"
 >
-CREATE EP FILE
+CREATE NATIVE EP
 </button>
 
-<div
-id="status"
-class="info"
->
+<div id="status" class="info">
 Ready.
 </div>
 
 <a
 id="downloadLink"
-class="downloadBtn hidden"
+class="download hidden"
 download
 >
 ⬇ DOWNLOAD NATIVE EP
@@ -469,43 +786,105 @@ download
 </div>
 
 
-<!-- ================= BINARY CHECK ================= -->
-
-<div class="card">
-
-<h2>5. Binary Check</h2>
-
-<pre id="hexPreview">
-No EP generated yet.
-</pre>
-
-</div>
-
-
-<!-- ================= RESULT CHECK ================= -->
-
 <div class="card">
 
 <h2>6. Output Check</h2>
 
 <div id="outputCheck" class="info">
-No output generated yet.
+No EP generated.
 </div>
 
 </div>
 
-
-<!-- ================= IMPORTANT ================= -->
 
 <div class="card">
 
-<h2>Important</h2>
+<h2>7. Binary Preview</h2>
 
-<p class="small">
-Running EP ke purane picks ko output picks ke liye use
-nahi kiya jayega. Design ke width/height ratio se picks
-calculate honge.
-</p>
+<pre id="hexPreview">
+No output.
+</pre>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+SETTINGS
+======================================================= -->
+
+<section
+id="settingsSection"
+class="section"
+>
+
+<div class="card">
+
+<h2>Admin Settings</h2>
+
+<label>New Admin ID</label>
+
+<input
+id="newAdminId"
+placeholder="New Admin ID"
+>
+
+<label>New Password</label>
+
+<input
+id="newAdminPassword"
+type="password"
+placeholder="New Password"
+>
+
+<label>Confirm Password</label>
+
+<input
+id="confirmAdminPassword"
+type="password"
+placeholder="Confirm Password"
+>
+
+<button
+id="saveAdminBtn"
+class="blue"
+>
+CHANGE ADMIN LOGIN
+</button>
+
+<div id="adminMsg"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Default Login</h2>
+
+<div class="info">
+
+Agar kabhi login details change ho jaye aur code
+default par wapas lana ho:
+
+<br><br>
+
+<b>Admin ID:</b> admin<br>
+<b>Password:</b> 123456
+
+</div>
+
+<button
+id="resetAdminBtn"
+class="red"
+>
+RESET ADMIN TO CODE DEFAULT
+</button>
+
+</div>
+
+</section>
+
 
 </div>
 
@@ -514,8 +893,10 @@ calculate honge.
 
 <div
 id="backMsg"
-class="backmsg hidden"
-></div>
+class="backMsg hidden"
+>
+App ke andar hi hain.
+</div>
 
 
 <canvas
@@ -526,32 +907,31 @@ class="hidden"
 
 <script>
 
-(function(){
-
 "use strict";
 
 
-/* =====================================================
-   ELEMENT
-===================================================== */
+/* =========================================================
+BASIC
+========================================================= */
 
 const $ = id => document.getElementById(id);
 
+const DEFAULT_ID = "admin";
 
-/* =====================================================
-   LOGIN
-===================================================== */
-
-const DEFAULT_ADMIN_ID = "admin";
-
-const DEFAULT_ADMIN_PASSWORD = "123456";
+const DEFAULT_PASSWORD = "123456";
 
 const LOGIN_KEY = "electronic_admin";
 
+const ADMIN_KEY = "electronic_admin_credentials";
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+
+/* =========================================================
+STATE
+========================================================= */
+
+let machines=[];
+
+let selectedMachine=null;
 
 let runningBytes=null;
 
@@ -560,10 +940,6 @@ let runningHeader=null;
 let runningHeaderLength=0;
 
 let runningPicks=0;
-
-let runningBytesPerPick=0;
-
-let runningFileName="";
 
 let designImage=null;
 
@@ -575,75 +951,153 @@ let mirror=false;
 
 let flip=false;
 
-let lastObjectUrl=null;
+let objectUrl=null;
 
 
-/* =====================================================
-   SHOW / HIDE
-===================================================== */
+/* =========================================================
+ADMIN
+========================================================= */
 
-function show(id){
+function getAdmin(){
 
-$(id).classList.remove("hidden");
+try{
+
+const x=
+localStorage.getItem(ADMIN_KEY);
+
+if(x){
+
+return JSON.parse(x);
 
 }
 
-function hide(id){
+}catch(e){}
 
-$(id).classList.add("hidden");
+return{
+
+id:DEFAULT_ID,
+
+password:DEFAULT_PASSWORD
+
+};
 
 }
 
 
-/* =====================================================
-   OPEN APP
-===================================================== */
+/* =========================================================
+LOGIN
+========================================================= */
+
+function login(){
+
+const a=getAdmin();
+
+const id=$("adminId").value.trim();
+
+const password=$("adminPassword").value;
+
+if(
+id===a.id &&
+password===a.password
+){
+
+localStorage.setItem(
+LOGIN_KEY,
+"1"
+);
+
+$("loginError").classList.add(
+"hidden"
+);
+
+openApp();
+
+}else{
+
+$("loginError").textContent=
+"Admin ID ya password galat hai.";
+
+$("loginError").classList.remove(
+"hidden"
+);
+
+}
+
+}
+
+
+$("loginBtn").onclick=login;
+
+
+$("adminPassword").addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter") login();
+
+}
+);
+
+
+$("showPassword").onchange=function(){
+
+$("adminPassword").type=
+this.checked
+?
+"text"
+:
+"password";
+
+};
+
+
+/* =========================================================
+OPEN APP
+========================================================= */
 
 function openApp(){
 
-hide("loginPage");
+$("loginPage").classList.add("hidden");
 
-show("appPage");
+$("appPage").classList.remove("hidden");
 
-window.scrollTo(0,0);
+initBack();
 
-initBackNavigation();
-
-}
-
-
-/* =====================================================
-   OPEN LOGIN
-===================================================== */
-
-function openLogin(){
-
-hide("appPage");
-
-show("loginPage");
+loadMachines();
 
 }
 
 
-/* =====================================================
-   BACK BUTTON
-===================================================== */
+/* =========================================================
+LOGOUT
+========================================================= */
 
-let backNavigationReady=false;
+$("logoutBtn").onclick=function(){
 
-let backMessageTimer=null;
+localStorage.removeItem(LOGIN_KEY);
+
+history.replaceState(
+{login:true},
+"",
+location.href
+);
+
+location.reload();
+
+};
 
 
-function initBackNavigation(){
+/* =========================================================
+BACK BLOCK
+========================================================= */
 
-if(backNavigationReady){
+let backReady=false;
 
-return;
+function initBack(){
 
-}
+if(backReady)return;
 
-backNavigationReady=true;
-
+backReady=true;
 
 history.replaceState(
 {electronicDesigning:true},
@@ -651,34 +1105,10 @@ history.replaceState(
 location.href
 );
 
-
 history.pushState(
 {electronicDesigning:true},
 "",
 location.href
-);
-
-}
-
-
-function showBackMessage(){
-
-const box=$("backMsg");
-
-box.textContent=
-"Electronic Designing app mein hi hain.";
-
-box.classList.remove("hidden");
-
-clearTimeout(backMessageTimer);
-
-backMessageTimer=setTimeout(
-function(){
-
-box.classList.add("hidden");
-
-},
-1800
 );
 
 }
@@ -690,21 +1120,11 @@ function(){
 
 if(
 localStorage.getItem(LOGIN_KEY)!=="1"
-){
-
-return;
-
-}
-
+)return;
 
 if(
 $("appPage").classList.contains("hidden")
-){
-
-return;
-
-}
-
+)return;
 
 history.pushState(
 {electronicDesigning:true},
@@ -712,360 +1132,334 @@ history.pushState(
 location.href
 );
 
-showBackMessage();
+$("backMsg").classList.remove(
+"hidden"
+);
+
+setTimeout(
+()=>{
+
+$("backMsg").classList.add(
+"hidden"
+);
+
+},
+1800
+);
 
 }
 );
 
 
-/* =====================================================
-   SHOW PASSWORD
-===================================================== */
+/* =========================================================
+TABS
+========================================================= */
 
-$("showPass").addEventListener(
-"change",
-function(){
+function showTab(name){
 
-$("adminPassword").type=
-this.checked
-?
-"text"
-:
-"password";
-
-}
+document
+.querySelectorAll(".tabs button")
+.forEach(b=>
+b.classList.remove("active")
 );
 
+document
+.querySelectorAll(".section")
+.forEach(s=>
+s.classList.remove("active")
+);
 
-/* =====================================================
-   LOGIN
-===================================================== */
+if(name==="machine"){
 
-function doLogin(){
+$("tabMachine").classList.add("active");
 
-const id=$("adminId").value.trim();
+$("machineSection")
+.classList.add("active");
 
-const pass=$("adminPassword").value;
+}
 
+if(name==="design"){
+
+$("tabDesign").classList.add("active");
+
+$("designSection")
+.classList.add("active");
+
+loadMachineSelect();
+
+}
+
+if(name==="settings"){
+
+$("tabSettings").classList.add("active");
+
+$("settingsSection")
+.classList.add("active");
+
+}
+
+}
+
+
+$("tabMachine").onclick=()=>{
+showTab("machine");
+};
+
+$("tabDesign").onclick=()=>{
+showTab("design");
+};
+
+$("tabSettings").onclick=()=>{
+showTab("settings");
+};
+
+
+/* =========================================================
+INDEXED DB
+========================================================= */
+
+const DB_NAME="ElectronicDesigningDB";
+
+const DB_VERSION=1;
+
+const STORE="machines";
+
+
+function openDB(){
+
+return new Promise(
+(resolve,reject)=>{
+
+const request=
+indexedDB.open(
+DB_NAME,
+DB_VERSION
+);
+
+request.onupgradeneeded=function(e){
+
+const db=e.target.result;
 
 if(
-id===DEFAULT_ADMIN_ID &&
-pass===DEFAULT_ADMIN_PASSWORD
+!db.objectStoreNames.contains(STORE)
 ){
 
-localStorage.setItem(
-LOGIN_KEY,
-"1"
+db.createObjectStore(
+STORE,
+{id:"id"}
 );
 
-$("loginMsg").classList.add("hidden");
-
-openApp();
-
 }
-
-else{
-
-$("loginMsg").textContent=
-"Admin ID ya password galat hai.";
-
-$("loginMsg").classList.remove("hidden");
-
-}
-
-}
-
-
-$("loginBtn").addEventListener(
-"click",
-doLogin
-);
-
-
-$("adminPassword").addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="Enter"){
-
-doLogin();
-
-}
-
-}
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-$("logoutBtn").addEventListener(
-"click",
-function(){
-
-localStorage.removeItem(LOGIN_KEY);
-
-backNavigationReady=false;
-
-history.replaceState(
-{login:true},
-"",
-location.href
-);
-
-openLogin();
-
-}
-);
-
-
-/* =====================================================
-   INVERT
-===================================================== */
-
-$("invertBtn").onclick=function(){
-
-invert=!invert;
-
-$("invertBtn").textContent=
-"Invert: "+
-(invert?"ON":"OFF");
 
 };
 
-
-/* =====================================================
-   MIRROR
-===================================================== */
-
-$("mirrorBtn").onclick=function(){
-
-mirror=!mirror;
-
-$("mirrorBtn").textContent=
-"Mirror: "+
-(mirror?"ON":"OFF");
-
+request.onsuccess=()=>{
+resolve(request.result);
 };
 
-
-/* =====================================================
-   FLIP
-===================================================== */
-
-$("flipBtn").onclick=function(){
-
-flip=!flip;
-
-$("flipBtn").textContent=
-"Flip: "+
-(flip?"ON":"OFF");
-
+request.onerror=()=>{
+reject(request.error);
 };
 
-
-/* =====================================================
-   24 BIT
-===================================================== */
-
-function u24(n){
-
-return new Uint8Array([
-
-n & 255,
-
-(n>>8)&255,
-
-(n>>16)&255
-
-]);
+});
 
 }
 
 
-/* =====================================================
-   EXACT PICK CALCULATION
-===================================================== */
+async function dbSave(machine){
 
-/*
-   THIS IS THE MAIN FIX.
+const db=await openDB();
 
-   Example:
+return new Promise(
+(resolve,reject)=>{
 
-   Design = 1536 × 864
-   Hooks  = 672
-
-   Picks =
-   672 × 864 / 1536
-
-   = 378
-
-   Running EP ke 192 picks ka yahan koi use nahi.
-*/
-
-function calculateDesignPicks(){
-
-if(!designImage){
-
-return 0;
-
-}
-
-
-const hooks=Math.max(
-8,
-parseInt($("hooks").value)||672
+const tx=
+db.transaction(
+STORE,
+"readwrite"
 );
 
+tx.objectStore(STORE)
+.put(machine);
 
-const width=designImage.naturalWidth ||
-designImage.width;
-
-
-const height=designImage.naturalHeight ||
-designImage.height;
-
-
-if(
-!width ||
-!height
-){
-
-return 0;
-
-}
-
-
-const picks=Math.round(
-(hooks*height)/width
-);
-
-
-return Math.max(
-1,
-picks
-);
-
-}
-
-
-/* =====================================================
-   DETECT RUNNING EP
-===================================================== */
-
-function detectEPStructure(bytes,hooks){
-
-const bytesPerPick=
-hooks/8;
-
-
-let headerLength=0;
-
-let picks=0;
-
-
-/*
-   IMPORTANT:
-
-   First test 34-byte format.
-   79A.EP:
-
-   34 + 84×192
-   = 16162
-*/
-
-if(
-bytes.length>=34 &&
-(bytes.length-34)%bytesPerPick===0
-){
-
-headerLength=34;
-
-picks=
-(bytes.length-34)/bytesPerPick;
-
-}
-
-
-/*
-   Then test 81-byte format.
-*/
-
-else if(
-bytes.length>=81 &&
-(bytes.length-81)%bytesPerPick===0
-){
-
-headerLength=81;
-
-picks=
-(bytes.length-81)/bytesPerPick;
-
-}
-
-
-/*
-   Fallback
-*/
-
-else{
-
-headerLength=34;
-
-picks=Math.floor(
-(bytes.length-34)/bytesPerPick
-);
-
-}
-
-
-return{
-
-headerLength,
-
-picks,
-
-bytesPerPick
-
+tx.oncomplete=()=>{
+resolve();
 };
 
-}
+tx.onerror=()=>{
+reject(tx.error);
+};
 
-
-/* =====================================================
-   RUNNING EP UPLOAD
-===================================================== */
-
-$("runningFile").addEventListener(
-"change",
-async function(){
-
-const file=this.files[0];
-
-if(!file){
-
-return;
+});
 
 }
 
 
-try{
+async function dbGetAll(){
 
-runningBytes=
-new Uint8Array(
+const db=await openDB();
+
+return new Promise(
+(resolve,reject)=>{
+
+const tx=
+db.transaction(
+STORE,
+"readonly"
+);
+
+const req=
+tx.objectStore(STORE)
+.getAll();
+
+req.onsuccess=()=>{
+resolve(req.result||[]);
+};
+
+req.onerror=()=>{
+reject(req.error);
+};
+
+});
+
+}
+
+
+async function dbDelete(id){
+
+const db=await openDB();
+
+return new Promise(
+(resolve,reject)=>{
+
+const tx=
+db.transaction(
+STORE,
+"readwrite"
+);
+
+tx.objectStore(STORE)
+.delete(id);
+
+tx.oncomplete=()=>{
+resolve();
+};
+
+tx.onerror=()=>{
+reject(tx.error);
+};
+
+});
+
+}
+
+
+/* =========================================================
+READ FILE
+========================================================= */
+
+async function fileBytes(file){
+
+return new Uint8Array(
 await file.arrayBuffer()
 );
 
-runningFileName=file.name;
+}
 
 
-const hooks=
-Math.max(
-8,
-parseInt($("hooks").value)||672
+/* =========================================================
+24 BIT
+========================================================= */
+
+function read24(bytes,pos){
+
+return(
+bytes[pos] |
+(bytes[pos+1]<<8) |
+(bytes[pos+2]<<16)
 );
 
+}
+
+
+function write24(bytes,pos,value){
+
+bytes[pos]=value&255;
+
+bytes[pos+1]=
+(value>>8)&255;
+
+bytes[pos+2]=
+(value>>16)&255;
+
+}
+
+
+/* =========================================================
+EP STRUCTURE
+========================================================= */
+
+function detectEP(bytes,hooks){
+
+const bpp=hooks/8;
+
+if(
+bytes.length>=34 &&
+(bytes.length-34)%bpp===0
+){
+
+return{
+
+header:34,
+
+picks:
+(bytes.length-34)/bpp,
+
+bpp:bpp
+
+};
+
+}
+
+if(
+bytes.length>=81 &&
+(bytes.length-81)%bpp===0
+){
+
+return{
+
+header:81,
+
+picks:
+(bytes.length-81)/bpp,
+
+bpp:bpp
+
+};
+
+}
+
+throw new Error(
+"EP structure detect nahi ho paya. Hooks check karein."
+);
+
+}
+
+
+/* =========================================================
+MACHINE FILE SELECT
+========================================================= */
+
+$("machineFile").onchange=async function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
+try{
+
+const hooks=
+parseInt($("machineHooks").value)||672;
 
 if(hooks%8!==0){
 
@@ -1075,152 +1469,618 @@ throw new Error(
 
 }
 
+const bytes=
+await fileBytes(file);
 
-const detected=
+const info=
 detectEPStructure(
-runningBytes,
+bytes,
 hooks
 );
 
+runningBytes=bytes;
 
 runningHeaderLength=
-detected.headerLength;
-
-runningPicks=
-detected.picks;
-
-runningBytesPerPick=
-detected.bytesPerPick;
-
+info.header;
 
 runningHeader=
-runningBytes.slice(
+bytes.slice(
 0,
-runningHeaderLength
+info.header
 );
 
+runningPicks=
+info.picks;
 
-$("runningInfo").className="ok";
 
+$("machineFileInfo").className="ok";
 
-$("runningInfo").innerHTML=
+$("machineFileInfo").innerHTML=
 
-"<b>✅ Original Running EP Loaded</b><br><br>"+
+"<b>✅ Running EP Loaded</b><br><br>"+
 
 "File: "+
 file.name+
 "<br>"+
 
 "Size: "+
-runningBytes.length.toLocaleString()+
+bytes.length.toLocaleString()+
 " bytes<br>"+
 
 "Header: "+
-runningHeaderLength+
+info.header+
 " bytes<br>"+
 
-"Bytes / Pick: "+
-runningBytesPerPick+
+"Hooks: "+
+hooks+
 "<br>"+
 
-"Running EP Picks: "+
-runningPicks+
+"Running Picks: "+
+info.picks+
+"<br>"+
+
+"Bytes / Pick: "+
+info.bpp+
 "<br><br>"+
 
-"<b>⚠ Running EP Picks output mein use nahi honge.</b>";
+"<b>Machine template ready.</b>";
 
-
-$("status").className="ok";
-
-$("status").textContent=
-"Running EP ready. Ab design upload karein.";
-
-}
-catch(e){
+}catch(e){
 
 runningBytes=null;
 
 runningHeader=null;
 
-$("runningInfo").className="err";
+$("machineFileInfo").className="err";
 
-$("runningInfo").textContent=
-"EP read error: "+e.message;
-
-}
+$("machineFileInfo").textContent=
+e.message;
 
 }
+
+};
+
+
+/* =========================================================
+SAVE MACHINE
+========================================================= */
+
+$("saveMachineBtn").onclick=async function(){
+
+try{
+
+const name=
+$("machineName").value.trim();
+
+if(!name){
+
+throw new Error(
+"Machine ka naam likhiye."
 );
 
+}
 
-/* =====================================================
-   DESIGN UPLOAD
-===================================================== */
+if(!runningBytes){
 
-$("designFile").addEventListener(
-"change",
-function(){
+throw new Error(
+"Original working running EP select kijiye."
+);
 
-const file=this.files[0];
+}
 
-if(!file){
+const hooks=
+parseInt($("machineHooks").value)||672;
+
+if(hooks%8!==0){
+
+throw new Error(
+"Hooks 8 ke multiple mein hona chahiye."
+);
+
+}
+
+const info=
+detectEPStructure(
+runningBytes,
+hooks
+);
+
+const id=
+name.toLowerCase()
+.replace(/[^a-z0-9]+/g,"-")
++"-"+Date.now();
+
+
+const machine={
+
+id:id,
+
+name:name,
+
+hooks:hooks,
+
+headerLength:info.header,
+
+runningPicks:info.picks,
+
+bpp:info.bpp,
+
+baverDori:8,
+
+baverForward:4,
+
+baverReturn:4,
+
+dadhaDori:4,
+
+dadhaForward:2,
+
+dadhaReturn:2,
+
+runningBytes:
+runningBytes.buffer.slice(
+runningBytes.byteOffset,
+runningBytes.byteOffset+
+runningBytes.byteLength
+),
+
+created:
+new Date().toISOString()
+
+};
+
+
+await dbSave(machine);
+
+$("saveMachineMsg").className="ok";
+
+$("saveMachineMsg").innerHTML=
+"✅ <b>"+
+name+
+"</b> save ho gaya.<br><br>"+
+"Ab future mein sirf machine select karke design upload karein.";
+
+$("machineName").value="";
+
+$("machineFile").value="";
+
+runningBytes=null;
+
+runningHeader=null;
+
+await loadMachines();
+
+}catch(e){
+
+$("saveMachineMsg").className="err";
+
+$("saveMachineMsg").textContent=
+"❌ "+e.message;
+
+}
+
+};
+
+
+/* =========================================================
+LOAD MACHINES
+========================================================= */
+
+async function loadMachines(){
+
+try{
+
+machines=
+await dbGetAll();
+
+renderMachineList();
+
+loadMachineSelect();
+
+}catch(e){
+
+$("machineList").className="err";
+
+$("machineList").textContent=
+"Machine list load nahi hui.";
+
+}
+
+}
+
+
+/* =========================================================
+MACHINE LIST
+========================================================= */
+
+function renderMachineList(){
+
+const box=$("machineList");
+
+if(!machines.length){
+
+box.innerHTML=
+"<div class='info'>"+
+"Abhi koi running EP save nahi hai."+
+"</div>";
 
 return;
 
 }
 
+box.innerHTML="";
+
+machines.forEach(m=>{
+
+const div=
+document.createElement("div");
+
+div.className="machineItem";
+
+div.innerHTML=
+
+"<b>"+escapeHTML(m.name)+"</b>"+
+
+"<span class='badge'>"+
+m.hooks+" Hooks"+
+"</span>"+
+
+"<span class='badge'>"+
+m.runningPicks+" Running Picks"+
+"</span>"+
+
+"<span class='badge'>"+
+"8 Baver / 4+4"+
+"</span>"+
+
+"<span class='badge'>"+
+"4 Dadha / 2+2"+
+"</span>"+
+
+"<div class='row' style='margin-top:8px'>"+
+
+"<button class='gray' data-use='"+m.id+"'>"+
+"USE"+
+"</button>"+
+
+"<button class='red' data-del='"+m.id+"'>"+
+"DELETE"+
+"</button>"+
+
+"</div>";
+
+box.appendChild(div);
+
+});
+
+
+box.querySelectorAll(
+"[data-use]"
+).forEach(btn=>{
+
+btn.onclick=()=>{
+
+$("machineSelect").value=
+btn.dataset.use;
+
+showTab("design");
+
+loadSelectedMachine();
+
+};
+
+});
+
+
+box.querySelectorAll(
+"[data-del]"
+).forEach(btn=>{
+
+btn.onclick=async()=>{
+
+if(
+!confirm(
+"Ye saved machine delete karna hai?"
+)
+)return;
+
+await dbDelete(
+btn.dataset.del
+);
+
+await loadMachines();
+
+};
+
+});
+
+}
+
+
+/* =========================================================
+ESCAPE
+========================================================= */
+
+function escapeHTML(str){
+
+return String(str)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+MACHINE SELECT
+========================================================= */
+
+function loadMachineSelect(){
+
+const select=$("machineSelect");
+
+const old=select.value;
+
+select.innerHTML=
+"<option value=''>-- Select Machine --</option>";
+
+machines.forEach(m=>{
+
+const op=
+document.createElement("option");
+
+op.value=m.id;
+
+op.textContent=
+m.name+
+" — "+
+m.hooks+
+" Hooks";
+
+select.appendChild(op);
+
+});
+
+if(
+old &&
+machines.some(
+m=>m.id===old
+)
+){
+
+select.value=old;
+
+}
+
+}
+
+
+$("machineSelect").onchange=
+loadSelectedMachine;
+
+
+async function loadSelectedMachine(){
+
+const id=
+$("machineSelect").value;
+
+if(!id){
+
+selectedMachine=null;
+
+$("selectedMachineInfo").className=
+"info";
+
+$("selectedMachineInfo").textContent=
+"Pehle saved machine select kijiye.";
+
+return;
+
+}
+
+selectedMachine=
+machines.find(
+m=>m.id===id
+);
+
+if(!selectedMachine)return;
+
+
+$("outHooks").value=
+selectedMachine.hooks;
+
+
+$("selectedMachineInfo").className="ok";
+
+$("selectedMachineInfo").innerHTML=
+
+"<b>✅ "+
+escapeHTML(selectedMachine.name)+
+"</b><br><br>"+
+
+"Hooks: "+
+selectedMachine.hooks+
+"<br>"+
+
+"Original Running Picks: "+
+selectedMachine.runningPicks+
+"<br><br>"+
+
+"<b>Baver:</b> 8 Dori → 4 Forward + 4 Return<br>"+
+
+"<b>Dadha:</b> 4 Dori → 2 Forward + 2 Return<br><br>"+
+
+"Running EP ka machine template automatically use hoga.";
+
+updateDesignInfo();
+
+}
+
+
+/* =========================================================
+DESIGN FILE
+========================================================= */
+
+$("designFile").onchange=function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
 designFileName=file.name;
 
-
-const reader=new FileReader();
-
+const reader=
+new FileReader();
 
 reader.onload=function(e){
 
-const img=new Image();
-
+const img=
+new Image();
 
 img.onload=function(){
 
 designImage=img;
 
+$("designPreview").src=
+e.target.result;
+
+$("designPreview")
+.classList.remove("hidden");
+
+updateDesignInfo();
+
+};
+
+img.onerror=function(){
+
+$("designInfo").className="err";
+
+$("designInfo").textContent=
+"Design image read nahi ho payi.";
+
+};
+
+img.src=e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+};
+
+
+/* =========================================================
+PICKS
+========================================================= */
+
+function calculatePicks(){
+
+if(!designImage)return 0;
+
+if(!selectedMachine)return 0;
 
 const hooks=
-Math.max(
-8,
-parseInt($("hooks").value)||672
+selectedMachine.hooks;
+
+const w=
+designImage.naturalWidth ||
+designImage.width;
+
+const h=
+designImage.naturalHeight ||
+designImage.height;
+
+if(!w||!h)return 0;
+
+
+/*
+IMPORTANT:
+
+Design ka original ratio.
+
+1536 × 864
+672 hooks
+
+672 × 864 / 1536
+= 378
+*/
+
+let picks=
+Math.round(
+hooks*h/w
 );
 
 
 /*
-   EXACT AUTO PICK.
-
-   1536×864 + 672 hooks
-   = 378 picks
+Machine direction ke liye
+even picks rakhen.
 */
 
+if(picks%2!==0){
+
+picks++;
+
+}
+
+return Math.max(
+2,
+picks
+);
+
+}
+
+
+/* =========================================================
+DESIGN INFO
+========================================================= */
+
+function updateDesignInfo(){
+
+if(!designImage){
+
+return;
+
+}
+
+if(!selectedMachine){
+
+$("designInfo").className="warn";
+
+$("designInfo").textContent=
+"Design upload ho gaya. Ab saved machine select karein.";
+
+return;
+
+}
+
+const hooks=
+selectedMachine.hooks;
+
 const picks=
-calculateDesignPicks();
+calculatePicks();
 
+$("outHooks").value=
+hooks;
 
-$("targetPicks").value=picks;
-
+$("outPicks").value=
+picks;
 
 $("designInfo").className="ok";
 
-
 $("designInfo").innerHTML=
 
-"<b>✅ Design Loaded</b><br><br>"+
+"<b>✅ Design Ready</b><br><br>"+
 
 "File: "+
-file.name+
+escapeHTML(designFileName)+
 "<br>"+
 
 "Original Size: "+
-img.width+
+designImage.naturalWidth+
 " × "+
-img.height+
+designImage.naturalHeight+
 "<br>"+
 
 "Hooks: "+
@@ -1231,226 +2091,263 @@ hooks+
 picks+
 "</b><br><br>"+
 
-"Output Design Area: "+
-hooks+
-" × "+
-picks+
-"<br><br>"+
-
 "Calculation: "+
 hooks+
 " × "+
-img.height+
+designImage.naturalHeight+
 " ÷ "+
-img.width+
+designImage.naturalWidth+
 " = "+
-picks;
-
-
-$("preview").src=e.target.result;
-
-show("preview");
-
-
-$("status").className="ok";
-
-$("status").innerHTML=
-"✅ Design ready: "+
-hooks+
-" × "+
-picks+
-" hooks/picks.";
-
-};
-
-
-img.onerror=function(){
-
-$("designInfo").className="err";
-
-$("designInfo").textContent=
-"Image read nahi ho payi.";
-
-};
-
-
-img.src=e.target.result;
-
-};
-
-
-reader.readAsDataURL(file);
-
-}
-);
-
-
-/* =====================================================
-   HOOK CHANGE
-===================================================== */
-
-$("hooks").addEventListener(
-"change",
-function(){
-
-if(!designImage){
-
-return;
-
-}
-
-
-const hooks=
-Math.max(
-8,
-parseInt(this.value)||672
-);
-
-
-if(hooks%8!==0){
-
-$("designInfo").className="err";
-
-$("designInfo").textContent=
-"Hooks 8 ke multiple mein hona chahiye.";
-
-return;
-
-}
-
-
-const picks=
-calculateDesignPicks();
-
-
-$("targetPicks").value=picks;
-
-
-$("designInfo").innerHTML=
-
-"<b>Design dimensions updated</b><br>"+
-"Hooks: "+
-hooks+
-"<br>"+
-"Automatic Picks: "+
+Math.round(
+hooks*
+designImage.naturalHeight/
+designImage.naturalWidth
+)+
+" → even = "+
 picks;
 
 }
+
+
+/* =========================================================
+POLARITY
+========================================================= */
+
+$("invertBtn").onclick=function(){
+
+invert=!invert;
+
+this.textContent=
+invert
+?
+"Design Polarity: LIGHT = LIFT"
+:
+"Design Polarity: DARK = LIFT";
+
+};
+
+
+/* =========================================================
+MIRROR
+========================================================= */
+
+$("mirrorBtn").onclick=function(){
+
+mirror=!mirror;
+
+this.textContent=
+"Mirror: "+
+(
+mirror
+?
+"ON"
+:
+"OFF"
 );
 
+};
 
-/* =====================================================
-   PACK DESIGN
-===================================================== */
 
-function packDesign(){
+/* =========================================================
+FLIP
+========================================================= */
 
-if(!designImage){
+$("flipBtn").onclick=function(){
 
-throw new Error(
-"Design file upload karein."
+flip=!flip;
+
+this.textContent=
+"Flip: "+
+(
+flip
+?
+"ON"
+:
+"OFF"
 );
 
-}
+};
 
 
-if(
-!runningBytes ||
-!runningHeader
-){
-
-throw new Error(
-"Original working running EP upload karein."
-);
-
-}
-
-
-const hooks=
-Math.max(
-8,
-parseInt($("hooks").value)||672
-);
-
-
-if(hooks%8!==0){
-
-throw new Error(
-"Hooks 8 ke multiple mein hona chahiye."
-);
-
-}
-
+/* =========================================================
+EXTRACT MACHINE TEMPLATE
+========================================================= */
 
 /*
-   VERY IMPORTANT:
+Running EP ke data rows se machine ka base template nikala jata hai.
 
-   User target picks ko manually use nahi karna.
+79A jaisi file mein alternating base/structure rows hote hain.
+Hum pehle even rows se 2 direction templates lete hain.
 
-   Always calculate from image ratio.
+Template:
+Forward  = first ground/template row
+Return   = second ground/template row
+
+Isse Baver 4+4 aur Dadha 2+2 direction cycle ko
+machine template ke saath preserve kiya jata hai.
 */
 
-const picks=
-calculateDesignPicks();
+function getDirectionTemplates(machine){
 
-
-if(!picks){
-
-throw new Error(
-"Design ke picks calculate nahi ho paaye."
+const bytes=
+new Uint8Array(
+machine.runningBytes
 );
 
-}
+const header=
+machine.headerLength;
 
+const bpp=
+machine.bpp;
 
-$("targetPicks").value=picks;
+const data=
+bytes.slice(header);
 
+const total=
+Math.floor(
+data.length/bpp
+);
 
-const threshold=
-Math.min(
-255,
-Math.max(
-0,
-parseInt($("threshold").value)
-||180
+const rows=[];
+
+for(
+let i=0;
+i<total;
+i++
+){
+
+rows.push(
+data.slice(
+i*bpp,
+(i+1)*bpp
 )
 );
 
-
-const left=
-Math.max(
-0,
-parseInt($("leftPad").value)
-||0
-);
+}
 
 
-const right=
-Math.max(
-0,
-parseInt($("rightPad").value)
-||0
-);
+let forward=null;
+
+let ret=null;
 
 
-if(
-left+right>=hooks
+/*
+Even rows are used as machine/base rows.
+*/
+
+for(
+let i=0;
+i<rows.length;
+i+=2
 ){
 
-throw new Error(
-"Left + Right padding invalid hai."
+if(!forward){
+
+forward=
+new Uint8Array(
+rows[i]
 );
+
+continue;
+
+}
+
+if(
+!ret &&
+!sameBytes(
+forward,
+rows[i]
+)
+){
+
+ret=
+new Uint8Array(
+rows[i]
+);
+
+break;
+
+}
 
 }
 
 
-const canvas=$("workCanvas");
+if(!forward){
+
+forward=
+new Uint8Array(bpp);
+
+}
+
+if(!ret){
+
+ret=
+new Uint8Array(forward);
+
+}
 
 
-canvas.width=hooks;
+return{
 
-canvas.height=picks;
+forward,
 
+ret,
+
+rows
+
+};
+
+}
+
+
+/* =========================================================
+BYTE COMPARE
+========================================================= */
+
+function sameBytes(a,b){
+
+if(
+!a ||
+!b ||
+a.length!==b.length
+)return false;
+
+for(
+let i=0;
+i<a.length;
+i++
+){
+
+if(a[i]!==b[i])
+return false;
+
+}
+
+return true;
+
+}
+
+
+/* =========================================================
+CANVAS BINARY
+========================================================= */
+
+function createDesignBits(){
+
+const hooks=
+selectedMachine.hooks;
+
+const picks=
+calculatePicks();
+
+const canvas=
+$("workCanvas");
+
+canvas.width=
+hooks;
+
+canvas.height=
+picks;
 
 const ctx=
 canvas.getContext(
@@ -1462,10 +2359,11 @@ willReadFrequently:true
 
 
 /*
-   WHITE BACKGROUND
+WHITE BASE
 */
 
-ctx.fillStyle="white";
+ctx.fillStyle=
+"white";
 
 ctx.fillRect(
 0,
@@ -1476,11 +2374,10 @@ picks
 
 
 /*
-   TRANSFORM
+TRANSFORM
 */
 
 ctx.save();
-
 
 if(mirror){
 
@@ -1495,7 +2392,6 @@ ctx.scale(
 );
 
 }
-
 
 if(flip){
 
@@ -1513,22 +2409,14 @@ ctx.scale(
 
 
 /*
-   IMPORTANT:
-
-   Image ko available area mein
-   EXACT RATIO ke saath fit karna.
+Fit design exactly inside machine area.
 */
-
-const usableW=
-hooks-left-right;
-
 
 const scale=
 Math.min(
-usableW/designImage.width,
+hooks/designImage.width,
 picks/designImage.height
 );
-
 
 const dw=
 Math.max(
@@ -1538,7 +2426,6 @@ designImage.width*scale
 )
 );
 
-
 const dh=
 Math.max(
 1,
@@ -1547,19 +2434,15 @@ designImage.height*scale
 )
 );
 
-
 const x=
-left+
 Math.floor(
-(usableW-dw)/2
+(hooks-dw)/2
 );
-
 
 const y=
 Math.floor(
 (picks-dh)/2
 );
-
 
 ctx.drawImage(
 designImage,
@@ -1569,15 +2452,10 @@ dw,
 dh
 );
 
-
 ctx.restore();
 
 
-/*
-   IMAGE → BINARY
-*/
-
-const data=
+const imageData=
 ctx.getImageData(
 0,
 0,
@@ -1585,15 +2463,11 @@ hooks,
 picks
 ).data;
 
-
 const bytesPerPick=
 hooks/8;
 
-
-const out=
-new Uint8Array(
-picks*bytesPerPick
-);
+const designRows=
+new Array(picks);
 
 
 for(
@@ -1602,159 +2476,315 @@ y<picks;
 y++
 ){
 
+const row=
+new Uint8Array(
+bytesPerPick
+);
+
 for(
 let x=0;
 x<hooks;
 x++
 ){
 
-const i=
+const pos=
 (y*hooks+x)*4;
-
 
 const gray=
 (
-data[i]+
-data[i+1]+
-data[i+2]
+imageData[pos]+
+imageData[pos+1]+
+imageData[pos+2]
 )/3;
 
+let lift=
+gray<180;
 
-let on=
-gray<threshold;
 
+/*
+Default:
+Dark design = lift.
+
+Invert:
+Light design = lift.
+*/
 
 if(invert){
 
-on=!on;
+lift=!lift;
 
 }
 
+if(lift){
 
-if(on){
-
-const byteIndex=
-y*bytesPerPick+
+const bi=
 Math.floor(x/8);
-
 
 const bit=
 7-(x%8);
 
+row[bi]|=
+1<<bit;
 
-out[byteIndex]|=
-(1<<bit);
+}
 
 }
 
-}
+designRows[y]=row;
 
 }
 
 
 return{
 
-out,
+designRows,
 
 hooks,
 
 picks,
 
-bytesPerPick,
-
-threshold
+bytesPerPick
 
 };
 
 }
 
 
-/* =====================================================
-   BUILD EP
-===================================================== */
+/* =========================================================
+OR BYTES
+========================================================= */
 
-function buildEP(){
+function orRows(base,design){
+
+const out=
+new Uint8Array(
+base
+);
+
+for(
+let i=0;
+i<out.length;
+i++
+){
+
+out[i]|=
+design[i];
+
+}
+
+return out;
+
+}
+
+
+/* =========================================================
+BUILD MACHINE EP
+========================================================= */
+
+function buildNativeEP(){
+
+if(!selectedMachine){
+
+throw new Error(
+"Saved machine select karein."
+);
+
+}
+
+if(!designImage){
+
+throw new Error(
+"Design upload karein."
+);
+
+}
+
+
+const machine=
+selectedMachine;
+
+const hooks=
+machine.hooks;
+
+const picks=
+calculatePicks();
+
+const bpp=
+hooks/8;
+
+
+/*
+Check running file.
+*/
+
+const running=
+new Uint8Array(
+machine.runningBytes
+);
 
 if(
-!runningBytes ||
-!runningHeader
+running.length<
+machine.headerLength+
+bpp
 ){
 
 throw new Error(
-"Original working EP upload karein."
+"Saved running EP corrupt ya incomplete hai."
 );
 
 }
 
 
-const result=
-packDesign();
-
-
-/*
-   COPY ONLY HEADER.
-
-   Old running data NEVER copy hoga.
-*/
-
 const header=
-new Uint8Array(
-runningHeader
+running.slice(
+0,
+machine.headerLength
 );
 
 
 /*
-   34-BYTE FORMAT
+IMPORTANT:
 
-   79A.EP ke case mein:
-
-   byte 3,4,5 = pick count.
-
-   378 decimal =
-   0x017A
-
-   bytes =
-   7A 01 00
+Output pick count NEW DESIGN ke hisab se hoga.
+Running EP ke purane 192 picks copy nahi honge.
 */
 
 if(
-runningHeaderLength===34
+machine.headerLength===34
 ){
 
-const p=
-u24(result.picks);
-
-
-header[3]=p[0];
-
-header[4]=p[1];
-
-header[5]=p[2];
+write24(
+header,
+3,
+picks
+);
 
 }
 
 
 /*
-   81-BYTE FORMAT
+Direction templates.
+*/
 
-   Header completely unchanged.
+const templates=
+getDirectionTemplates(machine);
+
+
+/*
+Design bits.
+*/
+
+const design=
+createDesignBits();
+
+
+/*
+Final data.
+*/
+
+const finalData=
+new Uint8Array(
+picks*bpp
+);
+
+
+/*
+=========================================================
+MACHINE PLAN
+
+BAVER:
+8 Dori
+4 Forward
+4 Return
+
+DADHA:
+4 Dori
+2 Forward
+2 Return
+
+Running EP ke actual machine/base rows ko use karke
+direction template cycle banaya ja raha hai.
+
+Har pick par:
+
+1. Machine base / ground template
+2. Design working lifts overlay
+
+Isliye background aur border sirf blank zero row
+nahi rahenge.
+=========================================================
+*/
+
+for(
+let y=0;
+y<picks;
+y++
+){
+
+/*
+Baver direction cycle:
+0-3 = Forward
+4-7 = Return
+*/
+
+const baverPos=
+y%8;
+
+const isForward=
+baverPos<4;
+
+
+/*
+Machine base.
+*/
+
+const base=
+isForward
+?
+templates.forward
+:
+templates.ret;
+
+
+/*
+Design row.
+
+White background = base template only.
+Dark design = base + design lift.
+*/
+
+const result=
+orRows(
+base,
+design.designRows[y]
+);
+
+
+finalData.set(
+result,
+y*bpp
+);
+
+}
+
+
+/*
+Final file.
 */
 
 const finalBytes=
 new Uint8Array(
 header.length+
-result.out.length
+finalData.length
 );
-
 
 finalBytes.set(
 header,
 0
 );
 
-
 finalBytes.set(
-result.out,
+finalData,
 header.length
 );
 
@@ -1763,108 +2793,106 @@ return{
 
 bytes:finalBytes,
 
-result,
+hooks,
 
-headerLength:header.length
+picks,
+
+bpp,
+
+headerLength:
+header.length,
+
+forward:
+templates.forward,
+
+returnTemplate:
+templates.ret
 
 };
 
 }
 
 
-/* =====================================================
-   CREATE EP
-===================================================== */
+/* =========================================================
+CREATE
+========================================================= */
 
-$("createBtn").addEventListener(
-"click",
-function(){
+$("createBtn").onclick=function(){
 
 try{
 
 $("downloadLink")
 .classList.add("hidden");
 
-
-$("downloadLink")
-.removeAttribute("href");
-
-
 $("status").className="info";
 
-
 $("status").innerHTML=
-"⏳ EP create ho rahi hai...";
+"⏳ Machine template + design conversion ho rahi hai...";
 
 
-const built=
-buildEP();
+const result=
+buildNativeEP();
 
 
 /*
-   EXACT EXPECTED SIZE
+Expected size.
 
-   672 hooks / 8
-   = 84 bytes per pick
+672 hooks:
+672 / 8 = 84 bytes/pick
 
-   378 picks
-   = 31,752 data bytes
+378 picks:
+84 × 378 = 31,752
 
-   34 header
-   = 31,786 final bytes
+34 header:
+31,752 + 34 = 31,786
 */
 
-const expectedDataBytes=
-built.result.bytesPerPick*
-built.result.picks;
+const expected=
+result.headerLength+
+result.bpp*
+result.picks;
 
-
-const expectedFinalBytes=
-built.headerLength+
-expectedDataBytes;
+const sizeOK=
+result.bytes.length===
+expected;
 
 
 /*
-   BLOB
+Blob
 */
 
 const blob=
 new Blob(
-[built.bytes],
+[result.bytes],
 {
-type:
-"application/octet-stream"
+type:"application/octet-stream"
 }
 );
 
 
-/*
-   OLD URL RELEASE
-*/
-
-if(lastObjectUrl){
+if(objectUrl){
 
 URL.revokeObjectURL(
-lastObjectUrl
+objectUrl
 );
 
 }
 
-
-lastObjectUrl=
-URL.createObjectURL(blob);
+objectUrl=
+URL.createObjectURL(
+blob
+);
 
 
 /*
-   FILE NAME
+Filename
 */
 
-let nameBase="Design";
-
+let base="Design";
 
 if(designFileName){
 
-nameBase=
+base=
 designFileName.replace(
 /\.[^.]+$/,
 ""
@@ -1872,24 +2900,18 @@ designFileName.replace(
 
 }
 
+const filename=
+base+"_Native.EP";
 
-const fileName=
-nameBase+"_Native.EP";
-
-
-/*
-   DOWNLOAD
-*/
 
 const link=
 $("downloadLink");
 
-
 link.href=
-lastObjectUrl;
+objectUrl;
 
 link.download=
-fileName;
+filename;
 
 link.textContent=
 "⬇ DOWNLOAD NATIVE EP";
@@ -1900,31 +2922,29 @@ link.classList.remove(
 
 
 /*
-   HEX
+HEX
 */
 
 let hex="";
 
-const hexCount=
+const count=
 Math.min(
 256,
-built.bytes.length
+result.bytes.length
 );
-
 
 for(
 let i=0;
-i<hexCount;
+i<count;
 i++
 ){
 
 hex+=
-built.bytes[i]
+result.bytes[i]
 .toString(16)
 .padStart(2,"0")
-.toUpperCase()
-+" ";
-
+.toUpperCase()+
+" ";
 
 if(
 (i+1)%16===0
@@ -1936,19 +2956,13 @@ hex+="\n";
 
 }
 
-
 $("hexPreview").textContent=
 hex;
 
 
 /*
-   RESULT CHECK
+Result
 */
-
-const sizeOK=
-built.bytes.length===
-expectedFinalBytes;
-
 
 $("outputCheck").className=
 sizeOK
@@ -1956,7 +2970,6 @@ sizeOK
 "ok"
 :
 "err";
-
 
 $("outputCheck").innerHTML=
 
@@ -1966,93 +2979,83 @@ sizeOK
 ?
 "✅ OUTPUT SIZE CORRECT"
 :
-"⚠ OUTPUT SIZE CHECK"
+"❌ OUTPUT SIZE ERROR"
 )+
 "</b><br><br>"+
 
+"Machine: "+
+escapeHTML(
+selectedMachine.name
+)+
+"<br>"+
+
 "Hooks: "+
-built.result.hooks+
+result.hooks+
 "<br>"+
 
 "Picks: "+
-built.result.picks+
+result.picks+
 "<br>"+
 
 "Bytes / Pick: "+
-built.result.bytesPerPick+
+result.bpp+
 "<br>"+
 
 "Header: "+
-built.headerLength+
+result.headerLength+
 " bytes<br>"+
 
 "Design Data: "+
-expectedDataBytes.toLocaleString()+
+(
+result.bpp*
+result.picks
+).toLocaleString()+
 " bytes<br>"+
 
-"Final File: "+
-built.bytes.length.toLocaleString()+
-" bytes<br><br>"+
+"<b>Final File: "+
+result.bytes.length.toLocaleString()+
+" bytes</b><br><br>"+
 
-(
-built.headerLength===34
-?
-"34-byte EP header preserved + pick count updated."
-:
-"81-byte EP header preserved unchanged."
-);
+"Baver: 8 Dori / 4 Forward + 4 Return<br>"+
+
+"Dadha: 4 Dori / 2 Forward + 2 Return<br><br>"+
+
+"Running EP ka machine template preserve kiya gaya.";
 
 
 /*
-   SUCCESS MESSAGE
+Status
 */
 
 $("status").className="ok";
-
 
 $("status").innerHTML=
 
 "<b>✅ EP FILE READY</b><br><br>"+
 
 "File: "+
-fileName+
+filename+
 "<br>"+
 
 "Hooks: "+
-built.result.hooks+
+result.hooks+
 "<br>"+
 
-"<b>Picks: "+
-built.result.picks+
-"</b><br>"+
+"Picks: "+
+result.picks+
+"<br>"+
 
-"Header: "+
-built.headerLength+
-" bytes<br>"+
-
-"File Size: "+
-built.bytes.length.toLocaleString()+
+"Size: "+
+result.bytes.length.toLocaleString()+
 " bytes<br><br>"+
 
-(
-sizeOK
-?
-"✅ Binary size check OK"
-:
-"⚠ Please check output"
-)+
-
-"<br><br>"+
+"Background / Border machine template ke saath generate kiya gaya hai.<br><br>"+
 
 "<b>⬇ Neeche green DOWNLOAD NATIVE EP button dabayein.</b>";
 
 
-/*
-   SCROLL TO DOWNLOAD
-*/
-
 setTimeout(
-function(){
+()=>{
 
 link.scrollIntoView({
 behavior:"smooth",
@@ -2063,24 +3066,121 @@ block:"center"
 250
 );
 
-}
-catch(e){
+
+}catch(e){
 
 $("status").className="err";
 
 $("status").innerHTML=
-"<b>❌ Error</b><br><br>"+
-e.message;
+"<b>❌ ERROR</b><br><br>"+
+escapeHTML(e.message);
 
 }
 
+};
+
+
+/* =========================================================
+ADMIN CHANGE
+========================================================= */
+
+$("saveAdminBtn").onclick=function(){
+
+const id=
+$("newAdminId").value.trim();
+
+const p=
+$("newAdminPassword").value;
+
+const c=
+$("confirmAdminPassword").value;
+
+if(!id){
+
+$("adminMsg").className="err";
+
+$("adminMsg").textContent=
+"New Admin ID likhiye.";
+
+return;
+
 }
+
+if(!p){
+
+$("adminMsg").className="err";
+
+$("adminMsg").textContent=
+"New password likhiye.";
+
+return;
+
+}
+
+if(p!==c){
+
+$("adminMsg").className="err";
+
+$("adminMsg").textContent=
+"Password match nahi kar raha.";
+
+return;
+
+}
+
+localStorage.setItem(
+ADMIN_KEY,
+JSON.stringify({
+id:id,
+password:p
+})
 );
 
+$("adminMsg").className="ok";
 
-/* =====================================================
-   AUTO LOGIN
-===================================================== */
+$("adminMsg").textContent=
+"✅ Admin ID aur password change ho gaya.";
+
+$("newAdminId").value="";
+
+$("newAdminPassword").value="";
+
+$("confirmAdminPassword").value="";
+
+};
+
+
+/* =========================================================
+RESET ADMIN
+========================================================= */
+
+$("resetAdminBtn").onclick=function(){
+
+if(
+!confirm(
+"Admin login ko admin / 123456 par reset karein?"
+)
+)return;
+
+localStorage.setItem(
+ADMIN_KEY,
+JSON.stringify({
+id:DEFAULT_ID,
+password:DEFAULT_PASSWORD
+})
+);
+
+$("adminMsg").className="ok";
+
+$("adminMsg").textContent=
+"✅ Admin login code-default par reset ho gaya.";
+
+};
+
+
+/* =========================================================
+AUTO START
+========================================================= */
 
 if(
 localStorage.getItem(LOGIN_KEY)==="1"
@@ -2088,15 +3188,21 @@ localStorage.getItem(LOGIN_KEY)==="1"
 
 openApp();
 
+}else{
+
+$("loginPage")
+.classList.remove("hidden");
+
 }
 
-else{
 
-openLogin();
+/* =========================================================
+INITIAL
+========================================================= */
 
-}
+loadMachines();
 
-})();
+
 </script>
 
 </body>
