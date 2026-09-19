@@ -334,11 +334,7 @@ function updateMagnetInfo(){
  $("magnetInfo").textContent="Magnet count: "+count;
 }
 
-/* STRUCTURE DETECTION
-   Header candidates are checked against the stored pick count when
-   present. Otherwise plausible bytes-per-pick values are evaluated.
-   This detects byte capacity, not physical harness mapping.
-*/
+/* STRUCTURE DETECTION */
 function readHeaderPickCount(bytes,header){
  if(header>=6){
   const n=bytes[3]|(bytes[4]<<8)|(bytes[5]<<16);
@@ -381,7 +377,6 @@ function detectEPStructure(bytes){
  }
 
  if(!candidates.length)return null;
-
  candidates.sort((a,b)=>b.score-a.score);
  const best=candidates[0];
  return {
@@ -817,8 +812,8 @@ function validatePreview(){
 }
 
 /* BUILD EP
-   Existing fallback: cycle running rows and OR design bits into them.
-   This is not a verified physical harness conversion algorithm.
+   Fallback algorithm only. Machine-specific physical harness mapping
+   is not established by this bitwise overlay.
 */
 function buildNativeEP(){
  if(!selectedMachine)throw new Error("Pehle machine select karein.");
@@ -938,7 +933,7 @@ async function exportBackup(){
  }catch(error){alert("Backup export error:\n"+error.message);}
 }
 
-/* BACKUP IMPORT - retain compatible old fields */
+/* BACKUP IMPORT */
 async function importBackup(file){
  try{
   const data=JSON.parse(await file.text());
@@ -1111,7 +1106,7 @@ window.addEventListener("popstate",()=>{
  history.pushState({page:"app"},"",location.href);
 });
 
-/* START */
+/* START APPLICATION */
 init();
 </script>
 </body>
