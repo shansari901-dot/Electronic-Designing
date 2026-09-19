@@ -2,738 +2,1711 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Electronic Designing - Jacquard EP Converter</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Electronic Designing</title>
 
 <style>
+*{
+  box-sizing:border-box;
+}
+
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f1f5f9;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.loginbox{
+  width:100%;
+  max-width:390px;
+  background:white;
+  padding:28px;
+  border-radius:20px;
+  box-shadow:0 8px 30px #0002;
 }
 
 .card{
-    background:white;
-    border:1px solid #e2e8f0;
-    border-radius:18px;
-    box-shadow:0 8px 25px rgba(0,0,0,.06);
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  margin:14px auto;
+  max-width:1050px;
+  box-shadow:0 3px 15px #00000012;
 }
 
-.btn{
-    border-radius:12px;
-    padding:12px 16px;
-    font-weight:700;
-    cursor:pointer;
+h1,h2,h3{
+  margin-top:0;
 }
 
-.btn:active{
-    transform:scale(.98);
+input,
+select,
+button{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:15px;
 }
 
-input,select{
-    outline:none;
+button{
+  background:#111827;
+  color:white;
+  border:0;
+  cursor:pointer;
+  font-weight:700;
 }
 
-canvas{
-    image-rendering:pixelated;
+button.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+button.green{
+  background:#16803c;
+}
+
+button.red{
+  background:#b91c1c;
+}
+
+label{
+  font-size:13px;
+  font-weight:700;
+  display:block;
+  margin-top:8px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+.info{
+  background:#eff6ff;
+  padding:12px;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.ok{
+  background:#ecfdf5;
+  color:#065f46;
+  padding:12px;
+  border-radius:10px;
+}
+
+.err{
+  background:#fef2f2;
+  color:#991b1b;
+  padding:12px;
+  border-radius:10px;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.row>*{
+  flex:1;
+  min-width:140px;
+}
+
+.small{
+  font-size:12px;
+  color:#6b7280;
+}
+
+.preview{
+  max-width:100%;
+  max-height:350px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+pre{
+  white-space:pre-wrap;
+  word-break:break-all;
+  background:#111827;
+  color:#d1fae5;
+  padding:12px;
+  border-radius:10px;
+  overflow:auto;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:16px;
+}
+
+header .inside{
+  max-width:1050px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+header button{
+  width:auto;
+  margin:0;
+  background:#374151;
 }
 </style>
 </head>
 
+
 <body>
-
-<!-- ================= HEADER ================= -->
-
-<header class="bg-slate-950 text-white">
-<div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-
-<div>
-<h1 class="text-xl md:text-2xl font-black">
-Electronic Designing
-</h1>
-
-<p class="text-xs text-slate-300">
-Jacquard Design • Running File • EP Converter
-</p>
-</div>
-
-<button id="logoutBtn"
-class="hidden bg-slate-800 px-4 py-2 rounded-lg text-sm">
-Logout
-</button>
-
-</div>
-</header>
-
-
-<!-- ================= MAIN ================= -->
-
-<main class="max-w-6xl mx-auto p-4">
 
 
 <!-- ================= LOGIN ================= -->
 
-<section id="loginSection"
-class="max-w-md mx-auto mt-10">
+<section id="loginPage" class="login">
 
-<div class="card p-6">
+  <div class="loginbox">
 
-<h2 class="text-2xl font-black mb-2">
-Admin Login
-</h2>
+    <h1>Electronic Designing</h1>
 
-<p class="text-sm text-slate-500 mb-6">
-Admin panel access
-</p>
+    <p class="small">
+      Admin Login
+    </p>
 
-<label class="text-sm font-bold">
-Admin ID
-</label>
+    <label>
+      Admin ID
+    </label>
 
-<input
-id="adminId"
-type="text"
-placeholder="Enter Admin ID"
-class="w-full border border-slate-300 rounded-xl p-3 mt-2 mb-4"
->
+    <input
+      id="adminId"
+      type="text"
+      autocomplete="username"
+      placeholder="admin"
+    >
 
-<label class="text-sm font-bold">
-Password
-</label>
+    <label>
+      Password
+    </label>
 
-<input
-id="adminPassword"
-type="password"
-placeholder="Enter Password"
-class="w-full border border-slate-300 rounded-xl p-3 mt-2 mb-5"
->
+    <input
+      id="adminPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="123456"
+    >
 
-<button
-id="loginBtn"
-class="btn bg-slate-950 text-white w-full">
-LOGIN
-</button>
+    <label style="font-weight:400">
 
-<p
-id="loginMessage"
-class="text-red-600 text-sm mt-4">
-</p>
+      <input
+        id="showPass"
+        type="checkbox"
+        style="width:auto"
+      >
 
-</div>
+      Show password
+
+    </label>
+
+    <button id="loginBtn">
+      LOGIN
+    </button>
+
+    <div
+      id="loginMsg"
+      class="err hidden"
+    ></div>
+
+    <div class="info">
+
+      <b>Admin Login</b>
+      <br><br>
+
+      ID:
+      <b>admin</b>
+
+      <br>
+
+      Password:
+      <b>123456</b>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= APP ================= -->
 
-<section id="appSection" class="hidden">
+<!-- ================= MAIN APP ================= -->
 
-<div class="grid lg:grid-cols-3 gap-5">
+<section id="appPage" class="hidden">
 
+<header>
 
-<!-- ================= LEFT ================= -->
+  <div class="inside">
 
-<div class="space-y-5">
+    <b>
+      Electronic Designing
+    </b>
 
+    <button id="logoutBtn">
+      Logout
+    </button>
 
-<!-- RUNNING FILE -->
+  </div>
 
-<div class="card p-5">
-
-<h2 class="text-lg font-black">
-1. Running EP / Machine File
-</h2>
-
-<p class="text-xs text-slate-500 mt-1 mb-4">
-
-Upload the original working machine EP file.
-
-</p>
-
-<input
-id="runningFile"
-type="file"
-accept=".EP,.ep"
-class="w-full text-sm"
->
-
-<div
-id="runningInfo"
-class="hidden mt-4 bg-slate-50 rounded-xl p-3 text-sm">
-</div>
-
-<button
-id="analyzeBtn"
-disabled
-class="btn bg-indigo-600 text-white w-full mt-4 opacity-40">
-
-ANALYZE MACHINE FILE
-
-</button>
-
-</div>
+</header>
 
 
-<!-- MACHINE PLAN -->
 
-<div class="card p-5">
+<!-- RUNNING EP -->
 
-<h2 class="text-lg font-black mb-4">
-2. Machine Plan
-</h2>
+<div class="card">
 
+  <h2>
+    1. Machine / Running EP
+  </h2>
 
-<div class="grid grid-cols-2 gap-3">
+  <p class="small">
 
+    Apni original working .EP file upload karein.
+    Website uske binary structure ko template ke
+    roop mein use karegi.
 
-<div>
+  </p>
 
-<label class="text-xs font-bold">
-Hooks
-</label>
+  <input
+    id="runningFile"
+    type="file"
+    accept=".ep,.EP"
+  >
 
-<input
-id="hooks"
-type="number"
-value="672"
-class="w-full border rounded-xl p-3 mt-1">
+  <div
+    id="runningInfo"
+    class="info"
+  >
+
+    No running file selected.
+
+  </div>
 
 </div>
 
 
-<div>
 
-<label class="text-xs font-bold">
-Header Bytes
-</label>
+<!-- MACHINE SETTINGS -->
 
-<input
-id="headerLength"
-type="number"
-value="34"
-class="w-full border rounded-xl p-3 mt-1">
+<div class="card">
 
-</div>
+  <h2>
+    2. Machine Settings
+  </h2>
 
+  <div class="grid">
 
-<div>
+    <div>
 
-<label class="text-xs font-bold">
-Bytes / Pick
-</label>
+      <label>
+        Hooks
+      </label>
 
-<input
-id="bytesPerPick"
-type="number"
-value="84"
-class="w-full border rounded-xl p-3 mt-1">
+      <input
+        id="hooks"
+        type="number"
+        value="672"
+        min="8"
+        step="8"
+      >
 
-</div>
+    </div>
 
 
-<div>
+    <div>
 
-<label class="text-xs font-bold">
-Original Picks
-</label>
+      <label>
+        Target Picks
+      </label>
 
-<input
-id="originalPicks"
-type="number"
-value="972"
-class="w-full border rounded-xl p-3 mt-1">
+      <input
+        id="targetPicks"
+        type="number"
+        value="972"
+        min="1"
+      >
 
-</div>
-
-
-<div>
-
-<label class="text-xs font-bold">
-Target Picks
-</label>
-
-<input
-id="targetPicks"
-type="number"
-value="972"
-class="w-full border rounded-xl p-3 mt-1">
-
-</div>
+    </div>
 
 
-<div>
+    <div>
 
-<label class="text-xs font-bold">
-Threshold
-</label>
+      <label>
+        Threshold (0-255)
+      </label>
 
-<input
-id="threshold"
-type="number"
-value="128"
-min="0"
-max="255"
-class="w-full border rounded-xl p-3 mt-1">
+      <input
+        id="threshold"
+        type="number"
+        value="128"
+        min="0"
+        max="255"
+      >
 
-</div>
-
-
-<div>
-
-<label class="text-xs font-bold">
-Left Padding
-</label>
-
-<input
-id="leftPadding"
-type="number"
-value="0"
-min="0"
-class="w-full border rounded-xl p-3 mt-1">
-
-</div>
+    </div>
 
 
-<div>
+    <div>
 
-<label class="text-xs font-bold">
-Right Padding
-</label>
+      <label>
+        Left Padding
+      </label>
 
-<input
-id="rightPadding"
-type="number"
-value="0"
-min="0"
-class="w-full border rounded-xl p-3 mt-1">
+      <input
+        id="leftPad"
+        type="number"
+        value="0"
+        min="0"
+      >
 
-</div>
-
-</div>
+    </div>
 
 
-<div class="mt-4 space-y-2 text-sm">
+    <div>
 
-<label class="flex gap-2">
-<input id="invertDesign" type="checkbox">
-Invert Design
-</label>
+      <label>
+        Right Padding
+      </label>
 
-<label class="flex gap-2">
-<input id="mirrorDesign" type="checkbox">
-Mirror Left / Right
-</label>
+      <input
+        id="rightPad"
+        type="number"
+        value="0"
+        min="0"
+      >
 
-<label class="flex gap-2">
-<input id="flipDesign" type="checkbox">
-Flip Top / Bottom
-</label>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <button
+      id="invertBtn"
+      class="secondary"
+    >
+      Invert: OFF
+    </button>
+
+    <button
+      id="mirrorBtn"
+      class="secondary"
+    >
+      Mirror: OFF
+    </button>
+
+    <button
+      id="flipBtn"
+      class="secondary"
+    >
+      Flip: OFF
+    </button>
+
+  </div>
 
 </div>
 
 
-<button
-id="savePlanBtn"
-class="btn bg-emerald-600 text-white w-full mt-4">
 
-SAVE MACHINE PLAN
+<!-- DESIGN -->
 
-</button>
+<div class="card">
 
-</div>
+  <h2>
+    3. Design File
+  </h2>
 
+  <input
+    id="designFile"
+    type="file"
+    accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg"
+  >
 
-<!-- DESIGN FILE -->
+  <div
+    id="designInfo"
+    class="info"
+  >
 
-<div class="card p-5">
+    No design selected.
 
-<h2 class="text-lg font-black">
-3. Design File
-</h2>
+  </div>
 
-<p class="text-xs text-slate-500 mt-1 mb-4">
-
-BMP / PNG / JPG design upload karein.
-
-</p>
-
-<input
-id="designFile"
-type="file"
-accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
-class="w-full text-sm"
->
-
-<div
-id="designInfo"
-class="text-xs text-slate-500 mt-3">
-</div>
+  <img
+    id="preview"
+    class="preview hidden"
+  >
 
 </div>
 
 
-<!-- CHECK -->
 
-<div class="card p-5">
+<!-- CREATE -->
 
-<h2 class="font-black mb-3">
-Conversion Check
-</h2>
+<div class="card">
 
-<div
-id="conversionCheck"
-class="text-sm text-slate-500">
+  <h2>
+    4. Create Native EP
+  </h2>
 
-Running EP aur design upload karein.
+  <button
+    id="createBtn"
+    class="green"
+  >
+    CREATE EP FILE
+  </button>
 
-</div>
+  <div
+    id="status"
+    class="info"
+  >
 
-</div>
+    Ready.
 
-</div>
+  </div>
 
-
-<!-- ================= RIGHT ================= -->
-
-<div class="lg:col-span-2 space-y-5">
-
-
-<!-- PREVIEW -->
-
-<div class="card p-5">
-
-<div class="flex flex-wrap justify-between gap-3 items-center">
-
-<div>
-
-<h2 class="text-xl font-black">
-Design Preview
-</h2>
-
-<p
-id="previewInfo"
-class="text-xs text-slate-500 mt-1">
-
-No design loaded
-
-</p>
+  <a
+    id="downloadLink"
+    class="hidden"
+    style="
+      display:block;
+      margin-top:10px;
+      font-weight:bold;
+    "
+  ></a>
 
 </div>
 
-
-<button
-id="convertBtn"
-disabled
-class="btn bg-slate-950 text-white opacity-40">
-
-CONVERT & DOWNLOAD EP
-
-</button>
-
-</div>
-
-
-<div class="grid md:grid-cols-2 gap-4 mt-5">
-
-
-<!-- ORIGINAL -->
-
-<div>
-
-<div class="text-xs font-bold mb-2">
-Original Design
-</div>
-
-<div
-class="bg-slate-950 rounded-xl p-3 min-h-[300px] flex justify-center items-center overflow-auto">
-
-<img
-id="originalPreview"
-class="max-w-full max-h-[450px] hidden"
->
-
-<span
-id="originalMessage"
-class="text-slate-500 text-sm">
-
-Upload design
-
-</span>
-
-</div>
-
-</div>
 
 
 <!-- BINARY -->
 
-<div>
+<div class="card">
 
-<div class="text-xs font-bold mb-2">
-Machine Binary Preview
-</div>
+  <h2>
+    5. Binary Check
+  </h2>
 
-<div
-class="bg-white border rounded-xl p-3 min-h-[300px] flex justify-center items-center overflow-auto">
-
-<canvas id="binaryCanvas"></canvas>
-
-</div>
+  <pre id="hexPreview">
+No EP generated yet.
+  </pre>
 
 </div>
 
 
-</div>
+
+<div class="card">
+
+  <h2>
+    Important
+  </h2>
+
+  <p class="small">
+
+    This version uses your uploaded working EP
+    as the machine-format template.
+
+    Exact proprietary EasyX server/harness
+    conversion is not copied.
+
+  </p>
 
 </div>
 
-
-<!-- VALIDATION -->
-
-<div class="card p-5">
-
-<h2 class="text-lg font-black mb-4">
-EP Validation
-</h2>
-
-<div
-id="validation"
-class="grid md:grid-cols-2 gap-3 text-sm">
-
-</div>
-
-
-<details class="mt-4">
-
-<summary class="font-bold cursor-pointer">
-Header Hex Preview
-</summary>
-
-<pre
-id="hexPreview"
-class="bg-slate-950 text-green-400 rounded-xl p-4 mt-3 text-xs overflow-auto">
-</pre>
-
-</details>
-
-</div>
-
-
-<!-- HISTORY -->
-
-<div class="card p-5">
-
-<div class="flex justify-between">
-
-<h2 class="text-lg font-black">
-Recent Conversions
-</h2>
-
-<button
-id="clearHistory"
-class="text-red-600 text-xs font-bold">
-
-Clear
-
-</button>
-
-</div>
-
-<div
-id="history"
-class="mt-4 space-y-2">
-
-</div>
-
-</div>
-
-
-<!-- WARNING -->
-
-<div class="card p-5 bg-amber-50 border-amber-200">
-
-<h3 class="font-black">
-Important
-</h3>
-
-<p class="text-sm text-amber-900 mt-2">
-
-Original running EP ka machine header preserve kiya jayega.
-672 hooks ke liye 84 bytes per pick use honge.
-Website khud se random 128-byte header create nahi karegi.
-
-</p>
-
-</div>
-
-
-</div>
-
-</div>
 
 </section>
 
-</main>
+
+<canvas
+  id="workCanvas"
+  class="hidden"
+></canvas>
+
 
 
 <script>
 
-/* =====================================================
-   ADMIN LOGIN
-   ===================================================== */
+(function(){
 
-const ADMIN_ID = "admin";
-const ADMIN_PASSWORD = "123456";
+"use strict";
 
 
-/* =====================================================
-   GLOBAL VARIABLES
-   ===================================================== */
 
-let runningEP = null;
+/* =========================================
+   SHORTCUT
+========================================= */
 
-let runningFileName = "";
+const $ = id =>
+  document.getElementById(id);
+
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let runningBytes = null;
+
+let runningHeader = null;
+
+let runningPicks = 0;
 
 let designImage = null;
 
-let binaryData = null;
+let invert = false;
 
-let database = null;
+let mirror = false;
 
-
-/* =====================================================
-   ELEMENT HELPER
-   ===================================================== */
-
-function $(id){
-    return document.getElementById(id);
-}
+let flip = false;
 
 
-/* =====================================================
-   INDEXED DB
-   ===================================================== */
 
-const DB_NAME = "ElectronicDesigningDB";
+/* =========================================
+   SHOW / HIDE
+========================================= */
 
-const STORE_NAME = "data";
+function show(id){
 
-
-function openDatabase(){
-
-    return new Promise((resolve,reject)=>{
-
-        const request =
-            indexedDB.open(DB_NAME,1);
-
-
-        request.onupgradeneeded = function(){
-
-            request.result
-            .createObjectStore(STORE_NAME);
-
-        };
-
-
-        request.onsuccess = function(){
-
-            database=request.result;
-
-            resolve();
-
-        };
-
-
-        request.onerror=function(){
-
-            reject(request.error);
-
-        };
-
-    });
+  $(id).classList.remove("hidden");
 
 }
 
 
-function saveDB(key,value){
+function hide(id){
 
-    return new Promise((resolve,reject)=>{
-
-        const transaction =
-            database.transaction(
-                STORE_NAME,
-                "readwrite"
-            );
-
-        transaction
-        .objectStore(STORE_NAME)
-        .put(value,key);
-
-        transaction.oncomplete=resolve;
-
-        transaction.onerror=()=>{
-            reject(transaction.error);
-        };
-
-    });
+  $(id).classList.add("hidden");
 
 }
 
 
-function getDB(key){
 
-    return new Promise((resolve,reject)=>{
+/* =========================================
+   OPEN APP
+========================================= */
 
-        const transaction =
-            database.transaction(
-                STORE_NAME,
-                "readonly"
-            );
+function openApp(){
 
-        const request =
-            transaction
-            .objectStore(STORE_NAME)
-            .get(key);
+  hide("loginPage");
 
-        request.onsuccess=()=>{
-            resolve(request.result);
-        };
+  show("appPage");
 
-        request.onerror=()=>{
-            reject(request.error);
-        };
-
-    });
+  window.scrollTo(0,0);
 
 }
 
 
-/* =====================================================
+
+/* =========================================
+   OPEN LOGIN
+========================================= */
+
+function openLogin(){
+
+  hide("appPage");
+
+  show("loginPage");
+
+}
+
+
+
+/* =========================================
+   SHOW PASSWORD
+========================================= */
+
+$("showPass").addEventListener(
+  "change",
+  function(){
+
+    $("adminPassword").type =
+      this.checked
+      ? "text"
+      : "password";
+
+  }
+);
+
+
+
+/* =========================================
    LOGIN
-   ===================================================== */
+========================================= */
 
-$("loginBtn").onclick=function(){
+function doLogin(){
 
-    const id=$("adminId").value.trim();
+  const id =
+    $("adminId").value.trim();
 
-    const password=$("adminPassword").value;
+  const pass =
+    $("adminPassword").value;
 
 
-    if(
-        id===ADMIN_ID &&
-        password===ADMIN_PASSWORD
-    ){
+  /*
+     FIXED ADMIN LOGIN
+  */
 
-        sessionStorage.setItem(
-            "electronic_admin",
-            "true"
+  if(
+    id === "admin" &&
+    pass === "123456"
+  ){
+
+    sessionStorage.setItem(
+      "electronic_admin",
+      "1"
+    );
+
+    $("loginMsg")
+      .classList
+      .add("hidden");
+
+    openApp();
+
+  }
+
+  else{
+
+    $("loginMsg").textContent =
+      "Admin ID ya password galat hai.";
+
+    $("loginMsg")
+      .classList
+      .remove("hidden");
+
+  }
+
+}
+
+
+
+/* LOGIN BUTTON */
+
+$("loginBtn")
+  .addEventListener(
+    "click",
+    doLogin
+  );
+
+
+
+/* ENTER KEY */
+
+$("adminPassword")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+
+        doLogin();
+
+      }
+
+    }
+  );
+
+
+$("adminId")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+
+        $("adminPassword").focus();
+
+      }
+
+    }
+  );
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      sessionStorage.removeItem(
+        "electronic_admin"
+      );
+
+      openLogin();
+
+    }
+  );
+
+
+
+/* =========================================
+   INVERT
+========================================= */
+
+$("invertBtn").onclick =
+function(){
+
+  invert = !invert;
+
+  $("invertBtn").textContent =
+    "Invert: " +
+    (invert ? "ON" : "OFF");
+
+};
+
+
+
+/* =========================================
+   MIRROR
+========================================= */
+
+$("mirrorBtn").onclick =
+function(){
+
+  mirror = !mirror;
+
+  $("mirrorBtn").textContent =
+    "Mirror: " +
+    (mirror ? "ON" : "OFF");
+
+};
+
+
+
+/* =========================================
+   FLIP
+========================================= */
+
+$("flipBtn").onclick =
+function(){
+
+  flip = !flip;
+
+  $("flipBtn").textContent =
+    "Flip: " +
+    (flip ? "ON" : "OFF");
+
+};
+
+
+
+/* =========================================
+   24 BIT NUMBER
+========================================= */
+
+function u24(n){
+
+  return new Uint8Array([
+
+    n & 255,
+
+    (n >> 8) & 255,
+
+    (n >> 16) & 255
+
+  ]);
+
+}
+
+
+
+/* =========================================
+   RUNNING EP
+========================================= */
+
+$("runningFile")
+.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      this.files[0];
+
+    if(!file)
+      return;
+
+
+    try{
+
+      runningBytes =
+        new Uint8Array(
+          await file.arrayBuffer()
         );
 
-        showApplication();
 
-    }else{
+      const hooks =
+        parseInt(
+          $("hooks").value
+        ) || 672;
 
-        $("loginMessage").textContent=
-            "Admin ID ya password galat hai
+
+      const bytesPerPick =
+        Math.ceil(
+          hooks / 8
+        );
+
+
+      let headerLen = 34;
+
+      let picks = 0;
+
+
+
+      /*
+        ORIGINAL 672 HOOK EP
+
+        34 BYTE HEADER
+        84 BYTE / PICK
+      */
+
+      if(
+        runningBytes.length >= 34 &&
+        (runningBytes.length - 34)
+        % bytesPerPick === 0
+      ){
+
+        headerLen = 34;
+
+        picks =
+          (
+            runningBytes.length -
+            headerLen
+          )
+          /
+          bytesPerPick;
+
+      }
+
+
+
+      /*
+        SECOND FORMAT
+      */
+
+      else if(
+        runningBytes.length >= 81 &&
+        (runningBytes.length - 81)
+        % bytesPerPick === 0
+      ){
+
+        headerLen = 81;
+
+        picks =
+          (
+            runningBytes.length -
+            headerLen
+          )
+          /
+          bytesPerPick;
+
+      }
+
+
+
+      /*
+        FALLBACK
+      */
+
+      else{
+
+        headerLen = 34;
+
+        picks =
+          Math.floor(
+            Math.max(
+              0,
+              runningBytes.length -
+              headerLen
+            )
+            /
+            bytesPerPick
+          );
+
+      }
+
+
+
+      runningHeader =
+        runningBytes.slice(
+          0,
+          headerLen
+        );
+
+
+      runningPicks =
+        picks;
+
+
+      if(picks > 0){
+
+        $("targetPicks").value =
+          picks;
+
+      }
+
+
+
+      $("runningInfo").innerHTML =
+
+        "<b>" +
+        file.name +
+        "</b><br>" +
+
+        "Size: " +
+        runningBytes.length
+          .toLocaleString() +
+        " bytes<br>" +
+
+        "Header: " +
+        headerLen +
+        " bytes<br>" +
+
+        "Bytes/Pick: " +
+        bytesPerPick +
+        "<br>" +
+
+        "Detected Picks: " +
+        picks;
+
+
+      $("status").textContent =
+        "Running EP loaded successfully.";
+
+    }
+
+    catch(error){
+
+      $("runningInfo").textContent =
+        "EP read error: " +
+        error.message;
+
+    }
+
+  }
+);
+
+
+
+/* =========================================
+   DESIGN FILE
+========================================= */
+
+$("designFile")
+.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+    if(!file)
+      return;
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function(e){
+
+        const img =
+          new Image();
+
+
+        img.onload =
+          function(){
+
+            designImage =
+              img;
+
+
+            $("designInfo")
+              .innerHTML =
+
+              "<b>" +
+              file.name +
+              "</b><br>" +
+
+              "Original size: " +
+              img.width +
+              " × " +
+              img.height;
+
+
+            $("preview").src =
+              e.target.result;
+
+
+            show("preview");
+
+          };
+
+
+        img.onerror =
+          function(){
+
+            $("designInfo")
+              .textContent =
+              "Image read nahi ho payi.";
+
+          };
+
+
+        img.src =
+          e.target.result;
+
+      };
+
+
+    reader.readAsDataURL(file);
+
+  }
+);
+
+
+
+/* =========================================
+   CREATE BINARY DESIGN
+========================================= */
+
+function packDesign(){
+
+  const hooks =
+    Math.max(
+      8,
+      parseInt(
+        $("hooks").value
+      ) || 672
+    );
+
+
+  const picks =
+    Math.max(
+      1,
+      parseInt(
+        $("targetPicks").value
+      ) || 1
+    );
+
+
+  const threshold =
+    Math.min(
+      255,
+      Math.max(
+        0,
+        parseInt(
+          $("threshold").value
+        ) || 128
+      )
+    );
+
+
+  const left =
+    Math.max(
+      0,
+      parseInt(
+        $("leftPad").value
+      ) || 0
+    );
+
+
+  const right =
+    Math.max(
+      0,
+      parseInt(
+        $("rightPad").value
+      ) || 0
+    );
+
+
+
+  if(!designImage){
+
+    throw new Error(
+      "Design file upload karein."
+    );
+
+  }
+
+
+
+  if(hooks % 8 !== 0){
+
+    throw new Error(
+      "Hooks 8 ke multiple mein hona chahiye."
+    );
+
+  }
+
+
+
+  if(left + right > hooks){
+
+    throw new Error(
+      "Left + Right padding hooks se zyada hai."
+    );
+
+  }
+
+
+
+  const canvas =
+    $("workCanvas");
+
+
+  canvas.width =
+    hooks;
+
+  canvas.height =
+    picks;
+
+
+  const ctx =
+    canvas.getContext(
+      "2d",
+      {
+        willReadFrequently:true
+      }
+    );
+
+
+  ctx.fillStyle =
+    "white";
+
+
+  ctx.fillRect(
+    0,
+    0,
+    hooks,
+    picks
+  );
+
+
+
+  /*
+     MIRROR / FLIP
+  */
+
+  ctx.save();
+
+
+  ctx.translate(
+    mirror ? hooks : 0,
+    flip ? picks : 0
+  );
+
+
+  ctx.scale(
+    mirror ? -1 : 1,
+    flip ? -1 : 1
+  );
+
+
+
+  /*
+     DESIGN FIT
+  */
+
+  const usableW =
+    hooks -
+    left -
+    right;
+
+
+  const scale =
+    Math.min(
+      usableW / designImage.width,
+      picks / designImage.height
+    );
+
+
+  const dw =
+    Math.max(
+      1,
+      Math.round(
+        designImage.width *
+        scale
+      )
+    );
+
+
+  const dh =
+    Math.max(
+      1,
+      Math.round(
+        designImage.height *
+        scale
+      )
+    );
+
+
+  const x =
+    left +
+    Math.floor(
+      (usableW - dw) / 2
+    );
+
+
+  const y =
+    Math.floor(
+      (picks - dh) / 2
+    );
+
+
+  ctx.drawImage(
+    designImage,
+    x,
+    y,
+    dw,
+    dh
+  );
+
+
+  ctx.restore();
+
+
+
+  /*
+     PIXEL DATA
+  */
+
+  const data =
+    ctx.getImageData(
+      0,
+      0,
+      hooks,
+      picks
+    ).data;
+
+
+
+  const bytesPerPick =
+    hooks / 8;
+
+
+  const out =
+    new Uint8Array(
+      picks *
+      bytesPerPick
+    );
+
+
+
+  /*
+     PACK BITS
+  */
+
+  for(
+    let y = 0;
+    y < picks;
+    y++
+  ){
+
+    for(
+      let x = 0;
+      x < hooks;
+      x++
+    ){
+
+      const i =
+        (
+          y *
+          hooks +
+          x
+        )
+        *
+        4;
+
+
+      const gray =
+        (
+          data[i] +
+          data[i+1] +
+          data[i+2]
+        )
+        /
+        3;
+
+
+      let on =
+        gray <
+        threshold;
+
+
+      if(invert){
+
+        on = !on;
+
+      }
+
+
+      if(on){
+
+        const byteIndex =
+          y *
+          bytesPerPick +
+          Math.floor(
+            x / 8
+          );
+
+
+        const bit =
+          7 -
+          (x % 8);
+
+
+        out[byteIndex] |=
+          (
+            1 <<
+            bit
+          );
+
+      }
+
+    }
+
+  }
+
+
+
+  return {
+
+    out:out,
+
+    hooks:hooks,
+
+    picks:picks,
+
+    bytesPerPick:
+      bytesPerPick
+
+  };
+
+}
+
+
+
+/* =========================================
+   BUILD EP
+========================================= */
+
+function buildEP(){
+
+  if(
+    !runningBytes ||
+    !runningHeader
+  ){
+
+    throw new Error(
+      "Pehle original working EP upload karein."
+    );
+
+  }
+
+
+  const result =
+    packDesign();
+
+
+  /*
+     COPY ORIGINAL HEADER
+  */
+
+  const header =
+    new Uint8Array(
+      runningHeader
+    );
+
+
+
+  /*
+     ORIGINAL EP ME
+     BYTES 3-5 PICK COUNT
+  */
+
+  if(header.length >= 6){
+
+    const p =
+      u24(
+        result.picks
+      );
+
+
+    header[3] =
+      p[0];
+
+    header[4] =
+      p[1];
+
+    header[5] =
+      p[2];
+
+  }
+
+
+
+  /*
+     HEADER + DESIGN DATA
+  */
+
+  const finalBytes =
+    new Uint8Array(
+      header.length +
+      result.out.length
+    );
+
+
+  finalBytes.set(
+    header,
+    0
+  );
+
+
+  finalBytes.set(
+    result.out,
+    header.length
+  );
+
+
+  return {
+
+    bytes:
+      finalBytes,
+
+    result:
+      result
+
+  };
+
+}
+
+
+
+/* =========================================
+   CREATE EP BUTTON
+========================================= */
+
+$("createBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    try{
+
+      $("status").className =
+        "info";
+
+
+      $("status").textContent =
+        "EP create ho rahi hai...";
+
+
+
+      const built =
+        buildEP();
+
+
+
+      const blob =
+        new Blob(
+          [built.bytes],
+          {
+            type:
+              "application/octet-stream"
+          }
+        );
+
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+
+      const originalName =
+        $("designFile")
+          .files[0]
+          ?.name ||
+        "Design";
+
+
+      const nameBase =
+        originalName
+          .replace(
+            /\.[^.]+$/,
+            ""
+          );
+
+
+
+      const a =
+        $("downloadLink");
+
+
+      a.href =
+        url;
+
+
+      a.download =
+        nameBase +
+        "_Native.EP";
+
+
+      a.textContent =
+        "⬇ Download " +
+        a.download;
+
+
+      a.classList.remove(
+        "hidden"
+      );
+
+
+
+      $("status")
+        .className =
+        "ok";
+
+
+      $("status")
+        .innerHTML =
+
+        "<b>EP ready.</b><br>" +
+
+        "Size: " +
+        built.bytes.length
+          .toLocaleString() +
+        " bytes<br>" +
+
+        "Hooks: " +
+        built.result.hooks +
+        "<br>" +
+
+        "Picks: " +
+        built.result.picks;
+
+
+
+      /*
+         HEX PREVIEW
+      */
+
+      let hex = "";
+
+
+      const n =
+        Math.min(
+          128,
+          built.bytes.length
+        );
+
+
+      for(
+        let i = 0;
+        i < n;
+        i++
+      ){
+
+        hex +=
+          built.bytes[i]
+            .toString(16)
+            .padStart(
+              2,
+              "0"
+            )
+            .toUpperCase() +
+          " ";
+
+
+        if(
+          (i + 1) % 16 === 0
+        ){
+
+          hex += "\n";
+
+        }
+
+      }
+
+
+      $("hexPreview")
+        .textContent =
+        hex;
+
+    }
+
+    catch(e){
+
+      $("status")
+        .className =
+        "err";
+
+
+      $("status")
+        .textContent =
+        e.message;
+
+    }
+
+  }
+);
+
+
+
+/* =========================================
+   AUTO LOGIN CHECK
+========================================= */
+
+if(
+  sessionStorage.getItem(
+    "electronic_admin"
+  ) === "1"
+){
+
+  openApp();
+
+}
+
+else{
+
+  openLogin();
+
+}
+
+
+})();
+</script>
+
+</body>
+</html>
