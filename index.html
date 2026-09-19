@@ -1,1712 +1,942 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Electronic Designing</title>
 
+
 <style>
+
+/* =====================================================
+   ELECTRONIC DESIGNING
+   PREMIUM ELECTRONIC THEME
+===================================================== */
+
 *{
   box-sizing:border-box;
 }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f3f4f6;
-  color:#111827;
+html{
+  scroll-behavior:smooth;
 }
+
+body{
+
+  margin:0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      #073b72 0%,
+      #031b38 28%,
+      #020b1d 65%,
+      #010714 100%
+    );
+
+  color:#ffffff;
+
+  min-height:100vh;
+
+}
+
+
+/* =====================================================
+   ELECTRONIC BACKGROUND
+===================================================== */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  pointer-events:none;
+
+  opacity:.20;
+
+  background-image:
+
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 47%,
+      #00d9ff 48%,
+      transparent 49%
+    );
+
+  background-size:140px 140px;
+
+}
+
+
+/* =====================================================
+   COMMON
+===================================================== */
 
 .hidden{
-  display:none!important;
+  display:none !important;
 }
 
-.login{
+.container{
+
+  width:
+    min(
+      1180px,
+      calc(100% - 28px)
+    );
+
+  margin:auto;
+
+}
+
+button,
+input,
+select{
+
+  font-family:inherit;
+
+}
+
+
+/* =====================================================
+   GLOW
+===================================================== */
+
+.glow{
+
+  text-shadow:
+    0 0 8px #00d9ff,
+    0 0 20px #0077ff;
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.loginPage{
+
   min-height:100vh;
+
   display:flex;
-  align-items:center;
+
   justify-content:center;
+
+  align-items:center;
+
   padding:20px;
+
 }
 
-.loginbox{
-  width:100%;
-  max-width:390px;
-  background:white;
-  padding:28px;
-  border-radius:20px;
-  box-shadow:0 8px 30px #0002;
+
+.loginBox{
+
+  width:
+    min(
+      420px,
+      100%
+    );
+
+  padding:32px;
+
+  border-radius:25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7,35,70,.96),
+      rgba(1,12,29,.98)
+    );
+
+  border:
+    1px solid
+    rgba(0,217,255,.35);
+
+  box-shadow:
+
+    0 0 20px
+    rgba(0,153,255,.20),
+
+    0 0 60px
+    rgba(0,153,255,.08),
+
+    inset 0 0 30px
+    rgba(0,217,255,.04);
+
 }
 
-.card{
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  margin:14px auto;
-  max-width:1050px;
-  box-shadow:0 3px 15px #00000012;
+
+.loginLogo{
+
+  width:95px;
+
+  height:95px;
+
+  margin:0 auto 15px;
+
+  border-radius:24px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:45px;
+
+  font-weight:bold;
+
+  color:#ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #00d9ff 55%,
+      #0877ff
+    );
+
+  color:#06172e;
+
+  box-shadow:
+    0 0 25px
+    rgba(0,217,255,.5);
+
 }
 
-h1,h2,h3{
-  margin-top:0;
+
+.loginTitle{
+
+  text-align:center;
+
+  font-size:28px;
+
+  font-weight:900;
+
+  letter-spacing:2px;
+
 }
+
+
+.loginSub{
+
+  text-align:center;
+
+  color:#7bdcff;
+
+  margin-bottom:25px;
+
+}
+
+
+.fieldLabel{
+
+  display:block;
+
+  margin:
+    14px 0 7px;
+
+  color:#a9eaff;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+}
+
 
 input,
-select,
-button{
+select{
+
   width:100%;
-  padding:12px;
-  margin:6px 0;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  font-size:15px;
+
+  padding:13px 14px;
+
+  border-radius:12px;
+
+  border:
+    1px solid
+    rgba(0,217,255,.28);
+
+  background:
+    rgba(1,15,35,.85);
+
+  color:#ffffff;
+
+  outline:none;
+
 }
 
-button{
-  background:#111827;
-  color:white;
+
+input:focus,
+select:focus{
+
+  border-color:#00d9ff;
+
+  box-shadow:
+    0 0 12px
+    rgba(0,217,255,.25);
+
+}
+
+
+select option{
+
+  background:#06172e;
+
+  color:#ffffff;
+
+}
+
+
+.btn{
+
+  width:100%;
+
+  padding:13px 16px;
+
+  margin-top:10px;
+
   border:0;
+
+  border-radius:12px;
+
   cursor:pointer;
-  font-weight:700;
+
+  font-weight:800;
+
+  color:#ffffff;
+
+  background:
+    linear-gradient(
+      90deg,
+      #006cff,
+      #00cfff
+    );
+
+  box-shadow:
+    0 0 18px
+    rgba(0,190,255,.22);
+
+  transition:.2s;
+
 }
 
-button.secondary{
-  background:#e5e7eb;
-  color:#111827;
+
+.btn:hover{
+
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 0 25px
+    rgba(0,217,255,.45);
+
 }
 
-button.green{
-  background:#16803c;
+
+.btn.secondary{
+
+  background:
+    rgba(255,255,255,.08);
+
+  border:
+    1px solid
+    rgba(0,217,255,.25);
+
 }
 
-button.red{
-  background:#b91c1c;
+
+.btn.danger{
+
+  background:
+    linear-gradient(
+      90deg,
+      #9d1515,
+      #e52c2c
+    );
+
 }
 
-label{
-  font-size:13px;
-  font-weight:700;
-  display:block;
-  margin-top:8px;
+
+.btn.green{
+
+  background:
+    linear-gradient(
+      90deg,
+      #007c63,
+      #00d69c
+    );
+
 }
+
+
+.loginError{
+
+  margin-top:12px;
+
+  padding:11px;
+
+  border-radius:10px;
+
+  background:
+    rgba(255,50,50,.12);
+
+  border:
+    1px solid
+    rgba(255,70,70,.35);
+
+  color:#ffaaaa;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.topHeader{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:50;
+
+  backdrop-filter:
+    blur(15px);
+
+  background:
+    rgba(1,12,29,.88);
+
+  border-bottom:
+    1px solid
+    rgba(0,217,255,.18);
+
+}
+
+
+.headerInner{
+
+  min-height:70px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+}
+
+
+.brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+
+.brandIcon{
+
+  width:48px;
+
+  height:48px;
+
+  border-radius:14px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:25px;
+
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #00d9ff,
+      #006cff
+    );
+
+  color:#06172e;
+
+  box-shadow:
+    0 0 18px
+    rgba(0,217,255,.35);
+
+}
+
+
+.brandText{
+
+  font-size:17px;
+
+  font-weight:900;
+
+  letter-spacing:1.3px;
+
+}
+
+
+.brandText span{
+
+  color:#00d9ff;
+
+}
+
+
+.logoutBtn{
+
+  width:auto;
+
+  margin:0;
+
+  padding:
+    10px 15px;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+  padding:
+    38px 0 25px;
+
+}
+
+
+.heroBox{
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:
+    30px;
+
+  border-radius:26px;
+
+  background:
+
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(0,210,255,.22),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      135deg,
+      rgba(4,45,85,.94),
+      rgba(1,13,30,.98)
+    );
+
+  border:
+    1px solid
+    rgba(0,217,255,.22);
+
+  box-shadow:
+    0 0 35px
+    rgba(0,125,255,.12);
+
+}
+
+
+.heroCircuit{
+
+  position:absolute;
+
+  right:-20px;
+
+  top:-35px;
+
+  font-size:150px;
+
+  opacity:.06;
+
+}
+
+
+.heroTitle{
+
+  margin:0;
+
+  font-size:
+    clamp(
+      28px,
+      5vw,
+      50px
+    );
+
+  font-weight:900;
+
+  letter-spacing:2px;
+
+}
+
+
+.heroTitle span{
+
+  color:#00d9ff;
+
+}
+
+
+.heroText{
+
+  color:#9bdff5;
+
+  max-width:700px;
+
+  line-height:1.6;
+
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.sectionTitle{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin:
+    24px 0 13px;
+
+  font-size:21px;
+
+}
+
+
+.sectionTitle .icon{
+
+  width:38px;
+
+  height:38px;
+
+  border-radius:11px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+    rgba(0,217,255,.10);
+
+  border:
+    1px solid
+    rgba(0,217,255,.28);
+
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+
+  padding:20px;
+
+  margin-bottom:16px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(5,34,65,.90),
+      rgba(1,14,31,.94)
+    );
+
+  border:
+    1px solid
+    rgba(0,217,255,.16);
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.18);
+
+}
+
+
+.cardTitle{
+
+  font-size:17px;
+
+  font-weight:800;
+
+  margin-bottom:13px;
+
+}
+
 
 .grid{
+
   display:grid;
+
   grid-template-columns:
-  repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
+    repeat(
+      auto-fit,
+      minmax(
+        210px,
+        1fr
+      )
+    );
+
+  gap:13px;
+
 }
 
-.info{
-  background:#eff6ff;
-  padding:12px;
-  border-radius:10px;
-  margin-top:10px;
-}
-
-.ok{
-  background:#ecfdf5;
-  color:#065f46;
-  padding:12px;
-  border-radius:10px;
-}
-
-.err{
-  background:#fef2f2;
-  color:#991b1b;
-  padding:12px;
-  border-radius:10px;
-}
-
-.row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.row>*{
-  flex:1;
-  min-width:140px;
-}
 
 .small{
+
+  color:#7fb6cc;
+
   font-size:12px;
-  color:#6b7280;
+
+  line-height:1.5;
+
 }
 
-.preview{
-  max-width:100%;
-  max-height:350px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  margin-top:10px;
-}
 
-pre{
-  white-space:pre-wrap;
-  word-break:break-all;
-  background:#111827;
-  color:#d1fae5;
+.info{
+
   padding:12px;
-  border-radius:10px;
-  overflow:auto;
+
+  margin-top:10px;
+
+  border-radius:12px;
+
+  color:#aeeeff;
+
+  background:
+    rgba(0,174,255,.07);
+
+  border:
+    1px solid
+    rgba(0,174,255,.14);
+
 }
 
-header{
-  background:#111827;
-  color:white;
-  padding:16px;
+
+.success{
+
+  color:#aaffdf;
+
+  background:
+    rgba(0,200,150,.08);
+
+  border:
+    1px solid
+    rgba(0,220,170,.20);
+
 }
 
-header .inside{
-  max-width:1050px;
-  margin:auto;
+
+.error{
+
+  color:#ffb1b1;
+
+  background:
+    rgba(255,50,50,.08);
+
+  border:
+    1px solid
+    rgba(255,60,60,.20);
+
+}
+
+
+/* =====================================================
+   MACHINE CARDS
+===================================================== */
+
+.machineGrid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        250px,
+        1fr
+      )
+    );
+
+  gap:14px;
+
+}
+
+
+.machineCard{
+
+  padding:18px;
+
+  border-radius:18px;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7,45,82,.9),
+      rgba(1,15,32,.95)
+    );
+
+  border:
+    1px solid
+    rgba(0,217,255,.18);
+
+  transition:.2s;
+
+}
+
+
+.machineCard:hover{
+
+  transform:
+    translateY(-3px);
+
+  border-color:#00cfff;
+
+  box-shadow:
+    0 0 25px
+    rgba(0,180,255,.18);
+
+}
+
+
+.machineName{
+
+  font-size:17px;
+
+  font-weight:900;
+
+  color:#ffffff;
+
+}
+
+
+.machineMeta{
+
+  color:#81cce7;
+
+  font-size:12px;
+
+  line-height:1.7;
+
+  margin:
+    8px 0;
+
+}
+
+
+.machineButtons{
+
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+
+  gap:7px;
+
 }
 
-header button{
-  width:auto;
+
+.machineButtons button{
+
   margin:0;
-  background:#374151;
-}
-</style>
-</head>
-
-
-<body>
-
-
-<!-- ================= LOGIN ================= -->
-
-<section id="loginPage" class="login">
-
-  <div class="loginbox">
-
-    <h1>Electronic Designing</h1>
-
-    <p class="small">
-      Admin Login
-    </p>
-
-    <label>
-      Admin ID
-    </label>
-
-    <input
-      id="adminId"
-      type="text"
-      autocomplete="username"
-      placeholder="admin"
-    >
-
-    <label>
-      Password
-    </label>
-
-    <input
-      id="adminPassword"
-      type="password"
-      autocomplete="current-password"
-      placeholder="123456"
-    >
-
-    <label style="font-weight:400">
-
-      <input
-        id="showPass"
-        type="checkbox"
-        style="width:auto"
-      >
-
-      Show password
-
-    </label>
-
-    <button id="loginBtn">
-      LOGIN
-    </button>
-
-    <div
-      id="loginMsg"
-      class="err hidden"
-    ></div>
-
-    <div class="info">
-
-      <b>Admin Login</b>
-      <br><br>
-
-      ID:
-      <b>admin</b>
-
-      <br>
-
-      Password:
-      <b>123456</b>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ================= MAIN APP ================= -->
-
-<section id="appPage" class="hidden">
-
-<header>
-
-  <div class="inside">
-
-    <b>
-      Electronic Designing
-    </b>
-
-    <button id="logoutBtn">
-      Logout
-    </button>
-
-  </div>
-
-</header>
-
-
-
-<!-- RUNNING EP -->
-
-<div class="card">
-
-  <h2>
-    1. Machine / Running EP
-  </h2>
-
-  <p class="small">
-
-    Apni original working .EP file upload karein.
-    Website uske binary structure ko template ke
-    roop mein use karegi.
-
-  </p>
-
-  <input
-    id="runningFile"
-    type="file"
-    accept=".ep,.EP"
-  >
-
-  <div
-    id="runningInfo"
-    class="info"
-  >
-
-    No running file selected.
-
-  </div>
-
-</div>
-
-
-
-<!-- MACHINE SETTINGS -->
-
-<div class="card">
-
-  <h2>
-    2. Machine Settings
-  </h2>
-
-  <div class="grid">
-
-    <div>
-
-      <label>
-        Hooks
-      </label>
-
-      <input
-        id="hooks"
-        type="number"
-        value="672"
-        min="8"
-        step="8"
-      >
-
-    </div>
-
-
-    <div>
-
-      <label>
-        Target Picks
-      </label>
-
-      <input
-        id="targetPicks"
-        type="number"
-        value="972"
-        min="1"
-      >
-
-    </div>
-
-
-    <div>
-
-      <label>
-        Threshold (0-255)
-      </label>
-
-      <input
-        id="threshold"
-        type="number"
-        value="128"
-        min="0"
-        max="255"
-      >
-
-    </div>
-
-
-    <div>
-
-      <label>
-        Left Padding
-      </label>
-
-      <input
-        id="leftPad"
-        type="number"
-        value="0"
-        min="0"
-      >
-
-    </div>
-
-
-    <div>
-
-      <label>
-        Right Padding
-      </label>
-
-      <input
-        id="rightPad"
-        type="number"
-        value="0"
-        min="0"
-      >
-
-    </div>
-
-  </div>
-
-
-  <div class="row">
-
-    <button
-      id="invertBtn"
-      class="secondary"
-    >
-      Invert: OFF
-    </button>
-
-    <button
-      id="mirrorBtn"
-      class="secondary"
-    >
-      Mirror: OFF
-    </button>
-
-    <button
-      id="flipBtn"
-      class="secondary"
-    >
-      Flip: OFF
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<!-- DESIGN -->
-
-<div class="card">
-
-  <h2>
-    3. Design File
-  </h2>
-
-  <input
-    id="designFile"
-    type="file"
-    accept="image/bmp,image/png,image/jpeg,.bmp,.png,.jpg,.jpeg"
-  >
-
-  <div
-    id="designInfo"
-    class="info"
-  >
-
-    No design selected.
-
-  </div>
-
-  <img
-    id="preview"
-    class="preview hidden"
-  >
-
-</div>
-
-
-
-<!-- CREATE -->
-
-<div class="card">
-
-  <h2>
-    4. Create Native EP
-  </h2>
-
-  <button
-    id="createBtn"
-    class="green"
-  >
-    CREATE EP FILE
-  </button>
-
-  <div
-    id="status"
-    class="info"
-  >
-
-    Ready.
-
-  </div>
-
-  <a
-    id="downloadLink"
-    class="hidden"
-    style="
-      display:block;
-      margin-top:10px;
-      font-weight:bold;
-    "
-  ></a>
-
-</div>
-
-
-
-<!-- BINARY -->
-
-<div class="card">
-
-  <h2>
-    5. Binary Check
-  </h2>
-
-  <pre id="hexPreview">
-No EP generated yet.
-  </pre>
-
-</div>
-
-
-
-<div class="card">
-
-  <h2>
-    Important
-  </h2>
-
-  <p class="small">
-
-    This version uses your uploaded working EP
-    as the machine-format template.
-
-    Exact proprietary EasyX server/harness
-    conversion is not copied.
-
-  </p>
-
-</div>
-
-
-</section>
-
-
-<canvas
-  id="workCanvas"
-  class="hidden"
-></canvas>
-
-
-
-<script>
-
-(function(){
-
-"use strict";
-
-
-
-/* =========================================
-   SHORTCUT
-========================================= */
-
-const $ = id =>
-  document.getElementById(id);
-
-
-
-/* =========================================
-   VARIABLES
-========================================= */
-
-let runningBytes = null;
-
-let runningHeader = null;
-
-let runningPicks = 0;
-
-let designImage = null;
-
-let invert = false;
-
-let mirror = false;
-
-let flip = false;
-
-
-
-/* =========================================
-   SHOW / HIDE
-========================================= */
-
-function show(id){
-
-  $(id).classList.remove("hidden");
 
 }
 
 
-function hide(id){
+.miniBtn{
 
-  $(id).classList.add("hidden");
+  padding:
+    9px 10px;
 
-}
-
-
-
-/* =========================================
-   OPEN APP
-========================================= */
-
-function openApp(){
-
-  hide("loginPage");
-
-  show("appPage");
-
-  window.scrollTo(0,0);
+  font-size:12px;
 
 }
 
 
+/* =====================================================
+   TWO COLUMN
+===================================================== */
 
-/* =========================================
-   OPEN LOGIN
-========================================= */
+.twoColumn{
 
-function openLogin(){
+  display:grid;
 
-  hide("appPage");
+  grid-template-columns:
+    1fr 1fr;
 
-  show("loginPage");
+  gap:16px;
 
 }
 
 
+@media(max-width:750px){
 
-/* =========================================
-   SHOW PASSWORD
-========================================= */
+  .twoColumn{
 
-$("showPass").addEventListener(
-  "change",
-  function(){
-
-    $("adminPassword").type =
-      this.checked
-      ? "text"
-      : "password";
-
-  }
-);
-
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-function doLogin(){
-
-  const id =
-    $("adminId").value.trim();
-
-  const pass =
-    $("adminPassword").value;
-
-
-  /*
-     FIXED ADMIN LOGIN
-  */
-
-  if(
-    id === "admin" &&
-    pass === "123456"
-  ){
-
-    sessionStorage.setItem(
-      "electronic_admin",
-      "1"
-    );
-
-    $("loginMsg")
-      .classList
-      .add("hidden");
-
-    openApp();
-
-  }
-
-  else{
-
-    $("loginMsg").textContent =
-      "Admin ID ya password galat hai.";
-
-    $("loginMsg")
-      .classList
-      .remove("hidden");
+    grid-template-columns:1fr;
 
   }
 
 }
 
 
+/* =====================================================
+   FILE BOX
+===================================================== */
 
-/* LOGIN BUTTON */
+.fileBox{
 
-$("loginBtn")
-  .addEventListener(
-    "click",
-    doLogin
-  );
+  border:
+    1px dashed
+    rgba(0,217,255,.35);
 
+  border-radius:15px;
 
+  padding:15px;
 
-/* ENTER KEY */
-
-$("adminPassword")
-  .addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key === "Enter"){
-
-        doLogin();
-
-      }
-
-    }
-  );
-
-
-$("adminId")
-  .addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key === "Enter"){
-
-        $("adminPassword").focus();
-
-      }
-
-    }
-  );
-
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-$("logoutBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      sessionStorage.removeItem(
-        "electronic_admin"
-      );
-
-      openLogin();
-
-    }
-  );
-
-
-
-/* =========================================
-   INVERT
-========================================= */
-
-$("invertBtn").onclick =
-function(){
-
-  invert = !invert;
-
-  $("invertBtn").textContent =
-    "Invert: " +
-    (invert ? "ON" : "OFF");
-
-};
-
-
-
-/* =========================================
-   MIRROR
-========================================= */
-
-$("mirrorBtn").onclick =
-function(){
-
-  mirror = !mirror;
-
-  $("mirrorBtn").textContent =
-    "Mirror: " +
-    (mirror ? "ON" : "OFF");
-
-};
-
-
-
-/* =========================================
-   FLIP
-========================================= */
-
-$("flipBtn").onclick =
-function(){
-
-  flip = !flip;
-
-  $("flipBtn").textContent =
-    "Flip: " +
-    (flip ? "ON" : "OFF");
-
-};
-
-
-
-/* =========================================
-   24 BIT NUMBER
-========================================= */
-
-function u24(n){
-
-  return new Uint8Array([
-
-    n & 255,
-
-    (n >> 8) & 255,
-
-    (n >> 16) & 255
-
-  ]);
-
-}
-
-
-
-/* =========================================
-   RUNNING EP
-========================================= */
-
-$("runningFile")
-.addEventListener(
-  "change",
-  async function(){
-
-    const file =
-      this.files[0];
-
-    if(!file)
-      return;
-
-
-    try{
-
-      runningBytes =
-        new Uint8Array(
-          await file.arrayBuffer()
-        );
-
-
-      const hooks =
-        parseInt(
-          $("hooks").value
-        ) || 672;
-
-
-      const bytesPerPick =
-        Math.ceil(
-          hooks / 8
-        );
-
-
-      let headerLen = 34;
-
-      let picks = 0;
-
-
-
-      /*
-        ORIGINAL 672 HOOK EP
-
-        34 BYTE HEADER
-        84 BYTE / PICK
-      */
-
-      if(
-        runningBytes.length >= 34 &&
-        (runningBytes.length - 34)
-        % bytesPerPick === 0
-      ){
-
-        headerLen = 34;
-
-        picks =
-          (
-            runningBytes.length -
-            headerLen
-          )
-          /
-          bytesPerPick;
-
-      }
-
-
-
-      /*
-        SECOND FORMAT
-      */
-
-      else if(
-        runningBytes.length >= 81 &&
-        (runningBytes.length - 81)
-        % bytesPerPick === 0
-      ){
-
-        headerLen = 81;
-
-        picks =
-          (
-            runningBytes.length -
-            headerLen
-          )
-          /
-          bytesPerPick;
-
-      }
-
-
-
-      /*
-        FALLBACK
-      */
-
-      else{
-
-        headerLen = 34;
-
-        picks =
-          Math.floor(
-            Math.max(
-              0,
-              runningBytes.length -
-              headerLen
-            )
-            /
-            bytesPerPick
-          );
-
-      }
-
-
-
-      runningHeader =
-        runningBytes.slice(
-          0,
-          headerLen
-        );
-
-
-      runningPicks =
-        picks;
-
-
-      if(picks > 0){
-
-        $("targetPicks").value =
-          picks;
-
-      }
-
-
-
-      $("runningInfo").innerHTML =
-
-        "<b>" +
-        file.name +
-        "</b><br>" +
-
-        "Size: " +
-        runningBytes.length
-          .toLocaleString() +
-        " bytes<br>" +
-
-        "Header: " +
-        headerLen +
-        " bytes<br>" +
-
-        "Bytes/Pick: " +
-        bytesPerPick +
-        "<br>" +
-
-        "Detected Picks: " +
-        picks;
-
-
-      $("status").textContent =
-        "Running EP loaded successfully.";
-
-    }
-
-    catch(error){
-
-      $("runningInfo").textContent =
-        "EP read error: " +
-        error.message;
-
-    }
-
-  }
-);
-
-
-
-/* =========================================
-   DESIGN FILE
-========================================= */
-
-$("designFile")
-.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-    if(!file)
-      return;
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload =
-      function(e){
-
-        const img =
-          new Image();
-
-
-        img.onload =
-          function(){
-
-            designImage =
-              img;
-
-
-            $("designInfo")
-              .innerHTML =
-
-              "<b>" +
-              file.name +
-              "</b><br>" +
-
-              "Original size: " +
-              img.width +
-              " × " +
-              img.height;
-
-
-            $("preview").src =
-              e.target.result;
-
-
-            show("preview");
-
-          };
-
-
-        img.onerror =
-          function(){
-
-            $("designInfo")
-              .textContent =
-              "Image read nahi ho payi.";
-
-          };
-
-
-        img.src =
-          e.target.result;
-
-      };
-
-
-    reader.readAsDataURL(file);
-
-  }
-);
-
-
-
-/* =========================================
-   CREATE BINARY DESIGN
-========================================= */
-
-function packDesign(){
-
-  const hooks =
-    Math.max(
-      8,
-      parseInt(
-        $("hooks").value
-      ) || 672
-    );
-
-
-  const picks =
-    Math.max(
-      1,
-      parseInt(
-        $("targetPicks").value
-      ) || 1
-    );
-
-
-  const threshold =
-    Math.min(
-      255,
-      Math.max(
-        0,
-        parseInt(
-          $("threshold").value
-        ) || 128
-      )
-    );
-
-
-  const left =
-    Math.max(
-      0,
-      parseInt(
-        $("leftPad").value
-      ) || 0
-    );
-
-
-  const right =
-    Math.max(
-      0,
-      parseInt(
-        $("rightPad").value
-      ) || 0
-    );
-
-
-
-  if(!designImage){
-
-    throw new Error(
-      "Design file upload karein."
-    );
-
-  }
-
-
-
-  if(hooks % 8 !== 0){
-
-    throw new Error(
-      "Hooks 8 ke multiple mein hona chahiye."
-    );
-
-  }
-
-
-
-  if(left + right > hooks){
-
-    throw new Error(
-      "Left + Right padding hooks se zyada hai."
-    );
-
-  }
-
-
-
-  const canvas =
-    $("workCanvas");
-
-
-  canvas.width =
-    hooks;
-
-  canvas.height =
-    picks;
-
-
-  const ctx =
-    canvas.getContext(
-      "2d",
-      {
-        willReadFrequently:true
-      }
-    );
-
-
-  ctx.fillStyle =
-    "white";
-
-
-  ctx.fillRect(
-    0,
-    0,
-    hooks,
-    picks
-  );
-
-
-
-  /*
-     MIRROR / FLIP
-  */
-
-  ctx.save();
-
-
-  ctx.translate(
-    mirror ? hooks : 0,
-    flip ? picks : 0
-  );
-
-
-  ctx.scale(
-    mirror ? -1 : 1,
-    flip ? -1 : 1
-  );
-
-
-
-  /*
-     DESIGN FIT
-  */
-
-  const usableW =
-    hooks -
-    left -
-    right;
-
-
-  const scale =
-    Math.min(
-      usableW / designImage.width,
-      picks / designImage.height
-    );
-
-
-  const dw =
-    Math.max(
-      1,
-      Math.round(
-        designImage.width *
-        scale
-      )
-    );
-
-
-  const dh =
-    Math.max(
-      1,
-      Math.round(
-        designImage.height *
-        scale
-      )
-    );
-
-
-  const x =
-    left +
-    Math.floor(
-      (usableW - dw) / 2
-    );
-
-
-  const y =
-    Math.floor(
-      (picks - dh) / 2
-    );
-
-
-  ctx.drawImage(
-    designImage,
-    x,
-    y,
-    dw,
-    dh
-  );
-
-
-  ctx.restore();
-
-
-
-  /*
-     PIXEL DATA
-  */
-
-  const data =
-    ctx.getImageData(
-      0,
-      0,
-      hooks,
-      picks
-    ).data;
-
-
-
-  const bytesPerPick =
-    hooks / 8;
-
-
-  const out =
-    new Uint8Array(
-      picks *
-      bytesPerPick
-    );
-
-
-
-  /*
-     PACK BITS
-  */
-
-  for(
-    let y = 0;
-    y < picks;
-    y++
-  ){
-
-    for(
-      let x = 0;
-      x < hooks;
-      x++
-    ){
-
-      const i =
-        (
-          y *
-          hooks +
-          x
-        )
-        *
-        4;
-
-
-      const gray =
-        (
-          data[i] +
-          data[i+1] +
-          data[i+2]
-        )
-        /
-        3;
-
-
-      let on =
-        gray <
-        threshold;
-
-
-      if(invert){
-
-        on = !on;
-
-      }
-
-
-      if(on){
-
-        const byteIndex =
-          y *
-          bytesPerPick +
-          Math.floor(
-            x / 8
-          );
-
-
-        const bit =
-          7 -
-          (x % 8);
-
-
-        out[byteIndex] |=
-          (
-            1 <<
-            bit
-          );
-
-      }
-
-    }
-
-  }
-
-
-
-  return {
-
-    out:out,
-
-    hooks:hooks,
-
-    picks:picks,
-
-    bytesPerPick:
-      bytesPerPick
-
-  };
-
-}
-
-
-
-/* =========================================
-   BUILD EP
-========================================= */
-
-function buildEP(){
-
-  if(
-    !runningBytes ||
-    !runningHeader
-  ){
-
-    throw new Error(
-      "Pehle original working EP upload karein."
-    );
-
-  }
-
-
-  const result =
-    packDesign();
-
-
-  /*
-     COPY ORIGINAL HEADER
-  */
-
-  const header =
-    new Uint8Array(
-      runningHeader
-    );
-
-
-
-  /*
-     ORIGINAL EP ME
-     BYTES 3-5 PICK COUNT
-  */
-
-  if(header.length >= 6){
-
-    const p =
-      u24(
-        result.picks
-      );
-
-
-    header[3] =
-      p[0];
-
-    header[4] =
-      p[1];
-
-    header[5] =
-      p[2];
-
-  }
-
-
-
-  /*
-     HEADER + DESIGN DATA
-  */
-
-  const finalBytes =
-    new Uint8Array(
-      header.length +
-      result.out.length
-    );
-
-
-  finalBytes.set(
-    header,
-    0
-  );
-
-
-  finalBytes.set(
-    result.out,
-    header.length
-  );
-
-
-  return {
-
-    bytes:
-      finalBytes,
-
-    result:
-      result
-
-  };
-
-}
-
-
-
-/* =========================================
-   CREATE EP BUTTON
-========================================= */
-
-$("createBtn")
-.addEventListener(
-  "click",
-  function(){
-
-    try{
-
-      $("status").className =
-        "info";
-
-
-      $("status").textContent =
-        "EP create ho rahi hai...";
-
-
-
-      const built =
-        buildEP();
-
-
-
-      const blob =
-        new Blob(
-          [built.bytes],
-          {
-            type:
-              "application/octet-stream"
-          }
-        );
-
-
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-
-
-      const originalName =
-        $("designFile")
-          .files[0]
-          ?.name ||
-        "Design";
-
-
-      const nameBase =
-        originalName
-          .replace(
-            /\.[^.]+$/,
-            ""
-          );
-
-
-
-      const a =
-        $("downloadLink");
-
-
-      a.href =
-        url;
-
-
-      a.download =
-        nameBase +
-        "_Native.EP";
-
-
-      a.textContent =
-        "⬇ Download " +
-        a.download;
-
-
-      a.classList.remove(
-        "hidden"
-      );
-
-
-
-      $("status")
-        .className =
-        "ok";
-
-
-      $("status")
-        .innerHTML =
-
-        "<b>EP ready.</b><br>" +
-
-        "Size: " +
-        built.bytes.length
-          .toLocaleString() +
-        " bytes<br>" +
-
-        "Hooks: " +
-        built.result.hooks +
-        "<br>" +
-
-        "Picks: " +
-        built.result.picks;
-
-
-
-      /*
-         HEX PREVIEW
-      */
-
-      let hex = "";
-
-
-      const n =
-        Math.min(
-          128,
-          built.bytes.length
-        );
-
-
-      for(
-        let i = 0;
-        i < n;
-        i++
-      ){
-
-        hex +=
-          built.bytes[i]
-            .toString(16)
-            .padStart(
-              2,
-              "0"
-            )
-            .toUpperCase() +
-          " ";
-
-
-        if(
-          (i + 1) % 16 === 0
-        ){
-
-          hex += "\n";
-
-        }
-
-      }
-
-
-      $("hexPreview")
-        .textContent =
-        hex;
-
-    }
-
-    catch(e){
-
-      $("status")
-        .className =
-        "err";
-
-
-      $("status")
-        .textContent =
-        e.message;
-
-    }
-
-  }
-);
-
-
-
-/* =========================================
-   AUTO LOGIN CHECK
-========================================= */
-
-if(
-  sessionStorage.getItem(
-    "electronic_admin"
-  ) === "1"
-){
-
-  openApp();
-
-}
-
-else{
-
-  openLogin();
-
-}
-
-
-})();
-</script>
+  background:
+    rgba(0,150,255,.035</script>
 
 </body>
 </html>
