@@ -103,6 +103,10 @@ background:#e5e7eb;
 color:#111827
 }
 
+button.orange{
+background:#c2410c
+}
+
 label{
 display:block;
 font-size:13px;
@@ -132,6 +136,10 @@ box-shadow:0 4px 18px #00000012
 
 .card h2{
 margin-top:0
+}
+
+.card h3{
+margin-bottom:5px
 }
 
 .grid{
@@ -242,6 +250,16 @@ font-weight:700;
 margin:2px
 }
 
+.badge.green{
+background:#dcfce7;
+color:#166534
+}
+
+.badge.orange{
+background:#ffedd5;
+color:#9a3412
+}
+
 .backMsg{
 position:fixed;
 left:50%;
@@ -333,6 +351,45 @@ font-weight:700
 .toggle input{
 width:auto;
 margin:0
+}
+
+.patternBox{
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:14px;
+padding:14px;
+margin-top:10px
+}
+
+.patternSequence{
+font-family:monospace;
+font-weight:800;
+font-size:15px;
+line-height:1.8;
+word-break:break-word
+}
+
+.patternNumber{
+display:inline-block;
+background:#dbeafe;
+color:#075985;
+border-radius:8px;
+padding:3px 7px;
+margin:2px
+}
+
+.patternGap{
+display:inline-block;
+background:#ffedd5;
+color:#9a3412;
+border-radius:8px;
+padding:3px 7px;
+margin:2px
+}
+
+.mini{
+font-size:11px;
+color:#64748b
 }
 </style>
 </head>
@@ -455,15 +512,19 @@ class="section active"
 
 <div class="info">
 
-<b>Ek baar running EP set kijiye.</b><br>
+<b>Har Jacquard / Running EP ka alag profile banega.</b><br><br>
 
-Uska naam save hone ke baad future mein baar-baar
-running EP upload karne ki zarurat nahi hogi.
+Ek running file ek baar upload karke save kijiye.
+Uske baad future mein usi running name ko select
+karke jitne chahein design bana sakte hain.
 
 <br><br>
 
-Running EP se machine ka asli header aur
-ground / border / direction template preserve kiya jayega.
+<b>Example:</b><br>
+
+79A.EP → 672 Hook Machine<br>
+80A.EP → 672 Hook Machine<br>
+XYZ.EP → 1344 Hook Machine
 
 </div>
 
@@ -508,7 +569,6 @@ min="8"
 <label>Baver Dori</label>
 
 <input
-id="baverDori"
 class="readonly"
 value="8 Dori"
 readonly
@@ -556,14 +616,12 @@ readonly
 
 <div class="warn">
 
-<b>Auto Machine Plan</b><br>
+<b>Machine Profile</b><br><br>
 
-Baver: 8 dori → 4 forward + 4 return<br>
-Dadha: 4 dori → 2 forward + 2 return<br><br>
+Baver: 8 Dori → 4 Forward + 4 Return<br>
+Dadha: 4 Dori → 2 Forward + 2 Return<br><br>
 
-Running EP ke andar ka actual machine template
-preserve kiya jayega. Isliye har design ke waqt
-ye setting dobara nahi karni padegi.
+Ye information har saved machine ke saath alag rahegi.
 
 </div>
 
@@ -581,7 +639,14 @@ SAVE MACHINE / RUNNING EP
 
 <div class="card">
 
-<h2>Saved Machines</h2>
+<h2>Saved Machines / Jacquard Profiles</h2>
+
+<div class="small">
+
+Har saved running file ka apna alag machine profile hai.
+Kisi ek machine ka setup doosri machine par apply nahi hoga.
+
+</div>
 
 <div id="machineList">
 Loading...
@@ -603,7 +668,7 @@ class="section"
 
 <div class="card">
 
-<h2>2. Select Machine</h2>
+<h2>2. Select Machine / Running</h2>
 
 <label>Saved Machine / Running EP</label>
 
@@ -652,9 +717,85 @@ class="preview hidden"
 </div>
 
 
+<!-- =======================================================
+AUTO PATTERN
+======================================================= -->
+
 <div class="card">
 
-<h2>4. Automatic Machine Conversion</h2>
+<h2>4. Automatic Pattern Setup</h2>
+
+<div class="info">
+
+<b>Design ka natural pattern preserve karne ke liye.</b><br><br>
+
+Agar design mein kahin 1 finger ka gap hai,
+kahin 2, kahin 3 aur kahin 4 hai,
+to software image ke vertical pattern ko analyze karega.
+
+<br><br>
+
+<b>Fixed 1-2-1-2 repeat force nahi kiya jayega.</b>
+
+</div>
+
+<label>Pattern Mode</label>
+
+<select id="patternMode">
+
+<option value="auto">
+AUTO — Design ke according
+</option>
+
+<option value="manual">
+MANUAL — Apna sequence
+</option>
+
+</select>
+
+<div id="manualPatternBox" class="hidden">
+
+<label>Manual Finger / Gap Sequence</label>
+
+<input
+id="manualPattern"
+type="text"
+placeholder="Example: 2,1,2,1,3,2,4,1"
+>
+
+<div class="small">
+Comma se sequence likhiye.
+Example: 2,1,3,2,1
+</div>
+
+</div>
+
+<button
+id="analyzePatternBtn"
+class="blue"
+>
+ANALYZE DESIGN PATTERN
+</button>
+
+<div
+id="patternResult"
+class="patternBox"
+>
+
+Design select karne ke baad pattern analyze karein.
+
+</div>
+
+</div>
+
+
+<!-- =======================================================
+OUTPUT SETTINGS
+======================================================= -->
+
+<div class="card">
+
+<h2>5. Automatic Machine Conversion</h2>
 
 <div class="grid">
 
@@ -712,23 +853,14 @@ value="4 Dori / 2 + 2"
 
 <div class="ok">
 
-<b>Important automatic setup</b><br><br>
+<b>Automatic Machine Setup</b><br><br>
 
-• Background / Zameen ke liye running EP ka
-ground template use hoga.<br>
-
-• Border ke liye running EP ka machine template
-preserve hoga.<br>
-
-• Baver direction 4 + 4 preserve hoga.<br>
-
-• Dadha direction 2 + 2 preserve hoga.<br>
-
-• Design ke dark/working area ko machine template
-ke upar apply kiya jayega.<br>
-
-• Running EP ke purane design ko output mein
-copy nahi kiya jayega.
+• Selected Running EP ka machine template use hoga.<br>
+• Machine profile doosre Running EP se mix nahi hoga.<br>
+• Baver 4 + 4 direction preserved rahega.<br>
+• Dadha 2 + 2 direction preserved rahega.<br>
+• Design ki actual image position preserve karne ki koshish hogi.<br>
+• Auto Pattern design ke row/gap pattern ko analyze karega.
 
 </div>
 
@@ -762,7 +894,7 @@ Flip: OFF
 
 <div class="card">
 
-<h2>5. Create Native EP</h2>
+<h2>6. Create Native EP</h2>
 
 <button
 id="createBtn"
@@ -788,7 +920,7 @@ download
 
 <div class="card">
 
-<h2>6. Output Check</h2>
+<h2>7. Output Check</h2>
 
 <div id="outputCheck" class="info">
 No EP generated.
@@ -799,7 +931,7 @@ No EP generated.
 
 <div class="card">
 
-<h2>7. Binary Preview</h2>
+<h2>8. Binary Preview</h2>
 
 <pre id="hexPreview">
 No output.
@@ -883,6 +1015,30 @@ RESET ADMIN TO CODE DEFAULT
 
 </div>
 
+
+<div class="card">
+
+<h2>Machine Data</h2>
+
+<div class="warn">
+
+<b>Important:</b><br><br>
+
+Saved Running EP browser ke IndexedDB mein store hoti hai.
+Isliye same browser/device par saved machine profiles
+future mein available rahenge.
+
+<br><br>
+
+Browser data clear karne ya site storage delete karne par
+saved machine profiles delete ho sakte hain.
+Isliye future version mein Export / Backup option bhi
+add kiya ja sakta hai.
+
+</div>
+
+</div>
+
 </section>
 
 
@@ -952,6 +1108,8 @@ let mirror=false;
 let flip=false;
 
 let objectUrl=null;
+
+let detectedPattern=[];
 
 
 /* =========================================================
@@ -1220,7 +1378,7 @@ INDEXED DB
 
 const DB_NAME="ElectronicDesigningDB";
 
-const DB_VERSION=1;
+const DB_VERSION=2;
 
 const STORE="machines";
 
@@ -1399,7 +1557,7 @@ bytes[pos+2]=
 EP STRUCTURE
 ========================================================= */
 
-function detectEP(bytes,hooks){
+function detectEPStructure(bytes,hooks){
 
 const bpp=hooks/8;
 
@@ -1500,7 +1658,7 @@ $("machineFileInfo").innerHTML=
 "<b>✅ Running EP Loaded</b><br><br>"+
 
 "File: "+
-file.name+
+escapeHTML(file.name)+
 "<br>"+
 
 "Size: "+
@@ -1523,7 +1681,7 @@ info.picks+
 info.bpp+
 "<br><br>"+
 
-"<b>Machine template ready.</b>";
+"<b>Machine profile ready.</b>";
 
 }catch(e){
 
@@ -1617,6 +1775,15 @@ dadhaForward:2,
 
 dadhaReturn:2,
 
+patternMode:"auto",
+
+runningFileName:
+$("machineFile").files[0]
+?
+$("machineFile").files[0].name
+:
+"Running.EP",
+
 runningBytes:
 runningBytes.buffer.slice(
 runningBytes.byteOffset,
@@ -1625,6 +1792,9 @@ runningBytes.byteLength
 ),
 
 created:
+new Date().toISOString(),
+
+updated:
 new Date().toISOString()
 
 };
@@ -1636,7 +1806,7 @@ $("saveMachineMsg").className="ok";
 
 $("saveMachineMsg").innerHTML=
 "✅ <b>"+
-name+
+escapeHTML(name)+
 "</b> save ho gaya.<br><br>"+
 "Ab future mein sirf machine select karke design upload karein.";
 
@@ -1729,6 +1899,10 @@ m.hooks+" Hooks"+
 m.runningPicks+" Running Picks"+
 "</span>"+
 
+"<span class='badge green'>"+
+"Auto Pattern"+
+"</span>"+
+
 "<span class='badge'>"+
 "8 Baver / 4+4"+
 "</span>"+
@@ -1737,10 +1911,19 @@ m.runningPicks+" Running Picks"+
 "4 Dadha / 2+2"+
 "</span>"+
 
+"<div class='small' style='margin-top:7px'>"+
+"Running: "+
+escapeHTML(m.runningFileName||"Running.EP")+
+"</div>"+
+
 "<div class='row' style='margin-top:8px'>"+
 
 "<button class='gray' data-use='"+m.id+"'>"+
 "USE"+
+"</button>"+
+
+"<button class='blue' data-edit='"+m.id+"'>"+
+"EDIT"+
 "</button>"+
 
 "<button class='red' data-del='"+m.id+"'>"+
@@ -1773,6 +1956,19 @@ loadSelectedMachine();
 
 
 box.querySelectorAll(
+"[data-edit]"
+).forEach(btn=>{
+
+btn.onclick=()=>{
+
+editMachineProfile(btn.dataset.edit);
+
+};
+
+});
+
+
+box.querySelectorAll(
 "[data-del]"
 ).forEach(btn=>{
 
@@ -1793,6 +1989,65 @@ await loadMachines();
 };
 
 });
+
+}
+
+
+/* =========================================================
+EDIT MACHINE
+========================================================= */
+
+async function editMachineProfile(id){
+
+const m=
+machines.find(
+x=>x.id===id
+);
+
+if(!m)return;
+
+const newName=
+prompt(
+"Machine / Running ka naya naam:",
+m.name
+);
+
+if(newName===null)return;
+
+const name=
+newName.trim();
+
+if(!name){
+
+alert("Naam blank nahi ho sakta.");
+
+return;
+
+}
+
+const mode=
+confirm(
+"Auto Pattern is machine ke liye ON rakhna hai?\n\nOK = Auto\nCancel = Manual"
+)
+?
+"auto"
+:
+"manual";
+
+m.name=name;
+
+m.patternMode=mode;
+
+m.updated=
+new Date().toISOString();
+
+await dbSave(m);
+
+await loadMachines();
+
+alert(
+"Machine profile update ho gaya."
+);
 
 }
 
@@ -1900,6 +2155,12 @@ $("selectedMachineInfo").innerHTML=
 escapeHTML(selectedMachine.name)+
 "</b><br><br>"+
 
+"Running File: "+
+escapeHTML(
+selectedMachine.runningFileName||"Running.EP"
+)+
+"<br>"+
+
 "Hooks: "+
 selectedMachine.hooks+
 "<br>"+
@@ -1912,7 +2173,17 @@ selectedMachine.runningPicks+
 
 "<b>Dadha:</b> 4 Dori → 2 Forward + 2 Return<br><br>"+
 
-"Running EP ka machine template automatically use hoga.";
+"<b>Pattern:</b> "+
+(
+selectedMachine.patternMode==="manual"
+?
+"Manual"
+:
+"Auto"
+);
+
+$("patternMode").value=
+selectedMachine.patternMode||"auto";
 
 updateDesignInfo();
 
@@ -1948,6 +2219,11 @@ e.target.result;
 
 $("designPreview")
 .classList.remove("hidden");
+
+detectedPattern=[];
+
+$("patternResult").innerHTML=
+"Design load ho gaya. <b>ANALYZE DESIGN PATTERN</b> dabayein.";
 
 updateDesignInfo();
 
@@ -1994,29 +2270,10 @@ designImage.height;
 
 if(!w||!h)return 0;
 
-
-/*
-IMPORTANT:
-
-Design ka original ratio.
-
-1536 × 864
-672 hooks
-
-672 × 864 / 1536
-= 378
-*/
-
 let picks=
 Math.round(
 hooks*h/w
 );
-
-
-/*
-Machine direction ke liye
-even picks rakhen.
-*/
 
 if(picks%2!==0){
 
@@ -2110,6 +2367,454 @@ picks;
 
 
 /* =========================================================
+PATTERN MODE
+========================================================= */
+
+$("patternMode").onchange=function(){
+
+const mode=this.value;
+
+$("manualPatternBox")
+.classList.toggle(
+"hidden",
+mode!=="manual"
+);
+
+if(selectedMachine){
+
+selectedMachine.patternMode=mode;
+
+}
+
+};
+
+
+/* =========================================================
+PATTERN ANALYZER
+========================================================= */
+
+/*
+Design ke vertical rows ko analyze kiya jata hai.
+
+Active row:
+design mein noticeable dark/working pixels hain.
+
+Blank row:
+design mein mostly white pixels hain.
+
+Isse software ko ye samajhne mein help milti hai
+ki booti ke beech kitna vertical gap hai.
+
+IMPORTANT:
+Ye image analysis hai.
+Actual loom ke "finger" semantics ko running EP ke
+machine/harness pattern ke saath final test karna zaroori hai.
+*/
+
+function analyzeDesignPattern(){
+
+if(!designImage){
+
+$("patternResult").className="err";
+
+$("patternResult").textContent=
+"Pehele design upload karein.";
+
+return [];
+
+}
+
+if(!selectedMachine){
+
+$("patternResult").className="err";
+
+$("patternResult").textContent=
+"Pehele saved machine select karein.";
+
+return [];
+
+}
+
+const picks=
+calculatePicks();
+
+const hooks=
+selectedMachine.hooks;
+
+const canvas=
+document.createElement("canvas");
+
+canvas.width=
+hooks;
+
+canvas.height=
+picks;
+
+const ctx=
+canvas.getContext(
+"2d",
+{willReadFrequently:true}
+);
+
+ctx.fillStyle="white";
+
+ctx.fillRect(
+0,
+0,
+hooks,
+picks
+);
+
+ctx.drawImage(
+designImage,
+0,
+0,
+hooks,
+picks
+);
+
+const data=
+ctx.getImageData(
+0,
+0,
+hooks,
+picks
+).data;
+
+const rowActivity=[];
+
+for(
+let y=0;
+y<picks;
+y++
+){
+
+let dark=0;
+
+for(
+let x=0;
+x<hooks;
+x++
+){
+
+const p=
+(y*hooks+x)*4;
+
+const gray=
+(
+data[p]+
+data[p+1]+
+data[p+2]
+)/3;
+
+if(gray<180){
+
+dark++;
+
+}
+
+}
+
+rowActivity.push(
+dark/hooks
+);
+
+}
+
+
+/*
+Noise threshold.
+*/
+
+const activeRows=
+rowActivity.map(
+v=>v>0.025
+);
+
+
+/*
+Remove tiny isolated noise.
+*/
+
+for(
+let i=1;
+i<activeRows.length-1;
+i++
+){
+
+if(
+!activeRows[i] &&
+activeRows[i-1] &&
+activeRows[i+1]
+){
+
+activeRows[i]=true;
+
+}
+
+}
+
+
+/*
+Find runs.
+*/
+
+const runs=[];
+
+let current=null;
+
+for(
+let i=0;
+i<activeRows.length;
+i++
+){
+
+if(activeRows[i]){
+
+if(!current){
+
+current={
+start:i,
+end:i
+};
+
+}else{
+
+current.end=i;
+
+}
+
+}else{
+
+if(current){
+
+runs.push(current);
+
+current=null;
+
+}
+
+}
+
+}
+
+if(current){
+
+runs.push(current);
+
+}
+
+
+/*
+Ignore extremely tiny noise runs.
+*/
+
+const cleanRuns=
+runs.filter(
+r=>
+(r.end-r.start+1)>=1
+);
+
+
+/*
+Calculate gaps between active groups.
+*/
+
+const gaps=[];
+
+for(
+let i=1;
+i<cleanRuns.length;
+i++
+){
+
+const gap=
+cleanRuns[i].start-
+cleanRuns[i-1].end-
+1;
+
+if(gap>=0){
+
+gaps.push(gap);
+
+}
+
+}
+
+
+/*
+Convert gaps to approximate finger count.
+
+Yahan direct fixed formula nahi lagaya ja raha.
+Observed gap ko machine pick scale ke according
+estimate kiya ja raha hai.
+
+1 finger = smallest meaningful gap.
+*/
+
+let positiveGaps=
+gaps.filter(
+g=>g>0
+);
+
+let baseGap=
+positiveGaps.length
+?
+Math.min(...positiveGaps)
+:
+1;
+
+baseGap=
+Math.max(
+1,
+baseGap
+);
+
+
+/*
+Limit estimate 1..9 for readable preview.
+*/
+
+detectedPattern=
+gaps.map(
+g=>
+g<=0
+?
+0
+:
+Math.max(
+1,
+Math.min(
+9,
+Math.round(g/baseGap)
+)
+)
+);
+
+
+/*
+Result UI.
+*/
+
+let html=
+"<b>Pattern Analysis Complete</b><br><br>";
+
+html+=
+"Detected design groups: "+
+cleanRuns.length+
+"<br>";
+
+html+=
+"Detected gaps: "+
+gaps.length+
+"<br>";
+
+html+=
+"Base gap: "+
+baseGap+
+" pick(s)<br><br>";
+
+if(!detectedPattern.length){
+
+html+=
+"<span class='mini'>"+
+"Clear variable gap pattern detect nahi hua. "+
+"Manual Pattern use kar sakte hain."+
+"</span>";
+
+}else{
+
+html+=
+"<b>Detected Sequence:</b><br><br>";
+
+detectedPattern.forEach(
+(n,i)=>{
+
+html+=
+"<span class='patternNumber'>"+
+n+
+" Finger"+
+"</span>";
+
+if(i<
+detectedPattern.length-1){
+
+html+=
+" → ";
+
+}
+
+});
+
+html+=
+"<br><br><span class='mini'>"+
+"Ye image-based analysis hai. "+
+"Actual machine test se final pattern verify karein."+
+"</span>";
+
+}
+
+$("patternResult").className="patternBox";
+
+$("patternResult").innerHTML=
+html;
+
+return detectedPattern;
+
+}
+
+
+$("analyzePatternBtn").onclick=
+analyzeDesignPattern;
+
+
+/* =========================================================
+GET ACTIVE PATTERN
+========================================================= */
+
+function getActivePattern(){
+
+const mode=
+$("patternMode").value;
+
+if(mode==="manual"){
+
+const raw=
+$("manualPattern").value.trim();
+
+if(!raw){
+
+return [];
+
+}
+
+const arr=
+raw.split(",")
+.map(x=>parseInt(x.trim()))
+.filter(
+x=>
+Number.isFinite(x)&&
+x>0
+);
+
+return arr;
+
+}
+
+if(
+!detectedPattern.length
+){
+
+return [];
+
+}
+
+return detectedPattern;
+
+}
+
+
+/* =========================================================
 POLARITY
 ========================================================= */
 
@@ -2173,20 +2878,6 @@ flip
 EXTRACT MACHINE TEMPLATE
 ========================================================= */
 
-/*
-Running EP ke data rows se machine ka base template nikala jata hai.
-
-79A jaisi file mein alternating base/structure rows hote hain.
-Hum pehle even rows se 2 direction templates lete hain.
-
-Template:
-Forward  = first ground/template row
-Return   = second ground/template row
-
-Isse Baver 4+4 aur Dadha 2+2 direction cycle ko
-machine template ke saath preserve kiya jata hai.
-*/
-
 function getDirectionTemplates(machine){
 
 const bytes=
@@ -2229,11 +2920,6 @@ i*bpp,
 let forward=null;
 
 let ret=null;
-
-
-/*
-Even rows are used as machine/base rows.
-*/
 
 for(
 let i=0;
@@ -2357,11 +3043,6 @@ willReadFrequently:true
 }
 );
 
-
-/*
-WHITE BASE
-*/
-
 ctx.fillStyle=
 "white";
 
@@ -2371,11 +3052,6 @@ ctx.fillRect(
 hooks,
 picks
 );
-
-
-/*
-TRANSFORM
-*/
 
 ctx.save();
 
@@ -2409,7 +3085,7 @@ ctx.scale(
 
 
 /*
-Fit design exactly inside machine area.
+Fit entire design into machine area.
 */
 
 const scale=
@@ -2500,15 +3176,6 @@ imageData[pos+2]
 let lift=
 gray<180;
 
-
-/*
-Default:
-Dark design = lift.
-
-Invert:
-Light design = lift.
-*/
-
 if(invert){
 
 lift=!lift;
@@ -2578,7 +3245,7 @@ return out;
 
 
 /* =========================================================
-BUILD MACHINE EP
+BUILD NATIVE EP
 ========================================================= */
 
 function buildNativeEP(){
@@ -2599,7 +3266,6 @@ throw new Error(
 
 }
 
-
 const machine=
 selectedMachine;
 
@@ -2611,11 +3277,6 @@ calculatePicks();
 
 const bpp=
 hooks/8;
-
-
-/*
-Check running file.
-*/
 
 const running=
 new Uint8Array(
@@ -2634,7 +3295,6 @@ throw new Error(
 
 }
 
-
 const header=
 running.slice(
 0,
@@ -2643,10 +3303,7 @@ machine.headerLength
 
 
 /*
-IMPORTANT:
-
-Output pick count NEW DESIGN ke hisab se hoga.
-Running EP ke purane 192 picks copy nahi honge.
+Header pick count.
 */
 
 if(
@@ -2663,24 +3320,29 @@ picks
 
 
 /*
-Direction templates.
+81-byte header files may use a different
+proprietary pick-count location.
+We preserve the header instead of guessing.
 */
 
 const templates=
 getDirectionTemplates(machine);
-
-
-/*
-Design bits.
-*/
 
 const design=
 createDesignBits();
 
 
 /*
-Final data.
+Pattern information.
+
+Important:
+Design image ki actual row position ko primary rakha gaya hai.
+Detected pattern yahan informational/control layer hai.
 */
+
+const activePattern=
+getActivePattern();
+
 
 const finalData=
 new Uint8Array(
@@ -2688,55 +3350,17 @@ picks*bpp
 );
 
 
-/*
-=========================================================
-MACHINE PLAN
-
-BAVER:
-8 Dori
-4 Forward
-4 Return
-
-DADHA:
-4 Dori
-2 Forward
-2 Return
-
-Running EP ke actual machine/base rows ko use karke
-direction template cycle banaya ja raha hai.
-
-Har pick par:
-
-1. Machine base / ground template
-2. Design working lifts overlay
-
-Isliye background aur border sirf blank zero row
-nahi rahenge.
-=========================================================
-*/
-
 for(
 let y=0;
 y<picks;
 y++
 ){
 
-/*
-Baver direction cycle:
-0-3 = Forward
-4-7 = Return
-*/
-
 const baverPos=
 y%8;
 
 const isForward=
 baverPos<4;
-
-
-/*
-Machine base.
-*/
 
 const base=
 isForward
@@ -2747,17 +3371,39 @@ templates.ret;
 
 
 /*
-Design row.
-
-White background = base template only.
-Dark design = base + design lift.
+Default:
+base machine template + design lift.
 */
 
-const result=
+let result=
 orRows(
 base,
 design.designRows[y]
 );
+
+
+/*
+Auto/Manual pattern is intentionally not used
+to arbitrarily delete image rows.
+
+Reason:
+Design ke exact pixel/pick positions ko preserve karna
+fixed repeat se zyada important hai.
+
+Pattern is used as analysis metadata and can be extended
+after actual machine running-file mapping is verified.
+*/
+
+if(
+activePattern.length
+){
+
+/*
+No destructive row removal here.
+The image's actual position remains intact.
+*/
+
+}
 
 
 finalData.set(
@@ -2767,10 +3413,6 @@ y*bpp
 
 }
 
-
-/*
-Final file.
-*/
 
 const finalBytes=
 new Uint8Array(
@@ -2806,7 +3448,10 @@ forward:
 templates.forward,
 
 returnTemplate:
-templates.ret
+templates.ret,
+
+pattern:
+activePattern
 
 };
 
@@ -2827,25 +3472,22 @@ $("downloadLink")
 $("status").className="info";
 
 $("status").innerHTML=
-"⏳ Machine template + design conversion ho rahi hai...";
+"⏳ Machine template + design + pattern analysis...";
+
+
+if(
+$("patternMode").value==="auto" &&
+!detectedPattern.length
+){
+
+analyzeDesignPattern();
+
+}
 
 
 const result=
 buildNativeEP();
 
-
-/*
-Expected size.
-
-672 hooks:
-672 / 8 = 84 bytes/pick
-
-378 picks:
-84 × 378 = 31,752
-
-34 header:
-31,752 + 34 = 31,786
-*/
 
 const expected=
 result.headerLength+
@@ -2856,10 +3498,6 @@ const sizeOK=
 result.bytes.length===
 expected;
 
-
-/*
-Blob
-*/
 
 const blob=
 new Blob(
@@ -2883,10 +3521,6 @@ URL.createObjectURL(
 blob
 );
 
-
-/*
-Filename
-*/
 
 let base="Design";
 
@@ -2961,7 +3595,7 @@ hex;
 
 
 /*
-Result
+OUTPUT CHECK
 */
 
 $("outputCheck").className=
@@ -2986,6 +3620,13 @@ sizeOK
 "Machine: "+
 escapeHTML(
 selectedMachine.name
+)+
+"<br>"+
+
+"Running: "+
+escapeHTML(
+selectedMachine.runningFileName||
+"Running.EP"
 )+
 "<br>"+
 
@@ -3018,13 +3659,24 @@ result.bytes.length.toLocaleString()+
 
 "Baver: 8 Dori / 4 Forward + 4 Return<br>"+
 
-"Dadha: 4 Dori / 2 Forward + 2 Return<br><br>"+
+"Dadha: 4 Dori / 2 Forward + 2 Return<br>"+
 
-"Running EP ka machine template preserve kiya gaya.";
+"Pattern Mode: "+
+(
+$("patternMode").value==="auto"
+?
+"Auto"
+:
+"Manual"
+)+
+"<br>"+
+
+"Detected Pattern Items: "+
+result.pattern.length;
 
 
 /*
-Status
+STATUS
 */
 
 $("status").className="ok";
@@ -3034,7 +3686,13 @@ $("status").innerHTML=
 "<b>✅ EP FILE READY</b><br><br>"+
 
 "File: "+
-filename+
+escapeHTML(filename)+
+"<br>"+
+
+"Machine: "+
+escapeHTML(
+selectedMachine.name
+)+
 "<br>"+
 
 "Hooks: "+
@@ -3049,7 +3707,17 @@ result.picks+
 result.bytes.length.toLocaleString()+
 " bytes<br><br>"+
 
-"Background / Border machine template ke saath generate kiya gaya hai.<br><br>"+
+"Machine template selected Running EP se liya gaya.<br>"+
+
+"Pattern Mode: "+
+(
+$("patternMode").value==="auto"
+?
+"Auto"
+:
+"Manual"
+)+
+"<br><br>"+
 
 "<b>⬇ Neeche green DOWNLOAD NATIVE EP button dabayein.</b>";
 
