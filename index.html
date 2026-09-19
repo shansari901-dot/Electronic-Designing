@@ -52,7 +52,9 @@ button{
     display:none!important;
 }
 
-/* LOGIN */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 #loginPage{
     min-height:100vh;
@@ -144,7 +146,9 @@ input:focus,select:focus{
     font-size:13px;
 }
 
-/* APP */
+/* =========================================================
+   APP
+   ========================================================= */
 
 #app{
     min-height:100vh;
@@ -487,7 +491,8 @@ footer{
     font-size:12px;
 }
 
-/* BACK BUTTON OVERLAY */
+/* BACK BUTTON */
+
 .backHint{
     position:fixed;
     bottom:12px;
@@ -510,6 +515,7 @@ footer{
 }
 
 /* CHECKBOX */
+
 .checkRow{
     display:flex;
     gap:9px;
@@ -524,11 +530,13 @@ footer{
 }
 
 /* FILE */
+
 .fileInput{
     padding:10px;
 }
 
 /* ANALYSIS */
+
 .analysisList{
     display:grid;
     gap:7px;
@@ -557,7 +565,9 @@ footer{
 }
 
 /* MOBILE */
+
 @media(max-width:600px){
+
     main{
         padding:11px;
     }
@@ -580,347 +590,722 @@ footer{
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================================================
+     LOGIN
+     ========================================================= -->
+
 <section id="loginPage">
+
     <div class="loginBox">
+
         <div class="logo">ED</div>
 
         <h1>Electronic Designing</h1>
-        <p>Electronic Jacquard • Native EP Converter</p>
+
+        <p>
+            Electronic Jacquard • Native EP Converter
+        </p>
 
         <div class="field">
+
             <label>Admin ID</label>
-            <input id="loginId" type="text" autocomplete="username">
+
+            <input
+                id="loginId"
+                type="text"
+                autocomplete="username"
+                autocapitalize="off"
+                spellcheck="false">
+
         </div>
 
         <div class="field">
+
             <label>Password</label>
-            <input id="loginPassword" type="password" autocomplete="current-password">
+
+            <input
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password">
+
         </div>
 
-        <button class="primary" onclick="login()">LOGIN</button>
+        <button class="primary" onclick="login()">
+            LOGIN
+        </button>
+
         <div id="loginError" class="error"></div>
+
     </div>
+
 </section>
 
 
-<!-- APP -->
+<!-- =========================================================
+     APP
+     ========================================================= -->
+
 <section id="app" class="hidden">
 
 <header>
+
     <div class="headerInner">
-        <div class="brand">⚡ ELECTRONIC DESIGNING</div>
+
+        <div class="brand">
+            ⚡ ELECTRONIC DESIGNING
+        </div>
 
         <div class="headerRight">
-            <button class="smallBtn" onclick="logout()">Logout</button>
+
+            <button
+                class="smallBtn"
+                onclick="logout()">
+                Logout
+            </button>
+
         </div>
+
     </div>
 
     <div class="tabs">
-        <button class="tab active" data-tab="machineTab" onclick="showTab('machineTab',this)">
+
+        <button
+            class="tab active"
+            data-tab="machineTab"
+            onclick="showTab('machineTab',this)">
             ⚙ Machine Setup
         </button>
 
-        <button class="tab" data-tab="createTab" onclick="showTab('createTab',this)">
+        <button
+            class="tab"
+            data-tab="createTab"
+            onclick="showTab('createTab',this)">
             🎨 Create Design EP
         </button>
 
-        <button class="tab" data-tab="settingsTab" onclick="showTab('settingsTab',this)">
+        <button
+            class="tab"
+            data-tab="settingsTab"
+            onclick="showTab('settingsTab',this)">
             🔐 Settings
         </button>
+
     </div>
+
 </header>
 
 
 <main>
 
-<!-- MACHINE TAB -->
+<!-- =========================================================
+     MACHINE TAB
+     ========================================================= -->
+
 <section id="machineTab" class="tabPage">
 
     <div class="panel">
-        <h2>⚙ Machine / Harness Plan Setup</h2>
+
+        <h2>
+            ⚙ Machine / Harness Plan Setup
+        </h2>
 
         <div class="muted">
-            Har Jacquard machine ka running EP ek baar upload karke uska
-            machine-specific Harness Plan analyze aur save karein.
+            Har Jacquard machine ka running EP ek baar upload
+            karke uska machine-specific Harness Plan analyze
+            aur save karein.
         </div>
 
         <div class="notice">
-            Running EP ko sirf simple Forward/Return template ki tarah use nahi kiya
-            jayega. Analyzer pick-by-pick bit masks, repeated cycles, stable hooks,
-            changing hooks aur dori pattern ko preserve karega.
+
+            Running EP ko sirf simple Forward/Return template
+            ki tarah use nahi kiya jayega.
+
+            Analyzer pick-by-pick bit masks, repeated cycles,
+            stable hooks, changing hooks aur dori pattern
+            preserve karega.
+
         </div>
 
-        <div class="grid" style="margin-top:15px">
+
+        <div
+            class="grid"
+            style="margin-top:15px">
 
             <div class="field">
-                <label>Machine / Jacquard Name</label>
-                <input id="machineName"
-                       placeholder="Example: 672 Hook Baver">
+
+                <label>
+                    Machine / Jacquard Name
+                </label>
+
+                <input
+                    id="machineName"
+                    placeholder="Example: 672 Hook Baver">
+
             </div>
 
+
             <div class="field">
-                <label>Hooks</label>
+
+                <label>
+                    Hooks
+                </label>
+
                 <select id="hooks">
-                    <option value="672">672 Hooks</option>
-                    <option value="1344">1344 Hooks</option>
-                    <option value="1536">1536 Hooks</option>
-                    <option value="2688">2688 Hooks</option>
-                    <option value="custom">Custom</option>
+
+                    <option value="672">
+                        672 Hooks
+                    </option>
+
+                    <option value="1344">
+                        1344 Hooks
+                    </option>
+
+                    <option value="1536">
+                        1536 Hooks
+                    </option>
+
+                    <option value="2688">
+                        2688 Hooks
+                    </option>
+
+                    <option value="custom">
+                        Custom
+                    </option>
+
                 </select>
+
             </div>
 
         </div>
 
-        <div class="grid" id="customHooksBox" style="display:none">
+
+        <div
+            class="grid"
+            id="customHooksBox"
+            style="display:none">
+
             <div class="field">
-                <label>Custom Hooks</label>
-                <input id="customHooks" type="number" min="8" step="8">
+
+                <label>
+                    Custom Hooks
+                </label>
+
+                <input
+                    id="customHooks"
+                    type="number"
+                    min="8"
+                    step="8">
+
             </div>
+
         </div>
+
 
         <div class="grid3">
 
             <div class="field">
-                <label>Baver Total Dori</label>
-                <input id="baverDori" type="number" value="8" min="0">
+
+                <label>
+                    Baver Total Dori
+                </label>
+
+                <input
+                    id="baverDori"
+                    type="number"
+                    value="8"
+                    min="0">
+
             </div>
 
-            <div class="field">
-                <label>Baver Forward</label>
-                <input id="baverForward" type="number" value="4" min="0">
-            </div>
 
             <div class="field">
-                <label>Baver Return</label>
-                <input id="baverReturn" type="number" value="4" min="0">
+
+                <label>
+                    Baver Forward
+                </label>
+
+                <input
+                    id="baverForward"
+                    type="number"
+                    value="4"
+                    min="0">
+
             </div>
 
-            <div class="field">
-                <label>Dadha Total Dori</label>
-                <input id="dadhaDori" type="number" value="4" min="0">
-            </div>
 
             <div class="field">
-                <label>Dadha Forward</label>
-                <input id="dadhaForward" type="number" value="2" min="0">
+
+                <label>
+                    Baver Return
+                </label>
+
+                <input
+                    id="baverReturn"
+                    type="number"
+                    value="4"
+                    min="0">
+
             </div>
 
+
             <div class="field">
-                <label>Dadha Return</label>
-                <input id="dadhaReturn" type="number" value="2" min="0">
+
+                <label>
+                    Dadha Total Dori
+                </label>
+
+                <input
+                    id="dadhaDori"
+                    type="number"
+                    value="4"
+                    min="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Dadha Forward
+                </label>
+
+                <input
+                    id="dadhaForward"
+                    type="number"
+                    value="2"
+                    min="0">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Dadha Return
+                </label>
+
+                <input
+                    id="dadhaReturn"
+                    type="number"
+                    value="2"
+                    min="0">
+
             </div>
 
         </div>
+
 
         <div class="field">
-            <label>Original Running EP</label>
-            <input id="runningEP"
-                   class="fileInput"
-                   type="file"
-                   accept=".ep,.EP">
-            <div id="runningFileName" class="fileName"></div>
+
+            <label>
+                Original Running EP
+            </label>
+
+            <input
+                id="runningEP"
+                class="fileInput"
+                type="file"
+                accept=".ep,.EP">
+
+            <div
+                id="runningFileName"
+                class="fileName">
+            </div>
+
         </div>
 
+
         <div class="btnRow">
-            <button class="btn primaryBtn" onclick="analyzeRunningEP()">
+
+            <button
+                class="btn primaryBtn"
+                onclick="analyzeRunningEP()">
                 🔬 Analyze Harness Plan
             </button>
 
-            <button class="btn green" onclick="saveAnalyzedMachine()">
+            <button
+                class="btn green"
+                onclick="saveAnalyzedMachine()">
                 💾 Analyze + Save Machine
             </button>
 
-            <button class="btn" onclick="clearMachineForm()">
+            <button
+                class="btn"
+                onclick="clearMachineForm()">
                 Clear
             </button>
+
         </div>
 
-        <div id="analysisProgressBox" class="hidden">
+
+        <div
+            id="analysisProgressBox"
+            class="hidden">
+
             <div class="progress">
+
                 <div id="analysisProgress"></div>
+
             </div>
-            <div id="analysisStatus" class="muted" style="margin-top:7px"></div>
+
+            <div
+                id="analysisStatus"
+                class="muted"
+                style="margin-top:7px">
+            </div>
+
         </div>
+
 
         <div id="analysisResult"></div>
 
     </div>
 
 
+    <!-- SAVED MACHINES -->
+
     <div class="panel">
-        <h2>📦 Saved Harness Plans</h2>
+
+        <h2>
+            📦 Saved Harness Plans
+        </h2>
+
         <div class="muted">
-            Saved machine ko future mein dobara running EP upload kiye bina use kar sakte hain.
+            Saved machine ko future mein dobara running EP
+            upload kiye bina use kar sakte hain.
         </div>
 
-        <div id="machineList" class="machineList"></div>
+        <div
+            id="machineList"
+            class="machineList">
+        </div>
+
     </div>
 
 </section>
 
 
-<!-- CREATE TAB -->
-<section id="createTab" class="tabPage hidden">
+<!-- =========================================================
+     CREATE TAB
+     ========================================================= -->
+
+<section
+    id="createTab"
+    class="tabPage hidden">
 
     <div class="panel">
-        <h2>🎨 Create Native Electronic Jacquard EP</h2>
+
+        <h2>
+            🎨 Create Native Electronic Jacquard EP
+        </h2>
+
 
         <div class="field">
-            <label>Select Saved Machine / Harness Plan</label>
+
+            <label>
+                Select Saved Machine / Harness Plan
+            </label>
+
             <select id="machineSelect">
-                <option value="">-- Select Machine --</option>
+
+                <option value="">
+                    -- Select Machine --
+                </option>
+
             </select>
+
         </div>
+
 
         <div id="selectedMachineInfo"></div>
 
-        <div class="field" style="margin-top:15px">
-            <label>Design BMP / PNG / JPG</label>
-            <input id="designFile"
-                   class="fileInput"
-                   type="file"
-                   accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg">
-            <div id="designFileName" class="fileName"></div>
+
+        <div
+            class="field"
+            style="margin-top:15px">
+
+            <label>
+                Design BMP / PNG / JPG
+            </label>
+
+            <input
+                id="designFile"
+                class="fileInput"
+                type="file"
+                accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg">
+
+            <div
+                id="designFileName"
+                class="fileName">
+            </div>
+
         </div>
+
 
         <div class="grid3">
 
             <div class="field">
-                <label>Target Picks</label>
-                <input id="targetPicks"
-                       type="number"
-                       min="1"
-                       placeholder="Auto">
+
+                <label>
+                    Target Picks
+                </label>
+
+                <input
+                    id="targetPicks"
+                    type="number"
+                    min="1"
+                    placeholder="Auto">
+
             </div>
+
 
             <div class="field">
-                <label>Horizontal Offset</label>
-                <input id="offsetX" type="number" value="0">
+
+                <label>
+                    Horizontal Offset
+                </label>
+
+                <input
+                    id="offsetX"
+                    type="number"
+                    value="0">
+
             </div>
+
 
             <div class="field">
-                <label>Vertical Offset</label>
-                <input id="offsetY" type="number" value="0">
+
+                <label>
+                    Vertical Offset
+                </label>
+
+                <input
+                    id="offsetY"
+                    type="number"
+                    value="0">
+
             </div>
 
         </div>
 
-        <div class="checkRow">
-            <input id="invertDesign" type="checkbox">
-            <label for="invertDesign">Invert Design</label>
-        </div>
 
         <div class="checkRow">
-            <input id="mirrorDesign" type="checkbox">
-            <label for="mirrorDesign">Mirror Horizontal</label>
+
+            <input
+                id="invertDesign"
+                type="checkbox">
+
+            <label for="invertDesign">
+                Invert Design
+            </label>
+
         </div>
 
+
         <div class="checkRow">
-            <input id="flipDesign" type="checkbox">
-            <label for="flipDesign">Flip Vertical</label>
+
+            <input
+                id="mirrorDesign"
+                type="checkbox">
+
+            <label for="mirrorDesign">
+                Mirror Horizontal
+            </label>
+
         </div>
+
+
+        <div class="checkRow">
+
+            <input
+                id="flipDesign"
+                type="checkbox">
+
+            <label for="flipDesign">
+                Flip Vertical
+            </label>
+
+        </div>
+
 
         <div class="btnRow">
-            <button class="btn primaryBtn" onclick="prepareDesign()">
+
+            <button
+                class="btn primaryBtn"
+                onclick="prepareDesign()">
                 🔄 Prepare Design
             </button>
 
-            <button class="btn green" onclick="buildNativeEP()">
+            <button
+                class="btn green"
+                onclick="buildNativeEP()">
                 ⚡ Generate Native EP
             </button>
+
         </div>
+
 
         <div id="designInfo"></div>
 
+
         <div class="previewBox">
+
             <canvas id="designCanvas"></canvas>
+
         </div>
 
     </div>
 
 
-    <div id="outputPanel" class="panel hidden">
+    <!-- OUTPUT -->
 
-        <h2>✅ Native EP Ready</h2>
+    <div
+        id="outputPanel"
+        class="panel hidden">
+
+        <h2>
+            ✅ Native EP Ready
+        </h2>
 
         <div id="outputInfo"></div>
 
         <div class="btnRow">
-            <button class="btn primaryBtn" onclick="downloadGeneratedEP()">
+
+            <button
+                class="btn primaryBtn"
+                onclick="downloadGeneratedEP()">
                 ⬇ Download Native EP
             </button>
+
         </div>
 
-        <h3>HEX Preview</h3>
-        <div id="hexPreview" class="hexBox"></div>
+        <h3>
+            HEX Preview
+        </h3>
+
+        <div
+            id="hexPreview"
+            class="hexBox">
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- SETTINGS -->
-<section id="settingsTab" class="tabPage hidden">
+<!-- =========================================================
+     SETTINGS
+     ========================================================= -->
+
+<section
+    id="settingsTab"
+    class="tabPage hidden">
 
     <div class="panel">
-        <h2>🔐 Admin Settings</h2>
+
+        <h2>
+            🔐 Admin Settings
+        </h2>
 
         <div class="notice">
-            Default credentials code ke andar defined hain:
-            <b>admin / 123456</b>
+            Yahan se Admin ID aur Password change kar sakte hain.
         </div>
 
-        <div class="grid" style="margin-top:15px">
+
+        <div
+            class="grid"
+            style="margin-top:15px">
 
             <div class="field">
-                <label>New Admin ID</label>
+
+                <label>
+                    New Admin ID
+                </label>
+
                 <input id="newAdminId">
+
             </div>
 
+
             <div class="field">
-                <label>New Password</label>
-                <input id="newAdminPassword" type="password">
+
+                <label>
+                    New Password
+                </label>
+
+                <input
+                    id="newAdminPassword"
+                    type="password">
+
             </div>
 
         </div>
 
-        <button class="btn primaryBtn" onclick="saveCredentials()">
+
+        <button
+            class="btn primaryBtn"
+            onclick="saveCredentials()">
             💾 Save Admin Credentials
         </button>
 
-        <div id="settingsMessage" class="muted" style="margin-top:10px"></div>
+
+        <div
+            id="settingsMessage"
+            class="muted"
+            style="margin-top:10px">
+        </div>
+
     </div>
 
 
     <div class="panel">
-        <h2>🗄 Data Management</h2>
+
+        <h2>
+            🗄 Data Management
+        </h2>
 
         <div class="muted">
-            Machines aur Harness Plans browser ke IndexedDB mein save hote hain.
-            Browser/site data clear karne par data delete ho sakta hai.
+
+            Machines aur Harness Plans browser ke
+            IndexedDB mein save hote hain.
+
+            Browser/site data clear karne par data delete
+            ho sakta hai.
+
         </div>
 
+
         <div class="btnRow">
-            <button class="btn" onclick="exportMachines()">
+
+            <button
+                class="btn"
+                onclick="exportMachines()">
                 📤 Export Machine Plans
             </button>
 
-            <button class="btn" onclick="document.getElementById('importFile').click()">
+
+            <button
+                class="btn"
+                onclick="document.getElementById('importFile').click()">
                 📥 Import Machine Plans
             </button>
 
-            <input id="importFile"
-                   type="file"
-                   accept=".json"
-                   class="hidden"
-                   onchange="importMachines(event)">
+
+            <input
+                id="importFile"
+                type="file"
+                accept=".json"
+                class="hidden"
+                onchange="importMachines(event)">
+
         </div>
+
     </div>
 
 </section>
 
 </main>
+
 
 <footer>
     Electronic Designing • Native Jacquard EP Converter
@@ -928,20 +1313,34 @@ footer{
 
 </section>
 
-<div id="backHint" class="backHint">Back button: app ke andar rahein</div>
+
+<div
+    id="backHint"
+    class="backHint">
+    Back button: app ke andar rahein
+</div>
 
 
 <script>
+
 /* ============================================================
    ELECTRONIC DESIGNING
    MACHINE / HARNESS PLAN ENGINE
    ============================================================ */
 
+
 /*
-   DEFAULT LOGIN
-   ------------------------------------------------------------
-   YAHAN se default ID/password change kar sakte hain.
+===============================================================
+DEFAULT LOGIN
+===============================================================
+
+YAHAN default Admin ID / Password change kar sakte hain.
+
+Default:
+ID       = admin
+Password = 123456
 */
+
 const DEFAULT_ADMIN_ID = "admin";
 const DEFAULT_ADMIN_PASSWORD = "123456";
 
@@ -951,13 +1350,21 @@ const DEFAULT_ADMIN_PASSWORD = "123456";
    ============================================================ */
 
 let db = null;
+
 let currentAnalysis = null;
+
 let currentDesign = null;
+
 let generatedEP = null;
+
 let generatedFileName = "Native.EP";
 
+let dbOpeningPromise = null;
+
 const DB_NAME = "ElectronicDesigningDB";
+
 const DB_VERSION = 3;
+
 const STORE_NAME = "machines";
 
 
@@ -966,75 +1373,190 @@ const STORE_NAME = "machines";
    ============================================================ */
 
 function getCredentials(){
+
     return {
-        id: localStorage.getItem("ed_admin_id") || DEFAULT_ADMIN_ID,
-        password: localStorage.getItem("ed_admin_password") || DEFAULT_ADMIN_PASSWORD
+        id:
+            localStorage.getItem("ed_admin_id") ||
+            DEFAULT_ADMIN_ID,
+
+        password:
+            localStorage.getItem("ed_admin_password") ||
+            DEFAULT_ADMIN_PASSWORD
     };
 }
 
+
 function login(){
-    const id = document.getElementById("loginId").value.trim();
-    const password = document.getElementById("loginPassword").value;
 
-    const c = getCredentials();
+    const id =
+        document.getElementById("loginId")
+        .value
+        .trim();
 
-    if(id === c.id && password === c.password){
-        sessionStorage.setItem("ed_logged_in","1");
-        localStorage.setItem("ed_login_remember","1");
+    const password =
+        document.getElementById("loginPassword")
+        .value;
+
+    const c =
+        getCredentials();
+
+
+    if(
+        id === c.id &&
+        password === c.password
+    ){
+
+        sessionStorage.setItem(
+            "ed_logged_in",
+            "1"
+        );
+
+        /*
+           This flag allows login to remain active
+           after reopening the page.
+        */
+        localStorage.setItem(
+            "ed_login_remember",
+            "1"
+        );
+
+        document.getElementById("loginError")
+            .textContent="";
 
         showApp();
+
     }else{
-        document.getElementById("loginError").textContent =
+
+        document.getElementById("loginError")
+            .textContent =
             "Admin ID ya password galat hai.";
     }
 }
 
-function showApp(){
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
 
-    openDB().then(()=>{
-        refreshMachineList();
+async function showApp(){
+
+    document.getElementById("loginPage")
+        .classList.add("hidden");
+
+    document.getElementById("app")
+        .classList.remove("hidden");
+
+
+    try{
+
+        await openDB();
+
+        await refreshMachineList();
+
+        await refreshMachineSelect();
+
         loadSettings();
-    });
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(
+            "Database open nahi ho saka:\n" +
+            err.message
+        );
+    }
 }
+
 
 function logout(){
-    sessionStorage.removeItem("ed_logged_in");
-    document.getElementById("app").classList.add("hidden");
-    document.getElementById("loginPage").classList.remove("hidden");
 
-    document.getElementById("loginId").value = "";
-    document.getElementById("loginPassword").value = "";
+    /*
+       IMPORTANT:
+       Logout karne ke baad remember flag bhi remove.
+       Isse page dobara open karne par login screen aayegi.
+    */
+
+    sessionStorage.removeItem(
+        "ed_logged_in"
+    );
+
+    localStorage.removeItem(
+        "ed_login_remember"
+    );
+
+
+    document.getElementById("app")
+        .classList.add("hidden");
+
+    document.getElementById("loginPage")
+        .classList.remove("hidden");
+
+
+    document.getElementById("loginId").value="";
+
+    document.getElementById("loginPassword").value="";
+
+    document.getElementById("loginError")
+        .textContent="";
 }
+
 
 function saveCredentials(){
 
-    const id = document.getElementById("newAdminId").value.trim();
-    const password = document.getElementById("newAdminPassword").value;
+    const id =
+        document.getElementById("newAdminId")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("newAdminPassword")
+        .value;
+
 
     if(!id || !password){
-        alert("ID aur password dono bharna zaroori hai.");
+
+        alert(
+            "ID aur password dono bharna zaroori hai."
+        );
+
         return;
     }
 
-    localStorage.setItem("ed_admin_id",id);
-    localStorage.setItem("ed_admin_password",password);
 
-    document.getElementById("settingsMessage").textContent =
+    localStorage.setItem(
+        "ed_admin_id",
+        id
+    );
+
+    localStorage.setItem(
+        "ed_admin_password",
+        password
+    );
+
+
+    document.getElementById("settingsMessage")
+        .textContent =
         "Admin credentials successfully save ho gaye.";
 
-    document.getElementById("newAdminId").value = "";
-    document.getElementById("newAdminPassword").value = "";
+
+    document.getElementById("newAdminId")
+        .value="";
+
+    document.getElementById("newAdminPassword")
+        .value="";
 }
 
-function loadSettings(){
-    const c = getCredentials();
 
-    document.getElementById("newAdminId").placeholder =
+function loadSettings(){
+
+    const c =
+        getCredentials();
+
+
+    document.getElementById("newAdminId")
+        .placeholder =
         "Current: " + c.id;
 
-    document.getElementById("newAdminPassword").placeholder =
+
+    document.getElementById("newAdminPassword")
+        .placeholder =
         "Current password set hai";
 }
 
@@ -1045,25 +1567,39 @@ function loadSettings(){
 
 function showTab(id,button){
 
-    document.querySelectorAll(".tabPage").forEach(x=>{
-        x.classList.add("hidden");
-    });
+    document.querySelectorAll(".tabPage")
+        .forEach(x=>{
+            x.classList.add("hidden");
+        });
 
-    document.getElementById(id).classList.remove("hidden");
 
-    document.querySelectorAll(".tab").forEach(x=>{
-        x.classList.remove("active");
-    });
+    const page =
+        document.getElementById(id);
+
+    if(page){
+        page.classList.remove("hidden");
+    }
+
+
+    document.querySelectorAll(".tab")
+        .forEach(x=>{
+            x.classList.remove("active");
+        });
+
 
     if(button){
         button.classList.add("active");
     }
 
+
     if(id === "machineTab"){
+
         refreshMachineList();
     }
 
+
     if(id === "createTab"){
+
         refreshMachineSelect();
     }
 }
@@ -1075,108 +1611,305 @@ function showTab(id,button){
 
 function openDB(){
 
-    return new Promise((resolve,reject)=>{
+    if(db){
+        return Promise.resolve(db);
+    }
 
-        if(db){
-            resolve(db);
-            return;
-        }
 
-        const request = indexedDB.open(DB_NAME,DB_VERSION);
+    if(dbOpeningPromise){
+        return dbOpeningPromise;
+    }
 
-        request.onupgradeneeded = function(e){
 
-            const database = e.target.result;
+    dbOpeningPromise =
+        new Promise((resolve,reject)=>{
 
-            if(!database.objectStoreNames.contains(STORE_NAME)){
-                const store = database.createObjectStore(
-                    STORE_NAME,
-                    {keyPath:"id",autoIncrement:true}
+            const request =
+                indexedDB.open(
+                    DB_NAME,
+                    DB_VERSION
                 );
 
-                store.createIndex("name","name",{unique:false});
-            }
-        };
 
-        request.onsuccess = function(e){
-            db = e.target.result;
-            resolve(db);
-        };
+            request.onupgradeneeded =
+                function(e){
 
-        request.onerror = function(){
-            reject(request.error);
-        };
-    });
+                    const database =
+                        e.target.result;
+
+
+                    if(
+                        !database
+                            .objectStoreNames
+                            .contains(STORE_NAME)
+                    ){
+
+                        const store =
+                            database
+                            .createObjectStore(
+                                STORE_NAME,
+                                {
+                                    keyPath:"id",
+                                    autoIncrement:true
+                                }
+                            );
+
+
+                        store.createIndex(
+                            "name",
+                            "name",
+                            {
+                                unique:false
+                            }
+                        );
+                    }
+                };
+
+
+            request.onsuccess =
+                function(e){
+
+                    db =
+                        e.target.result;
+
+
+                    db.onversionchange =
+                        function(){
+
+                            db.close();
+
+                            db=null;
+
+                            dbOpeningPromise=null;
+                        };
+
+
+                    resolve(db);
+                };
+
+
+            request.onerror =
+                function(){
+
+                    dbOpeningPromise=null;
+
+                    reject(
+                        request.error
+                    );
+                };
+
+        });
+
+
+    return dbOpeningPromise;
+}
+
+
+/* ============================================================
+   DB HELPERS
+   ============================================================ */
+
+async function ensureDB(){
+
+    if(!db){
+        await openDB();
+    }
+
+    if(!db){
+        throw new Error(
+            "Database available nahi hai."
+        );
+    }
+
+    return db;
 }
 
 
 function addMachine(machine){
 
-    return new Promise((resolve,reject)=>{
+    return new Promise(
+        async(resolve,reject)=>{
 
-        const tx = db.transaction(STORE_NAME,"readwrite");
-        const store = tx.objectStore(STORE_NAME);
+            try{
 
-        const request = store.add(machine);
+                await ensureDB();
 
-        request.onsuccess = ()=>{
-            resolve(request.result);
-        };
+                const tx =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
 
-        request.onerror = ()=>{
-            reject(request.error);
-        };
-    });
+                const store =
+                    tx.objectStore(
+                        STORE_NAME
+                    );
+
+                const request =
+                    store.add(machine);
+
+
+                request.onsuccess =
+                    ()=>{
+                        resolve(
+                            request.result
+                        );
+                    };
+
+
+                request.onerror =
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
+
+            }catch(err){
+
+                reject(err);
+            }
+        }
+    );
 }
 
 
 function getAllMachines(){
 
-    return new Promise((resolve,reject)=>{
+    return new Promise(
+        async(resolve,reject)=>{
 
-        const tx = db.transaction(STORE_NAME,"readonly");
-        const store = tx.objectStore(STORE_NAME);
+            try{
 
-        const request = store.getAll();
+                await ensureDB();
 
-        request.onsuccess = ()=>{
-            resolve(request.result || []);
-        };
+                const tx =
+                    db.transaction(
+                        STORE_NAME,
+                        "readonly"
+                    );
 
-        request.onerror = ()=>{
-            reject(request.error);
-        };
-    });
+                const store =
+                    tx.objectStore(
+                        STORE_NAME
+                    );
+
+                const request =
+                    store.getAll();
+
+
+                request.onsuccess =
+                    ()=>{
+                        resolve(
+                            request.result || []
+                        );
+                    };
+
+
+                request.onerror =
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
+
+            }catch(err){
+
+                reject(err);
+            }
+        }
+    );
 }
 
 
 function deleteMachine(id){
 
-    return new Promise((resolve,reject)=>{
+    return new Promise(
+        async(resolve,reject)=>{
 
-        const tx = db.transaction(STORE_NAME,"readwrite");
-        const store = tx.objectStore(STORE_NAME);
+            try{
 
-        const request = store.delete(id);
+                await ensureDB();
 
-        request.onsuccess = ()=>resolve();
-        request.onerror = ()=>reject(request.error);
-    });
+                const tx =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
+
+                const store =
+                    tx.objectStore(
+                        STORE_NAME
+                    );
+
+                const request =
+                    store.delete(id);
+
+
+                request.onsuccess =
+                    ()=>{
+                        resolve();
+                    };
+
+
+                request.onerror =
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
+
+            }catch(err){
+
+                reject(err);
+            }
+        }
+    );
 }
 
 
 function updateMachine(machine){
 
-    return new Promise((resolve,reject)=>{
+    return new Promise(
+        async(resolve,reject)=>{
 
-        const tx = db.transaction(STORE_NAME,"readwrite");
-        const store = tx.objectStore(STORE_NAME);
+            try{
 
-        const request = store.put(machine);
+                await ensureDB();
 
-        request.onsuccess = ()=>resolve();
-        request.onerror = ()=>reject(request.error);
-    });
+                const tx =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
+
+                const store =
+                    tx.objectStore(
+                        STORE_NAME
+                    );
+
+                const request =
+                    store.put(machine);
+
+
+                request.onsuccess =
+                    ()=>{
+                        resolve();
+                    };
+
+
+                request.onerror =
+                    ()=>{
+                        reject(
+                            request.error
+                        );
+                    };
+
+            }catch(err){
+
+                reject(err);
+            }
+        }
+    );
 }
 
 
@@ -1184,33 +1917,87 @@ function updateMachine(machine){
    HOOKS
    ============================================================ */
 
-document.getElementById("hooks").addEventListener("change",function(){
+document
+.getElementById("hooks")
+.addEventListener(
+    "change",
+    function(){
 
-    document.getElementById("customHooksBox").style.display =
-        this.value === "custom" ? "block" : "none";
-});
+        document.getElementById(
+            "customHooksBox"
+        ).style.display =
+            this.value === "custom"
+            ? "block"
+            : "none";
+    }
+);
 
 
 /* ============================================================
-   FILE NAME
+   RUNNING EP FILE
    ============================================================ */
 
-document.getElementById("runningEP").addEventListener("change",function(){
+document
+.getElementById("runningEP")
+.addEventListener(
+    "change",
+    function(){
 
-    if(this.files[0]){
-        document.getElementById("runningFileName").textContent =
-            this.files[0].name;
+        if(this.files[0]){
+
+            document.getElementById(
+                "runningFileName"
+            ).textContent =
+                this.files[0].name;
+
+            /*
+               New running EP means old analysis
+               must not accidentally be saved.
+            */
+            currentAnalysis=null;
+        }
     }
-});
+);
 
 
-document.getElementById("designFile").addEventListener("change",function(){
+/* ============================================================
+   DESIGN FILE
+   ============================================================ */
 
-    if(this.files[0]){
-        document.getElementById("designFileName").textContent =
-            this.files[0].name;
+document
+.getElementById("designFile")
+.addEventListener(
+    "change",
+    function(){
+
+        /*
+           New design file invalidates the old prepared
+           design. This prevents stale design data.
+        */
+        currentDesign=null;
+
+        generatedEP=null;
+
+        document
+        .getElementById("outputPanel")
+        .classList.add("hidden");
+
+
+        if(this.files[0]){
+
+            document.getElementById(
+                "designFileName"
+            ).textContent =
+                this.files[0].name;
+
+        }else{
+
+            document.getElementById(
+                "designFileName"
+            ).textContent="";
+        }
     }
-});
+);
 
 
 /* ============================================================
@@ -1219,24 +2006,44 @@ document.getElementById("designFile").addEventListener("change",function(){
 
 function getSelectedHooks(){
 
-    const v = document.getElementById("hooks").value;
+    const v =
+        document.getElementById("hooks")
+        .value;
+
 
     if(v === "custom"){
-        return parseInt(document.getElementById("customHooks").value || 0);
+
+        return parseInt(
+            document.getElementById("customHooks")
+            .value || 0
+        );
     }
+
 
     return parseInt(v);
 }
 
 
 function bytesPerPick(hooks){
-    return Math.ceil(hooks / 8);
+
+    return Math.ceil(
+        hooks / 8
+    );
 }
 
 
-function getUint24LE(bytes,offset){
+function getUint24LE(
+    bytes,
+    offset
+){
 
-    if(offset + 2 >= bytes.length) return 0;
+    if(
+        offset + 2 >=
+        bytes.length
+    ){
+        return 0;
+    }
+
 
     return (
         bytes[offset] |
@@ -1246,21 +2053,33 @@ function getUint24LE(bytes,offset){
 }
 
 
-function setUint24LE(bytes,offset,value){
+function setUint24LE(
+    bytes,
+    offset,
+    value
+){
 
-    bytes[offset] = value & 255;
-    bytes[offset+1] = (value >> 8) & 255;
-    bytes[offset+2] = (value >> 16) & 255;
+    bytes[offset] =
+        value & 255;
+
+    bytes[offset+1] =
+        (value >> 8) & 255;
+
+    bytes[offset+2] =
+        (value >> 16) & 255;
 }
 
 
 function countBits8(v){
 
-    let c = 0;
+    let c=0;
 
     while(v){
-        c += v & 1;
-        v >>>= 1;
+
+        c +=
+            v & 1;
+
+        v >>>=1;
     }
 
     return c;
@@ -1269,10 +2088,16 @@ function countBits8(v){
 
 function countBitsArray(arr){
 
-    let c = 0;
+    let c=0;
 
-    for(let i=0;i<arr.length;i++){
-        c += countBits8(arr[i]);
+    for(
+        let i=0;
+        i<arr.length;
+        i++
+    ){
+
+        c +=
+            countBits8(arr[i]);
     }
 
     return c;
@@ -1281,11 +2106,24 @@ function countBitsArray(arr){
 
 function xorArrays(a,b){
 
-    const n = Math.min(a.length,b.length);
-    const out = new Uint8Array(n);
+    const n =
+        Math.min(
+            a.length,
+            b.length
+        );
 
-    for(let i=0;i<n;i++){
-        out[i] = a[i] ^ b[i];
+    const out =
+        new Uint8Array(n);
+
+
+    for(
+        let i=0;
+        i<n;
+        i++
+    ){
+
+        out[i] =
+            a[i] ^ b[i];
     }
 
     return out;
@@ -1294,11 +2132,24 @@ function xorArrays(a,b){
 
 function andArrays(a,b){
 
-    const n = Math.min(a.length,b.length);
-    const out = new Uint8Array(n);
+    const n =
+        Math.min(
+            a.length,
+            b.length
+        );
 
-    for(let i=0;i<n;i++){
-        out[i] = a[i] & b[i];
+    const out =
+        new Uint8Array(n);
+
+
+    for(
+        let i=0;
+        i<n;
+        i++
+    ){
+
+        out[i] =
+            a[i] & b[i];
     }
 
     return out;
@@ -1307,11 +2158,24 @@ function andArrays(a,b){
 
 function orArrays(a,b){
 
-    const n = Math.min(a.length,b.length);
-    const out = new Uint8Array(n);
+    const n =
+        Math.min(
+            a.length,
+            b.length
+        );
 
-    for(let i=0;i<n;i++){
-        out[i] = a[i] | b[i];
+    const out =
+        new Uint8Array(n);
+
+
+    for(
+        let i=0;
+        i<n;
+        i++
+    ){
+
+        out[i] =
+            a[i] | b[i];
     }
 
     return out;
@@ -1320,10 +2184,20 @@ function orArrays(a,b){
 
 function notArray(a){
 
-    const out = new Uint8Array(a.length);
+    const out =
+        new Uint8Array(
+            a.length
+        );
 
-    for(let i=0;i<a.length;i++){
-        out[i] = (~a[i]) & 255;
+
+    for(
+        let i=0;
+        i<a.length;
+        i++
+    ){
+
+        out[i] =
+            (~a[i]) & 255;
     }
 
     return out;
@@ -1332,10 +2206,26 @@ function notArray(a){
 
 function arraysEqual(a,b){
 
-    if(a.length !== b.length) return false;
+    if(
+        a.length !==
+        b.length
+    ){
+        return false;
+    }
 
-    for(let i=0;i<a.length;i++){
-        if(a[i] !== b[i]) return false;
+
+    for(
+        let i=0;
+        i<a.length;
+        i++
+    ){
+
+        if(
+            a[i] !==
+            b[i]
+        ){
+            return false;
+        }
     }
 
     return true;
@@ -1343,21 +2233,36 @@ function arraysEqual(a,b){
 
 
 function cloneArray(a){
+
     return new Uint8Array(a);
 }
 
 
 function arrayToBase64(arr){
 
-    let binary = "";
+    let binary="";
 
-    const chunk = 0x8000;
+    const chunk=0x8000;
 
-    for(let i=0;i<arr.length;i+=chunk){
-        binary += String.fromCharCode(
-            ...arr.subarray(i,Math.min(i+chunk,arr.length))
-        );
+
+    for(
+        let i=0;
+        i<arr.length;
+        i+=chunk
+    ){
+
+        binary +=
+            String.fromCharCode(
+                ...arr.subarray(
+                    i,
+                    Math.min(
+                        i+chunk,
+                        arr.length
+                    )
+                )
+            );
     }
+
 
     return btoa(binary);
 }
@@ -1365,11 +2270,23 @@ function arrayToBase64(arr){
 
 function base64ToUint8(base64){
 
-    const binary = atob(base64);
-    const arr = new Uint8Array(binary.length);
+    const binary =
+        atob(base64);
 
-    for(let i=0;i<binary.length;i++){
-        arr[i] = binary.charCodeAt(i);
+    const arr =
+        new Uint8Array(
+            binary.length
+        );
+
+
+    for(
+        let i=0;
+        i<binary.length;
+        i++
+    ){
+
+        arr[i] =
+            binary.charCodeAt(i);
     }
 
     return arr;
@@ -1380,40 +2297,65 @@ function base64ToUint8(base64){
    EP STRUCTURE DETECTION
    ============================================================ */
 
-function detectEPStructure(bytes,hooks){
+function detectEPStructure(
+    bytes,
+    hooks
+){
 
-    const bpp = bytesPerPick(hooks);
+    const bpp =
+        bytesPerPick(hooks);
 
-    const candidates = [];
+    const candidates=[];
 
-    const possibleHeaders = [34,81,32,64,80,82,83,84];
+    const possibleHeaders=[
+        34,
+        81,
+        32,
+        64,
+        80,
+        82,
+        83,
+        84
+    ];
 
-    for(const h of possibleHeaders){
 
-        if(bytes.length <= h) continue;
+    for(
+        const h of possibleHeaders
+    ){
 
-        const dataLength = bytes.length - h;
+        if(
+            bytes.length <= h
+        ){
+            continue;
+        }
 
-        if(dataLength > 0 && dataLength % bpp === 0){
+
+        const dataLength =
+            bytes.length - h;
+
+
+        if(
+            dataLength > 0 &&
+            dataLength % bpp === 0
+        ){
 
             candidates.push({
                 headerLength:h,
-                picks:dataLength / bpp
+                picks:dataLength/bpp
             });
         }
     }
 
-    /*
-       Most known native EP samples have:
-       34 + pickCount * bytesPerPick
-       OR
-       81 + pickCount * bytesPerPick
-    */
 
     const preferred =
-        candidates.find(x=>x.headerLength===34) ||
-        candidates.find(x=>x.headerLength===81) ||
+        candidates.find(
+            x=>x.headerLength===34
+        ) ||
+        candidates.find(
+            x=>x.headerLength===81
+        ) ||
         candidates[0];
+
 
     if(!preferred){
 
@@ -1422,10 +2364,16 @@ function detectEPStructure(bytes,hooks){
         );
     }
 
+
     return {
-        headerLength:preferred.headerLength,
-        picks:preferred.picks,
-        bytesPerPick:bpp
+        headerLength:
+            preferred.headerLength,
+
+        picks:
+            preferred.picks,
+
+        bytesPerPick:
+            bpp
     };
 }
 
@@ -1436,7 +2384,8 @@ function detectEPStructure(bytes,hooks){
 
 async function readFileBytes(file){
 
-    const buffer = await file.arrayBuffer();
+    const buffer =
+        await file.arrayBuffer();
 
     return new Uint8Array(buffer);
 }
@@ -1448,180 +2397,364 @@ async function readFileBytes(file){
 
 async function analyzeRunningEP(){
 
+    /*
+       VERY IMPORTANT:
+       Purana analysis kabhi bhi accidentally save na ho.
+    */
+    currentAnalysis=null;
+
+
     try{
 
         const file =
-            document.getElementById("runningEP").files[0];
+            document
+            .getElementById("runningEP")
+            .files[0];
+
 
         if(!file){
-            alert("Pehle original running EP upload karein.");
+
+            alert(
+                "Pehle original running EP upload karein."
+            );
+
             return;
         }
 
-        let hooks = getSelectedHooks();
 
-        if(!hooks || hooks < 8 || hooks % 8 !== 0){
-            alert("Hooks 8 ke multiple mein hona chahiye.");
+        let hooks =
+            getSelectedHooks();
+
+
+        if(
+            !hooks ||
+            hooks < 8 ||
+            hooks % 8 !== 0
+        ){
+
+            alert(
+                "Hooks 8 ke multiple mein hona chahiye."
+            );
+
             return;
         }
+
 
         const name =
-            document.getElementById("machineName").value.trim() ||
-            file.name.replace(/\.[^.]+$/,"");
+            document
+            .getElementById("machineName")
+            .value
+            .trim() ||
+            file.name.replace(
+                /\.[^.]+$/,
+                ""
+            );
 
-        const bytes = await readFileBytes(file);
 
-        const structure = detectEPStructure(bytes,hooks);
+        const bytes =
+            await readFileBytes(file);
 
-        showAnalysisProgress(5,"EP read ho raha hai...");
 
-        const header = bytes.slice(0,structure.headerLength);
+        showAnalysisProgress(
+            2,
+            "EP structure detect ho raha hai..."
+        );
 
-        const rows = [];
 
-        for(let y=0;y<structure.picks;y++){
+        const structure =
+            detectEPStructure(
+                bytes,
+                hooks
+            );
+
+
+        showAnalysisProgress(
+            5,
+            "EP read ho raha hai..."
+        );
+
+
+        const header =
+            bytes.slice(
+                0,
+                structure.headerLength
+            );
+
+
+        const rows=[];
+
+
+        for(
+            let y=0;
+            y<structure.picks;
+            y++
+        ){
 
             const start =
                 structure.headerLength +
-                y * structure.bytesPerPick;
+                y *
+                structure.bytesPerPick;
+
 
             rows.push(
                 bytes.slice(
                     start,
-                    start + structure.bytesPerPick
+                    start +
+                    structure.bytesPerPick
                 )
             );
 
-            if(y % 50 === 0){
+
+            if(
+                y % 50 === 0
+            ){
 
                 const p =
                     5 +
                     Math.round(
-                        (y / structure.picks) * 50
+                        (
+                            y /
+                            structure.picks
+                        ) *
+                        50
                     );
+
 
                 showAnalysisProgress(
                     p,
                     "Pick pattern analyze ho raha hai... " +
-                    y + "/" + structure.picks
+                    y +
+                    "/" +
+                    structure.picks
                 );
+
 
                 await sleep(0);
             }
         }
 
-        showAnalysisProgress(60,"Pattern cycles detect ho rahe hain...");
+
+        showAnalysisProgress(
+            60,
+            "Pattern cycles detect ho rahe hain..."
+        );
+
 
         const rowOnBits =
-            rows.map(r=>countBitsArray(r));
+            rows.map(
+                r=>countBitsArray(r)
+            );
+
 
         const rowHashes =
-            rows.map(r=>bytesToHex(r));
+            rows.map(
+                r=>bytesToHex(r)
+            );
+
 
         const stableMask =
             calculateStableMask(rows);
 
+
         const variableMask =
             calculateVariableMask(rows);
+
 
         const transitions =
             calculateTransitions(rows);
 
+
         const repeatedCycles =
             detectCycles(rows);
+
 
         const rowGroups =
             classifyRows(rows);
 
-        showAnalysisProgress(78,"Hook groups analyze ho rahe hain...");
+
+        showAnalysisProgress(
+            78,
+            "Hook groups analyze ho rahe hain..."
+        );
+
 
         const hookActivity =
-            calculateHookActivity(rows,hooks);
+            calculateHookActivity(
+                rows,
+                hooks
+            );
+
 
         const hookGroups =
-            detectHookGroups(hookActivity);
+            detectHookGroups(
+                hookActivity
+            );
+
 
         const direction =
             detectDirectionCycle(rows);
 
+
         const background =
             calculateBackgroundMask(rows);
+
 
         const border =
             calculateBorderCandidate(rows);
 
+
         const doriAnalysis =
             analyzeDoriPattern(
                 rows,
-                parseInt(document.getElementById("baverDori").value || 8),
-                parseInt(document.getElementById("baverForward").value || 4),
-                parseInt(document.getElementById("baverReturn").value || 4),
-                parseInt(document.getElementById("dadhaDori").value || 4),
-                parseInt(document.getElementById("dadhaForward").value || 2),
-                parseInt(document.getElementById("dadhaReturn").value || 2)
+
+                parseInt(
+                    document
+                    .getElementById("baverDori")
+                    .value || 8
+                ),
+
+                parseInt(
+                    document
+                    .getElementById("baverForward")
+                    .value || 4
+                ),
+
+                parseInt(
+                    document
+                    .getElementById("baverReturn")
+                    .value || 4
+                ),
+
+                parseInt(
+                    document
+                    .getElementById("dadhaDori")
+                    .value || 4
+                ),
+
+                parseInt(
+                    document
+                    .getElementById("dadhaForward")
+                    .value || 2
+                ),
+
+                parseInt(
+                    document
+                    .getElementById("dadhaReturn")
+                    .value || 2
+                )
             );
 
-        showAnalysisProgress(92,"Harness Plan ready ho raha hai...");
 
-        const plan = {
-            version:3,
+        showAnalysisProgress(
+            92,
+            "Harness Plan ready ho raha hai..."
+        );
+
+
+        const plan={
+
+            version:4,
 
             machineName:name,
 
             hooks:hooks,
 
-            headerLength:structure.headerLength,
+            headerLength:
+                structure.headerLength,
 
-            runningPicks:structure.picks,
+            runningPicks:
+                structure.picks,
 
-            bytesPerPick:structure.bytesPerPick,
+            bytesPerPick:
+                structure.bytesPerPick,
 
-            baverDori:parseInt(
-                document.getElementById("baverDori").value || 8
-            ),
 
-            baverForward:parseInt(
-                document.getElementById("baverForward").value || 4
-            ),
+            baverDori:
+                parseInt(
+                    document
+                    .getElementById("baverDori")
+                    .value || 8
+                ),
 
-            baverReturn:parseInt(
-                document.getElementById("baverReturn").value || 4
-            ),
+            baverForward:
+                parseInt(
+                    document
+                    .getElementById("baverForward")
+                    .value || 4
+                ),
 
-            dadhaDori:parseInt(
-                document.getElementById("dadhaDori").value || 4
-            ),
+            baverReturn:
+                parseInt(
+                    document
+                    .getElementById("baverReturn")
+                    .value || 4
+                ),
 
-            dadhaForward:parseInt(
-                document.getElementById("dadhaForward").value || 2
-            ),
 
-            dadhaReturn:parseInt(
-                document.getElementById("dadhaReturn").value || 2
-            ),
+            dadhaDori:
+                parseInt(
+                    document
+                    .getElementById("dadhaDori")
+                    .value || 4
+                ),
 
-            fileName:file.name,
+            dadhaForward:
+                parseInt(
+                    document
+                    .getElementById("dadhaForward")
+                    .value || 2
+                ),
 
-            headerBase64:arrayToBase64(header),
+            dadhaReturn:
+                parseInt(
+                    document
+                    .getElementById("dadhaReturn")
+                    .value || 2
+                ),
+
+
+            fileName:
+                file.name,
+
+
+            headerBase64:
+                arrayToBase64(header),
+
 
             /*
                COMPLETE RUNNING PATTERN
                Every pick is preserved.
             */
-            rowsBase64:rows.map(r=>arrayToBase64(r)),
+            rowsBase64:
+                rows.map(
+                    r=>arrayToBase64(r)
+                ),
 
-            /*
-               Machine analysis
-            */
+
             rowOnBits,
 
-            stableMaskBase64:arrayToBase64(stableMask),
+            rowHashes,
 
-            variableMaskBase64:arrayToBase64(variableMask),
+            stableMaskBase64:
+                arrayToBase64(
+                    stableMask
+                ),
 
-            backgroundMaskBase64:arrayToBase64(background),
+            variableMaskBase64:
+                arrayToBase64(
+                    variableMask
+                ),
 
-            borderMaskBase64:arrayToBase64(border),
+            backgroundMaskBase64:
+                arrayToBase64(
+                    background
+                ),
+
+            borderMaskBase64:
+                arrayToBase64(
+                    border
+                ),
+
 
             hookActivity,
 
@@ -1637,13 +2770,11 @@ async function analyzeRunningEP(){
 
             doriAnalysis,
 
-            createdAt:new Date().toISOString(),
 
-            /*
-               This flag is intentionally honest:
-               automatic byte analysis does not magically know
-               proprietary semantic labels.
-            */
+            createdAt:
+                new Date().toISOString(),
+
+
             semanticConfidence:
                 calculateConfidence(
                     rows,
@@ -1652,17 +2783,29 @@ async function analyzeRunningEP(){
                 )
         };
 
-        currentAnalysis = plan;
 
-        showAnalysisProgress(100,"Analysis complete.");
+        currentAnalysis=plan;
+
+
+        showAnalysisProgress(
+            100,
+            "Analysis complete."
+        );
+
 
         renderAnalysis(plan);
+
 
     }catch(err){
 
         console.error(err);
 
-        document.getElementById("analysisResult").innerHTML =
+        currentAnalysis=null;
+
+
+        document
+        .getElementById("analysisResult")
+        .innerHTML =
             `<div class="notice danger">
                 <b>Analysis Error:</b><br>
                 ${escapeHTML(err.message)}
@@ -1673,20 +2816,33 @@ async function analyzeRunningEP(){
 
 /* ============================================================
    STABLE MASK
-   Hook/byte bits that remain ON across every pick.
    ============================================================ */
 
 function calculateStableMask(rows){
 
     if(!rows.length){
+
         return new Uint8Array();
     }
 
-    let mask = cloneArray(rows[0]);
 
-    for(let i=1;i<rows.length;i++){
-        mask = andArrays(mask,rows[i]);
+    let mask =
+        cloneArray(rows[0]);
+
+
+    for(
+        let i=1;
+        i<rows.length;
+        i++
+    ){
+
+        mask =
+            andArrays(
+                mask,
+                rows[i]
+            );
     }
+
 
     return mask;
 }
@@ -1694,23 +2850,42 @@ function calculateStableMask(rows){
 
 /* ============================================================
    VARIABLE MASK
-   Bits that change somewhere in the running file.
    ============================================================ */
 
 function calculateVariableMask(rows){
 
     if(!rows.length){
+
         return new Uint8Array();
     }
 
-    let mask = new Uint8Array(rows[0].length);
 
-    for(let i=1;i<rows.length;i++){
+    let mask =
+        new Uint8Array(
+            rows[0].length
+        );
 
-        const x = xorArrays(rows[0],rows[i]);
 
-        mask = orArrays(mask,x);
+    for(
+        let i=1;
+        i<rows.length;
+        i++
+    ){
+
+        const x =
+            xorArrays(
+                rows[0],
+                rows[i]
+            );
+
+
+        mask =
+            orArrays(
+                mask,
+                x
+            );
     }
+
 
     return mask;
 }
@@ -1718,21 +2893,33 @@ function calculateVariableMask(rows){
 
 /* ============================================================
    BACKGROUND CANDIDATE
-   Bits that are ON in a high percentage of picks.
    ============================================================ */
 
 function calculateBackgroundMask(rows){
 
     if(!rows.length){
+
         return new Uint8Array();
     }
 
-    const len = rows[0].length;
-    const counts = new Uint32Array(len);
 
-    for(const row of rows){
+    const len =
+        rows[0].length;
 
-        for(let i=0;i<len;i++){
+
+    const counts =
+        new Uint32Array(len);
+
+
+    for(
+        const row of rows
+    ){
+
+        for(
+            let i=0;
+            i<len;
+            i++
+        ){
 
             if(row[i]){
                 counts[i]++;
@@ -1740,18 +2927,27 @@ function calculateBackgroundMask(rows){
         }
     }
 
-    const out = new Uint8Array(len);
 
-    for(let i=0;i<len;i++){
+    const out =
+        new Uint8Array(len);
 
-        /*
-           >= 80% considered background candidate.
-           This is a candidate, not a guaranteed semantic Ground.
-        */
-        if(counts[i] / rows.length >= .80){
-            out[i] = 255;
+
+    for(
+        let i=0;
+        i<len;
+        i++
+    ){
+
+        if(
+            counts[i] /
+            rows.length >=
+            .80
+        ){
+
+            out[i]=255;
         }
     }
+
 
     return out;
 }
@@ -1759,31 +2955,46 @@ function calculateBackgroundMask(rows){
 
 /* ============================================================
    BORDER CANDIDATE
-   Edge hooks/bytes are analyzed separately.
    ============================================================ */
 
 function calculateBorderCandidate(rows){
 
     if(!rows.length){
+
         return new Uint8Array();
     }
 
-    const len = rows[0].length;
 
-    const out = new Uint8Array(len);
+    const len =
+        rows[0].length;
 
-    /*
-       Approximate edge byte candidates.
-       Actual border semantics depend on machine format.
-    */
+
+    const out =
+        new Uint8Array(len);
+
 
     const edgeBytes =
-        Math.max(1,Math.ceil(len * .08));
+        Math.max(
+            1,
+            Math.ceil(
+                len*.08
+            )
+        );
 
-    for(let i=0;i<edgeBytes;i++){
-        out[i] = 255;
-        out[len-1-i] = 255;
+
+    for(
+        let i=0;
+        i<edgeBytes;
+        i++
+    ){
+
+        out[i]=255;
+
+        out[
+            len-1-i
+        ]=255;
     }
+
 
     return out;
 }
@@ -1793,27 +3004,53 @@ function calculateBorderCandidate(rows){
    HOOK ACTIVITY
    ============================================================ */
 
-function calculateHookActivity(rows,hooks){
+function calculateHookActivity(
+    rows,
+    hooks
+){
 
-    const activity = new Array(hooks).fill(0);
+    const activity =
+        new Array(hooks)
+        .fill(0);
 
-    for(const row of rows){
 
-        for(let h=0;h<hooks;h++){
+    for(
+        const row of rows
+    ){
+
+        for(
+            let h=0;
+            h<hooks;
+            h++
+        ){
 
             const byteIndex =
-                Math.floor(h / 8);
+                Math.floor(
+                    h/8
+                );
 
             const bit =
-                h % 8;
+                h%8;
 
-            if(byteIndex >= row.length) continue;
 
-            if(row[byteIndex] & (1 << bit)){
+            if(
+                byteIndex >=
+                row.length
+            ){
+                continue;
+            }
+
+
+            if(
+                row[byteIndex] &
+                (1<<bit)
+            ){
+
                 activity[h]++;
             }
         }
     }
+
 
     return activity;
 }
@@ -1826,63 +3063,119 @@ function calculateHookActivity(rows,hooks){
 function detectHookGroups(activity){
 
     if(!activity.length){
+
         return [];
     }
 
-    const max =
-        Math.max(...activity);
-
-    const min =
-        Math.min(...activity);
 
     const average =
-        activity.reduce((a,b)=>a+b,0) /
+        activity.reduce(
+            (a,b)=>a+b,
+            0
+        ) /
         activity.length;
 
-    const groups = [];
 
-    let start = 0;
+    const groups=[];
+
+    let start=0;
+
 
     let previousType =
-        classifyActivity(activity[0],average);
+        classifyActivity(
+            activity[0],
+            average
+        );
 
-    for(let i=1;i<activity.length;i++){
+
+    for(
+        let i=1;
+        i<activity.length;
+        i++
+    ){
 
         const type =
-            classifyActivity(activity[i],average);
+            classifyActivity(
+                activity[i],
+                average
+            );
 
-        if(type !== previousType){
+
+        if(
+            type !==
+            previousType
+        ){
 
             groups.push({
+
                 start,
+
                 end:i-1,
-                type:previousType
+
+                type:
+                    previousType
             });
 
+
             start=i;
-            previousType=type;
+
+            previousType=
+                type;
         }
     }
 
+
     groups.push({
+
         start,
-        end:activity.length-1,
-        type:previousType
+
+        end:
+            activity.length-1,
+
+        type:
+            previousType
     });
 
-    return groups.slice(0,200);
+
+    return groups.slice(
+        0,
+        200
+    );
 }
 
 
-function classifyActivity(value,average){
+function classifyActivity(
+    value,
+    average
+){
 
-    if(average === 0) return "inactive";
+    if(average===0){
+
+        return "inactive";
+    }
+
 
     const ratio =
-        value / Math.max(1,average);
+        value /
+        Math.max(
+            1,
+            average
+        );
 
-    if(ratio < .25) return "low";
-    if(ratio > 1.75) return "high";
+
+    if(
+        ratio < .25
+    ){
+        return "low";
+    }
+
+
+    if(
+        ratio > 1.75
+    ){
+        return "high";
+    }
+
 
     return "normal";
 }
@@ -1894,15 +3187,27 @@ function classifyActivity(value,average){
 
 function calculateTransitions(rows){
 
-    const result = [];
+    const result=[];
 
-    for(let i=1;i<rows.length;i++){
+
+    for(
+        let i=1;
+        i<rows.length;
+        i++
+    ){
 
         const x =
-            xorArrays(rows[i-1],rows[i]);
+            xorArrays(
+                rows[i-1],
+                rows[i]
+            );
 
-        result.push(countBitsArray(x));
+
+        result.push(
+            countBitsArray(x)
+        );
     }
+
 
     return result;
 }
@@ -1914,53 +3219,99 @@ function calculateTransitions(rows){
 
 function detectCycles(rows){
 
-    const n = rows.length;
+    const n =
+        rows.length;
 
-    if(n < 4){
+
+    if(n<4){
+
         return [];
     }
 
-    const possible = [
+
+    const possible=[
         2,3,4,5,6,7,8,9,10,12,
         16,20,24,32,40,48,64,72,84,96,
         128,168,192,256
     ];
 
-    const found = [];
 
-    for(const cycle of possible){
+    const found=[];
 
-        if(cycle >= n) continue;
 
-        let matches = 0;
-        let comparisons = 0;
+    for(
+        const cycle of possible
+    ){
 
-        for(let i=cycle;i<n;i++){
+        if(
+            cycle >= n
+        ){
+            continue;
+        }
+
+
+        let matches=0;
+
+        let comparisons=0;
+
+
+        for(
+            let i=cycle;
+            i<n;
+            i++
+        ){
 
             comparisons++;
 
-            if(arraysEqual(rows[i],rows[i-cycle])){
+
+            if(
+                arraysEqual(
+                    rows[i],
+                    rows[i-cycle]
+                )
+            ){
+
                 matches++;
             }
         }
 
-        const ratio =
-            comparisons ?
-            matches/comparisons : 0;
 
-        if(ratio >= .75){
+        const ratio =
+            comparisons
+            ?
+            matches/comparisons
+            :
+            0;
+
+
+        if(
+            ratio >= .75
+        ){
 
             found.push({
-                length:cycle,
+
+                length:
+                    cycle,
+
                 matchPercent:
-                    Math.round(ratio*100)
+                    Math.round(
+                        ratio*100
+                    )
             });
         }
     }
 
+
     return found
-        .sort((a,b)=>b.matchPercent-a.matchPercent)
-        .slice(0,10);
+        .sort(
+            (a,b)=>
+                b.matchPercent -
+                a.matchPercent
+        )
+        .slice(
+            0,
+            10
+        );
 }
 
 
@@ -1971,35 +3322,66 @@ function detectCycles(rows){
 function classifyRows(rows){
 
     if(!rows.length){
+
         return [];
     }
 
+
     const counts =
-        rows.map(x=>countBitsArray(x));
+        rows.map(
+            x=>countBitsArray(x)
+        );
+
 
     const avg =
-        counts.reduce((a,b)=>a+b,0)/counts.length;
+        counts.reduce(
+            (a,b)=>a+b,
+            0
+        ) /
+        counts.length;
 
-    return rows.map((row,i)=>{
 
-        const value = counts[i];
+    return rows.map(
+        (row,i)=>{
 
-        let type="normal";
+            const value =
+                counts[i];
 
-        if(value === 0){
-            type="empty";
-        }else if(value > avg*1.5){
-            type="high";
-        }else if(value < avg*.5){
-            type="low";
+
+            let type =
+                "normal";
+
+
+            if(value===0){
+
+                type="empty";
+
+            }else if(
+                value >
+                avg*1.5
+            ){
+
+                type="high";
+
+            }else if(
+                value <
+                avg*.5
+            ){
+
+                type="low";
+            }
+
+
+            return {
+
+                pick:i,
+
+                onBits:value,
+
+                type
+            };
         }
-
-        return {
-            pick:i,
-            onBits:value,
-            type
-        };
-    });
+    );
 }
 
 
@@ -2009,60 +3391,107 @@ function classifyRows(rows){
 
 function detectDirectionCycle(rows){
 
-    if(rows.length < 2){
+    if(
+        rows.length<2
+    ){
+
         return {
+
             cycleLength:1,
-            sequence:[0]
+
+            sequence:[0],
+
+            matchPercent:0
         };
     }
 
-    /*
-       Find best short repeating sequence based on
-       row equality.
-    */
 
-    const candidates = [];
+    const candidates=[];
 
-    for(let cycle=1;cycle<=16 && cycle<rows.length;cycle++){
+
+    for(
+        let cycle=1;
+        cycle<=16 &&
+        cycle<rows.length;
+        cycle++
+    ){
 
         let matches=0;
+
         let total=0;
 
-        for(let i=cycle;i<rows.length;i++){
+
+        for(
+            let i=cycle;
+            i<rows.length;
+            i++
+        ){
 
             total++;
 
-            if(arraysEqual(rows[i],rows[i-cycle])){
+
+            if(
+                arraysEqual(
+                    rows[i],
+                    rows[i-cycle]
+                )
+            ){
+
                 matches++;
             }
         }
 
+
         if(total){
 
             candidates.push({
+
                 cycle,
-                ratio:matches/total
+
+                ratio:
+                    matches/total
             });
         }
     }
 
-    candidates.sort((a,b)=>b.ratio-a.ratio);
+
+    candidates.sort(
+        (a,b)=>
+            b.ratio-a.ratio
+    );
+
 
     const best =
-        candidates[0] || {cycle:1,ratio:0};
+        candidates[0] ||
+        {
+            cycle:1,
+            ratio:0
+        };
+
 
     const sequence=[];
 
-    for(let i=0;i<best.cycle;i++){
 
-        sequence.push(
-            i
-        );
+    for(
+        let i=0;
+        i<best.cycle;
+        i++
+    ){
+
+        sequence.push(i);
     }
 
+
     return {
-        cycleLength:best.cycle,
-        matchPercent:Math.round(best.ratio*100),
+
+        cycleLength:
+            best.cycle,
+
+        matchPercent:
+            Math.round(
+                best.ratio*100
+            ),
+
         sequence
     };
 }
@@ -2083,15 +3512,29 @@ function analyzeDoriPattern(
 ){
 
     const cycle =
-        rows.length ?
-        Math.min(32,rows.length) : 0;
+        rows.length
+        ?
+        Math.min(
+            32,
+            rows.length
+        )
+        :
+        0;
 
-    const directionRows = [];
 
-    for(let i=0;i<cycle;i++){
+    const directionRows=[];
+
+
+    for(
+        let i=0;
+        i<cycle;
+        i++
+    ){
 
         directionRows.push({
+
             pick:i,
+
             phase:
                 classifyDirection(
                     i,
@@ -2101,20 +3544,37 @@ function analyzeDoriPattern(
         });
     }
 
+
     return {
+
         baver:{
-            total:baverDori,
-            forward:baverForward,
-            return:baverReturn
+
+            total:
+                baverDori,
+
+            forward:
+                baverForward,
+
+            return:
+                baverReturn
         },
+
 
         dadha:{
-            total:dadhaDori,
-            forward:dadhaForward,
-            return:dadhaReturn
+
+            total:
+                dadhaDori,
+
+            forward:
+                dadhaForward,
+
+            return:
+                dadhaReturn
         },
 
-        sample:directionRows
+
+        sample:
+            directionRows
     };
 }
 
@@ -2126,13 +3586,20 @@ function classifyDirection(
 ){
 
     const total =
-        Math.max(1,forward+back);
+        Math.max(
+            1,
+            forward+back
+        );
+
 
     const p =
-        pick % total;
+        pick%total;
 
-    return p < forward ?
-        "FORWARD" :
+
+    return p<forward
+        ?
+        "FORWARD"
+        :
         "RETURN";
 }
 
@@ -2148,30 +3615,51 @@ function calculateConfidence(
 ){
 
     if(!rows.length){
+
         return 0;
     }
 
+
     let score=40;
 
+
     if(cycles.length){
-        score += 20;
+
+        score+=20;
     }
+
 
     if(groups.length){
-        score += 10;
+
+        score+=10;
     }
+
 
     const variation =
-        rows.length > 1 ?
+        rows.length>1
+        ?
         countBitsArray(
-            xorArrays(rows[0],rows[rows.length-1])
-        ) : 0;
+            xorArrays(
+                rows[0],
+                rows[
+                    rows.length-1
+                ]
+            )
+        )
+        :
+        0;
+
 
     if(variation){
-        score += 15;
+
+        score+=15;
     }
 
-    return Math.min(95,score);
+
+    return Math.min(
+        95,
+        score
+    );
 }
 
 
@@ -2179,17 +3667,36 @@ function calculateConfidence(
    ANALYSIS PROGRESS
    ============================================================ */
 
-function showAnalysisProgress(percent,text){
+function showAnalysisProgress(
+    percent,
+    text
+){
 
     const box =
-        document.getElementById("analysisProgressBox");
+        document
+        .getElementById(
+            "analysisProgressBox"
+        );
 
-    box.classList.remove("hidden");
 
-    document.getElementById("analysisProgress").style.width =
-        percent + "%";
+    box.classList.remove(
+        "hidden"
+    );
 
-    document.getElementById("analysisStatus").textContent =
+
+    document
+    .getElementById(
+        "analysisProgress"
+    )
+    .style.width =
+        percent+"%";
+
+
+    document
+    .getElementById(
+        "analysisStatus"
+    )
+    .textContent =
         text;
 }
 
@@ -2201,22 +3708,39 @@ function showAnalysisProgress(percent,text){
 function renderAnalysis(plan){
 
     const stable =
-        base64ToUint8(plan.stableMaskBase64);
+        base64ToUint8(
+            plan.stableMaskBase64
+        );
+
 
     const variable =
-        base64ToUint8(plan.variableMaskBase64);
+        base64ToUint8(
+            plan.variableMaskBase64
+        );
+
 
     const background =
-        base64ToUint8(plan.backgroundMaskBase64);
+        base64ToUint8(
+            plan.backgroundMaskBase64
+        );
+
 
     const border =
-        base64ToUint8(plan.borderMaskBase64);
+        base64ToUint8(
+            plan.borderMaskBase64
+        );
 
-    const html = `
 
-    <div class="panel" style="margin-top:15px">
+    const html=`
 
-        <h3>🔬 Harness Plan Analysis Result</h3>
+    <div
+        class="panel"
+        style="margin-top:15px">
+
+        <h3>
+            🔬 Harness Plan Analysis Result
+        </h3>
+
 
         <div class="statGrid">
 
@@ -2242,37 +3766,56 @@ function renderAnalysis(plan){
 
         </div>
 
+
         <div class="analysisList">
 
             <div class="analysisItem">
                 <span>Machine</span>
-                <b>${escapeHTML(plan.machineName)}</b>
+                <b>
+                    ${escapeHTML(plan.machineName)}
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Source EP</span>
-                <b>${escapeHTML(plan.fileName)}</b>
+                <b>
+                    ${escapeHTML(plan.fileName)}
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Stable byte candidates</span>
-                <b>${countBitsArray(stable)} bits</b>
+                <b>
+                    ${countBitsArray(stable)} bits
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Variable byte candidates</span>
-                <b>${countBitsArray(variable)} bits</b>
+                <b>
+                    ${countBitsArray(variable)} bits
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Background candidates</span>
-                <b>${countBitsArray(background)} bits</b>
+                <b>
+                    ${countBitsArray(background)} bits
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Border candidates</span>
-                <b>${countBitsArray(border)} bits</b>
+                <b>
+                    ${countBitsArray(border)} bits
+                </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Detected repeating cycles</span>
@@ -2281,13 +3824,20 @@ function renderAnalysis(plan){
                         plan.repeatedCycles.length
                         ?
                         plan.repeatedCycles
-                            .map(x=>x.length+" ("+x.matchPercent+"%)")
-                            .join(", ")
+                        .map(
+                            x =>
+                                x.length +
+                                " (" +
+                                x.matchPercent +
+                                "%)"
+                        )
+                        .join(", ")
                         :
                         "None"
                     }
                 </b>
             </div>
+
 
             <div class="analysisItem">
                 <span>Direction cycle</span>
@@ -2298,24 +3848,36 @@ function renderAnalysis(plan){
                 </b>
             </div>
 
+
             <div class="analysisItem">
                 <span>Auto-analysis confidence</span>
-                <b>${plan.semanticConfidence}%</b>
+                <b>
+                    ${plan.semanticConfidence}%
+                </b>
             </div>
 
         </div>
 
+
         <div class="notice warning">
 
             <b>Important:</b>
-            Ground, Border, Baver, Dadha aur Finger/Peti jaise
-            semantic names byte pattern se hamesha 100% identify nahi
-            kiye ja sakte. Analyzer actual running pattern ko preserve
-            karta hai; semantic region ko bina evidence ke force nahi karta.
+
+            Ground, Border, Baver, Dadha aur Finger/Peti
+            jaise semantic names byte pattern se hamesha
+            100% identify nahi kiye ja sakte.
+
+            Analyzer actual running pattern ko preserve
+            karta hai; semantic region ko bina evidence ke
+            force nahi karta.
 
         </div>
 
-        <h3>Machine Dori Configuration</h3>
+
+        <h3>
+            Machine Dori Configuration
+        </h3>
+
 
         <table class="planTable">
 
@@ -2326,12 +3888,14 @@ function renderAnalysis(plan){
                 <th>Return</th>
             </tr>
 
+
             <tr>
                 <td>Baver</td>
                 <td>${plan.baverDori}</td>
                 <td>${plan.baverForward}</td>
                 <td>${plan.baverReturn}</td>
             </tr>
+
 
             <tr>
                 <td>Dadha</td>
@@ -2345,7 +3909,12 @@ function renderAnalysis(plan){
     </div>
     `;
 
-    document.getElementById("analysisResult").innerHTML = html;
+
+    document
+    .getElementById(
+        "analysisResult"
+    )
+    .innerHTML=html;
 }
 
 
@@ -2355,25 +3924,64 @@ function renderAnalysis(plan){
 
 async function saveAnalyzedMachine(){
 
+    /*
+       IMPORTANT:
+       Save button always verifies current form/file.
+    */
+
+    const file =
+        document
+        .getElementById("runningEP")
+        .files[0];
+
+
+    if(!file){
+
+        alert(
+            "Pehle original running EP upload karein."
+        );
+
+        return;
+    }
+
+
+    /*
+       Agar current analysis nahi hai to analyze.
+    */
     if(!currentAnalysis){
 
         await analyzeRunningEP();
 
+
         if(!currentAnalysis){
+
             return;
         }
     }
 
+
     try{
 
-        const machines = await getAllMachines();
+        const machines =
+            await getAllMachines();
+
 
         const existing =
             machines.find(
                 m =>
-                    m.name.toLowerCase() ===
-                    currentAnalysis.machineName.toLowerCase()
+                    String(
+                        m.machineName ||
+                        m.name ||
+                        ""
+                    )
+                    .toLowerCase()
+                    ===
+                    String(
+                        currentAnalysis.machineName
+                    )
+                    .toLowerCase()
             );
+
 
         if(existing){
 
@@ -2384,28 +3992,44 @@ async function saveAnalyzedMachine(){
                     "Cancel = kuch nahi"
                 );
 
-            if(!replace) return;
 
-            currentAnalysis.id = existing.id;
+            if(!replace){
 
-            await updateMachine(currentAnalysis);
+                return;
+            }
+
+
+            currentAnalysis.id =
+                existing.id;
+
+
+            await updateMachine(
+                currentAnalysis
+            );
 
         }else{
 
-            await addMachine(currentAnalysis);
+            await addMachine(
+                currentAnalysis
+            );
         }
+
 
         alert(
             "Harness Plan successfully save ho gaya.\n\n" +
             "Ab future mein is machine ke liye running EP dobara upload karne ki zaroorat nahi hogi."
         );
 
+
         await refreshMachineList();
+
         await refreshMachineSelect();
+
 
     }catch(err){
 
         console.error(err);
+
 
         alert(
             "Machine save nahi ho saka:\n" +
@@ -2421,136 +4045,302 @@ async function saveAnalyzedMachine(){
 
 async function refreshMachineList(){
 
-    if(!db) return;
+    try{
 
-    const list =
-        document.getElementById("machineList");
+        await ensureDB();
 
-    const machines =
-        await getAllMachines();
 
-    if(!machines.length){
+        const list =
+            document.getElementById(
+                "machineList"
+            );
+
+
+        const machines =
+            await getAllMachines();
+
+
+        if(!machines.length){
+
+            list.innerHTML =
+                `<div class="empty">
+                    Abhi koi Harness Plan save nahi hai.
+                    Pehle running EP upload karke
+                    Analyze + Save karein.
+                </div>`;
+
+            return;
+        }
+
 
         list.innerHTML =
-            `<div class="empty">
-                Abhi koi Harness Plan save nahi hai.
-                Pehle running EP upload karke Analyze + Save karein.
-            </div>`;
+            machines.map(
+                m=>{
 
-        return;
-    }
+                    return `
 
-    list.innerHTML =
-        machines.map(m=>{
+                    <div class="machineCard">
 
-            return `
-            <div class="machineCard">
+                        <div class="machineTop">
 
-                <div class="machineTop">
+                            <div>
 
-                    <div>
-                        <div class="machineName">
-                            ${escapeHTML(m.machineName || m.name || "Machine")}
+                                <div class="machineName">
+                                    ${
+                                        escapeHTML(
+                                            m.machineName ||
+                                            m.name ||
+                                            "Machine"
+                                        )
+                                    }
+                                </div>
+
+
+                                <span class="badge good">
+                                    Harness Plan Saved
+                                </span>
+
+
+                                <span class="badge">
+                                    ${m.hooks} Hooks
+                                </span>
+
+
+                                <span class="badge">
+                                    ${m.runningPicks} Picks
+                                </span>
+
+
+                                <span class="badge">
+                                    ${m.bytesPerPick}
+                                    Bytes/Pick
+                                </span>
+
+                            </div>
+
+
+                            <button
+                                class="btn red"
+                                onclick="removeMachine(${m.id})">
+                                Delete
+                            </button>
+
                         </div>
 
-                        <span class="badge good">
-                            Harness Plan Saved
-                        </span>
 
-                        <span class="badge">
-                            ${m.hooks} Hooks
-                        </span>
+                        <div class="statGrid">
 
-                        <span class="badge">
-                            ${m.runningPicks} Picks
-                        </span>
+                            <div class="stat">
+                                <span>Header</span>
+                                <b>${m.headerLength}</b>
+                            </div>
 
-                        <span class="badge">
-                            ${m.bytesPerPick} Bytes/Pick
-                        </span>
+
+                            <div class="stat">
+                                <span>Baver</span>
+                                <b>${m.baverDori}</b>
+                            </div>
+
+
+                            <div class="stat">
+                                <span>Dadha</span>
+                                <b>${m.dadhaDori}</b>
+                            </div>
+
+
+                            <div class="stat">
+                                <span>Confidence</span>
+                                <b>
+                                    ${m.semanticConfidence || 0}%
+                                </b>
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="muted"
+                            style="margin-top:9px">
+
+                            Source:
+                            ${
+                                escapeHTML(
+                                    m.fileName ||
+                                    "Running EP"
+                                )
+                            }
+
+                        </div>
+
+
+                        <div class="btnRow">
+
+                            <button
+                                class="btn"
+                                onclick="useMachine(${m.id})">
+                                🎨 Use for Design
+                            </button>
+
+
+                            <button
+                                class="btn yellow"
+                                onclick="exportSingleMachine(${m.id})">
+                                📤 Export Plan
+                            </button>
+
+                        </div>
+
                     </div>
+                    `;
+                }
+            ).join("");
 
-                    <button class="btn red"
-                        onclick="removeMachine(${m.id})">
-                        Delete
-                    </button>
 
-                </div>
+    }catch(err){
 
-                <div class="statGrid">
-
-                    <div class="stat">
-                        <span>Header</span>
-                        <b>${m.headerLength}</b>
-                    </div>
-
-                    <div class="stat">
-                        <span>Baver</span>
-                        <b>${m.baverDori}</b>
-                    </div>
-
-                    <div class="stat">
-                        <span>Dadha</span>
-                        <b>${m.dadhaDori}</b>
-                    </div>
-
-                    <div class="stat">
-                        <span>Confidence</span>
-                        <b>${m.semanticConfidence || 0}%</b>
-                    </div>
-
-                </div>
-
-                <div class="muted" style="margin-top:9px">
-                    Source: ${escapeHTML(m.fileName || "Running EP")}
-                </div>
-
-                <div class="btnRow">
-
-                    <button class="btn"
-                        onclick="useMachine(${m.id})">
-                        🎨 Use for Design
-                    </button>
-
-                    <button class="btn yellow"
-                        onclick="exportSingleMachine(${m.id})">
-                        📤 Export Plan
-                    </button>
-
-                </div>
-
-            </div>
-            `;
-        }).join("");
+        console.error(
+            "Machine list error:",
+            err
+        );
+    }
 }
 
 
 async function removeMachine(id){
 
-    if(!confirm(
-        "Is machine ka saved Harness Plan delete karna hai?"
-    )){
+    if(
+        !confirm(
+            "Is machine ka saved Harness Plan delete karna hai?"
+        )
+    ){
+
         return;
     }
 
-    await deleteMachine(id);
 
-    await refreshMachineList();
-    await refreshMachineSelect();
+    try{
+
+        await deleteMachine(id);
+
+
+        /*
+           Agar currently selected machine delete hui
+           to create state clear.
+        */
+
+        const select =
+            document.getElementById(
+                "machineSelect"
+            );
+
+
+        if(
+            select &&
+            String(select.value) ===
+            String(id)
+        ){
+
+            resetCreateState();
+        }
+
+
+        await refreshMachineList();
+
+        await refreshMachineSelect();
+
+    }catch(err){
+
+        alert(
+            "Machine delete nahi hua:\n" +
+            err.message
+        );
+    }
 }
 
 
+/* ============================================================
+   USE MACHINE
+   ============================================================ */
+
 async function useMachine(id){
 
-    document.getElementById("machineSelect").value =
-        String(id);
+    try{
 
-    await showSelectedMachine();
+        await ensureDB();
 
-    showTab(
-        "createTab",
-        document.querySelector('[data-tab="createTab"]')
-    );
+
+        const select =
+            document.getElementById(
+                "machineSelect"
+            );
+
+
+        /*
+           Machine dropdown ko fresh populate karo
+           aur phir exact selected ID set karo.
+        */
+        await refreshMachineSelect();
+
+
+        select.value =
+            String(id);
+
+
+        /*
+           CRITICAL:
+           Selected machine ko actual DB se verify karo.
+        */
+        await showSelectedMachine();
+
+
+        /*
+           Old design machine ID invalidate.
+        */
+        currentDesign=null;
+
+        generatedEP=null;
+
+
+        document
+        .getElementById("outputPanel")
+        .classList.add("hidden");
+
+
+        document
+        .getElementById("designInfo")
+        .innerHTML="";
+
+
+        showTab(
+            "createTab",
+            document.querySelector(
+                '[data-tab="createTab"]'
+            )
+        );
+
+
+        /*
+           showTab() ke andar refreshMachineSelect()
+           hota hai. Isliye dobara exact ID set karke
+           selected machine ko restore karte hain.
+        */
+
+        await refreshMachineSelect();
+
+        select.value =
+            String(id);
+
+        await showSelectedMachine();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert(
+            "Machine select nahi ho saki:\n" +
+            err.message
+        );
+    }
 }
 
 
@@ -2560,94 +4350,323 @@ async function useMachine(id){
 
 async function refreshMachineSelect(){
 
-    if(!db) return;
+    try{
 
-    const machines =
-        await getAllMachines();
+        await ensureDB();
 
-    const select =
-        document.getElementById("machineSelect");
 
-    const old =
-        select.value;
+        const machines =
+            await getAllMachines();
 
-    select.innerHTML =
-        `<option value="">-- Select Machine --</option>` +
-        machines.map(m=>
-            `<option value="${m.id}">
-                ${escapeHTML(m.machineName || m.name)}
-                — ${m.hooks} Hooks
-            </option>`
-        ).join("");
 
-    if(machines.some(m=>String(m.id)===old)){
-        select.value=old;
+        const select =
+            document.getElementById(
+                "machineSelect"
+            );
+
+
+        const old =
+            select.value;
+
+
+        select.innerHTML =
+            `<option value="">
+                -- Select Machine --
+            </option>` +
+            machines
+            .map(
+                m=>
+                    `<option value="${m.id}">
+                        ${
+                            escapeHTML(
+                                m.machineName ||
+                                m.name ||
+                                "Machine"
+                            )
+                        }
+                        — ${m.hooks} Hooks
+                    </option>`
+            )
+            .join("");
+
+
+        if(
+            machines.some(
+                m =>
+                    String(m.id) ===
+                    String(old)
+            )
+        ){
+
+            select.value =
+                String(old);
+        }
+
+
+        await showSelectedMachine();
+
+    }catch(err){
+
+        console.error(
+            "Machine select refresh error:",
+            err
+        );
     }
-
-    await showSelectedMachine();
 }
 
 
-document.getElementById("machineSelect")
-.addEventListener("change",showSelectedMachine);
+/*
+   CRITICAL FIX:
+
+   Machine change hone par:
+   - old currentDesign clear
+   - generated EP clear
+   - output hide
+   - design info clear
+   - selected machine fresh load
+*/
+
+document
+.getElementById("machineSelect")
+.addEventListener(
+    "change",
+    async function(){
+
+        resetCreateState();
+
+        await showSelectedMachine();
+    }
+);
+
+
+function resetCreateState(){
+
+    currentDesign=null;
+
+    generatedEP=null;
+
+    generatedFileName=
+        "Native.EP";
+
+
+    const output =
+        document.getElementById(
+            "outputPanel"
+        );
+
+
+    if(output){
+        output.classList.add(
+            "hidden"
+        );
+    }
+
+
+    const info =
+        document.getElementById(
+            "designInfo"
+        );
+
+
+    if(info){
+        info.innerHTML="";
+    }
+
+
+    const hex =
+        document.getElementById(
+            "hexPreview"
+        );
+
+
+    if(hex){
+        hex.textContent="";
+    }
+
+
+    const outInfo =
+        document.getElementById(
+            "outputInfo"
+        );
+
+
+    if(outInfo){
+        outInfo.innerHTML="";
+    }
+
+
+    const canvas =
+        document.getElementById(
+            "designCanvas"
+        );
+
+
+    if(canvas){
+
+        const ctx =
+            canvas.getContext("2d");
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        canvas.width=1;
+
+        canvas.height=1;
+    }
+}
 
 
 async function showSelectedMachine(){
 
-    const id =
-        parseInt(
-            document.getElementById("machineSelect").value
-        );
+    try{
 
-    const box =
-        document.getElementById("selectedMachineInfo");
+        await ensureDB();
 
-    if(!id){
 
-        box.innerHTML="";
-        return;
+        const select =
+            document.getElementById(
+                "machineSelect"
+            );
+
+
+        /*
+           parseInt("") = NaN
+           isNaN check important.
+        */
+        const raw =
+            String(
+                select.value || ""
+            ).trim();
+
+
+        if(!raw){
+
+            document
+            .getElementById(
+                "selectedMachineInfo"
+            )
+            .innerHTML="";
+
+            return null;
+        }
+
+
+        const id =
+            Number(raw);
+
+
+        if(
+            !Number.isInteger(id) ||
+            id<=0
+        ){
+
+            document
+            .getElementById(
+                "selectedMachineInfo"
+            )
+            .innerHTML="";
+
+            return null;
+        }
+
+
+        const machines =
+            await getAllMachines();
+
+
+        const machine =
+            machines.find(
+                m =>
+                    Number(m.id) === id
+            );
+
+
+        if(!machine){
+
+            document
+            .getElementById(
+                "selectedMachineInfo"
+            )
+            .innerHTML =
+                `<div class="notice danger">
+                    Selected machine plan nahi mila.
+                </div>`;
+
+            return null;
+        }
+
+
+        document
+        .getElementById(
+            "selectedMachineInfo"
+        )
+        .innerHTML = `
+
+        <div class="notice success">
+
+            <b>
+                ${escapeHTML(
+                    machine.machineName ||
+                    machine.name ||
+                    "Machine"
+                )}
+            </b>
+
+            <br>
+
+            ${machine.hooks}
+            Hooks •
+
+            ${machine.runningPicks}
+            Running Picks •
+
+            ${machine.bytesPerPick}
+            Bytes/Pick •
+
+            Header
+            ${machine.headerLength}
+            bytes
+
+            <br><br>
+
+            Baver:
+            ${machine.baverDori}
+            dori
+            (
+            ${machine.baverForward}
+            Forward +
+            ${machine.baverReturn}
+            Return
+            )
+
+            <br>
+
+            Dadha:
+            ${machine.dadhaDori}
+            dori
+            (
+            ${machine.dadhaForward}
+            Forward +
+            ${machine.dadhaReturn}
+            Return
+            )
+
+        </div>
+        `;
+
+
+        return machine;
+
+    }catch(err){
+
+        console.error(err);
+
+        return null;
     }
-
-    const machines =
-        await getAllMachines();
-
-    const machine =
-        machines.find(m=>m.id===id);
-
-    if(!machine){
-        box.innerHTML="";
-        return;
-    }
-
-    box.innerHTML = `
-
-    <div class="notice success">
-
-        <b>${escapeHTML(machine.machineName)}</b><br>
-
-        ${machine.hooks} Hooks •
-        ${machine.runningPicks} Running Picks •
-        ${machine.bytesPerPick} Bytes/Pick •
-        Header ${machine.headerLength} bytes
-
-        <br><br>
-
-        Baver:
-        ${machine.baverDori}
-        dori
-        (${machine.baverForward} Forward +
-        ${machine.baverReturn} Return)
-
-        <br>
-
-        Dadha:
-        ${machine.dadhaDori}
-        dori
-        (${machine.dadhaForward} Forward +
-        ${machine.dadhaReturn} Return)
-
-    </div>
-    `;
 }
 
 
@@ -2657,55 +4676,127 @@ async function showSelectedMachine(){
 
 async function prepareDesign(){
 
-    const file =
-        document.getElementById("designFile").files[0];
-
-    if(!file){
-        alert("Pehle design upload karein.");
-        return;
-    }
-
-    const machineId =
-        parseInt(
-            document.getElementById("machineSelect").value
-        );
-
-    if(!machineId){
-        alert("Pehle machine select karein.");
-        return;
-    }
-
-    const machines =
-        await getAllMachines();
-
-    const machine =
-        machines.find(m=>m.id===machineId);
-
-    if(!machine){
-        alert("Machine plan nahi mila.");
-        return;
-    }
-
     try{
+
+        /*
+           CRITICAL FIX:
+           Machine ID currentDesign se nahi,
+           dropdown se read hoti hai.
+        */
+
+        const select =
+            document.getElementById(
+                "machineSelect"
+            );
+
+
+        const rawMachineId =
+            String(
+                select.value || ""
+            ).trim();
+
+
+        if(!rawMachineId){
+
+            alert(
+                "Pehle machine select karein."
+            );
+
+
+            select.focus();
+
+            return false;
+        }
+
+
+        const machineId =
+            Number(rawMachineId);
+
+
+        if(
+            !Number.isInteger(machineId) ||
+            machineId<=0
+        ){
+
+            alert(
+                "Valid machine select karein."
+            );
+
+            select.focus();
+
+            return false;
+        }
+
+
+        const file =
+            document
+            .getElementById("designFile")
+            .files[0];
+
+
+        if(!file){
+
+            alert(
+                "Pehle design upload karein."
+            );
+
+            return false;
+        }
+
+
+        await ensureDB();
+
+
+        const machines =
+            await getAllMachines();
+
+
+        const machine =
+            machines.find(
+                m =>
+                    Number(m.id) ===
+                    machineId
+            );
+
+
+        if(!machine){
+
+            alert(
+                "Selected machine plan nahi mila."
+            );
+
+            return false;
+        }
+
 
         const bitmap =
             await loadImageBitmap(file);
 
+
         let width =
             bitmap.width;
+
 
         let height =
             bitmap.height;
 
+
         const hooks =
-            machine.hooks;
+            Number(machine.hooks);
+
 
         let picks =
             parseInt(
-                document.getElementById("targetPicks").value
+                document
+                .getElementById("targetPicks")
+                .value
             );
 
-        if(!picks || picks < 1){
+
+        if(
+            !picks ||
+            picks<1
+        ){
 
             picks =
                 Math.round(
@@ -2714,22 +4805,49 @@ async function prepareDesign(){
                     width
                 );
 
+
             /*
                Even picks preferred.
             */
-            if(picks % 2 !== 0){
+            if(
+                picks%2!==0
+            ){
+
                 picks++;
             }
         }
 
-        currentDesign = {
+
+        /*
+           Minimum one pick.
+        */
+        picks =
+            Math.max(
+                1,
+                picks
+            );
+
+
+        currentDesign={
+
             bitmap,
+
             width,
+
             height,
+
             hooks,
+
             picks,
-            machineId
+
+            machineId,
+
+            machineName:
+                machine.machineName ||
+                machine.name ||
+                "Machine"
         };
+
 
         drawDesignPreview(
             bitmap,
@@ -2737,11 +4855,29 @@ async function prepareDesign(){
             picks
         );
 
-        document.getElementById("designInfo").innerHTML = `
+
+        document
+        .getElementById(
+            "designInfo"
+        )
+        .innerHTML = `
 
         <div class="notice success">
 
-            <b>Design Ready</b><br>
+            <b>
+                Design Ready
+            </b>
+
+            <br>
+
+            Machine:
+            ${escapeHTML(
+                machine.machineName ||
+                machine.name ||
+                "Machine"
+            )}
+
+            <br>
 
             Original:
             ${width} × ${height}px
@@ -2749,7 +4885,8 @@ async function prepareDesign(){
             <br>
 
             Target:
-            ${hooks} Hooks × ${picks} Picks
+            ${hooks} Hooks ×
+            ${picks} Picks
 
             <br>
 
@@ -2759,12 +4896,23 @@ async function prepareDesign(){
         </div>
         `;
 
+
+        return true;
+
     }catch(err){
+
+        console.error(err);
+
+        currentDesign=null;
+
 
         alert(
             "Design read nahi hua:\n" +
             err.message
         );
+
+
+        return false;
     }
 }
 
@@ -2775,33 +4923,44 @@ async function prepareDesign(){
 
 function loadImageBitmap(file){
 
-    return new Promise((resolve,reject)=>{
+    return new Promise(
+        (resolve,reject)=>{
 
-        const img = new Image();
+            const img =
+                new Image();
 
-        img.onload = ()=>{
 
-            resolve(img);
+            img.onload=()=>{
 
-            URL.revokeObjectURL(img.src);
-        };
+                resolve(img);
 
-        img.onerror = ()=>{
-            reject(
-                new Error(
-                    "Image load nahi ho saki."
-                )
-            );
-        };
+                URL.revokeObjectURL(
+                    img.src
+                );
+            };
 
-        img.src =
-            URL.createObjectURL(file);
-    });
+
+            img.onerror=()=>{
+
+                reject(
+                    new Error(
+                        "Image load nahi ho saki."
+                    )
+                );
+            };
+
+
+            img.src =
+                URL.createObjectURL(
+                    file
+                );
+        }
+    );
 }
 
 
 /* ============================================================
-   DESIGN CANVAS PREVIEW
+   DESIGN PREVIEW
    ============================================================ */
 
 function drawDesignPreview(
@@ -2811,40 +4970,68 @@ function drawDesignPreview(
 ){
 
     const canvas =
-        document.getElementById("designCanvas");
+        document
+        .getElementById(
+            "designCanvas"
+        );
+
 
     const ctx =
         canvas.getContext("2d");
 
-    const maxWidth = 900;
+
+    const maxWidth=900;
+
 
     const ratio =
-        image.width / image.height;
+        image.width /
+        image.height;
+
 
     let w =
-        Math.min(maxWidth,hooks);
+        Math.min(
+            maxWidth,
+            hooks
+        );
+
 
     let h =
-        Math.max(1,Math.round(w/ratio));
+        Math.max(
+            1,
+            Math.round(
+                w/ratio
+            )
+        );
+
 
     /*
        Preview follows target pick count.
     */
     h=picks;
 
+
     canvas.width=w;
+
     canvas.height=h;
+
 
     ctx.imageSmoothingEnabled=false;
 
+
     ctx.clearRect(
-        0,0,w,h
+        0,
+        0,
+        w,
+        h
     );
+
 
     ctx.drawImage(
         image,
-        0,0,
-        w,h
+        0,
+        0,
+        w,
+        h
     );
 }
 
@@ -2860,47 +5047,105 @@ function getDesignBits(
 ){
 
     const sourceCanvas =
-        document.createElement("canvas");
+        document.createElement(
+            "canvas"
+        );
 
-    sourceCanvas.width=hooks;
-    sourceCanvas.height=picks;
+
+    sourceCanvas.width=
+        hooks;
+
+    sourceCanvas.height=
+        picks;
+
 
     const ctx =
-        sourceCanvas.getContext("2d");
+        sourceCanvas.getContext(
+            "2d"
+        );
+
 
     ctx.imageSmoothingEnabled=false;
 
+
+    const offsetX =
+        parseInt(
+            document
+            .getElementById(
+                "offsetX"
+            )
+            .value || 0
+        );
+
+
+    const offsetY =
+        parseInt(
+            document
+            .getElementById(
+                "offsetY"
+            )
+            .value || 0
+        );
+
+
     /*
-       Apply mirror/flip.
+       Apply mirror / flip / offset.
     */
 
     ctx.save();
 
-    if(
-        document.getElementById("mirrorDesign").checked
-    ){
-
-        ctx.translate(hooks,0);
-        ctx.scale(-1,1);
-    }
 
     if(
-        document.getElementById("flipDesign").checked
+        document
+        .getElementById(
+            "mirrorDesign"
+        )
+        .checked
     ){
 
-        ctx.translate(0,picks);
-        ctx.scale(1,-1);
+        ctx.translate(
+            hooks,
+            0
+        );
+
+        ctx.scale(
+            -1,
+            1
+        );
     }
+
+
+    if(
+        document
+        .getElementById(
+            "flipDesign"
+        )
+        .checked
+    ){
+
+        ctx.translate(
+            0,
+            picks
+        );
+
+        ctx.scale(
+            1,
+            -1
+        );
+    }
+
 
     ctx.drawImage(
         image,
-        0,
-        0,
+        offsetX,
+        offsetY,
         hooks,
         picks
     );
 
+
     ctx.restore();
+
 
     const data =
         ctx.getImageData(
@@ -2910,58 +5155,109 @@ function getDesignBits(
             picks
         ).data;
 
+
     const invert =
-        document.getElementById("invertDesign").checked;
+        document
+        .getElementById(
+            "invertDesign"
+        )
+        .checked;
 
-    const rows =
-        [];
 
-    for(let y=0;y<picks;y++){
+    const rows=[];
+
+
+    for(
+        let y=0;
+        y<picks;
+        y++
+    ){
 
         const row =
             new Uint8Array(
-                bytesPerPick(hooks)
+                bytesPerPick(
+                    hooks
+                )
             );
 
-        for(let x=0;x<hooks;x++){
+
+        for(
+            let x=0;
+            x<hooks;
+            x++
+        ){
 
             const index =
-                (y*hooks+x)*4;
+                (
+                    y*
+                    hooks+
+                    x
+                )*4;
 
-            const r=data[index];
-            const g=data[index+1];
-            const b=data[index+2];
-            const a=data[index+3];
+
+            const r =
+                data[index];
+
+
+            const g =
+                data[index+1];
+
+
+            const b =
+                data[index+2];
+
+
+            const a =
+                data[index+3];
+
 
             let brightness =
-                (r+g+b)/3;
+                (
+                    r+
+                    g+
+                    b
+                )/3;
+
 
             let on =
-                brightness < 128;
+                brightness<128;
 
-            if(a < 20){
+
+            if(a<20){
+
                 on=false;
             }
 
+
             if(invert){
+
                 on=!on;
             }
+
 
             if(on){
 
                 const byteIndex =
-                    Math.floor(x/8);
+                    Math.floor(
+                        x/8
+                    );
+
 
                 const bit =
                     x%8;
 
+
                 row[byteIndex] |=
-                    (1<<bit);
+                    (
+                        1<<bit
+                    );
             }
         }
 
+
         rows.push(row);
     }
+
 
     return rows;
 }
@@ -2973,54 +5269,196 @@ function getDesignBits(
 
 async function buildNativeEP(){
 
-    if(!currentDesign){
-
-        await prepareDesign();
-
-        if(!currentDesign){
-            return;
-        }
-    }
-
-    const machineId =
-        currentDesign.machineId;
-
-    const machines =
-        await getAllMachines();
-
-    const machine =
-        machines.find(
-            m=>m.id===machineId
-        );
-
-    if(!machine){
-        alert("Machine plan nahi mila.");
-        return;
-    }
-
     try{
 
+        /*
+           CRITICAL FIX #1:
+           Hamesha current dropdown se machine read karo.
+           currentDesign.machineId ko authority nahi banaya.
+        */
+
+        const select =
+            document
+            .getElementById(
+                "machineSelect"
+            );
+
+
+        const rawMachineId =
+            String(
+                select.value || ""
+            ).trim();
+
+
+        if(!rawMachineId){
+
+            alert(
+                "Pehle machine select karein."
+            );
+
+            select.focus();
+
+            return;
+        }
+
+
+        const machineId =
+            Number(rawMachineId);
+
+
+        if(
+            !Number.isInteger(machineId) ||
+            machineId<=0
+        ){
+
+            alert(
+                "Valid machine select karein."
+            );
+
+            select.focus();
+
+            return;
+        }
+
+
+        /*
+           Agar design prepare nahi hai,
+           automatically prepare karega.
+        */
+
+        if(
+            !currentDesign ||
+            Number(
+                currentDesign.machineId
+            ) !== machineId
+        ){
+
+            const ok =
+                await prepareDesign();
+
+
+            if(!ok){
+
+                return;
+            }
+        }
+
+
+        /*
+           PrepareDesign ke baad bhi verify.
+        */
+
+        if(
+            !currentDesign
+        ){
+
+            alert(
+                "Design prepare nahi hua."
+            );
+
+            return;
+        }
+
+
+        /*
+           CRITICAL FIX #2:
+           Current selected machine se hi DB machine lo.
+        */
+
+        await ensureDB();
+
+
+        const machines =
+            await getAllMachines();
+
+
+        const machine =
+            machines.find(
+                m =>
+                    Number(m.id) ===
+                    machineId
+            );
+
+
+        if(!machine){
+
+            alert(
+                "Machine plan nahi mila."
+            );
+
+            return;
+        }
+
+
+        /*
+           Safety:
+           Prepared design bhi isi machine ka hona chahiye.
+        */
+
+        if(
+            Number(
+                currentDesign.machineId
+            ) !== machineId
+        ){
+
+            currentDesign=null;
+
+
+            const ok =
+                await prepareDesign();
+
+
+            if(!ok){
+
+                return;
+            }
+        }
+
+
         const header =
-            base64ToUint8(machine.headerBase64);
+            base64ToUint8(
+                machine.headerBase64
+            );
+
 
         const runningRows =
             machine.rowsBase64.map(
-                x=>base64ToUint8(x)
+                x =>
+                    base64ToUint8(x)
             );
 
+
         const hooks =
-            machine.hooks;
+            Number(machine.hooks);
+
 
         const bpp =
-            machine.bytesPerPick;
+            Number(
+                machine.bytesPerPick
+            );
+
 
         const picks =
-            currentDesign.picks;
+            Number(
+                currentDesign.picks
+            );
+
+
+        if(
+            !runningRows.length
+        ){
+
+            throw new Error(
+                "Saved machine mein running pattern nahi mila."
+            );
+        }
+
 
         /*
            Actual uploaded design bitmap
-           is mapped to the target machine dimensions.
+           is mapped to target machine dimensions.
         */
+
         const designRows =
             getDesignBits(
                 currentDesign.bitmap,
@@ -3028,16 +5466,10 @@ async function buildNativeEP(){
                 picks
             );
 
+
         /*
-           IMPORTANT:
-           We do not create a hard-coded
-           "every 4 rows forward / every 4 rows return"
-           pattern.
-
-           Instead we use the saved running EP cycle.
-
-           This preserves the original machine pattern
-           wherever the running EP provides it.
+           Output size:
+           header + picks*bpp
         */
 
         const outputData =
@@ -3046,31 +5478,34 @@ async function buildNativeEP(){
                 picks*bpp
             );
 
-        outputData.set(header,0);
 
-        for(let y=0;y<picks;y++){
+        outputData.set(
+            header,
+            0
+        );
+
+
+        for(
+            let y=0;
+            y<picks;
+            y++
+        ){
 
             /*
                Running pattern repeats cyclically.
             */
+
             const baseRow =
                 runningRows[
-                    y % runningRows.length
+                    y %
+                    runningRows.length
                 ];
+
 
             const designRow =
                 designRows[y];
 
-            /*
-               Combine design with machine pattern.
 
-               The design is treated as the variable
-               pattern. Machine's running row provides
-               the native machine structure.
-
-               This avoids inventing a fixed finger-gap
-               cycle.
-            */
             const finalRow =
                 combineDesignWithHarness(
                     designRow,
@@ -3080,16 +5515,23 @@ async function buildNativeEP(){
                     runningRows
                 );
 
+
             outputData.set(
                 finalRow,
-                header.length+y*bpp
+                header.length+
+                y*bpp
             );
         }
 
+
         /*
-           Update pick count for known 34-byte EP header.
+           Known 34-byte format:
+           bytes 3,4,5 = pick count.
         */
-        if(header.length === 34){
+
+        if(
+            header.length===34
+        ){
 
             setUint24LE(
                 outputData,
@@ -3098,26 +5540,48 @@ async function buildNativeEP(){
             );
         }
 
+
         /*
-           For 81-byte style headers we preserve
-           the original header unless a clear pick
-           field is known.
+           For 81-byte style headers:
+           header preserved because exact pick field
+           is format-specific and not safely assumed.
         */
+
 
         generatedEP =
             outputData;
 
+
+        const designFile =
+            document
+            .getElementById(
+                "designFile"
+            )
+            .files[0];
+
+
         const sourceName =
-            document.getElementById("designFile")
-            .files[0]
-            .name
-            .replace(/\.[^.]+$/,"");
+            designFile
+            ?
+            designFile.name
+                .replace(
+                    /\.[^.]+$/,
+                    ""
+                )
+            :
+            "Design";
+
 
         generatedFileName =
             sourceName +
             "_" +
-            safeFileName(machine.machineName) +
+            safeFileName(
+                machine.machineName ||
+                machine.name ||
+                "Machine"
+            ) +
             "_Native.EP";
+
 
         renderOutput(
             generatedEP,
@@ -3125,12 +5589,38 @@ async function buildNativeEP(){
             sourceName
         );
 
-        document.getElementById("outputPanel")
-            .classList.remove("hidden");
+
+        document
+        .getElementById(
+            "outputPanel"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+
+        /*
+           Output panel visible hone ke baad
+           automatically uske paas scroll.
+        */
+
+        document
+        .getElementById(
+            "outputPanel"
+        )
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
 
     }catch(err){
 
         console.error(err);
+
+
+        generatedEP=null;
+
 
         alert(
             "EP generate nahi hua:\n" +
@@ -3157,44 +5647,62 @@ function combineDesignWithHarness(
             machine.bytesPerPick
         );
 
-    /*
-       Core principle:
 
-       1. Running EP is the machine's native pattern.
-       2. Design supplies variable lift information.
-       3. The running plan is never reduced to a
-          simplistic 4-forward/4-return assumption.
+    /*
+       IMPORTANT:
+
+       Running EP machine ka native pattern provide karta hai.
+
+       Design variable pattern provide karta hai.
+
+       Current implementation machine pattern ko preserve
+       karta hai aur design bits ko overlay karta hai.
+
+       Exact proprietary EasyX Harness Plan semantics
+       is operation se claim nahi ki ja rahi.
     */
 
-    for(let i=0;i<out.length;i++){
+    for(
+        let i=0;
+        i<out.length;
+        i++
+    ){
 
         const design =
             designRow[i] || 0;
 
+
         const base =
             baseRow[i] || 0;
 
-        /*
-           Preserve machine native bits.
-        */
+
         out[i] =
-            base | design;
+            base |
+            design;
     }
 
-    /*
-       Preserve exact trailing unused bits.
-    */
-    const unused =
-        machine.hooks % 8;
 
-    if(unused !== 0){
+    /*
+       Unused trailing bits clear.
+    */
+
+    const unused =
+        machine.hooks%8;
+
+
+    if(
+        unused!==0
+    ){
 
         const usedMask =
             (1<<unused)-1;
 
-        out[out.length-1] &=
-            usedMask;
+
+        out[
+            out.length-1
+        ] &= usedMask;
     }
+
 
     return out;
 }
@@ -3213,16 +5721,24 @@ function renderOutput(
     const size =
         bytes.length;
 
+
     const expected =
         machine.headerLength +
         machine.bytesPerPick *
         currentDesign.picks;
 
-    document.getElementById("outputInfo").innerHTML = `
+
+    document
+    .getElementById(
+        "outputInfo"
+    )
+    .innerHTML = `
 
     <div class="notice success">
 
-        <b>Native EP generated successfully.</b>
+        <b>
+            Native EP generated successfully.
+        </b>
 
         <br><br>
 
@@ -3232,7 +5748,13 @@ function renderOutput(
         <br>
 
         Machine:
-        ${escapeHTML(machine.machineName)}
+        ${
+            escapeHTML(
+                machine.machineName ||
+                machine.name ||
+                "Machine"
+            )
+        }
 
         <br>
 
@@ -3252,53 +5774,36 @@ function renderOutput(
         <br>
 
         Header:
-        ${machine.headerLength} bytes
+        ${machine.headerLength}
+        bytes
 
         <br>
 
         Output Size:
-        ${size.toLocaleString()} bytes
+        ${size.toLocaleString()}
+        bytes
 
         <br>
 
         Expected:
-        ${expected.toLocaleString()} bytes
+        ${expected.toLocaleString()}
+        bytes
 
     </div>
     `;
 
-    document.getElementById("hexPreview").textContent =
-        formatHex(bytes.slice(0,256));
-}
 
-
-function formatHex(bytes){
-
-    const lines=[];
-
-    for(let i=0;i<bytes.length;i+=16){
-
-        const part =
-            Array.from(
-                bytes.slice(i,i+16)
+    document
+    .getElementById(
+        "hexPreview"
+    )
+    .textContent =
+        formatHex(
+            bytes.slice(
+                0,
+                256
             )
-            .map(
-                x=>x.toString(16)
-                    .padStart(2,"0")
-                    .toUpperCase()
-            )
-            .join(" ");
-
-        lines.push(
-            i.toString(16)
-             .padStart(6,"0")
-             .toUpperCase() +
-            "  " +
-            part
         );
-    }
-
-    return lines.join("\n");
 }
 
 
@@ -3309,36 +5814,60 @@ function formatHex(bytes){
 function downloadGeneratedEP(){
 
     if(!generatedEP){
-        alert("Pehle Native EP generate karein.");
+
+        alert(
+            "Pehle Native EP generate karein."
+        );
+
         return;
     }
+
 
     const blob =
         new Blob(
             [generatedEP],
             {
-                type:"application/octet-stream"
+                type:
+                    "application/octet-stream"
             }
         );
 
+
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
+
 
     const a =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
+
 
     a.href=url;
-    a.download=generatedFileName;
 
-    document.body.appendChild(a);
+    a.download =
+        generatedFileName;
+
+
+    document
+    .body
+    .appendChild(a);
+
 
     a.click();
 
+
     a.remove();
 
-    setTimeout(()=>{
-        URL.revokeObjectURL(url);
-    },1000);
+
+    setTimeout(
+        ()=>{
+            URL.revokeObjectURL(url);
+        },
+        1000
+    );
 }
 
 
@@ -3348,84 +5877,175 @@ function downloadGeneratedEP(){
 
 async function exportMachines(){
 
-    const machines =
-        await getAllMachines();
+    try{
 
-    if(!machines.length){
-        alert("Export karne ke liye koi machine nahi hai.");
-        return;
+        const machines =
+            await getAllMachines();
+
+
+        if(!machines.length){
+
+            alert(
+                "Export karne ke liye koi machine nahi hai."
+            );
+
+            return;
+        }
+
+
+        const json =
+            JSON.stringify(
+                machines,
+                null,
+                2
+            );
+
+
+        const blob =
+            new Blob(
+                [json],
+                {
+                    type:
+                        "application/json"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const a =
+            document.createElement(
+                "a"
+            );
+
+
+        a.href=url;
+
+        a.download =
+            "Electronic_Designing_Harness_Plans.json";
+
+
+        document
+        .body
+        .appendChild(a);
+
+
+        a.click();
+
+        a.remove();
+
+
+        setTimeout(
+            ()=>{
+                URL.revokeObjectURL(url);
+            },
+            1000
+        );
+
+    }catch(err){
+
+        alert(
+            "Export error:\n" +
+            err.message
+        );
     }
-
-    const json =
-        JSON.stringify(
-            machines,
-            null,
-            2
-        );
-
-    const blob =
-        new Blob(
-            [json],
-            {type:"application/json"}
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href=url;
-    a.download=
-        "Electronic_Designing_Harness_Plans.json";
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(()=>{
-        URL.revokeObjectURL(url);
-    },1000);
 }
 
 
 async function exportSingleMachine(id){
 
-    const machines =
-        await getAllMachines();
+    try{
 
-    const machine =
-        machines.find(m=>m.id===id);
+        const machines =
+            await getAllMachines();
 
-    if(!machine) return;
 
-    const blob =
-        new Blob(
-            [JSON.stringify(machine,null,2)],
-            {type:"application/json"}
+        const machine =
+            machines.find(
+                m =>
+                    Number(m.id) ===
+                    Number(id)
+            );
+
+
+        if(!machine){
+
+            alert(
+                "Machine nahi mili."
+            );
+
+            return;
+        }
+
+
+        const blob =
+            new Blob(
+                [
+                    JSON.stringify(
+                        machine,
+                        null,
+                        2
+                    )
+                ],
+                {
+                    type:
+                        "application/json"
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const a =
+            document.createElement(
+                "a"
+            );
+
+
+        a.href=url;
+
+
+        a.download =
+            safeFileName(
+                machine.machineName ||
+                machine.name ||
+                "Machine"
+            ) +
+            "_HarnessPlan.json";
+
+
+        document
+        .body
+        .appendChild(a);
+
+
+        a.click();
+
+        a.remove();
+
+
+        setTimeout(
+            ()=>{
+                URL.revokeObjectURL(url);
+            },
+            1000
         );
 
-    const url =
-        URL.createObjectURL(blob);
+    }catch(err){
 
-    const a =
-        document.createElement("a");
-
-    a.href=url;
-
-    a.download =
-        safeFileName(
-            machine.machineName
-        ) +
-        "_HarnessPlan.json";
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    setTimeout(()=>{
-        URL.revokeObjectURL(url);
-    },1000);
+        alert(
+            "Export error:\n" +
+            err.message
+        );
+    }
 }
 
 
@@ -3434,41 +6054,81 @@ async function importMachines(event){
     const file =
         event.target.files[0];
 
-    if(!file) return;
+
+    if(!file){
+
+        return;
+    }
+
 
     try{
+
+        await ensureDB();
+
 
         const text =
             await file.text();
 
+
         const data =
             JSON.parse(text);
 
+
         const list =
-            Array.isArray(data) ?
-            data :
+            Array.isArray(data)
+            ?
+            data
+            :
             [data];
+
 
         let count=0;
 
-        for(const machine of list){
+
+        for(
+            const machine of list
+        ){
 
             /*
-               Do not import the old auto-increment id.
+               Basic validation.
             */
+
+            if(
+                !machine ||
+                !machine.hooks ||
+                !machine.bytesPerPick ||
+                !machine.rowsBase64 ||
+                !machine.headerBase64
+            ){
+
+                continue;
+            }
+
+
+            /*
+               Do not import old auto ID.
+            */
+
             delete machine.id;
 
-            await addMachine(machine);
+
+            await addMachine(
+                machine
+            );
+
 
             count++;
         }
+
 
         alert(
             count +
             " Harness Plan import ho gaye."
         );
 
+
         await refreshMachineList();
+
         await refreshMachineSelect();
 
     }catch(err){
@@ -3477,26 +6137,72 @@ async function importMachines(event){
             "Import error:\n" +
             err.message
         );
-    }
 
-    event.target.value="";
+    }finally{
+
+        event.target.value="";
+    }
 }
 
 
 /* ============================================================
-   CLEAR FORM
+   CLEAR MACHINE FORM
    ============================================================ */
 
 function clearMachineForm(){
 
     currentAnalysis=null;
 
-    document.getElementById("machineName").value="";
-    document.getElementById("runningEP").value="";
-    document.getElementById("runningFileName").textContent="";
-    document.getElementById("analysisResult").innerHTML="";
-    document.getElementById("analysisProgressBox")
-        .classList.add("hidden");
+
+    document
+    .getElementById(
+        "machineName"
+    )
+    .value="";
+
+
+    document
+    .getElementById(
+        "runningEP"
+    )
+    .value="";
+
+
+    document
+    .getElementById(
+        "runningFileName"
+    )
+    .textContent="";
+
+
+    document
+    .getElementById(
+        "analysisResult"
+    )
+    .innerHTML="";
+
+
+    document
+    .getElementById(
+        "analysisProgressBox"
+    )
+    .classList.add(
+        "hidden"
+    );
+
+
+    document
+    .getElementById(
+        "analysisProgress"
+    )
+    .style.width="0%";
+
+
+    document
+    .getElementById(
+        "analysisStatus"
+    )
+    .textContent="";
 }
 
 
@@ -3507,7 +6213,11 @@ function clearMachineForm(){
 function sleep(ms){
 
     return new Promise(
-        resolve=>setTimeout(resolve,ms)
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
     );
 }
 
@@ -3515,20 +6225,122 @@ function sleep(ms){
 function safeFileName(name){
 
     return String(name)
-        .replace(/[<>:"/\\|?*\x00-\x1F]/g,"_")
-        .replace(/\s+/g,"_")
-        .slice(0,80);
+        .replace(
+            /[<>:"/\\|?*\x00-\x1F]/g,
+            "_"
+        )
+        .replace(
+            /\s+/g,
+            "_"
+        )
+        .slice(
+            0,
+            80
+        );
 }
 
 
 function escapeHTML(value){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+}
+
+
+/*
+   Row hash / HEX helper.
+*/
+function bytesToHex(bytes){
+
+    let out="";
+
+    for(
+        let i=0;
+        i<bytes.length;
+        i++
+    ){
+
+        out +=
+            bytes[i]
+            .toString(16)
+            .padStart(2,"0")
+            .toUpperCase();
+    }
+
+    return out;
+}
+
+
+function formatHex(bytes){
+
+    const lines=[];
+
+
+    for(
+        let i=0;
+        i<bytes.length;
+        i+=16
+    ){
+
+        const part =
+            Array.from(
+                bytes.slice(
+                    i,
+                    i+16
+                )
+            )
+            .map(
+                x =>
+                    x.toString(16)
+                    .padStart(
+                        2,
+                        "0"
+                    )
+                    .toUpperCase()
+            )
+            .join(" ");
+
+
+        lines.push(
+
+            i.toString(16)
+            .padStart(
+                6,
+                "0"
+            )
+            .toUpperCase() +
+
+            "  " +
+
+            part
+        );
+    }
+
+
+    return lines.join(
+        "\n"
+    );
 }
 
 
@@ -3536,86 +6348,167 @@ function escapeHTML(value){
    BACK BUTTON CONTROL
    ============================================================ */
 
-let backState = 0;
-
 function pushAppHistory(){
 
-    history.pushState(
-        {edApp:true},
-        "",
-        location.href
-    );
-}
-
-window.addEventListener("popstate",function(){
-
     /*
-       GitHub page se turant bahar jane ki jagah
-       app ke andar history state maintain.
+       Duplicate state avoid karne ke liye
+       replaceState + pushState pattern.
     */
 
-    pushAppHistory();
+    try{
 
-    const hint =
-        document.getElementById("backHint");
+        history.pushState(
+            {
+                edApp:true
+            },
+            "",
+            location.href
+        );
 
-    hint.classList.add("show");
+    }catch(e){
 
-    setTimeout(()=>{
-        hint.classList.remove("show");
-    },1300);
-});
+        console.warn(
+            "History state error:",
+            e
+        );
+    }
+}
+
+
+window.addEventListener(
+    "popstate",
+    function(){
+
+        pushAppHistory();
+
+
+        const hint =
+            document.getElementById(
+                "backHint"
+            );
+
+
+        hint.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            ()=>{
+                hint.classList.remove(
+                    "show"
+                );
+            },
+            1300
+        );
+    }
+);
 
 
 /* ============================================================
    INITIALIZATION
    ============================================================ */
 
-document.addEventListener("DOMContentLoaded",async function(){
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
 
-    /*
-       Login persists using localStorage remember flag.
-    */
-    if(
-        sessionStorage.getItem("ed_logged_in")==="1" ||
-        localStorage.getItem("ed_login_remember")==="1"
-    ){
+        /*
+           Login persistence.
 
-        showApp();
-    }
+           Agar user pehle login kar chuka hai
+           aur logout nahi kiya hai to app open.
+        */
 
-    /*
-       Enter key on login.
-    */
-    document.getElementById("loginPassword")
-        .addEventListener("keydown",function(e){
+        if(
+            sessionStorage.getItem(
+                "ed_logged_in"
+            ) === "1" ||
 
-            if(e.key==="Enter"){
-                login();
+            localStorage.getItem(
+                "ed_login_remember"
+            ) === "1"
+        ){
+
+            await showApp();
+        }
+
+
+        /*
+           Enter key on login.
+        */
+
+        document
+        .getElementById(
+            "loginPassword"
+        )
+        .addEventListener(
+            "keydown",
+            function(e){
+
+                if(
+                    e.key === "Enter"
+                ){
+
+                    login();
+                }
             }
-        });
+        );
 
-    /*
-       Initial history state.
-    */
-    pushAppHistory();
-});
+
+        /*
+           Enter on ID also works.
+        */
+
+        document
+        .getElementById(
+            "loginId"
+        )
+        .addEventListener(
+            "keydown",
+            function(e){
+
+                if(
+                    e.key === "Enter"
+                ){
+
+                    document
+                    .getElementById(
+                        "loginPassword"
+                    )
+                    .focus();
+                }
+            }
+        );
+
+
+        /*
+           Initial history state.
+        */
+
+        pushAppHistory();
+
+    }
+);
 
 
 /* ============================================================
    AUTO REFRESH / SAFETY
    ============================================================ */
 
-window.addEventListener("beforeunload",function(){
+window.addEventListener(
+    "beforeunload",
+    function(){
 
-    /*
-       IndexedDB automatically persists.
-       This function intentionally does not erase anything.
-    */
-});
+        /*
+           IndexedDB automatically persists.
+           Nothing is deleted here.
+        */
 
+    }
+);
 
 </script>
 
 </body>
-  </html>
+      </html>
