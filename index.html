@@ -81,7 +81,7 @@
                 <div id="selectedRunningDisplay" class="text-center text-[11px] text-gray-400 font-bold">No active machine setup loaded</div>
             </div>
 
-            <!-- Step 2: Shuttle & Machine Specifications + EasyX Dadha/Finger Padding -->
+            <!-- Step 2: Shuttle & Machine Specifications + Dadha/Finger Padding -->
             <div class="glass-card p-4 rounded-2xl space-y-4 shadow-lg">
                 <div class="text-amber-400 font-semibold text-xs">⚙️ Step 2: Shuttle, Hooks & Dadha/Finger Padding</div>
                 
@@ -111,11 +111,11 @@
 
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Target Picks (Height)</label>
-                        <input type="number" id="picksInput" value="160" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
+                        <input type="number" id="picksInput" value="372" class="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs font-bold text-amber-400 text-center">
                     </div>
                 </div>
 
-                <!-- EasyX Style Border Padding for Dadha / Finger -->
+                <!-- Dadha / Finger Hook Padding -->
                 <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-800">
                     <div>
                         <label class="block text-[11px] text-gray-400 mb-1">Left Dadha/Finger Hook Padding</label>
@@ -130,7 +130,7 @@
                 <div>
                     <label class="block text-[11px] text-gray-400 mb-1">Jacquard Format</label>
                     <select id="jacquardFormatSelect" class="w-full bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs font-bold text-white">
-                        <option value="ep" selected>Direct Machine .EP File</option>
+                        <option value="ep" selected>Direct Machine 79A .EP File</option>
                         <option value="png">PNG Grid Preview File</option>
                     </select>
                 </div>
@@ -349,7 +349,7 @@
             let machines = JSON.parse(localStorage.getItem('zarafiya_saved_machines') || '[]');
             let html = '<option value="">-- Choose Saved Machine --</option>';
             machines.forEach(m => {
-                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 160}]</option>`;
+                html += `<option value="${m.name}">${m.name} [Hooks: ${m.width}, Picks: ${m.picks || 372}]</option>`;
             });
             savedMachineCategory.innerHTML = html;
         }
@@ -406,7 +406,7 @@
                     const baseWidth = parseInt(widthSelect.value);
                     if (uploadedImage.width > 0) {
                         let calculatedPicks = Math.round(baseWidth * (uploadedImage.height / uploadedImage.width));
-                        if (calculatedPicks < 50) calculatedPicks = 160;
+                        if (calculatedPicks < 50) calculatedPicks = 372;
                         picksInput.value = calculatedPicks;
                     }
                     processJacquardGrid();
@@ -431,7 +431,7 @@
             const rPad = parseInt(rightPadInput.value) || 0;
             
             const designWidth = Math.max(50, machineHooks - (lPad + rPad));
-            const targetHeight = parseInt(picksInput.value) || 160;
+            const targetHeight = parseInt(picksInput.value) || 372;
 
             outputCanvas.width = machineHooks;
             outputCanvas.height = targetHeight;
@@ -465,7 +465,7 @@
             if (!uploadedImage.src) return;
             const format = jacquardFormatSelect.value;
             const machineHooks = parseInt(widthSelect.value) || 672;
-            const targetHeight = parseInt(picksInput.value) || 160;
+            const targetHeight = parseInt(picksInput.value) || 372;
             const activeMachine = machineNameInput.value || "Machine_Setup";
 
             if (format === 'png') {
@@ -479,17 +479,16 @@
                 return;
             }
 
-            // Exact 79A / Tianmai Compatible Binary Header Structure with Strict Metadata Offsets
+            // Exactly matching the 79A.EP Binary Header Format Structure
             const headerBytes = new Uint8Array(128);
-            headerBytes.fill(32); // fill with spaces
+            headerBytes.fill(32); // Space padding
             
-            // Write standard header signature matching 79A setup
-            const sig = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  79A`;
+            const sig = `   À  79A                       € ÿÿ_UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU`;
             for(let i=0; i<Math.min(sig.length, 128); i++) {
                 headerBytes[i] = sig.charCodeAt(i);
             }
 
-            // Embed exact width and height as little-endian 16-bit words at standard Tianmai offsets
+            // Exact 16-bit little-endian embedding for Width and Height matching 79A
             headerBytes[64] = machineHooks & 0xFF;
             headerBytes[65] = (machineHooks >> 8) & 0xFF;
             headerBytes[66] = targetHeight & 0xFF;
@@ -558,7 +557,7 @@
                             <img src="${item.dataUrl}" class="w-12 h-12 object-cover rounded-lg border border-gray-700 bg-black">
                             <div>
                                 <h4 class="text-xs font-bold text-white">${item.machine} - ${item.name}</h4>
-                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 160} | Format: ${item.format.toUpperCase()}</p>
+                                <p class="text-[10px] text-amber-400">Hooks: ${item.width} | Picks: ${item.picks || 372} | Format: ${item.format.toUpperCase()}</p>
                                 <span class="text-[9px] text-gray-500">${item.timestamp}</span>
                             </div>
                         </div>
