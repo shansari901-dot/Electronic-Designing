@@ -105,7 +105,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .tab{
  white-space:nowrap;
  background:#13273b;
- flex:1;
 }
 .tab.active{background:#00aee8}
 
@@ -142,6 +141,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .machine-name{
  font-size:16px;
  font-weight:bold;
+}
+
+.plan{
+ background:#071421;
+ border:1px solid #27506b;
+ border-radius:13px;
+ padding:12px;
+ margin-top:10px;
+}
+.plan-title{
+ font-size:15px;
+ font-weight:900;
+ color:#00d9ff;
+ margin-bottom:7px;
 }
 
 .pill{
@@ -193,29 +206,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
  max-width:90%;
 }
 
-.typeBox{
- border:1px solid #28516b;
- background:#081625;
- border-radius:12px;
- padding:12px;
-}
-
-.typeTitle{
- font-size:13px;
- font-weight:bold;
- color:#00d9ff;
-}
-
-.doriInfo{
- margin-top:7px;
- font-size:12px;
- color:#a9c2d6;
-}
-
-.settingsBox{
- margin-top:12px;
- border-top:1px solid #24465d;
- padding-top:12px;
+.small-note{
+ font-size:11px;
+ color:#7f9db3;
+ line-height:1.5;
 }
 
 @media(max-width:600px){
@@ -225,7 +219,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
  .grid{grid-template-columns:1fr 1fr}
  .row>*{min-width:100%}
  .machine .row>*{min-width:0}
- .tab{font-size:12px;padding:10px 7px}
 }
 </style>
 </head>
@@ -244,19 +237,10 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 <main class="wrap">
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
-
 <section id="loginView" class="login">
-
  <div class="card">
-
   <h2>Admin Login</h2>
-
-  <div class="sub">
-   Admin credentials screen par show nahi kiye ja rahe.
-  </div>
+  <div class="sub">Admin credentials screen par show nahi kiye ja rahe.</div>
 
   <label>Admin ID</label>
   <input id="loginId" autocomplete="username">
@@ -264,112 +248,158 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <label>Password</label>
   <input id="loginPass" type="password" autocomplete="current-password">
 
-  <button id="loginBtn" style="width:100%;margin-top:12px">
-   LOGIN
-  </button>
+  <button id="loginBtn" style="width:100%;margin-top:12px">LOGIN</button>
 
   <div id="loginMsg" class="status err hidden"></div>
-
  </div>
-
 </section>
-
-
-<!-- =====================================================
-     APP
-===================================================== -->
 
 <section id="appView" class="hidden">
 
- <!-- ONLY 2 MAIN TABS -->
  <div class="tabs">
-
-  <button class="tab active" data-tab="machines">
-   ⚙ Machine Setup
-  </button>
-
-  <button class="tab" data-tab="design">
-   🎨 Create Design EP
-  </button>
-
+  <button class="tab active" data-tab="machines">Machine Setup</button>
+  <button class="tab" data-tab="design">Create Design EP</button>
+  <button class="tab" data-tab="settings">Settings</button>
  </div>
 
-
 <!-- =====================================================
-     TAB 1 : MACHINE SETUP
+ MACHINE SETUP
 ===================================================== -->
 
 <div id="machines" class="panel active">
 
  <div class="card">
-
   <h2>1. New Machine / Running EP</h2>
 
   <div class="sub">
    Har Jacquard/machine ka original running EP ek baar save karein.
-   Baad mein wahi machine select karke design convert karein.
+   Baver aur Dadha dono ki settings isi machine plan mein save hongi.
   </div>
-
 
   <label>Machine Name</label>
-
-  <input
-   id="machineName"
-   placeholder="Example: 79A / Baver 672 / Dadha 672"
-  >
-
-
-  <!-- BAVER / DADHA -->
-  <label>Jacquard Type</label>
-
-  <div class="typeBox">
-
-   <select id="jacquardType">
-
-    <option value="Baver">
-     Baver
-    </option>
-
-    <option value="Dadha">
-     Dadha
-    </option>
-
-   </select>
-
-   <div id="doriInfo" class="doriInfo">
-    Baver: 8 Dori — 4 Forward + 4 Return
-   </div>
-
-  </div>
-
+  <input id="machineName" placeholder="Example: 79A / 672 Hook Jacquard">
 
   <label>Running .EP File</label>
-
-  <input
-   id="runningFile"
-   type="file"
-   accept=".ep,.EP"
-  >
-
+  <input id="runningFile" type="file" accept=".ep,.EP">
 
   <div id="runInfo" class="status">
    Running file select nahi ki gayi.
   </div>
 
-
   <div class="row" style="margin-top:10px">
-
-   <button id="analyzeBtn" disabled>
-    Analyze Running EP
-   </button>
-
-   <button
-    id="saveMachineBtn"
-    class="green"
-    disabled
-   >
+   <button id="analyzeBtn" disabled>Analyze Running EP</button>
+   <button id="saveMachineBtn" class="green" disabled>
     Save New Machine
    </button>
+  </div>
+ </div>
+
+
+ <!-- DORI PLAN -->
+ <div class="card">
+  <h2>2. Jacquard Dori / Harness Plan</h2>
+
+  <div class="small-note">
+   Baver aur Dadha dono alag sections hain. Dono ko ek hi machine mein save kiya ja sakta hai.
+   Yahan sirf naam nahi, balki Forward/Return dori ki actual count bhi save hoti hai.
+  </div>
+
+  <div class="plan">
+
+   <div class="plan-title">🔵 BAVER</div>
+
+   <div class="grid">
+
+    <div>
+     <label>Baver Forward Dori</label>
+     <input id="baverForward" type="number" min="0" value="4">
+    </div>
+
+    <div>
+     <label>Baver Return Dori</label>
+     <input id="baverReturn" type="number" min="0" value="4">
+    </div>
+
+    <div>
+     <label>Baver Total Dori</label>
+     <input id="baverTotal" type="number" value="8" readonly>
+    </div>
+
+   </div>
+
+   <div id="baverInfo" class="status">
+    Baver: 4 Forward + 4 Return = 8 Dori
+   </div>
+
+  </div>
+
+
+  <div class="plan">
+
+   <div class="plan-title">🟣 DADHA</div>
+
+   <div class="grid">
+
+    <div>
+     <label>Dad​ha Forward Dori</label>
+     <input id="dadhaForward" type="number" min="0" value="2">
+    </div>
+
+    <div>
+     <label>Dad​ha Return Dori</label>
+     <input id="dadhaReturn" type="number" min="0" value="2">
+    </div>
+
+    <div>
+     <label>Dadha Total Dori</label>
+     <input id="dadhaTotal" type="number" value="4" readonly>
+    </div>
+
+   </div>
+
+   <div id="dadhaInfo" class="status">
+    Dadha: 2 Forward + 2 Return = 4 Dori
+   </div>
+
+  </div>
+
+
+  <div class="plan">
+
+   <div class="plan-title">⚙️ DESIGN STRUCTURE</div>
+
+   <div class="grid">
+
+    <div>
+     <label>Ground / Background</label>
+     <select id="groundMode">
+      <option value="running">Running EP se analyze</option>
+      <option value="design">Design pixels se</option>
+     </select>
+    </div>
+
+    <div>
+     <label>Border / Kinara</label>
+     <select id="borderMode">
+      <option value="running">Running EP se analyze</option>
+      <option value="design">Design pixels se</option>
+     </select>
+    </div>
+
+    <div>
+     <label>Dori Pattern</label>
+     <select id="doriPattern">
+      <option value="running">Running EP pattern preserve</option>
+      <option value="design">Design structure follow</option>
+     </select>
+    </div>
+
+   </div>
+
+   <div class="small-note" style="margin-top:8px">
+    Important: exact machine punching pattern running EP ke actual data se analyze hota hai.
+    Baver/Dadha counts ko sirf naam ke roop mein use nahi kiya gaya hai.
+   </div>
 
   </div>
 
@@ -377,52 +407,29 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 
  <!-- MACHINE PARAMETERS -->
-
  <div class="card">
-
-  <h2>2. Machine Parameters</h2>
+  <h2>3. Machine Parameters</h2>
 
   <div class="grid">
 
    <div>
     <label>Hooks</label>
-    <input
-     id="hooks"
-     type="number"
-     min="8"
-     step="8"
-     value="672"
-    >
+    <input id="hooks" type="number" min="8" step="8" value="672">
    </div>
 
    <div>
     <label>Header Bytes</label>
-    <input
-     id="headerLen"
-     type="number"
-     min="0"
-     value="34"
-    >
+    <input id="headerLen" type="number" min="0" value="34">
    </div>
 
    <div>
     <label>Bytes / Pick</label>
-    <input
-     id="bytesPerPick"
-     type="number"
-     min="1"
-     value="84"
-    >
+    <input id="bytesPerPick" type="number" min="1" value="84">
    </div>
 
    <div>
     <label>Original Picks</label>
-    <input
-     id="originalPicks"
-     type="number"
-     min="1"
-     value="1"
-    >
+    <input id="originalPicks" type="number" min="1" value="1">
    </div>
 
   </div>
@@ -430,950 +437,486 @@ button:disabled{opacity:.45;cursor:not-allowed}
   <div id="analysisBox" class="status">
    EP analysis yahan dikhega.
   </div>
-
  </div>
 
 
  <!-- SAVED MACHINES -->
-
  <div class="card">
-
-  <h2>3. Saved Machines</h2>
+  <h2>4. Saved Machines</h2>
 
   <div class="sub">
    Har saved machine ka alag Use aur Delete button hai.
   </div>
 
   <div id="machineList"></div>
-
- </div>
-
-
- <!-- SETTINGS INSIDE FIRST TAB -->
-
- <div class="card">
-
-  <h2>⚙ Settings</h2>
-
-  <div class="sub">
-   Main app mein sirf 2 tabs hain. Settings yahin rakhi gayi hai.
-  </div>
-
-
-  <div class="settingsBox">
-
-   <h3>Admin Login Settings</h3>
-
-   <div class="sub">
-    Default login: admin / 123456
-   </div>
-
-   <label>New Admin ID</label>
-
-   <input id="newAdminId">
-
-
-   <label>New Password</label>
-
-   <input
-    id="newAdminPass"
-    type="password"
-   >
-
-
-   <button
-    id="saveCreds"
-    class="green"
-    style="margin-top:10px"
-   >
-    Save Login
-   </button>
-
-
-   <div
-    id="credMsg"
-    class="status hidden"
-   ></div>
-
-  </div>
-
-
-  <div class="settingsBox">
-
-   <h3>Database Backup</h3>
-
-   <div class="sub">
-    Machine data isi browser ke IndexedDB mein permanently saved hota hai.
-   </div>
-
-
-   <button
-    id="exportBtn"
-    class="secondary"
-    style="margin-top:10px"
-   >
-    Export Machine Backup
-   </button>
-
-
-   <input
-    id="importFile"
-    type="file"
-    accept="application/json"
-    style="margin-top:8px"
-   >
-
-
-   <button
-    id="clearAllBtn"
-    class="red"
-    style="margin-top:8px"
-   >
-    Delete ALL Machines
-   </button>
-
-  </div>
-
  </div>
 
 </div>
 
 
 <!-- =====================================================
-     TAB 2 : CREATE DESIGN EP
+ DESIGN
 ===================================================== -->
 
 <div id="design" class="panel">
 
-
  <div class="card">
-
   <h2>1. Machine Select</h2>
 
   <select id="machineSelect">
-
-   <option value="">
-    -- Saved machine select karein --
-   </option>
-
+   <option value="">-- Saved machine select karein --</option>
   </select>
 
-
-  <div
-   id="selectedMachineInfo"
-   class="status"
-  >
+  <div id="selectedMachineInfo" class="status">
    Pehle saved machine select karein.
   </div>
-
  </div>
 
 
  <div class="card">
-
   <h2>2. Design File</h2>
 
-  <input
-   id="designFile"
+  <input id="designFile"
    type="file"
-   accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
-  >
+   accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg">
 
-
-  <div
-   id="designInfo"
-   class="status"
-  >
+  <div id="designInfo" class="status">
    Design select nahi kiya.
   </div>
-
 
   <div class="grid">
 
    <div>
-
     <label>Target Picks</label>
-
-    <input
-     id="targetPicks"
-     type="number"
-     min="1"
-     value="972"
-    >
-
+    <input id="targetPicks" type="number" min="1" value="972">
    </div>
 
-
    <div>
-
     <label>Threshold</label>
-
-    <input
-     id="threshold"
-     type="number"
-     min="0"
-     max="255"
-     value="128"
-    >
-
+    <input id="threshold" type="number" min="0" max="255" value="128">
    </div>
 
-
    <div>
-
     <label>Left Padding</label>
-
-    <input
-     id="leftPad"
-     type="number"
-     min="0"
-     value="0"
-    >
-
+    <input id="leftPad" type="number" min="0" value="0">
    </div>
 
-
    <div>
-
     <label>Right Padding</label>
-
-    <input
-     id="rightPad"
-     type="number"
-     min="0"
-     value="0"
-    >
-
+    <input id="rightPad" type="number" min="0" value="0">
    </div>
 
   </div>
 
-
   <div class="row" style="margin-top:8px">
-
-   <button
-    id="invertBtn"
-    class="secondary"
-   >
-    Invert: OFF
-   </button>
-
-   <button
-    id="mirrorBtn"
-    class="secondary"
-   >
-    Mirror: OFF
-   </button>
-
-   <button
-    id="flipBtn"
-    class="secondary"
-   >
-    Flip: OFF
-   </button>
-
+   <button id="invertBtn" class="secondary">Invert: OFF</button>
+   <button id="mirrorBtn" class="secondary">Mirror: OFF</button>
+   <button id="flipBtn" class="secondary">Flip: OFF</button>
   </div>
 
  </div>
 
 
  <div class="card">
-
   <h2>3. Preview & Convert</h2>
 
   <div class="grid">
 
    <div>
-
-    <div class="sub">
-     Original
-    </div>
-
-    <img
-     id="originalPreview"
-     class="preview hidden"
-    >
-
+    <div class="sub">Original</div>
+    <img id="originalPreview" class="preview hidden">
    </div>
 
-
    <div>
-
-    <div class="sub">
-     Binary Preview
-    </div>
-
-    <canvas
-     id="binaryCanvas"
-     class="preview"
-    ></canvas>
-
+    <div class="sub">Binary Preview</div>
+    <canvas id="binaryCanvas" class="preview"></canvas>
    </div>
 
   </div>
 
-
-  <div
-   id="designCheck"
-   class="status"
-  >
+  <div id="designCheck" class="status">
    Machine aur design select karein.
   </div>
 
-
-  <button
-   id="convertBtn"
+  <button id="convertBtn"
    style="width:100%;margin-top:10px"
-   disabled
-  >
+   disabled>
    CONVERT & DOWNLOAD EP
   </button>
-
  </div>
 
 
  <div class="card">
-
   <h2>EP Validation</h2>
 
-  <div
-   id="validation"
-   class="grid"
-  ></div>
+  <div id="validation" class="grid"></div>
 
-
-  <div
-   class="sub"
-   style="margin-top:10px"
-  >
+  <div class="sub" style="margin-top:10px">
    Header Hex
   </div>
 
+  <div id="hexPreview" class="hex"></div>
+ </div>
 
-  <div
-   id="hexPreview"
-   class="hex"
-  ></div>
+</div>
 
+
+<!-- =====================================================
+ SETTINGS
+===================================================== -->
+
+<div id="settings" class="panel">
+
+ <div class="card">
+  <h2>Admin Settings</h2>
+
+  <div class="sub">
+   Default login: admin / 123456
+  </div>
+
+  <label>New Admin ID</label>
+  <input id="newAdminId">
+
+  <label>New Password</label>
+  <input id="newAdminPass" type="password">
+
+  <button id="saveCreds" class="green" style="margin-top:10px">
+   Save Login
+  </button>
+
+  <div id="credMsg" class="status hidden"></div>
+ </div>
+
+
+ <div class="card">
+  <h2>Database Tools</h2>
+
+  <div class="sub">
+   Machine data isi browser ke IndexedDB mein permanently saved hota hai.
+  </div>
+
+  <button id="exportBtn" class="secondary">
+   Export Machine Backup
+  </button>
+
+  <input id="importFile"
+   type="file"
+   accept="application/json"
+   style="margin-top:8px">
+
+  <button id="clearAllBtn"
+   class="red"
+   style="margin-top:8px">
+   Delete ALL Machines
+  </button>
  </div>
 
 </div>
 
 </section>
-
 </main>
 
-
-<div
- id="toast"
- class="toast hidden"
-></div>
+<div id="toast" class="toast hidden"></div>
 
 
 <script>
 
-/* =========================================================
-   BASIC SETTINGS
-========================================================= */
+const DEFAULT_ID="admin";
+const DEFAULT_PASS="123456";
 
-const DEFAULT_ID = "admin";
-const DEFAULT_PASS = "123456";
+const DB_NAME="ElectronicDesigningMachineDB";
+const DB_VERSION=3;
 
-const DB_NAME =
- "ElectronicDesigningMachineDB";
+const MACHINE_STORE="machines";
+const SETTINGS_STORE="settings";
 
-/*
- * Version 3:
- * Existing database ko preserve karta hai.
- */
-const DB_VERSION = 3;
+let db=null;
 
-const MACHINE_STORE = "machines";
-const SETTINGS_STORE = "settings";
+let runningBytes=null;
+let runningName="";
+let runningAnalysis=null;
 
-let db = null;
+let designImage=null;
+let designFileName="";
+let binaryBits=null;
 
-let runningBytes = null;
-let runningName = "";
-let runningAnalysis = null;
+let selectedMachine=null;
+let currentDesignMachineId=null;
 
-let designImage = null;
-let designFileName = "";
+let invert=false;
+let mirror=false;
+let flip=false;
 
-let binaryBits = null;
-
-let selectedMachine = null;
-let currentDesignMachineId = null;
-
-let invert = false;
-let mirror = false;
-let flip = false;
+const $=id=>document.getElementById(id);
 
 
-/* =========================================================
-   SHORTCUT
-========================================================= */
-
-const $ = id =>
- document.getElementById(id);
-
-
-/* =========================================================
-   TOAST
-========================================================= */
+/* =====================================================
+ TOAST
+===================================================== */
 
 function toast(message){
 
- const t = $("toast");
+ const t=$("toast");
 
- t.textContent = message;
-
+ t.textContent=message;
  t.classList.remove("hidden");
 
  clearTimeout(toast.timer);
 
- toast.timer =
-  setTimeout(()=>{
-   t.classList.add("hidden");
-  },2600);
-
+ toast.timer=setTimeout(()=>{
+  t.classList.add("hidden");
+ },2600);
 }
 
 
-/* =========================================================
-   MACHINE TYPE / DORI
-========================================================= */
-
-function getDoriInfo(type){
-
- if(type === "Dadha"){
-
-  return {
-   type:"Dadha",
-   doriTotal:4,
-   forward:2,
-   returnDori:2
-  };
-
- }
-
- return {
-  type:"Baver",
-  doriTotal:8,
-  forward:4,
-  returnDori:4
- };
-
-}
-
-
-function updateDoriInfo(){
-
- const type =
-  $("jacquardType").value ||
-  "Baver";
-
- const info =
-  getDoriInfo(type);
-
- $("doriInfo").textContent =
-  info.type +
-  ": " +
-  info.doriTotal +
-  " Dori — " +
-  info.forward +
-  " Forward + " +
-  info.returnDori +
-  " Return";
-
-}
-
-
-/* =========================================================
-   ID
-========================================================= */
+/* =====================================================
+ ID
+===================================================== */
 
 function makeId(){
 
- return "machine_" +
- Date.now().toString(36) +
- "_" +
- Math.random()
-  .toString(36)
-  .slice(2,10);
-
+ return "machine_"+Date.now().toString(36)+"_"+
+ Math.random().toString(36).slice(2,10);
 }
 
 
-/* =========================================================
-   BASE64
-========================================================= */
+/* =====================================================
+ BASE64
+===================================================== */
 
 function bytesToBase64(bytes){
 
- let binary = "";
+ let binary="";
+ const chunk=0x8000;
 
- const chunk = 0x8000;
+ for(let i=0;i<bytes.length;i+=chunk){
 
- for(
-  let i=0;
-  i<bytes.length;
-  i+=chunk
- ){
-
-  binary += String.fromCharCode(
-   ...bytes.subarray(
-    i,
-    Math.min(
-     i+chunk,
-     bytes.length
-    )
-   )
+  binary+=String.fromCharCode(
+   ...bytes.subarray(i,Math.min(i+chunk,bytes.length))
   );
 
  }
 
  return btoa(binary);
-
 }
 
 
 function base64ToBytes(base64){
 
- if(!base64)
-  return new Uint8Array();
+ if(!base64)return new Uint8Array();
 
- const binary =
-  atob(base64);
+ const binary=atob(base64);
+ const bytes=new Uint8Array(binary.length);
 
- const bytes =
-  new Uint8Array(
-   binary.length
-  );
-
- for(
-  let i=0;
-  i<binary.length;
-  i++
- ){
-
-  bytes[i] =
-   binary.charCodeAt(i);
-
- }
+ for(let i=0;i<binary.length;i++)
+  bytes[i]=binary.charCodeAt(i);
 
  return bytes;
-
 }
 
 
-/* =========================================================
-   INDEXED DB
-========================================================= */
+/* =====================================================
+ INDEXED DB
+===================================================== */
 
 function openDB(){
 
- return new Promise(
-  (resolve,reject)=>{
+ return new Promise((resolve,reject)=>{
 
-   const request =
-    indexedDB.open(
-     DB_NAME,
-     DB_VERSION
+  const request=indexedDB.open(DB_NAME,DB_VERSION);
+
+  request.onupgradeneeded=function(){
+
+   const database=request.result;
+
+   if(!database.objectStoreNames.contains(MACHINE_STORE)){
+
+    database.createObjectStore(
+     MACHINE_STORE,
+     {keyPath:"id"}
     );
 
+   }
 
-   request.onupgradeneeded =
-    function(){
+   if(!database.objectStoreNames.contains(SETTINGS_STORE)){
 
-     const database =
-      request.result;
+    database.createObjectStore(SETTINGS_STORE);
 
+   }
 
-     if(
-      !database.objectStoreNames
-       .contains(MACHINE_STORE)
-     ){
+  };
 
-      database.createObjectStore(
-       MACHINE_STORE,
-       {keyPath:"id"}
-      );
+  request.onsuccess=function(){
 
-     }
+   db=request.result;
 
+   resolve();
 
-     if(
-      !database.objectStoreNames
-       .contains(SETTINGS_STORE)
-     ){
+  };
 
-      database.createObjectStore(
-       SETTINGS_STORE
-      );
+  request.onerror=function(){
+   reject(request.error);
+  };
 
-     }
-
-    };
-
-
-   request.onsuccess =
-    function(){
-
-     db =
-      request.result;
-
-     resolve();
-
-    };
-
-
-   request.onerror =
-    function(){
-
-     reject(
-      request.error
-     );
-
-    };
-
-  }
- );
+ });
 
 }
 
 
-/* =========================================================
-   DB HELPERS
-========================================================= */
+/* =====================================================
+ DB HELPERS
+===================================================== */
 
 function dbGetAll(storeName){
 
- return new Promise(
-  (resolve,reject)=>{
+ return new Promise((resolve,reject)=>{
 
-   const tx =
-    db.transaction(
-     storeName,
-     "readonly"
-    );
+  const tx=db.transaction(storeName,"readonly");
+  const req=tx.objectStore(storeName).getAll();
 
-   const store =
-    tx.objectStore(storeName);
+  req.onsuccess=()=>resolve(req.result||[]);
+  req.onerror=()=>reject(req.error);
 
-   const req =
-    store.getAll();
-
-
-   req.onsuccess =
-    ()=>{
-     resolve(
-      req.result || []
-     );
-    };
-
-
-   req.onerror =
-    ()=>{
-     reject(
-      req.error
-     );
-    };
-
-  }
- );
+ });
 
 }
 
 
 function dbGet(storeName,key){
 
- return new Promise(
-  (resolve,reject)=>{
+ return new Promise((resolve,reject)=>{
 
-   const tx =
-    db.transaction(
-     storeName,
-     "readonly"
-    );
+  const tx=db.transaction(storeName,"readonly");
+  const req=tx.objectStore(storeName).get(key);
 
-   const req =
-    tx.objectStore(storeName)
-      .get(key);
+  req.onsuccess=()=>resolve(req.result||null);
+  req.onerror=()=>reject(req.error);
 
-
-   req.onsuccess =
-    ()=>{
-     resolve(
-      req.result || null
-     );
-    };
-
-
-   req.onerror =
-    ()=>{
-     reject(
-      req.error
-     );
-    };
-
-  }
- );
+ });
 
 }
 
 
-/*
- * Generic DB put.
- *
- * Settings store ke liye direct key/value
- * helper alag use kiya gaya hai.
- */
+function dbPut(storeName,value,key){
 
-function dbPut(storeName,value){
+ return new Promise((resolve,reject)=>{
 
- return new Promise(
-  (resolve,reject)=>{
+  const tx=db.transaction(storeName,"readwrite");
+  const store=tx.objectStore(storeName);
 
-   const tx =
-    db.transaction(
-     storeName,
-     "readwrite"
-    );
+  const req=
+   key===undefined
+   ? store.put(value)
+   : store.put(value,key);
 
-   const req =
-    tx.objectStore(storeName)
-      .put(value);
+  req.onsuccess=()=>resolve(req.result);
+  req.onerror=()=>reject(req.error);
 
-
-   req.onsuccess =
-    ()=>{
-     resolve(
-      req.result
-     );
-    };
-
-
-   req.onerror =
-    ()=>{
-     reject(
-      req.error
-     );
-    };
-
-  }
- );
-
-}
-
-
-function dbPutSetting(key,value){
-
- return new Promise(
-  (resolve,reject)=>{
-
-   const tx =
-    db.transaction(
-     SETTINGS_STORE,
-     "readwrite"
-    );
-
-   tx.objectStore(
-    SETTINGS_STORE
-   ).put(
-    value,
-    key
-   );
-
-
-   tx.oncomplete =
-    ()=>{
-     resolve();
-    };
-
-
-   tx.onerror =
-    ()=>{
-     reject(
-      tx.error
-     );
-    };
-
-  }
- );
+ });
 
 }
 
 
 function dbDelete(storeName,key){
 
- return new Promise(
-  (resolve,reject)=>{
+ return new Promise((resolve,reject)=>{
 
-   const tx =
-    db.transaction(
-     storeName,
-     "readwrite"
-    );
+  const tx=db.transaction(storeName,"readwrite");
+  const req=tx.objectStore(storeName).delete(key);
 
-   const req =
-    tx.objectStore(storeName)
-      .delete(key);
+  req.onsuccess=()=>resolve();
+  req.onerror=()=>reject(req.error);
 
-
-   req.onsuccess =
-    ()=>{
-     resolve();
-    };
-
-
-   req.onerror =
-    ()=>{
-     reject(
-      req.error
-     );
-    };
-
-  }
- );
+ });
 
 }
 
 
 function dbClear(storeName){
 
- return new Promise(
-  (resolve,reject)=>{
+ return new Promise((resolve,reject)=>{
 
-   const tx =
-    db.transaction(
-     storeName,
-     "readwrite"
-    );
+  const tx=db.transaction(storeName,"readwrite");
+  const req=tx.objectStore(storeName).clear();
 
-   const req =
-    tx.objectStore(storeName)
-      .clear();
+  req.onsuccess=()=>resolve();
+  req.onerror=()=>reject(req.error);
 
-
-   req.onsuccess =
-    ()=>{
-     resolve();
-    };
-
-
-   req.onerror =
-    ()=>{
-     reject(
-      req.error
-     );
-    };
-
-  }
- );
+ });
 
 }
 
 
-/* =========================================================
-   SETTINGS / CREDENTIALS
-========================================================= */
+/* =====================================================
+ CREDENTIALS
+===================================================== */
 
 async function getCredentials(){
 
- const id =
-  await dbGet(
-   SETTINGS_STORE,
-   "adminId"
-  );
-
- const pass =
-  await dbGet(
-   SETTINGS_STORE,
-   "adminPass"
-  );
-
+ const id=await dbGet(SETTINGS_STORE,"adminId");
+ const pass=await dbGet(SETTINGS_STORE,"adminPass");
 
  return {
-
-  id:
-   id || DEFAULT_ID,
-
-  pass:
-   pass || DEFAULT_PASS
-
+  id:id||DEFAULT_ID,
+  pass:pass||DEFAULT_PASS
  };
 
 }
 
 
-/* =========================================================
-   EP STRUCTURE DETECTION
-========================================================= */
+/* =====================================================
+ DORI CALCULATION
+===================================================== */
 
-function detectEPStructure(
- bytes,
- hooks
-){
+function updateDoriValues(){
 
- const hookCount =
-  Number(hooks) || 672;
+ const bf=Math.max(0,Number($("baverForward").value)||0);
+ const br=Math.max(0,Number($("baverReturn").value)||0);
 
- const expectedBpp =
-  Math.ceil(
-   hookCount / 8
-  );
+ const df=Math.max(0,Number($("dadhaForward").value)||0);
+ const dr=Math.max(0,Number($("dadhaReturn").value)||0);
 
+ $("baverTotal").value=bf+br;
+ $("dadhaTotal").value=df+dr;
 
- const headers = [
-  34,
-  81,
-  32,
-  64,
-  80,
-  82,
-  83,
-  84
- ];
+ $("baverInfo").textContent=
+  "Baver: "+bf+" Forward + "+br+
+  " Return = "+(bf+br)+" Dori";
+
+ $("dadhaInfo").textContent=
+  "Dadha: "+df+" Forward + "+dr+
+  " Return = "+(df+dr)+" Dori";
+
+}
 
 
- for(
-  const header of headers
- ){
+/* =====================================================
+ EP STRUCTURE
+===================================================== */
 
-  if(
-   bytes.length <= header
-  )
-   continue;
+function detectEPStructure(bytes,hooks){
 
+ const hookCount=Number(hooks)||672;
+ const expectedBpp=Math.ceil(hookCount/8);
 
-  const remaining =
-   bytes.length - header;
+ const headers=[34,81,32,64,80,82,83,84];
 
+ for(const header of headers){
 
-  if(
-   remaining %
-   expectedBpp === 0
-  ){
+  if(bytes.length<=header)continue;
 
-   const picks =
-    remaining /
-    expectedBpp;
+  const remaining=bytes.length-header;
 
+  if(remaining%expectedBpp===0){
 
-   if(picks > 0){
+   const picks=remaining/expectedBpp;
+
+   if(picks>0){
 
     return {
-
-     headerLength:
-      header,
-
-     bytesPerPick:
-      expectedBpp,
-
-     picks:
-      picks
-
+     headerLength:header,
+     bytesPerPick:expectedBpp,
+     picks:picks
     };
 
    }
@@ -1382,89 +925,53 @@ function detectEPStructure(
 
  }
 
-
  return null;
-
 }
 
 
-/* =========================================================
-   ANALYZE RUNNING EP
-========================================================= */
+/* =====================================================
+ BIT COUNT
+===================================================== */
 
-function analyzeRunning(
- bytes,
- header,
- bpp,
- picks
-){
+function countBits(n){
 
- const start =
-  header;
+ n=n-((n>>1)&0x55);
+ n=(n&0x33)+((n>>2)&0x33);
 
- const end =
-  header +
-  bpp*picks;
+ return ((n+(n>>4))&0x0F);
+}
 
 
- const rows =
-  bytes.slice(
-   start,
-   end
-  );
+/* =====================================================
+ ANALYZE RUNNING
+===================================================== */
 
+function analyzeRunning(bytes,header,bpp,picks){
 
- const hookCount =
-  bpp*8;
+ const rows=new Uint8Array(
+  bytes.buffer,
+  bytes.byteOffset+header,
+  bpp*picks
+ );
 
+ const hookCount=bpp*8;
 
- const hookActivity =
-  new Uint32Array(
-   hookCount
-  );
+ const hookActivity=new Uint32Array(hookCount);
 
+ let totalOn=0;
 
- let totalOn = 0;
+ for(let y=0;y<picks;y++){
 
+  for(let b=0;b<bpp;b++){
 
- for(
-  let y=0;
-  y<picks;
-  y++
- ){
+   const value=rows[y*bpp+b];
 
-  for(
-   let b=0;
-   b<bpp;
-   b++
-  ){
+   totalOn+=countBits(value);
 
-   const value =
-    rows[
-     y*bpp+b
-    ];
+   for(let bit=0;bit<8;bit++){
 
-
-   totalOn +=
-    countBits(value);
-
-
-   for(
-    let bit=0;
-    bit<8;
-    bit++
-   ){
-
-    if(
-     value &
-     (1<<bit)
-    ){
-
-     hookActivity[
-      b*8+bit
-     ]++;
-
-    }
+    if(value&(1<<bit))
+     hookActivity[b*8+bit]++;
 
    }
 
@@ -1472,536 +979,276 @@ function analyzeRunning(
 
  }
 
-
  return {
-
-  rows64:
-   bytesToBase64(rows),
-
-  totalOn:
-   totalOn,
-
-  averageOn:
-   picks ?
-   totalOn/picks :
-   0,
-
-  hookActivity:
-   Array.from(
-    hookActivity
-   )
-
+  rows64:bytesToBase64(rows),
+  totalOn:totalOn,
+  averageOn:picks?totalOn/picks:0,
+  hookActivity:Array.from(hookActivity)
  };
 
 }
 
 
-function countBits(n){
+/* =====================================================
+ RUNNING FILE
+===================================================== */
 
- n =
-  n -
-  ((n>>1)&0x55);
-
- n =
-  (n&0x33) +
-  ((n>>2)&0x33);
-
- return (
-  (n+(n>>4)) &
-  0x0F
- );
-
-}
-
-
-/* =========================================================
-   RUNNING FILE LOAD
-========================================================= */
-
-async function handleRunningFile(
- file
-){
+async function handleRunningFile(file){
 
  try{
 
-  const buffer =
-   await file.arrayBuffer();
+  const buffer=await file.arrayBuffer();
+  const bytes=new Uint8Array(buffer);
 
+  runningBytes=bytes;
+  runningName=file.name;
 
-  const bytes =
-   new Uint8Array(
-    buffer
-   );
+  const hooks=Number($("hooks").value)||672;
 
-
-  runningBytes =
-   bytes;
-
-  runningName =
-   file.name;
-
-
-  const hooks =
-   Number(
-    $("hooks").value
-   ) || 672;
-
-
-  const structure =
-   detectEPStructure(
-    bytes,
-    hooks
-   );
-
+  const structure=detectEPStructure(bytes,hooks);
 
   if(!structure){
 
-   $("runInfo").className =
-    "status err";
+   $("runInfo").className="status err";
+   $("runInfo").textContent=
+    "EP structure detect nahi ho paya. Hooks check karein.";
 
-   $("runInfo").textContent =
-    "EP structure detect nahi ho paya. Hooks/header check karein.";
-
-   $("analyzeBtn").disabled =
-    true;
-
-   $("saveMachineBtn").disabled =
-    true;
+   $("analyzeBtn").disabled=true;
+   $("saveMachineBtn").disabled=true;
 
    return;
-
   }
 
+  $("headerLen").value=structure.headerLength;
+  $("bytesPerPick").value=structure.bytesPerPick;
+  $("originalPicks").value=structure.picks;
 
-  $("headerLen").value =
-   structure.headerLength;
+  runningAnalysis=analyzeRunning(
+   bytes,
+   structure.headerLength,
+   structure.bytesPerPick,
+   structure.picks
+  );
 
+  $("runInfo").className="status ok";
 
-  $("bytesPerPick").value =
-   structure.bytesPerPick;
+  $("runInfo").innerHTML=
+   "✓ "+escapeHtml(file.name)+
+   "<br>Size: "+bytes.length.toLocaleString()+" bytes"+
+   "<br>Header: "+structure.headerLength+" bytes"+
+   "<br>Bytes/Pick: "+structure.bytesPerPick+
+   "<br>Picks: "+structure.picks;
 
+  $("analysisBox").className="status ok";
 
-  $("originalPicks").value =
-   structure.picks;
+  $("analysisBox").innerHTML=
+   "✓ Running EP analyzed"+
+   "<br>Hooks: "+hooks+
+   "<br>Average ON hooks/pick: "+
+   runningAnalysis.averageOn.toFixed(2);
 
-
-  const analysis =
-   analyzeRunning(
-    bytes,
-    structure.headerLength,
-    structure.bytesPerPick,
-    structure.picks
-   );
-
-
-  runningAnalysis =
-   analysis;
-
-
-  $("runInfo").className =
-   "status ok";
-
-
-  $("runInfo").innerHTML =
-   "✓ " +
-   escapeHtml(file.name) +
-   "<br>Size: " +
-   bytes.length.toLocaleString() +
-   " bytes" +
-   "<br>Header: " +
-   structure.headerLength +
-   " bytes" +
-   "<br>Bytes/Pick: " +
-   structure.bytesPerPick +
-   "<br>Picks: " +
-   structure.picks;
-
-
-  $("analysisBox").className =
-   "status ok";
-
-
-  $("analysisBox").innerHTML =
-   "✓ Running EP analyzed" +
-   "<br>Hooks: " +
-   hooks +
-   "<br>Average ON hooks/pick: " +
-   analysis.averageOn.toFixed(2);
-
-
-  $("analyzeBtn").disabled =
-   false;
-
+  $("analyzeBtn").disabled=false;
 
   updateSaveButton();
-
 
  }catch(error){
 
   console.error(error);
 
-
-  $("runInfo").className =
-   "status err";
-
-
-  $("runInfo").textContent =
-   "File read error: " +
-   error.message;
+  $("runInfo").className="status err";
+  $("runInfo").textContent=
+   "File read error: "+error.message;
 
  }
 
 }
 
 
-/* =========================================================
-   SAVE BUTTON
-========================================================= */
+/* =====================================================
+ SAVE BUTTON
+===================================================== */
 
 function updateSaveButton(){
 
- $("saveMachineBtn").disabled =
-  !(
-   runningBytes &&
-   $("machineName")
-    .value
-    .trim()
-  );
+ $("saveMachineBtn").disabled=
+  !(runningBytes&&$("machineName").value.trim());
 
 }
 
 
-/* =========================================================
-   SAVE NEW MACHINE
-========================================================= */
+/* =====================================================
+ SAVE MACHINE
+===================================================== */
 
 async function saveNewMachine(){
 
  try{
 
-  const name =
-   $("machineName")
-    .value
-    .trim();
-
+  const name=$("machineName").value.trim();
 
   if(!name){
-
-   alert(
-    "Machine Name bharna zaroori hai."
-   );
-
+   alert("Machine Name bharna zaroori hai.");
    return;
-
   }
-
 
   if(!runningBytes){
-
-   alert(
-    "Pehle Running EP select karein."
-   );
-
+   alert("Pehle Running EP select karein.");
    return;
-
   }
 
+  updateDoriValues();
 
-  const type =
-   $("jacquardType").value ||
-   "Baver";
+  const hooks=Number($("hooks").value)||672;
+  const headerLen=Number($("headerLen").value);
+  const bpp=Number($("bytesPerPick").value);
+  const picks=Number($("originalPicks").value);
 
-
-  const dori =
-   getDoriInfo(type);
-
-
-  const hooks =
-   Number(
-    $("hooks").value
-   ) || 672;
-
-
-  const headerLen =
-   Number(
-    $("headerLen").value
-   );
-
-
-  const bpp =
-   Number(
-    $("bytesPerPick").value
-   );
-
-
-  const picks =
-   Number(
-    $("originalPicks").value
-   );
-
-
-  if(
-   headerLen < 0 ||
-   !bpp ||
-   !picks
-  ){
-
-   alert(
-    "EP parameters check karein."
-   );
-
+  if(!headerLen||!bpp||!picks){
+   alert("EP parameters check karein.");
    return;
-
   }
 
+  const existing=await dbGetAll(MACHINE_STORE);
 
-  const existing =
-   await dbGetAll(
-    MACHINE_STORE
-   );
-
-
-  const duplicate =
-   existing.find(
-    m =>
-     String(m.name)
-      .trim()
-      .toLowerCase() ===
-     name.toLowerCase()
-   );
-
+  const duplicate=existing.find(m=>
+   String(m.name).trim().toLowerCase()===
+   name.toLowerCase()
+  );
 
   if(duplicate){
 
    alert(
-    "Is naam ka Machine already saved hai.\n\n" +
+    "Is naam ka Machine already saved hai.\n\n"+
     "Naya naam use karein."
    );
 
    return;
-
   }
 
+  const header=runningBytes.slice(0,headerLen);
 
-  const header =
-   runningBytes.slice(
-    0,
-    headerLen
-   );
+  const rows=runningBytes.slice(
+   headerLen,
+   headerLen+bpp*picks
+  );
 
+  if(rows.length!==bpp*picks){
 
-  const rows =
-   runningBytes.slice(
-    headerLen,
-    headerLen +
-    bpp*picks
-   );
-
-
-  if(
-   rows.length !==
-   bpp*picks
-  ){
-
-   alert(
-    "Running EP rows ka size match nahi kar raha."
-   );
-
+   alert("Running EP rows ka size match nahi kar raha.");
    return;
-
   }
 
+  const machine={
 
-  const machine = {
+   id:makeId(),
 
-   id:
-    makeId(),
+   name:name,
 
-   name:
-    name,
+   hooks:hooks,
 
-   /*
-    * Baver / Dadha
-    */
-   jacquardType:
-    dori.type,
+   headerLen:headerLen,
 
-   doriTotal:
-    dori.doriTotal,
+   bpp:bpp,
 
-   doriForward:
-    dori.forward,
+   picks:picks,
 
-   doriReturn:
-    dori.returnDori,
+   fileName:runningName,
 
-   hooks:
-    hooks,
+   header64:bytesToBase64(header),
 
-   headerLen:
-    headerLen,
+   rows64:bytesToBase64(rows),
 
-   bpp:
-    bpp,
+   averageOn:runningAnalysis?
+    runningAnalysis.averageOn:0,
 
-   picks:
-    picks,
+   hookActivity:runningAnalysis?
+    runningAnalysis.hookActivity:[],
 
-   fileName:
-    runningName,
+   /* BAVER */
+   baver:{
+    forward:Number($("baverForward").value)||0,
+    return:Number($("baverReturn").value)||0,
+    total:Number($("baverTotal").value)||0
+   },
 
-   header64:
-    bytesToBase64(header),
+   /* DADHA */
+   dadha:{
+    forward:Number($("dadhaForward").value)||0,
+    return:Number($("dadhaReturn").value)||0,
+    total:Number($("dadhaTotal").value)||0
+   },
 
-   rows64:
-    bytesToBase64(rows),
+   /* DESIGN STRUCTURE */
+   groundMode:$("groundMode").value,
+   borderMode:$("borderMode").value,
+   doriPattern:$("doriPattern").value,
 
-   averageOn:
-    runningAnalysis ?
-    runningAnalysis.averageOn :
-    0,
+   createdAt:Date.now(),
 
-   hookActivity:
-    runningAnalysis ?
-    runningAnalysis.hookActivity :
-    [],
-
-   createdAt:
-    Date.now(),
-
-   version:
-    6
+   version:7
 
   };
 
+  $("saveMachineBtn").disabled=true;
 
-  $("saveMachineBtn").disabled =
-   true;
+  await dbPut(MACHINE_STORE,machine);
 
+  toast("✓ Baver + Dadha machine plan save ho gaya.");
 
-  await dbPut(
-   MACHINE_STORE,
-   machine
-  );
+  await refreshMachines(machine.id);
 
+  $("machineName").value="";
+  $("runningFile").value="";
 
-  toast(
-   "✓ " +
-   dori.type +
-   " machine save ho gayi."
-  );
+  runningBytes=null;
+  runningName="";
+  runningAnalysis=null;
 
-
-  /*
-   * New machine ko immediately
-   * select bhi karte hain.
-   */
-
-  await refreshMachines(
-   machine.id
-  );
-
-
-  $("machineName").value =
-   "";
-
-
-  $("runningFile").value =
-   "";
-
-
-  runningBytes =
-   null;
-
-  runningName =
-   "";
-
-  runningAnalysis =
-   null;
-
-
-  $("runInfo").className =
-   "status";
-
-
-  $("runInfo").textContent =
+  $("runInfo").className="status";
+  $("runInfo").textContent=
    "Running file select nahi ki gayi.";
 
-
-  $("saveMachineBtn").disabled =
-   true;
-
+  $("saveMachineBtn").disabled=true;
 
  }catch(error){
 
   console.error(error);
 
+  alert("Machine save error:\n"+error.message);
 
-  alert(
-   "Machine save error:\n" +
-   error.message
-  );
-
-
-  $("saveMachineBtn").disabled =
-   false;
+  $("saveMachineBtn").disabled=false;
 
  }
 
 }
 
 
-/* =========================================================
-   REFRESH MACHINE LIST
-========================================================= */
+/* =====================================================
+ REFRESH
+===================================================== */
 
-async function refreshMachines(
- preferredId=null
-){
+async function refreshMachines(preferredId=null){
 
- const machines =
-  await dbGetAll(
-   MACHINE_STORE
-  );
+ const machines=await dbGetAll(MACHINE_STORE);
 
-
- machines.sort(
-  (a,b)=>
-   Number(b.createdAt || 0) -
-   Number(a.createdAt || 0)
+ machines.sort((a,b)=>
+  Number(b.createdAt||0)-Number(a.createdAt||0)
  );
 
-
- renderMachineList(
-  machines
- );
-
-
- renderMachineSelect(
-  machines,
-  preferredId
- );
-
+ renderMachineList(machines);
+ renderMachineSelect(machines,preferredId);
 
  if(preferredId){
 
-  const found =
-   machines.find(
-    m =>
-     String(m.id) ===
-     String(preferredId)
-   );
-
+  const found=machines.find(
+   m=>String(m.id)===String(preferredId)
+  );
 
   if(found){
 
-   selectedMachine =
-    normalizeMachine(found);
+   selectedMachine=found;
 
-
-   $("machineSelect").value =
-    String(found.id);
-
+   $("machineSelect").value=String(found.id);
 
    showSelectedMachine();
 
@@ -2012,790 +1259,428 @@ async function refreshMachines(
 }
 
 
-/* =========================================================
-   NORMALIZE OLD MACHINES
-========================================================= */
+/* =====================================================
+ MACHINE LIST
+===================================================== */
 
-function normalizeMachine(machine){
+function renderMachineList(machines){
 
- /*
-  * Purane saved machines mein
-  * Baver/Dadha fields nahi honge.
-  *
-  * Unko default Baver maana jayega
-  * taaki purana data delete na ho.
-  */
-
- if(!machine.jacquardType){
-
-  machine.jacquardType =
-   "Baver";
-
-  machine.doriTotal =
-   8;
-
-  machine.doriForward =
-   4;
-
-  machine.doriReturn =
-   4;
-
- }
-
-
- return machine;
-
-}
-
-
-/* =========================================================
-   MACHINE LIST
-========================================================= */
-
-function renderMachineList(
- machines
-){
-
- const box =
-  $("machineList");
-
+ const box=$("machineList");
 
  if(!machines.length){
 
-  box.innerHTML =
-   '<div class="status">' +
-   'Abhi koi machine saved nahi hai.' +
-   '</div>';
+  box.innerHTML=
+   '<div class="status">Abhi koi machine saved nahi hai.</div>';
 
   return;
-
  }
 
+ box.innerHTML=machines.map(machine=>{
 
- box.innerHTML =
-  machines.map(
-   machine=>{
+  const baver=machine.baver||{
+   forward:4,return:4,total:8
+  };
 
-    const m =
-     normalizeMachine(
-      machine
-     );
+  const dadha=machine.dadha||{
+   forward:2,return:2,total:4
+  };
 
+  return `
+   <div class="machine">
 
-    const dori =
-     getDoriInfo(
-      m.jacquardType
-     );
+    <div class="machine-title">
 
-
-    return `
-
-    <div class="machine">
-
-     <div class="machine-title">
-
-      <div class="machine-name">
-       ${escapeHtml(m.name)}
-      </div>
-
-      <span class="pill">
-       ${escapeHtml(m.jacquardType || "Baver")}
-      </span>
-
+     <div class="machine-name">
+      ${escapeHtml(machine.name)}
      </div>
 
-
-     <div style="margin-top:5px">
-
-      <span class="pill">
-       ${m.hooks} Hooks
-      </span>
-
-      <span class="pill">
-       ${dori.doriTotal} Dori
-      </span>
-
-      <span class="pill">
-       ${dori.forward}F +
-       ${dori.returnDori}R
-      </span>
-
-      <span class="pill">
-       ${m.bpp} Bytes/Pick
-      </span>
-
-      <span class="pill">
-       ${m.picks} Picks
-      </span>
-
-     </div>
-
-
-     <div style="margin-top:4px">
-
-      <span class="pill">
-       ${escapeHtml(m.fileName || "Running EP")}
-      </span>
-
-     </div>
-
-
-     <div class="row" style="margin-top:9px">
-
-      <button
-       class="green"
-       data-use-machine="${escapeAttr(m.id)}"
-      >
-       Use Machine
-      </button>
-
-
-      <button
-       class="red"
-       data-delete-machine="${escapeAttr(m.id)}"
-      >
-       Delete
-      </button>
-
-     </div>
+     <span class="pill">
+      ${machine.hooks} Hooks
+     </span>
 
     </div>
 
-    `;
+    <div style="margin-top:5px">
 
-   }
-  ).join("");
+     <span class="pill">
+      Baver ${baver.forward}+${baver.return}
+     </span>
+
+     <span class="pill">
+      Dadha ${dadha.forward}+${dadha.return}
+     </span>
+
+     <span class="pill">
+      ${machine.bpp} Bytes/Pick
+     </span>
+
+     <span class="pill">
+      ${machine.picks} Picks
+     </span>
+
+    </div>
+
+    <div style="margin-top:5px">
+
+     <span class="pill">
+      ${escapeHtml(machine.fileName||"Running EP")}
+     </span>
+
+    </div>
+
+    <div class="row" style="margin-top:9px">
+
+     <button
+      class="green"
+      data-use-machine="${escapeAttr(machine.id)}">
+      Use Machine
+     </button>
+
+     <button
+      class="red"
+      data-delete-machine="${escapeAttr(machine.id)}">
+      Delete
+     </button>
+
+    </div>
+
+   </div>
+  `;
+
+ }).join("");
 
 
- /*
-  * EVENT DELEGATION
-  */
+ box.querySelectorAll("[data-use-machine]").forEach(button=>{
 
- box.querySelectorAll(
-  "[data-use-machine]"
- ).forEach(
-  button=>{
+  button.onclick=async()=>{
 
-   button.onclick =
-    async ()=>{
+   await selectMachineById(
+    String(button.dataset.useMachine)
+   );
 
-     const id =
-      String(
-       button.dataset.useMachine
-      );
+  };
+
+ });
 
 
-     await selectMachineById(
-      id
-     );
+ box.querySelectorAll("[data-delete-machine]").forEach(button=>{
 
-    };
+  button.onclick=async()=>{
 
-  }
- );
+   await deleteMachineById(
+    String(button.dataset.deleteMachine)
+   );
 
+  };
 
- box.querySelectorAll(
-  "[data-delete-machine]"
- ).forEach(
-  button=>{
-
-   button.onclick =
-    async ()=>{
-
-     const id =
-      String(
-       button.dataset.deleteMachine
-      );
-
-
-     await deleteMachineById(
-      id
-     );
-
-    };
-
-  }
- );
+ });
 
 }
 
 
-/* =========================================================
-   MACHINE DROPDOWN
-========================================================= */
+/* =====================================================
+ MACHINE SELECT
+===================================================== */
 
-function renderMachineSelect(
- machines,
- preferredId=null
-){
+function renderMachineSelect(machines,preferredId=null){
 
- const select =
-  $("machineSelect");
+ const select=$("machineSelect");
 
+ const oldValue=
+  preferredId!==null
+  ?String(preferredId)
+  :String(select.value||"");
 
- const oldValue =
-  preferredId !== null
-   ? String(preferredId)
-   : String(
-      select.value || ""
-     );
+ select.innerHTML=
+  '<option value="">-- Saved machine select karein --</option>';
 
+ machines.forEach(machine=>{
 
- select.innerHTML =
-  '<option value="">' +
-  '-- Saved machine select karein --' +
-  '</option>';
+  const option=document.createElement("option");
 
+  option.value=String(machine.id);
 
- machines.forEach(
-  machine=>{
+  option.textContent=
+   machine.name+" • "+machine.hooks+" Hooks";
 
-   const m =
-    normalizeMachine(
-     machine
-    );
+  select.appendChild(option);
 
+ });
 
-   const option =
-    document.createElement(
-     "option"
-    );
+ if(oldValue&&machines.some(
+  m=>String(m.id)===oldValue
+ )){
 
-
-   option.value =
-    String(m.id);
-
-
-   option.textContent =
-    m.name +
-    " • " +
-    (m.jacquardType || "Baver") +
-    " • " +
-    m.hooks +
-    " Hooks";
-
-
-   select.appendChild(
-    option
-   );
-
-  }
- );
-
-
- if(
-  oldValue &&
-  machines.some(
-   m =>
-    String(m.id) ===
-    oldValue
-  )
- ){
-
-  select.value =
-   oldValue;
+  select.value=oldValue;
 
  }else{
 
-  select.value =
-   "";
+  select.value="";
 
  }
 
 }
 
 
-/* =========================================================
-   SELECT MACHINE
-========================================================= */
+/* =====================================================
+ SELECT MACHINE
+===================================================== */
 
-async function selectMachineById(
- id
-){
+async function selectMachineById(id){
 
- id =
-  String(id);
-
-
- const machine =
-  await dbGet(
-   MACHINE_STORE,
-   id
-  );
-
+ const machine=await dbGet(
+  MACHINE_STORE,
+  String(id)
+ );
 
  if(!machine){
 
-  alert(
-   "Machine record nahi mila."
-  );
-
-
+  alert("Machine record nahi mila.");
   await refreshMachines();
-
   return;
-
  }
 
+ selectedMachine=machine;
 
- selectedMachine =
-  normalizeMachine(
-   machine
-  );
+ $("machineSelect").value=String(machine.id);
 
-
- $("machineSelect").value =
-  String(
-   selectedMachine.id
-  );
-
-
- /*
-  * Design ko selected machine ke saath
-  * fresh prepare karna hoga.
-  */
-
- currentDesignMachineId =
-  null;
-
- binaryBits =
-  null;
-
+ currentDesignMachineId=null;
+ binaryBits=null;
 
  showSelectedMachine();
 
+ switchTab("design");
 
- /*
-  * Agar design already loaded hai,
-  * to isi machine ke liye dobara render karein.
-  */
-
- if(designImage){
-
-  currentDesignMachineId =
-   String(
-    selectedMachine.id
-   );
-
-  renderBinary();
-
- }
-
-
- switchTab(
-  "design"
- );
-
-
- toast(
-  "✓ " +
-  selectedMachine.name +
-  " selected"
- );
+ toast("✓ "+machine.name+" selected");
 
 }
 
 
-/* =========================================================
-   DELETE MACHINE
-========================================================= */
+/* =====================================================
+ DELETE MACHINE
+===================================================== */
 
-async function deleteMachineById(
- id
-){
+async function deleteMachineById(id){
 
- id =
-  String(id);
+ id=String(id);
 
-
- const machine =
-  await dbGet(
-   MACHINE_STORE,
-   id
-  );
-
+ const machine=await dbGet(
+  MACHINE_STORE,
+  id
+ );
 
  if(!machine){
 
-  alert(
-   "Machine already delete ho chuki hai."
-  );
-
-
   await refreshMachines();
-
   return;
-
  }
 
+ const ok=confirm(
+  "Machine delete karni hai?\n\n"+
+  machine.name+
+  "\n\nYe action undo nahi hoga."
+ );
 
- const ok =
-  confirm(
-   "Machine delete karni hai?\n\n" +
-   machine.name +
-   "\n\nYe action undo nahi hoga."
-  );
-
-
- if(!ok)
-  return;
-
+ if(!ok)return;
 
  try{
 
-  await dbDelete(
-   MACHINE_STORE,
-   id
-  );
-
+  await dbDelete(MACHINE_STORE,id);
 
   if(
-   selectedMachine &&
-   String(
-    selectedMachine.id
-   ) === id
+   selectedMachine&&
+   String(selectedMachine.id)===id
   ){
 
-   selectedMachine =
-    null;
-
-   currentDesignMachineId =
-    null;
-
-   binaryBits =
-    null;
-
+   selectedMachine=null;
+   currentDesignMachineId=null;
+   binaryBits=null;
   }
-
 
   await refreshMachines();
 
-
   showSelectedMachine();
 
-
-  toast(
-   "✓ " +
-   machine.name +
-   " delete ho gayi."
-  );
-
+  toast("✓ "+machine.name+" delete ho gayi.");
 
  }catch(error){
 
   console.error(error);
 
-
-  alert(
-   "Delete error:\n" +
-   error.message
-  );
+  alert("Delete error:\n"+error.message);
 
  }
 
 }
 
 
-/* =========================================================
-   SHOW SELECTED MACHINE
-========================================================= */
+/* =====================================================
+ SHOW SELECTED MACHINE
+===================================================== */
 
 function showSelectedMachine(){
 
  if(!selectedMachine){
 
-  $("selectedMachineInfo")
-   .className =
-   "status";
+  $("selectedMachineInfo").className="status";
 
-
-  $("selectedMachineInfo")
-   .textContent =
+  $("selectedMachineInfo").textContent=
    "Pehle saved machine select karein.";
 
+  $("targetPicks").value=1;
 
   updateDesignCheck();
 
   return;
-
  }
 
+ const b=selectedMachine.baver||{
+  forward:4,return:4,total:8
+ };
 
- selectedMachine =
-  normalizeMachine(
-   selectedMachine
-  );
+ const d=selectedMachine.dadha||{
+  forward:2,return:2,total:4
+ };
 
+ $("selectedMachineInfo").className="status ok";
 
- const dori =
-  getDoriInfo(
-   selectedMachine.jacquardType
-  );
-
-
- $("selectedMachineInfo")
-  .className =
-  "status ok";
-
-
- $("selectedMachineInfo")
-  .innerHTML =
-
-  "<b>" +
-  escapeHtml(
-   selectedMachine.name
-  ) +
-  "</b> selected" +
-
-  "<br>" +
-
-  "<b>Type:</b> " +
-  escapeHtml(
-   selectedMachine.jacquardType
-  ) +
-
-  " • " +
-
-  dori.doriTotal +
-  " Dori • " +
-
-  dori.forward +
-  " Forward + " +
-
-  dori.returnDori +
-  " Return" +
-
-  "<br>" +
-
-  selectedMachine.hooks +
-  " Hooks • " +
-
-  selectedMachine.bpp +
-  " bytes/pick • " +
-
-  selectedMachine.picks +
-  " running picks" +
-
-  "<br>" +
-
-  "<span class='sub'>" +
-  "Running: " +
-  escapeHtml(
-   selectedMachine.fileName
-  ) +
+ $("selectedMachineInfo").innerHTML=
+  "<b>"+escapeHtml(selectedMachine.name)+
+  "</b> selected"+
+  "<br>"+
+  selectedMachine.hooks+" Hooks • "+
+  selectedMachine.bpp+" Bytes/Pick • "+
+  selectedMachine.picks+" Running Picks"+
+  "<br>"+
+  "<span class='pill'>Baver: "+
+  b.forward+" Forward + "+
+  b.return+" Return = "+
+  b.total+
+  "</span>"+
+  "<span class='pill'>Dadha: "+
+  d.forward+" Forward + "+
+  d.return+" Return = "+
+  d.total+
+  "</span>"+
+  "<br><span class='sub'>Running: "+
+  escapeHtml(selectedMachine.fileName||"")+
   "</span>";
 
-
- $("targetPicks").value =
-  selectedMachine.picks;
-
+ $("targetPicks").value=selectedMachine.picks;
 
  updateDesignCheck();
 
 }
 
 
-/* =========================================================
-   DESIGN FILE
-========================================================= */
+/* =====================================================
+ DESIGN LOAD
+===================================================== */
 
-function loadDesign(
- file
-){
+function loadDesign(file){
 
- const url =
-  URL.createObjectURL(
-   file
-  );
+ const url=URL.createObjectURL(file);
+ const img=new Image();
 
+ img.onload=()=>{
 
- const img =
-  new Image();
+  designImage=img;
+  designFileName=file.name;
 
+  $("originalPreview").src=url;
+  $("originalPreview").classList.remove("hidden");
 
- img.onload =
-  ()=>{
+  $("designInfo").className="status";
 
-   designImage =
-    img;
+  $("designInfo").textContent=
+   img.naturalWidth+
+   " × "+
+   img.naturalHeight+
+   " px • "+
+   file.name;
 
+  if(selectedMachine){
 
-   designFileName =
-    file.name;
+   currentDesignMachineId=
+    String(selectedMachine.id);
 
+  }
 
-   $("originalPreview").src =
-    url;
+  renderBinary();
 
+ };
 
-   $("originalPreview")
-    .classList.remove(
-     "hidden"
-    );
+ img.onerror=()=>{
 
+  alert("Design file read nahi ho paayi.");
 
-   $("designInfo")
-    .className =
-    "status";
+ };
 
-
-   $("designInfo")
-    .textContent =
-    img.naturalWidth +
-    " × " +
-    img.naturalHeight +
-    " px • " +
-    file.name;
-
-
-   if(selectedMachine){
-
-    currentDesignMachineId =
-     String(
-      selectedMachine.id
-     );
-
-   }
-
-
-   renderBinary();
-
-  };
-
-
- img.onerror =
-  ()=>{
-
-   alert(
-    "Design file read nahi ho paayi."
-   );
-
-  };
-
-
- img.src =
-  url;
+ img.src=url;
 
 }
 
 
-/* =========================================================
-   BINARY DESIGN
-========================================================= */
+/* =====================================================
+ BINARY
+===================================================== */
 
 function renderBinary(){
 
- if(
-  !designImage ||
-  !selectedMachine
- )
-  return;
+ if(!designImage||!selectedMachine)return;
 
+ const W=Number(selectedMachine.hooks);
 
- const W =
-  Number(
-   selectedMachine.hooks
-  );
-
-
- const H =
-  Math.max(
-   1,
-   Number(
-    $("targetPicks").value
-   ) ||
-   selectedMachine.picks
-  );
-
-
- const left =
-  Math.max(
-   0,
-   Number(
-    $("leftPad").value
-   ) || 0
-  );
-
-
- const right =
-  Math.max(
-   0,
-   Number(
-    $("rightPad").value
-   ) || 0
-  );
-
-
- const drawWidth =
-  Math.max(
-   1,
-   W-left-right
-  );
-
-
- $("targetPicks").value =
-  H;
-
-
- const canvas =
-  document.createElement(
-   "canvas"
-  );
-
-
- canvas.width =
-  drawWidth;
-
-
- canvas.height =
-  H;
-
-
- const ctx =
-  canvas.getContext(
-   "2d",
-   {
-    willReadFrequently:true
-   }
-  );
-
-
- ctx.imageSmoothingEnabled =
-  false;
-
-
- ctx.fillStyle =
-  "#ffffff";
-
-
- ctx.fillRect(
-  0,
-  0,
-  drawWidth,
-  H
+ const H=Math.max(
+  1,
+  Number($("targetPicks").value)||
+  selectedMachine.picks
  );
 
+ const left=Math.max(
+  0,
+  Number($("leftPad").value)||0
+ );
+
+ const right=Math.max(
+  0,
+  Number($("rightPad").value)||0
+ );
+
+ const drawWidth=Math.max(
+  1,
+  W-left-right
+ );
+
+ $("targetPicks").value=H;
+
+ const canvas=document.createElement("canvas");
+
+ canvas.width=drawWidth;
+ canvas.height=H;
+
+ const ctx=canvas.getContext(
+  "2d",
+  {willReadFrequently:true}
+ );
+
+ ctx.imageSmoothingEnabled=false;
+
+ ctx.fillStyle="#ffffff";
+
+ ctx.fillRect(0,0,drawWidth,H);
 
  ctx.save();
 
-
  ctx.translate(
-  mirror ?
-   drawWidth :
-   0,
-
-  flip ?
-   H :
-   0
+  mirror?drawWidth:0,
+  flip?H:0
  );
-
 
  ctx.scale(
-  mirror ? -1 : 1,
-  flip ? -1 : 1
+  mirror?-1:1,
+  flip?-1:1
  );
-
 
  ctx.drawImage(
   designImage,
@@ -2805,85 +1690,40 @@ function renderBinary(){
   H
  );
 
-
  ctx.restore();
 
+ const pixels=ctx.getImageData(
+  0,0,drawWidth,H
+ ).data;
 
- const pixels =
-  ctx.getImageData(
-   0,
-   0,
-   drawWidth,
-   H
-  ).data;
+ binaryBits=new Uint8Array(W*H);
 
+ let threshold=Number($("threshold").value);
 
- binaryBits =
-  new Uint8Array(
-   W*H
-  );
+ if(!Number.isFinite(threshold))
+  threshold=128;
 
+ for(let y=0;y<H;y++){
 
- let threshold =
-  Number(
-   $("threshold").value
-  );
+  for(let x=0;x<drawWidth;x++){
 
+   const index=(y*drawWidth+x)*4;
 
- if(
-  !Number.isFinite(
-   threshold
-  )
- )
-  threshold = 128;
-
-
- for(
-  let y=0;
-  y<H;
-  y++
- ){
-
-  for(
-   let x=0;
-   x<drawWidth;
-   x++
-  ){
-
-   const index =
-    (y*drawWidth+x)*4;
-
-
-   const gray =
-    0.299*pixels[index] +
-    0.587*pixels[index+1] +
+   const gray=
+    0.299*pixels[index]+
+    0.587*pixels[index+1]+
     0.114*pixels[index+2];
 
-
-   let on =
-    gray < threshold
-     ? 1
-     : 0;
-
+   let on=gray<threshold?1:0;
 
    if(invert)
-    on =
-     on ? 0 : 1;
+    on=on?0:1;
 
+   const realX=left+x;
 
-   const realX =
-    left+x;
+   if(realX>=0&&realX<W){
 
-
-   if(
-    realX >= 0 &&
-    realX < W
-   ){
-
-    binaryBits[
-     y*W+realX
-    ] =
-     on;
+    binaryBits[y*W+realX]=on;
 
    }
 
@@ -2892,126 +1732,53 @@ function renderBinary(){
  }
 
 
- /*
-  * PREVIEW
-  */
+ const preview=$("binaryCanvas");
 
- const preview =
-  $("binaryCanvas");
+ const previewWidth=Math.min(900,W);
 
+ const previewHeight=Math.min(
+  600,
+  Math.max(
+   100,
+   Math.round(H*previewWidth/W)
+  )
+ );
 
- const previewWidth =
-  Math.min(
-   900,
-   W
-  );
+ preview.width=previewWidth;
+ preview.height=previewHeight;
 
+ const temp=document.createElement("canvas");
 
- const previewHeight =
-  Math.min(
-   600,
-   Math.max(
-    100,
-    Math.round(
-     H*
-     previewWidth/
-     W
-    )
-   )
-  );
+ temp.width=W;
+ temp.height=H;
 
+ const tempCtx=temp.getContext("2d");
 
- preview.width =
-  previewWidth;
+ const image=tempCtx.createImageData(W,H);
 
+ for(let y=0;y<H;y++){
 
- preview.height =
-  previewHeight;
+  for(let x=0;x<W;x++){
 
+   const value=
+    binaryBits[y*W+x]?0:255;
 
- const temp =
-  document.createElement(
-   "canvas"
-  );
+   const i=(y*W+x)*4;
 
-
- temp.width =
-  W;
-
- temp.height =
-  H;
-
-
- const tempCtx =
-  temp.getContext(
-   "2d"
-  );
-
-
- const image =
-  tempCtx.createImageData(
-   W,
-   H
-  );
-
-
- for(
-  let y=0;
-  y<H;
-  y++
- ){
-
-  for(
-   let x=0;
-   x<W;
-   x++
-  ){
-
-   const value =
-    binaryBits[
-     y*W+x
-    ]
-     ? 0
-     : 255;
-
-
-   const i =
-    (y*W+x)*4;
-
-
-   image.data[i] =
-    value;
-
-   image.data[i+1] =
-    value;
-
-   image.data[i+2] =
-    value;
-
-   image.data[i+3] =
-    255;
+   image.data[i]=value;
+   image.data[i+1]=value;
+   image.data[i+2]=value;
+   image.data[i+3]=255;
 
   }
 
  }
 
+ tempCtx.putImageData(image,0,0);
 
- tempCtx.putImageData(
-  image,
-  0,
-  0
- );
+ const previewCtx=preview.getContext("2d");
 
-
- const previewCtx =
-  preview.getContext(
-   "2d"
-  );
-
-
- previewCtx.imageSmoothingEnabled =
-  false;
-
+ previewCtx.imageSmoothingEnabled=false;
 
  previewCtx.drawImage(
   temp,
@@ -3021,366 +1788,223 @@ function renderBinary(){
   previewHeight
  );
 
-
  updateDesignCheck();
 
 }
 
 
-/* =========================================================
-   DESIGN CHECK
-========================================================= */
+/* =====================================================
+ DESIGN CHECK
+===================================================== */
 
 function updateDesignCheck(){
 
- if(
-  !selectedMachine ||
-  !designImage
- ){
+ if(!selectedMachine||!designImage){
 
-  $("designCheck")
-   .className =
-   "status";
+  $("designCheck").className="status";
 
-
-  $("designCheck")
-   .textContent =
+  $("designCheck").textContent=
    "Machine aur design select karein.";
 
-
-  $("convertBtn")
-   .disabled =
-   true;
-
+  $("convertBtn").disabled=true;
 
   return;
-
  }
 
+ const H=Math.max(
+  1,
+  Number($("targetPicks").value)||
+  selectedMachine.picks
+ );
 
- const H =
-  Math.max(
-   1,
-   Number(
-    $("targetPicks").value
-   ) ||
-   selectedMachine.picks
-  );
+ const expectedBpp=
+  Math.ceil(selectedMachine.hooks/8);
 
-
- const expectedBpp =
-  Math.ceil(
-   selectedMachine.hooks/8
-  );
-
-
- const outputSize =
-  selectedMachine.headerLen +
+ const outputSize=
+  selectedMachine.headerLen+
   selectedMachine.bpp*H;
 
+ $("designCheck").className="status ok";
 
- $("designCheck")
-  .className =
-  "status ok";
-
-
- $("designCheck")
-  .innerHTML =
-
-  "✓ <b>" +
-  escapeHtml(
-   selectedMachine.name
-  ) +
-  "</b> selected" +
-
-  "<br>" +
-
-  "Type: <b>" +
-  escapeHtml(
-   selectedMachine.jacquardType ||
-   "Baver"
-  ) +
-  "</b>" +
-
-  " • " +
-  selectedMachine.doriTotal +
-  " Dori" +
-
-  "<br>" +
-
-  selectedMachine.hooks +
-  " Hooks × " +
-  H +
-  " Picks" +
-
-  "<br>" +
-
-  "Output size: " +
-  outputSize.toLocaleString() +
-  " bytes" +
-
-  "<br>" +
-
-  "Machine row width: " +
-  selectedMachine.bpp +
+ $("designCheck").innerHTML=
+  "✓ <b>"+
+  escapeHtml(selectedMachine.name)+
+  "</b> selected"+
+  "<br>"+
+  selectedMachine.hooks+
+  " Hooks × "+
+  H+
+  " Picks"+
+  "<br>"+
+  "Output size: "+
+  outputSize.toLocaleString()+
+  " bytes"+
+  "<br>"+
+  "Machine row width: "+
+  selectedMachine.bpp+
   " bytes/pick";
 
-
- $("convertBtn")
-  .disabled =
-
-  String(
-   currentDesignMachineId
-  ) !==
-  String(
-   selectedMachine.id
-  ) ||
-
-  selectedMachine.bpp <
-  expectedBpp;
-
+ $("convertBtn").disabled=
+  String(currentDesignMachineId)!==
+  String(selectedMachine.id)||
+  selectedMachine.bpp<expectedBpp;
 
  validatePreview();
 
 }
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
+/* =====================================================
+ VALIDATION
+===================================================== */
 
 function validatePreview(){
 
  if(!selectedMachine){
 
-  $("validation")
-   .innerHTML =
-   "";
-
-  $("hexPreview")
-   .textContent =
-   "";
-
+  $("validation").innerHTML="";
+  $("hexPreview").textContent="";
   return;
-
  }
 
+ const H=Math.max(
+  1,
+  Number($("targetPicks").value)||
+  selectedMachine.picks
+ );
 
- const H =
-  Math.max(
-   1,
-   Number(
-    $("targetPicks").value
-   ) ||
-   selectedMachine.picks
-  );
+ const b=selectedMachine.baver||{
+  forward:4,return:4,total:8
+ };
 
+ const d=selectedMachine.dadha||{
+  forward:2,return:2,total:4
+ };
 
- $("validation")
-  .innerHTML = `
+ $("validation").innerHTML=`
 
-   <div class="status">
-    Type<br>
-    <b>${escapeHtml(
-     selectedMachine.jacquardType ||
-     "Baver"
-    )}</b>
-   </div>
+  <div class="status">
+   Hooks<br><b>${selectedMachine.hooks}</b>
+  </div>
 
-   <div class="status">
-    Dori<br>
-    <b>${selectedMachine.doriTotal}</b>
-   </div>
+  <div class="status">
+   Picks<br><b>${H}</b>
+  </div>
 
-   <div class="status">
-    Hooks<br>
-    <b>${selectedMachine.hooks}</b>
-   </div>
+  <div class="status">
+   Baver<br>
+   <b>${b.forward} F + ${b.return} R</b>
+  </div>
 
-   <div class="status">
-    Picks<br>
-    <b>${H}</b>
-   </div>
+  <div class="status">
+   Dadha<br>
+   <b>${d.forward} F + ${d.return} R</b>
+  </div>
 
-   <div class="status">
-    Header<br>
-    <b>${selectedMachine.headerLen} bytes</b>
-   </div>
+  <div class="status">
+   Header<br>
+   <b>${selectedMachine.headerLen} bytes</b>
+  </div>
 
-   <div class="status">
-    Bytes/Pick<br>
-    <b>${selectedMachine.bpp}</b>
-   </div>
+  <div class="status">
+   Bytes/Pick<br>
+   <b>${selectedMachine.bpp}</b>
+  </div>
 
-  `;
-
+ `;
 
  updateHex();
 
 }
 
 
-/* =========================================================
-   NATIVE EP BUILD
-========================================================= */
+/* =====================================================
+ NATIVE EP
+===================================================== */
 
 function buildNativeEP(){
 
- if(!selectedMachine){
+ if(!selectedMachine)
+  throw new Error("Pehle machine select karein.");
 
-  throw new Error(
-   "Pehle machine select karein."
-  );
-
- }
-
+ if(!designImage||!binaryBits)
+  throw new Error("Pehle design upload karein.");
 
  if(
-  !designImage ||
-  !binaryBits
- ){
-
-  throw new Error(
-   "Pehle design upload karein."
-  );
-
- }
-
-
- if(
-  String(
-   currentDesignMachineId
-  ) !==
-  String(
-   selectedMachine.id
-  )
- ){
-
+  String(currentDesignMachineId)!==
+  String(selectedMachine.id)
+ )
   throw new Error(
    "Current design selected machine ke liye ready nahi hai. Design dobara select karein."
   );
 
- }
-
-
- const H =
-  Math.max(
-   1,
-   Number(
-    $("targetPicks").value
-   ) ||
-   selectedMachine.picks
-  );
-
-
- const bpp =
-  selectedMachine.bpp;
-
-
- const hooks =
-  selectedMachine.hooks;
-
-
- const header =
-  selectedMachine.headerLen;
-
-
- const headerBytes =
-  base64ToBytes(
-   selectedMachine.header64
-  );
-
-
- const runningRows =
-  base64ToBytes(
-   selectedMachine.rows64
-  );
-
-
- const output =
-  new Uint8Array(
-   header +
-   bpp*H
-  );
-
-
- output.set(
-  headerBytes,
-  0
+ const H=Math.max(
+  1,
+  Number($("targetPicks").value)||
+  selectedMachine.picks
  );
+
+ const bpp=selectedMachine.bpp;
+ const hooks=selectedMachine.hooks;
+ const header=selectedMachine.headerLen;
+
+ const headerBytes=base64ToBytes(
+  selectedMachine.header64
+ );
+
+ const runningRows=base64ToBytes(
+  selectedMachine.rows64
+ );
+
+ const output=new Uint8Array(
+  header+bpp*H
+ );
+
+ output.set(headerBytes,0);
 
 
  /*
-  * Running EP ki original rows
-  * machine pattern preserve karti hain.
+  * Running EP ka machine pattern
+  * base pattern ke roop mein preserve hota hai.
+  *
+  * Baver + Dadha ki saved configuration
+  * machine plan mein available hai.
+  *
+  * Exact proprietary harness algorithm
+  * is code se claim nahi kiya ja raha.
   */
 
- for(
-  let y=0;
-  y<H;
-  y++
- ){
+ for(let y=0;y<H;y++){
 
-  const sourcePick =
-   y %
-   selectedMachine.picks;
+  const sourcePick=
+   y%selectedMachine.picks;
 
-
-  const sourceStart =
+  const sourceStart=
    sourcePick*bpp;
 
-
-  const targetStart =
+  const targetStart=
    header+y*bpp;
 
+  for(let b=0;b<bpp;b++){
 
-  for(
-   let b=0;
-   b<bpp;
-   b++
-  ){
-
-   output[
-    targetStart+b
-   ] =
-    runningRows[
-     sourceStart+b
-    ];
+   output[targetStart+b]=
+    runningRows[sourceStart+b];
 
   }
 
-
   /*
-   * Design ON bits overlay.
-   *
-   * Existing EP conversion logic
-   * preserve ki gayi hai.
+   * Design ON bits.
    */
 
-  for(
-   let x=0;
-   x<hooks;
-   x++
-  ){
+  for(let x=0;x<hooks;x++){
 
-   if(
-    binaryBits[
-     y*hooks+x
-    ]
-   ){
+   if(binaryBits[y*hooks+x]){
 
-    const byteIndex =
-     x>>3;
+    const byteIndex=x>>3;
 
+    const bit=7-(x&7);
 
-    const bit =
-     7-(x&7);
-
-
-    output[
-     targetStart+
-     byteIndex
-    ] |=
+    output[targetStart+byteIndex]|=
      (1<<bit);
 
    }
@@ -3391,150 +2015,89 @@ function buildNativeEP(){
 
 
  /*
-  * Known 34-byte EP header:
-  * pick count byte 3-5.
-  *
-  * Sirf jab header mein ye bytes
-  * available hon tab update.
+  * Common EP header pick count.
   */
 
- if(header >= 6){
+ if(header>=6){
 
-  output[3] =
-   H & 255;
-
-  output[4] =
-   (H>>8) & 255;
-
-  output[5] =
-   (H>>16) & 255;
+  output[3]=H&255;
+  output[4]=(H>>8)&255;
+  output[5]=(H>>16)&255;
 
  }
-
 
  return output;
 
 }
 
 
-/* =========================================================
-   DOWNLOAD
-========================================================= */
+/* =====================================================
+ DOWNLOAD
+===================================================== */
 
 function convertAndDownload(){
 
  try{
 
-  const output =
-   buildNativeEP();
+  const output=buildNativeEP();
 
-
-  const blob =
-   new Blob(
-    [output],
-    {
-     type:
-      "application/octet-stream"
-    }
-   );
-
-
-  const url =
-   URL.createObjectURL(
-    blob
-   );
-
-
-  const base =
-   designFileName
-    .replace(
-     /\.[^.]+$/,
-     ""
-    ) ||
-   "design";
-
-
-  const safeMachineName =
-   selectedMachine.name
-    .replace(
-     /[^a-z0-9_-]+/gi,
-     "_"
-    );
-
-
-  const fileName =
-   base +
-   "_" +
-   safeMachineName +
-   "_Native.EP";
-
-
-  const link =
-   document.createElement(
-    "a"
-   );
-
-
-  link.href =
-   url;
-
-
-  link.download =
-   fileName;
-
-
-  document.body.appendChild(
-   link
+  const blob=new Blob(
+   [output],
+   {type:"application/octet-stream"}
   );
 
+  const url=URL.createObjectURL(blob);
+
+  const base=
+   designFileName.replace(/\.[^.]+$/,"")||
+   "design";
+
+  const safeMachineName=
+   selectedMachine.name.replace(
+    /[^a-z0-9_-]+/gi,
+    "_"
+   );
+
+  const fileName=
+   base+"_"+safeMachineName+"_Native.EP";
+
+  const link=document.createElement("a");
+
+  link.href=url;
+  link.download=fileName;
+
+  document.body.appendChild(link);
 
   link.click();
 
-
   link.remove();
 
+  setTimeout(()=>{
+   URL.revokeObjectURL(url);
+  },1500);
 
-  setTimeout(
-   ()=>{
-    URL.revokeObjectURL(
-     url
-    );
-   },
-   1500
-  );
+  $("validation").innerHTML+=`
 
+   <div class="status ok"
+    style="grid-column:1/-1">
 
-  $("validation")
-   .innerHTML += `
+    ✓ Downloaded:
+    ${escapeHtml(fileName)}
+    <br>
+    Size:
+    ${output.length.toLocaleString()}
+    bytes
 
-    <div
-     class="status ok"
-     style="grid-column:1/-1"
-    >
+   </div>
 
-     ✓ Downloaded:
-     ${escapeHtml(fileName)}
+  `;
 
-     <br>
-
-     Size:
-     ${output.length.toLocaleString()}
-     bytes
-
-    </div>
-
-   `;
-
-
-  toast(
-   "✓ EP download ho gaya."
-  );
-
+  toast("✓ EP download ho gaya.");
 
  }catch(error){
 
   alert(
-   "Conversion error:\n" +
+   "Conversion error:\n"+
    error.message
   );
 
@@ -3543,360 +2106,211 @@ function convertAndDownload(){
 }
 
 
-/* =========================================================
-   HEX
-========================================================= */
+/* =====================================================
+ HEX
+===================================================== */
 
 function updateHex(){
 
  if(!selectedMachine){
 
-  $("hexPreview")
-   .textContent =
-   "";
-
+  $("hexPreview").textContent="";
   return;
-
  }
 
+ const bytes=base64ToBytes(
+  selectedMachine.header64
+ );
 
- const bytes =
-  base64ToBytes(
-   selectedMachine.header64
-  );
-
-
- $("hexPreview")
-  .textContent =
-  makeHex(
-   bytes,
-   96
-  );
+ $("hexPreview").textContent=
+  makeHex(bytes,96);
 
 }
 
 
-function makeHex(
- bytes,
- max
-){
+function makeHex(bytes,max){
 
- let output = "";
+ let output="";
 
+ const length=Math.min(
+  max,
+  bytes.length
+ );
 
- const length =
-  Math.min(
-   max,
-   bytes.length
-  );
+ for(let i=0;i<length;i++){
 
-
- for(
-  let i=0;
-  i<length;
-  i++
- ){
-
-  output +=
+  output+=
    bytes[i]
     .toString(16)
-    .padStart(
-     2,
-     "0"
-    )
-    .toUpperCase() +
+    .padStart(2,"0")
+    .toUpperCase()+
    " ";
 
-
-  if(
-   (i+1)%16 === 0
-  )
-   output +=
-    "\n";
+  if((i+1)%16===0)
+   output+="\n";
 
  }
-
 
  return output;
 
 }
 
 
-/* =========================================================
-   ESCAPE
-========================================================= */
+/* =====================================================
+ ESCAPE
+===================================================== */
 
 function escapeHtml(value){
 
- return String(value)
-  .replace(
-   /[&<>"']/g,
-   function(c){
-
-    return {
-
-     "&":
-      "&amp;",
-
-     "<":
-      "&lt;",
-
-     ">":
-      "&gt;",
-
-     '"':
-      "&quot;",
-
-     "'":
-      "&#039;"
-
-    }[c];
-
-   }
-  );
+ return String(value).replace(
+  /[&<>"']/g,
+  c=>({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[c])
+ );
 
 }
 
 
 function escapeAttr(value){
 
- return String(value)
-  .replace(
-   /"/g,
-   "&quot;"
-  );
+ return String(value).replace(
+  /"/g,
+  "&quot;"
+ );
 
 }
 
 
-/* =========================================================
-   TABS
-========================================================= */
+/* =====================================================
+ TABS
+===================================================== */
 
 function switchTab(id){
 
- document
-  .querySelectorAll(".tab")
-  .forEach(
-   button=>{
+ document.querySelectorAll(".tab")
+ .forEach(button=>{
 
-    button.classList.toggle(
-     "active",
-     button.dataset.tab === id
-    );
-
-   }
+  button.classList.toggle(
+   "active",
+   button.dataset.tab===id
   );
 
+ });
 
- document
-  .querySelectorAll(".panel")
-  .forEach(
-   panel=>{
+ document.querySelectorAll(".panel")
+ .forEach(panel=>{
 
-    panel.classList.toggle(
-     "active",
-     panel.id === id
-    );
-
-   }
+  panel.classList.toggle(
+   "active",
+   panel.id===id
   );
 
+ });
 
- if(id === "design"){
-
+ if(id==="design")
   showSelectedMachine();
-
- }
 
 }
 
 
-/* =========================================================
-   BACKUP EXPORT
-========================================================= */
+/* =====================================================
+ BACKUP EXPORT
+===================================================== */
 
 async function exportBackup(){
 
- const machines =
-  await dbGetAll(
-   MACHINE_STORE
-  );
+ const machines=await dbGetAll(MACHINE_STORE);
 
-
- const backup = {
-
-  version:
-   6,
-
-  createdAt:
-   new Date().toISOString(),
-
-  machines:
-   machines
-
+ const backup={
+  version:7,
+  createdAt:new Date().toISOString(),
+  machines:machines
  };
 
-
- const blob =
-  new Blob(
-   [
-    JSON.stringify(
-     backup
-    )
-   ],
-   {
-    type:
-     "application/json"
-   }
-  );
-
-
- const url =
-  URL.createObjectURL(
-   blob
-  );
-
-
- const a =
-  document.createElement(
-   "a"
-  );
-
-
- a.href =
-  url;
-
-
- a.download =
-  "electronic-designing-machine-backup.json";
-
-
- document.body.appendChild(
-  a
+ const blob=new Blob(
+  [JSON.stringify(backup)],
+  {type:"application/json"}
  );
 
+ const url=URL.createObjectURL(blob);
+
+ const a=document.createElement("a");
+
+ a.href=url;
+ a.download=
+  "electronic-designing-machine-backup.json";
+
+ document.body.appendChild(a);
 
  a.click();
 
-
  a.remove();
 
+ setTimeout(()=>{
+  URL.revokeObjectURL(url);
+ },1000);
 
- setTimeout(
-  ()=>{
-   URL.revokeObjectURL(
-    url
-   );
-  },
-  1000
- );
-
-
- toast(
-  "✓ Backup export ho gaya."
- );
+ toast("✓ Backup export ho gaya.");
 
 }
 
 
-/* =========================================================
-   BACKUP IMPORT
-========================================================= */
+/* =====================================================
+ BACKUP IMPORT
+===================================================== */
 
-async function importBackup(
- file
-){
+async function importBackup(file){
 
  try{
 
-  const text =
-   await file.text();
+  const text=await file.text();
+  const data=JSON.parse(text);
 
+  if(!Array.isArray(data.machines))
+   throw new Error("Backup file invalid hai.");
 
-  const data =
-   JSON.parse(
-    text
-   );
+  let imported=0;
 
-
-  if(
-   !Array.isArray(
-    data.machines
-   )
-  ){
-
-   throw new Error(
-    "Backup file invalid hai."
-   );
-
-  }
-
-
-  let imported = 0;
-
-
-  for(
-   const original
-   of data.machines
-  ){
+  for(const original of data.machines){
 
    if(
-    !original.name ||
-    !original.header64 ||
+    !original.name||
+    !original.header64||
     !original.rows64
    )
     continue;
 
-
-   const machine = {
-
+   const machine={
     ...original,
-
-    id:
-     makeId(),
-
-    importedAt:
-     Date.now()
-
+    id:makeId(),
+    importedAt:Date.now()
    };
-
-
-   /*
-    * Old backup ko bhi Baver/Dadha
-    * compatible banate hain.
-    */
-
-   normalizeMachine(
-    machine
-   );
-
 
    await dbPut(
     MACHINE_STORE,
     machine
    );
 
-
    imported++;
 
   }
 
-
   await refreshMachines();
 
-
   toast(
-   "✓ " +
-   imported +
+   "✓ "+imported+
    " machine backup import ho gayi."
   );
-
 
  }catch(error){
 
   alert(
-   "Import error:\n" +
+   "Import error:\n"+
    error.message
   );
 
@@ -3905,37 +2319,18 @@ async function importBackup(
 }
 
 
-/* =========================================================
-   LOGIN
-========================================================= */
+/* =====================================================
+ LOGIN
+===================================================== */
 
 function showApp(){
 
- $("loginView")
-  .classList.add(
-   "hidden"
-  );
-
-
- $("appView")
-  .classList.remove(
-   "hidden"
-  );
-
-
- $("logoutBtn")
-  .classList.remove(
-   "hidden"
-  );
+ $("loginView").classList.add("hidden");
+ $("appView").classList.remove("hidden");
+ $("logoutBtn").classList.remove("hidden");
 
 }
 
-
-/*
- * Login ab localStorage mein rahega.
- * Browser/GitHub Pages dobara kholne par
- * user ko baar-baar login nahi karna padega.
- */
 
 function logout(){
 
@@ -3943,15 +2338,14 @@ function logout(){
   "electronic_designing_login"
  );
 
-
  location.reload();
 
 }
 
 
-/* =========================================================
-   INIT
-========================================================= */
+/* =====================================================
+ INIT
+===================================================== */
 
 async function init(){
 
@@ -3959,45 +2353,31 @@ async function init(){
 
   await openDB();
 
-
-  updateDoriInfo();
-
+  updateDoriValues();
 
   await refreshMachines();
 
+  const credentials=await getCredentials();
 
-  const credentials =
-   await getCredentials();
-
-
-  $("newAdminId").value =
-   credentials.id;
-
-
-  $("newAdminPass").value =
-   credentials.pass;
-
+  $("newAdminId").value=credentials.id;
+  $("newAdminPass").value=credentials.pass;
 
   if(
    localStorage.getItem(
     "electronic_designing_login"
-   ) === "1"
+   )==="1"
   ){
 
    showApp();
 
   }
 
-
  }catch(error){
 
-  console.error(
-   error
-  );
-
+  console.error(error);
 
   alert(
-   "Database open nahi ho paya:\n" +
+   "Database open nahi ho paya:\n"+
    error.message
   );
 
@@ -4006,558 +2386,352 @@ async function init(){
 }
 
 
-/* =========================================================
-   EVENTS
-========================================================= */
+/* =====================================================
+ EVENTS
+===================================================== */
 
+$("loginBtn").onclick=async function(){
 
-/* LOGIN */
+ const credentials=await getCredentials();
 
-$("loginBtn").onclick =
- async function(){
+ const enteredId=$("loginId").value;
+ const enteredPass=$("loginPass").value;
 
-  const credentials =
-   await getCredentials();
+ if(
+  enteredId===credentials.id&&
+  enteredPass===credentials.pass
+ ){
 
+  localStorage.setItem(
+   "electronic_designing_login",
+   "1"
+  );
 
-  const enteredId =
-   $("loginId").value;
+  $("loginMsg").classList.add("hidden");
 
+  showApp();
 
-  const enteredPass =
-   $("loginPass").value;
+ }else{
 
+  $("loginMsg").textContent=
+   "Admin ID ya password galat hai.";
 
-  if(
-   enteredId ===
-    credentials.id &&
-   enteredPass ===
-    credentials.pass
-  ){
+  $("loginMsg").classList.remove("hidden");
 
-   localStorage.setItem(
-    "electronic_designing_login",
-    "1"
-   );
-
-
-   $("loginMsg")
-    .classList.add(
-     "hidden"
-    );
-
-
-   showApp();
-
-
-   await refreshMachines();
-
-
-  }else{
-
-   $("loginMsg")
-    .textContent =
-    "Admin ID ya password galat hai.";
-
-
-   $("loginMsg")
-    .classList.remove(
-     "hidden"
-    );
-
-  }
+ }
 
 };
 
 
-$("loginPass").onkeydown =
- function(event){
+$("loginPass").onkeydown=function(event){
 
-  if(
-   event.key ===
-   "Enter"
-  ){
-
-   $("loginBtn").click();
-
-  }
+ if(event.key==="Enter")
+  $("loginBtn").click();
 
 };
 
 
-/* LOGOUT */
-
-$("logoutBtn").onclick =
- logout;
+$("logoutBtn").onclick=logout;
 
 
 /* TABS */
 
-document
- .querySelectorAll(".tab")
- .forEach(
-  button=>{
+document.querySelectorAll(".tab")
+.forEach(button=>{
 
-   button.onclick =
-    function(){
+ button.onclick=function(){
 
-     switchTab(
-      button.dataset.tab
-     );
-
-    };
-
-  }
- );
-
-
-/* JACQUARD TYPE */
-
-$("jacquardType").onchange =
- function(){
-
-  updateDoriInfo();
-
- };
-
-
-/* RUNNING FILE */
-
-$("runningFile").onchange =
- function(event){
-
-  const file =
-   event.target.files[0];
-
-
-  if(file){
-
-   handleRunningFile(
-    file
-   );
-
-  }
-
- };
-
-
-/* MACHINE NAME */
-
-$("machineName").oninput =
- updateSaveButton;
-
-
-/* HOOKS CHANGE */
-
-$("hooks").oninput =
- function(){
-
-  if(
-   runningBytes
-  ){
-
-   /*
-    * New hook count ke according
-    * EP structure dobara detect.
-    */
-
-   const structure =
-    detectEPStructure(
-     runningBytes,
-     Number(
-      $("hooks").value
-     ) || 672
-    );
-
-
-   if(structure){
-
-    $("headerLen").value =
-     structure.headerLength;
-
-    $("bytesPerPick").value =
-     structure.bytesPerPick;
-
-    $("originalPicks").value =
-     structure.picks;
-
-   }
-
-  }
-
-
-  updateSaveButton();
-
- };
-
-
-/* ANALYZE */
-
-$("analyzeBtn").onclick =
- async function(){
-
-  if(!runningBytes){
-
-   alert(
-    "Pehle Running EP select karein."
-   );
-
-   return;
-
-  }
-
-
-  const file =
-   new File(
-    [runningBytes],
-    runningName ||
-    "running.EP"
-   );
-
-
-  await handleRunningFile(
-   file
+  switchTab(
+   button.dataset.tab
   );
 
  };
 
+});
 
-/* SAVE */
 
-$("saveMachineBtn").onclick =
+/* DORI */
+
+$("baverForward").oninput=updateDoriValues;
+$("baverReturn").oninput=updateDoriValues;
+
+$("dadhaForward").oninput=updateDoriValues;
+$("dadhaReturn").oninput=updateDoriValues;
+
+
+/* RUNNING */
+
+$("runningFile").onchange=function(event){
+
+ const file=event.target.files[0];
+
+ if(file)
+  handleRunningFile(file);
+
+};
+
+
+$("machineName").oninput=updateSaveButton;
+
+
+$("analyzeBtn").onclick=async function(){
+
+ if(!runningBytes){
+
+  alert("Pehle Running EP select karein.");
+  return;
+
+ }
+
+ const file=new File(
+  [runningBytes],
+  runningName||"running.EP"
+ );
+
+ await handleRunningFile(file);
+
+};
+
+
+$("saveMachineBtn").onclick=
  saveNewMachine;
 
 
 /* MACHINE SELECT */
 
-$("machineSelect").onchange =
- async function(){
+$("machineSelect").onchange=async function(){
 
-  const id =
-   String(
-    $("machineSelect")
-     .value ||
-    ""
-   );
+ const id=String(
+  $("machineSelect").value||""
+ );
 
+ if(!id){
 
-  if(!id){
+  selectedMachine=null;
+  currentDesignMachineId=null;
+  binaryBits=null;
 
-   selectedMachine =
-    null;
+  showSelectedMachine();
 
-   currentDesignMachineId =
-    null;
+  return;
+ }
 
-   binaryBits =
-    null;
+ await selectMachineById(id);
 
-
-   showSelectedMachine();
-
-   return;
-
-  }
-
-
-  await selectMachineById(
-   id
-  );
-
- };
+};
 
 
 /* DESIGN */
 
-$("designFile").onchange =
- function(event){
+$("designFile").onchange=function(event){
 
-  const file =
-   event.target.files[0];
+ const file=event.target.files[0];
 
+ if(file)
+  loadDesign(file);
 
-  if(file){
-
-   loadDesign(
-    file
-   );
-
-  }
-
- };
+};
 
 
-/* DESIGN PARAMETERS */
+$("targetPicks").oninput=function(){
 
-$("targetPicks").oninput =
- function(){
+ if(designImage)
+  renderBinary();
+ else
+  updateDesignCheck();
 
-  if(designImage)
-   renderBinary();
-  else
-   updateDesignCheck();
-
- };
+};
 
 
-$("threshold").oninput =
- function(){
+$("threshold").oninput=function(){
 
-  if(designImage)
-   renderBinary();
+ if(designImage)
+  renderBinary();
 
- };
-
-
-$("leftPad").oninput =
- function(){
-
-  if(designImage)
-   renderBinary();
-
- };
+};
 
 
-$("rightPad").oninput =
- function(){
+$("leftPad").oninput=function(){
 
-  if(designImage)
-   renderBinary();
+ if(designImage)
+  renderBinary();
 
- };
+};
+
+
+$("rightPad").oninput=function(){
+
+ if(designImage)
+  renderBinary();
+
+};
 
 
 /* INVERT */
 
-$("invertBtn").onclick =
- function(){
+$("invertBtn").onclick=function(){
 
-  invert =
-   !invert;
+ invert=!invert;
 
+ $("invertBtn").textContent=
+  "Invert: "+(invert?"ON":"OFF");
 
-  $("invertBtn")
-   .textContent =
-   "Invert: " +
-   (
-    invert
-     ? "ON"
-     : "OFF"
-   );
+ if(designImage)
+  renderBinary();
 
-
-  if(designImage)
-   renderBinary();
-
- };
+};
 
 
 /* MIRROR */
 
-$("mirrorBtn").onclick =
- function(){
+$("mirrorBtn").onclick=function(){
 
-  mirror =
-   !mirror;
+ mirror=!mirror;
 
+ $("mirrorBtn").textContent=
+  "Mirror: "+(mirror?"ON":"OFF");
 
-  $("mirrorBtn")
-   .textContent =
-   "Mirror: " +
-   (
-    mirror
-     ? "ON"
-     : "OFF"
-   );
+ if(designImage)
+  renderBinary();
 
-
-  if(designImage)
-   renderBinary();
-
- };
+};
 
 
 /* FLIP */
 
-$("flipBtn").onclick =
- function(){
+$("flipBtn").onclick=function(){
 
-  flip =
-   !flip;
+ flip=!flip;
 
+ $("flipBtn").textContent=
+  "Flip: "+(flip?"ON":"OFF");
 
-  $("flipBtn")
-   .textContent =
-   "Flip: " +
-   (
-    flip
-     ? "ON"
-     : "OFF"
-   );
+ if(designImage)
+  renderBinary();
 
-
-  if(designImage)
-   renderBinary();
-
- };
+};
 
 
 /* CONVERT */
 
-$("convertBtn").onclick =
+$("convertBtn").onclick=
  convertAndDownload;
 
 
-/* SAVE LOGIN */
+/* =====================================================
+ SAVE LOGIN - FIXED
+===================================================== */
 
-$("saveCreds").onclick =
- async function(){
+$("saveCreds").onclick=async function(){
 
-  const id =
-   $("newAdminId")
-    .value
-    .trim();
+ const id=$("newAdminId").value.trim();
+ const pass=$("newAdminPass").value;
 
+ if(!id||!pass){
 
-  const pass =
-   $("newAdminPass")
-    .value;
+  alert(
+   "Admin ID aur password dono bharna hai."
+  );
 
+  return;
+ }
 
-  if(!id || !pass){
-
-   alert(
-    "Admin ID aur password dono bharna hai."
-   );
-
-   return;
-
-  }
-
+ try{
 
   /*
-   * FIX:
-   * Pehle galat generic dbPut() call tha.
-   * Ab sirf direct key/value setting save hoti hai.
+   * IMPORTANT:
+   * settings store mein keyPath nahi hai,
+   * isliye value + key separately save kar rahe hain.
    */
 
-  await dbPutSetting(
-   "adminId",
-   id
+  await dbPut(
+   SETTINGS_STORE,
+   id,
+   "adminId"
   );
 
-
-  await dbPutSetting(
-   "adminPass",
-   pass
+  await dbPut(
+   SETTINGS_STORE,
+   pass,
+   "adminPass"
   );
 
+  $("credMsg").className="status ok";
 
-  $("credMsg")
-   .className =
-   "status ok";
-
-
-  $("credMsg")
-   .textContent =
+  $("credMsg").textContent=
    "✓ Login settings save ho gayi.";
 
+  $("credMsg").classList.remove("hidden");
 
-  $("credMsg")
-   .classList.remove(
-    "hidden"
-   );
+  toast("✓ Login update ho gaya.");
 
+ }catch(error){
 
-  toast(
-   "✓ Login update ho gaya."
+  console.error(error);
+
+  alert(
+   "Login save error:\n"+
+   error.message
   );
 
- };
+ }
+
+};
 
 
 /* EXPORT */
 
-$("exportBtn").onclick =
+$("exportBtn").onclick=
  exportBackup;
 
 
 /* IMPORT */
 
-$("importFile").onchange =
- function(event){
+$("importFile").onchange=function(event){
 
-  const file =
-   event.target.files[0];
+ const file=event.target.files[0];
 
+ if(file)
+  importBackup(file);
 
-  if(file){
-
-   importBackup(
-    file
-   );
-
-  }
-
- };
+};
 
 
 /* DELETE ALL */
 
-$("clearAllBtn").onclick =
- async function(){
+$("clearAllBtn").onclick=async function(){
 
-  const ok =
-   confirm(
-    "WARNING!\n\n" +
-    "ALL saved machines permanently delete karni hain?"
-   );
+ const ok=confirm(
+  "WARNING!\n\n"+
+  "ALL saved machines permanently delete karni hain?"
+ );
 
+ if(!ok)return;
 
-  if(!ok)
-   return;
+ await dbClear(MACHINE_STORE);
 
+ selectedMachine=null;
+ currentDesignMachineId=null;
+ binaryBits=null;
 
-  await dbClear(
-   MACHINE_STORE
-  );
+ await refreshMachines();
 
+ showSelectedMachine();
 
-  selectedMachine =
-   null;
+ toast("✓ Sab machines delete ho gayi.");
 
-
-  currentDesignMachineId =
-   null;
+};
 
 
-  binaryBits =
-   null;
-
-
-  await refreshMachines();
-
-
-  showSelectedMachine();
-
-
-  toast(
-   "✓ Sab machines delete ho gayi."
-  );
-
- };
-
-
-/* =========================================================
-   MOBILE BACK BUTTON
-========================================================= */
+/* =====================================================
+ MOBILE BACK BUTTON
+===================================================== */
 
 history.replaceState(
  {page:"app"},
  "",
  location.href
 );
-
 
 window.addEventListener(
  "popstate",
@@ -4573,13 +2747,11 @@ window.addEventListener(
 );
 
 
-/* =========================================================
-   START
-========================================================= */
+/* START */
 
 init();
 
 </script>
 
 </body>
- </html>
+</html>
