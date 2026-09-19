@@ -46,7 +46,28 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .plan{background:#071421;border:1px solid #27506b;border-radius:13px;padding:12px;margin-top:10px}
 .plan-title{font-size:15px;font-weight:900;color:#00d9ff;margin-bottom:7px}
 .pill{display:inline-block;padding:4px 8px;margin:3px 3px 0 0;border-radius:30px;border:1px solid #2c536d;color:#a9c5d9;font-size:11px}
-.preview{max-width:100%;max-height:380px;border-radius:12px;border:1px solid #294b63;background:white}
+
+/* CLEAN PREVIEW */
+.preview{
+ display:block;
+ width:100%;
+ max-width:100%;
+ max-height:380px;
+ height:auto;
+ object-fit:contain;
+ border:2px solid #00d9d5;
+ border-radius:5px;
+ background:#35d5d2;
+ image-rendering:pixelated;
+ image-rendering:crisp-edges;
+}
+#binaryCanvas{
+ background:#35d5d2;
+ border:3px solid #00bfc5;
+ border-radius:3px;
+ box-shadow:0 0 8px #00d9d555;
+}
+
 .hex{background:#030a10;color:#8ef2ca;padding:12px;border-radius:10px;font:11px monospace;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow:auto}
 .login{max-width:420px;margin:8vh auto}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:100;background:#102d45;border:1px solid #2c6684;padding:12px 17px;border-radius:12px;box-shadow:0 8px 30px #0009;max-width:90%}
@@ -698,68 +719,117 @@ function loadDesign(file){
  img.src=url;
 }
 
-/* BINARY RENDER */
+/* BINARY RENDER - CLEAN PREVIEW */
 function renderBinary(){
- if(!designImage||!selectedMachine)return;
+ if(!designImage || !selectedMachine) return;
 
- const W=Number(selectedMachine.hooks);
- const H=Math.max(1,Math.floor(Number($("targetPicks").value)||selectedMachine.picks));
- const left=Math.max(0,Math.floor(Number($("leftPad").value)||0));
- const right=Math.max(0,Math.floor(Number($("rightPad").value)||0));
+ const W = Number(selectedMachine.hooks);
+ const H = Math.max(
+  1,
+  Math.floor(Number($("targetPicks").value) || selectedMachine.picks)
+ );
 
- if(left+right>=W){
-  $("designCheck").className="status err";
-  $("designCheck").textContent="Left + Right padding hook capacity se kam hona chahiye.";
-  $("convertBtn").disabled=true;
+ const left = Math.max(0, Math.floor(Number($("leftPad").value) || 0));
+ const right = Math.max(0, Math.floor(Number($("rightPad").value) || 0));
+
+ if(left + right >= W){
+  $("designCheck").className = "status err";
+  $("designCheck").textContent =
+   "Left + Right padding hook capacity se kam hona chahiye.";
+  $("convertBtn").disabled = true;
   return;
  }
 
- const drawWidth=W-left-right;
- $("targetPicks").value=H;
+ const drawWidth = W - left - right;
+ $("targetPicks").value = H;
 
- const canvas=document.createElement("canvas");
- canvas.width=drawWidth;canvas.height=H;
- const ctx=canvas.getContext("2d",{willReadFrequently:true});
- ctx.imageSmoothingEnabled=false;
- ctx.fillStyle="#ffffff";ctx.fillRect(0,0,drawWidth,H);
- ctx.save();
- ctx.translate(mirror?drawWidth:0,flip?H:0);
- ctx.scale(mirror?-1:1,flip?-1:1);
- ctx.drawImage(designImage,0,0,drawWidth,H);
- ctx.restore();
+ /* Source image ko required dimensions mein draw karein */
+ const sourceCanvas = document.createElement("canvas");
+ sourceCanvas.width = drawWidth;
+ sourceCanvas.height = H;
 
- const pixels=ctx.getImageData(0,0,drawWidth,H).data;
- binaryBits=new Uint8Array(W*H);
- let threshold=Number($("threshold").value);
- if(!Number.isFinite(threshold))threshold=128;
+ const sourceCtx = sourceCanvas.getContext("2d", {
+  willReadFrequently:true
+ });
 
- for(let y=0;y<H;y++){
-  for(let x=0;x<drawWidth;x++){
-   const i=(y*drawWidth+x)*4;
-   const gray=.299*pixels[i]+.587*pixels[i+1]+.114*pixels[i+2];
-   let on=gray<threshold?1:0;
-   if(invert)on=on?0:1;
-   binaryBits[y*W+left+x]=on;
+ sourceCtx.imageSmoothingEnabled = false;
+ sourceCtx.fillStyle = "#ffffff";
+ sourceCtx.fillRect(0, 0, drawWidth, H);
+
+ sourceCtx.save();
+ sourceCtx.translate(mirror ? drawWidth : 0, flip ? H : 0);
+ sourceCtx.scale(mirror ? -1 : 1, flip ? -1 : 1);
+ sourceCtx.drawImage(designImage, 0, 0, drawWidth, H);
+ sourceCtx.restore();
+
+ const pixels = sourceCtx.getImageData(0, 0, drawWidth, H).data;
+
+ binaryBits = new Uint8Array(W * H);
+
+ let threshold = Number($("threshold").value);
+ if(!Number.isFinite(threshold)) threshold = 128;
+
+ /* Pixels ko binary hook data mein badlein */
+ for(let y = 0; y < H; y++){
+  for(let x = 0; x < drawWidth; x++){
+   const i = (y * drawWidth + x) * 4;
+
+   const gray =
+    0.299 * pixels[i] +
+    0.587 * pixels[i + 1] +
+    0.114 * pixels[i + 2];
+
+   let on = gray < threshold ? 1 : 0;
+   if(invert) on = on ? 0 : 1;
+
+   binaryBits[y * W + left + x] = on;
   }
  }
 
- const preview=$("binaryCanvas");
- const previewWidth=Math.min(900,W);
- const previewHeight=Math.min(600,Math.max(100,Math.round(H*previewWidth/W)));
- preview.width=previewWidth;preview.height=previewHeight;
+ /* Machine-style preview dimensions */
+ const preview = $("binaryCanvas");
+ const previewWidth = Math.min(900, W);
+ const previewHeight = Math.min(
+  600,
+  Math.max(100, Math.round(H * previewWidth / W))
+ );
 
- const temp=document.createElement("canvas");
- temp.width=W;temp.height=H;
- const tempCtx=temp.getContext("2d");
- const image=tempCtx.createImageData(W,H);
- for(let i=0;i<binaryBits.length;i++){
-  const value=binaryBits[i]?0:255,j=i*4;
-  image.data[j]=value;image.data[j+1]=value;image.data[j+2]=value;image.data[j+3]=255;
+ preview.width = previewWidth;
+ preview.height = previewHeight;
+
+ const temp = document.createElement("canvas");
+ temp.width = W;
+ temp.height = H;
+
+ const tempCtx = temp.getContext("2d");
+ const image = tempCtx.createImageData(W, H);
+
+ /* OFF pixels = cyan background; ON pixels = dark design */
+ const background = [53, 213, 210];
+ const designColor = [35, 58, 78];
+
+ for(let i = 0; i < binaryBits.length; i++){
+  const color = binaryBits[i] ? designColor : background;
+  const j = i * 4;
+
+  image.data[j] = color[0];
+  image.data[j + 1] = color[1];
+  image.data[j + 2] = color[2];
+  image.data[j + 3] = 255;
  }
- tempCtx.putImageData(image,0,0);
- const previewCtx=preview.getContext("2d");
- previewCtx.imageSmoothingEnabled=false;
- previewCtx.drawImage(temp,0,0,previewWidth,previewHeight);
+
+ tempCtx.putImageData(image, 0, 0);
+
+ const previewCtx = preview.getContext("2d");
+ previewCtx.clearRect(0, 0, previewWidth, previewHeight);
+ previewCtx.imageSmoothingEnabled = false;
+ previewCtx.drawImage(temp, 0, 0, previewWidth, previewHeight);
+
+ /* Crisp border around the preview */
+ previewCtx.strokeStyle = "#007f91";
+ previewCtx.lineWidth = Math.max(1, Math.round(previewWidth / 450));
+ previewCtx.strokeRect(0, 0, previewWidth, previewHeight);
+
  updateDesignCheck();
 }
 
