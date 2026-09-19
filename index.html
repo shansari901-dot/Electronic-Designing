@@ -1,942 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Electronic Designing</title>
 
-
 <style>
 
-/* =====================================================
-   ELECTRONIC DESIGNING
-   PREMIUM ELECTRONIC THEME
-===================================================== */
+/* =========================================================
+   BASIC
+========================================================= */
 
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#ffffff;
 
-  margin:0;
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(0,119,255,.28),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(0,220,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #061d3d,
+            #031329 45%,
+            #020817
+        );
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 20% 10%,
-      #073b72 0%,
-      #031b38 28%,
-      #020b1d 65%,
-      #010714 100%
-    );
-
-  color:#ffffff;
-
-  min-height:100vh;
-
+    min-height:100vh;
 }
-
-
-/* =====================================================
-   ELECTRONIC BACKGROUND
-===================================================== */
 
 body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.06;
 
-  content:"";
+    background-image:
+        linear-gradient(
+            135deg,
+            transparent 0 47%,
+            #00d9ff 48%,
+            transparent 49%
+        );
 
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  opacity:.20;
-
-  background-image:
-
-    linear-gradient(
-      135deg,
-      transparent 0%,
-      transparent 47%,
-      #00d9ff 48%,
-      transparent 49%
-    );
-
-  background-size:140px 140px;
-
+    background-size:120px 120px;
 }
 
-
-/* =====================================================
-   COMMON
-===================================================== */
-
 .hidden{
-  display:none !important;
+    display:none !important;
 }
 
 .container{
-
-  width:
-    min(
-      1180px,
-      calc(100% - 28px)
-    );
-
-  margin:auto;
-
+    width:min(1120px,calc(100% - 24px));
+    margin:auto;
 }
 
 button,
 input,
 select{
-
-  font-family:inherit;
-
+    font-family:inherit;
 }
 
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-/* =====================================================
-   GLOW
-===================================================== */
+.btn{
+    width:100%;
+    border:0;
+    border-radius:12px;
+    padding:13px 15px;
+    margin-top:10px;
+    color:white;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
 
-.glow{
+    background:
+        linear-gradient(
+            90deg,
+            #006eff,
+            #00cfff
+        );
 
-  text-shadow:
-    0 0 8px #00d9ff,
-    0 0 20px #0077ff;
-
+    box-shadow:
+        0 0 18px rgba(0,187,255,.18);
 }
 
+.btn:hover{
+    box-shadow:
+        0 0 25px rgba(0,210,255,.35);
+}
 
-/* =====================================================
+.btn.secondary{
+    background:#102945;
+    border:1px solid rgba(0,210,255,.20);
+}
+
+.btn.green{
+    background:
+        linear-gradient(
+            90deg,
+            #00876c,
+            #00cfa0
+        );
+}
+
+.btn.red{
+    background:
+        linear-gradient(
+            90deg,
+            #9c1717,
+            #e02a2a
+        );
+}
+
+.btn.small{
+    padding:9px 10px;
+    margin-top:0;
+    font-size:12px;
+}
+
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
-.loginPage{
-
-  min-height:100vh;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  padding:20px;
-
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
-
 
 .loginBox{
+    width:min(410px,100%);
+    padding:28px;
+    border-radius:24px;
 
-  width:
-    min(
-      420px,
-      100%
-    );
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,38,74,.97),
+            rgba(2,13,30,.98)
+        );
 
-  padding:32px;
+    border:
+        1px solid rgba(0,215,255,.24);
 
-  border-radius:25px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(7,35,70,.96),
-      rgba(1,12,29,.98)
-    );
-
-  border:
-    1px solid
-    rgba(0,217,255,.35);
-
-  box-shadow:
-
-    0 0 20px
-    rgba(0,153,255,.20),
-
-    0 0 60px
-    rgba(0,153,255,.08),
-
-    inset 0 0 30px
-    rgba(0,217,255,.04);
-
+    box-shadow:
+        0 0 35px rgba(0,120,255,.15);
 }
 
+.logoBox{
+    width:90px;
+    height:90px;
+    margin:0 auto 16px;
 
-.loginLogo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  width:95px;
+    border-radius:24px;
 
-  height:95px;
+    font-weight:900;
+    font-size:34px;
 
-  margin:0 auto 15px;
+    color:#05172d;
 
-  border-radius:24px;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #12d7ff 55%,
+            #126aff
+        );
 
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:45px;
-
-  font-weight:bold;
-
-  color:#ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #00d9ff 55%,
-      #0877ff
-    );
-
-  color:#06172e;
-
-  box-shadow:
-    0 0 25px
-    rgba(0,217,255,.5);
-
+    box-shadow:
+        0 0 25px rgba(0,211,255,.35);
 }
-
 
 .loginTitle{
-
-  text-align:center;
-
-  font-size:28px;
-
-  font-weight:900;
-
-  letter-spacing:2px;
-
+    text-align:center;
+    font-size:26px;
+    font-weight:900;
+    letter-spacing:1.5px;
 }
 
+.loginTitle span{
+    color:#00d9ff;
+}
 
 .loginSub{
-
-  text-align:center;
-
-  color:#7bdcff;
-
-  margin-bottom:25px;
-
+    text-align:center;
+    color:#8bdcf4;
+    margin:8px 0 22px;
+    font-size:13px;
 }
 
-
-.fieldLabel{
-
-  display:block;
-
-  margin:
-    14px 0 7px;
-
-  color:#a9eaff;
-
-  font-size:13px;
-
-  font-weight:bold;
-
+label{
+    display:block;
+    color:#9cdff1;
+    font-size:13px;
+    font-weight:700;
+    margin:10px 0 6px;
 }
-
 
 input,
 select{
+    width:100%;
+    padding:12px 13px;
 
-  width:100%;
+    color:white;
+    background:#05172d;
 
-  padding:13px 14px;
+    border:
+        1px solid rgba(0,214,255,.20);
 
-  border-radius:12px;
-
-  border:
-    1px solid
-    rgba(0,217,255,.28);
-
-  background:
-    rgba(1,15,35,.85);
-
-  color:#ffffff;
-
-  outline:none;
-
+    border-radius:11px;
+    outline:none;
 }
-
 
 input:focus,
 select:focus{
-
-  border-color:#00d9ff;
-
-  box-shadow:
-    0 0 12px
-    rgba(0,217,255,.25);
-
+    border-color:#00d9ff;
+    box-shadow:
+        0 0 12px rgba(0,211,255,.20);
 }
-
 
 select option{
-
-  background:#06172e;
-
-  color:#ffffff;
-
+    background:#061b35;
+    color:white;
 }
-
-
-.btn{
-
-  width:100%;
-
-  padding:13px 16px;
-
-  margin-top:10px;
-
-  border:0;
-
-  border-radius:12px;
-
-  cursor:pointer;
-
-  font-weight:800;
-
-  color:#ffffff;
-
-  background:
-    linear-gradient(
-      90deg,
-      #006cff,
-      #00cfff
-    );
-
-  box-shadow:
-    0 0 18px
-    rgba(0,190,255,.22);
-
-  transition:.2s;
-
-}
-
-
-.btn:hover{
-
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 0 25px
-    rgba(0,217,255,.45);
-
-}
-
-
-.btn.secondary{
-
-  background:
-    rgba(255,255,255,.08);
-
-  border:
-    1px solid
-    rgba(0,217,255,.25);
-
-}
-
-
-.btn.danger{
-
-  background:
-    linear-gradient(
-      90deg,
-      #9d1515,
-      #e52c2c
-    );
-
-}
-
-
-.btn.green{
-
-  background:
-    linear-gradient(
-      90deg,
-      #007c63,
-      #00d69c
-    );
-
-}
-
 
 .loginError{
+    margin-top:10px;
+    padding:10px;
+    border-radius:10px;
 
-  margin-top:12px;
+    color:#ffb3b3;
 
-  padding:11px;
+    background:
+        rgba(255,50,50,.08);
 
-  border-radius:10px;
-
-  background:
-    rgba(255,50,50,.12);
-
-  border:
-    1px solid
-    rgba(255,70,70,.35);
-
-  color:#ffaaaa;
-
+    border:
+        1px solid rgba(255,80,80,.20);
 }
 
+.loginHint{
+    text-align:center;
+    margin-top:15px;
+    color:#668ea5;
+    font-size:12px;
+}
 
-/* =====================================================
+/* =========================================================
    HEADER
-===================================================== */
+========================================================= */
 
-.topHeader{
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
 
-  position:sticky;
+    background:
+        rgba(2,15,32,.92);
 
-  top:0;
+    backdrop-filter:blur(14px);
 
-  z-index:50;
-
-  backdrop-filter:
-    blur(15px);
-
-  background:
-    rgba(1,12,29,.88);
-
-  border-bottom:
-    1px solid
-    rgba(0,217,255,.18);
-
+    border-bottom:
+        1px solid rgba(0,215,255,.15);
 }
-
 
 .headerInner{
+    min-height:68px;
 
-  min-height:70px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:15px;
-
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
-
 
 .brand{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
-
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
+.brandLogo{
+    width:44px;
+    height:44px;
 
-.brandIcon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  width:48px;
+    border-radius:12px;
 
-  height:48px;
+    color:#041426;
+    font-weight:900;
 
-  border-radius:14px;
+    background:
+        linear-gradient(
+            135deg,
+            white,
+            #00dbff,
+            #076dff
+        );
 
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:25px;
-
-  font-weight:900;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #00d9ff,
-      #006cff
-    );
-
-  color:#06172e;
-
-  box-shadow:
-    0 0 18px
-    rgba(0,217,255,.35);
-
+    box-shadow:
+        0 0 16px rgba(0,210,255,.30);
 }
 
-
-.brandText{
-
-  font-size:17px;
-
-  font-weight:900;
-
-  letter-spacing:1.3px;
-
+.brandName{
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
-
-.brandText span{
-
-  color:#00d9ff;
-
+.brandName span{
+    color:#00d9ff;
 }
 
-
-.logoutBtn{
-
-  width:auto;
-
-  margin:0;
-
-  padding:
-    10px 15px;
-
+.logout{
+    width:auto;
+    margin:0;
+    padding:9px 13px;
 }
 
+/* =========================================================
+   NAV
+========================================================= */
 
-/* =====================================================
+.nav{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:15px 0;
+}
+
+.nav button{
+    margin:0;
+    padding:11px 5px;
+
+    border-radius:11px;
+
+    background:#09223e;
+    border:1px solid rgba(0,210,255,.12);
+
+    color:#8cd8ee;
+}
+
+.nav button.active{
+    background:
+        linear-gradient(
+            90deg,
+            #075fff,
+            #00c8ff
+        );
+
+    color:white;
+
+    border-color:#00d9ff;
+}
+
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
-
-  padding:
-    38px 0 25px;
-
+    margin-top:14px;
 }
-
 
 .heroBox{
+    padding:25px;
+    border-radius:22px;
 
-  position:relative;
+    background:
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(0,217,255,.18),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(7,45,84,.92),
+            rgba(2,15,31,.97)
+        );
 
-  overflow:hidden;
+    border:
+        1px solid rgba(0,210,255,.17);
 
-  padding:
-    30px;
-
-  border-radius:26px;
-
-  background:
-
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(0,210,255,.22),
-      transparent 30%
-    ),
-
-    linear-gradient(
-      135deg,
-      rgba(4,45,85,.94),
-      rgba(1,13,30,.98)
-    );
-
-  border:
-    1px solid
-    rgba(0,217,255,.22);
-
-  box-shadow:
-    0 0 35px
-    rgba(0,125,255,.12);
-
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.20);
 }
-
-
-.heroCircuit{
-
-  position:absolute;
-
-  right:-20px;
-
-  top:-35px;
-
-  font-size:150px;
-
-  opacity:.06;
-
-}
-
 
 .heroTitle{
-
-  margin:0;
-
-  font-size:
-    clamp(
-      28px,
-      5vw,
-      50px
-    );
-
-  font-weight:900;
-
-  letter-spacing:2px;
-
+    margin:0;
+    font-size:clamp(28px,6vw,45px);
+    font-weight:900;
+    letter-spacing:2px;
 }
-
 
 .heroTitle span{
-
-  color:#00d9ff;
-
+    color:#00d9ff;
 }
-
 
 .heroText{
-
-  color:#9bdff5;
-
-  max-width:700px;
-
-  line-height:1.6;
-
+    margin:10px 0 0;
+    color:#8bcde1;
+    line-height:1.55;
 }
 
+/* =========================================================
+   SECTIONS
+========================================================= */
 
-/* =====================================================
-   SECTION
-===================================================== */
+.pageSection{
+    margin-top:18px;
+}
 
 .sectionTitle{
+    display:flex;
+    align-items:center;
+    gap:9px;
 
-  display:flex;
+    font-size:20px;
+    font-weight:900;
 
-  align-items:center;
-
-  gap:10px;
-
-  margin:
-    24px 0 13px;
-
-  font-size:21px;
-
+    margin-bottom:11px;
 }
 
+.sectionIcon{
+    width:37px;
+    height:37px;
 
-.sectionTitle .icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-  width:38px;
+    border-radius:10px;
 
-  height:38px;
+    background:
+        rgba(0,210,255,.09);
 
-  border-radius:11px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  background:
-    rgba(0,217,255,.10);
-
-  border:
-    1px solid
-    rgba(0,217,255,.28);
-
+    border:
+        1px solid rgba(0,210,255,.20);
 }
-
-
-/* =====================================================
-   CARDS
-===================================================== */
 
 .card{
+    padding:18px;
+    margin-bottom:14px;
 
-  padding:20px;
+    border-radius:19px;
 
-  margin-bottom:16px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7,37,69,.91),
+            rgba(2,15,31,.96)
+        );
 
-  border-radius:20px;
+    border:
+        1px solid rgba(0,210,255,.14);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(5,34,65,.90),
-      rgba(1,14,31,.94)
-    );
-
-  border:
-    1px solid
-    rgba(0,217,255,.16);
-
-  box-shadow:
-    0 10px 30px
-    rgba(0,0,0,.18);
-
+    box-shadow:
+        0 8px 28px rgba(0,0,0,.16);
 }
-
 
 .cardTitle{
-
-  font-size:17px;
-
-  font-weight:800;
-
-  margin-bottom:13px;
-
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:10px;
 }
-
-
-.grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(
-        210px,
-        1fr
-      )
-    );
-
-  gap:13px;
-
-}
-
-
-.small{
-
-  color:#7fb6cc;
-
-  font-size:12px;
-
-  line-height:1.5;
-
-}
-
 
 .info{
+    margin-top:10px;
+    padding:12px;
 
-  padding:12px;
+    border-radius:11px;
 
-  margin-top:10px;
+    color:#aeefff;
 
-  border-radius:12px;
+    background:
+        rgba(0,183,255,.055);
 
-  color:#aeeeff;
+    border:
+        1px solid rgba(0,200,255,.12);
 
-  background:
-    rgba(0,174,255,.07);
-
-  border:
-    1px solid
-    rgba(0,174,255,.14);
-
+    font-size:13px;
+    line-height:1.6;
 }
-
 
 .success{
+    color:#a8ffdf;
 
-  color:#aaffdf;
+    background:
+        rgba(0,190,150,.06);
 
-  background:
-    rgba(0,200,150,.08);
-
-  border:
-    1px solid
-    rgba(0,220,170,.20);
-
+    border-color:
+        rgba(0,220,170,.18);
 }
-
 
 .error{
+    color:#ffb0b0;
 
-  color:#ffb1b1;
+    background:
+        rgba(255,50,50,.06);
 
-  background:
-    rgba(255,50,50,.08);
-
-  border:
-    1px solid
-    rgba(255,60,60,.20);
-
+    border-color:
+        rgba(255,60,60,.18);
 }
 
+.smallText{
+    color:#7299ad;
+    font-size:12px;
+    line-height:1.55;
+}
 
-/* =====================================================
-   MACHINE CARDS
-===================================================== */
+/* =========================================================
+   MACHINE GRID
+========================================================= */
 
 .machineGrid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(
-        250px,
-        1fr
-      )
-    );
-
-  gap:14px;
-
+    display:grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(245px,1fr)
+        );
+    gap:12px;
 }
-
 
 .machineCard{
+    padding:16px;
 
-  padding:18px;
+    border-radius:16px;
 
-  border-radius:18px;
+    background:
+        linear-gradient(
+            145deg,
+            #0a2c4e,
+            #04172d
+        );
 
-  cursor:pointer;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(7,45,82,.9),
-      rgba(1,15,32,.95)
-    );
-
-  border:
-    1px solid
-    rgba(0,217,255,.18);
-
-  transition:.2s;
-
+    border:
+        1px solid rgba(0,211,255,.14);
 }
-
 
 .machineCard:hover{
-
-  transform:
-    translateY(-3px);
-
-  border-color:#00cfff;
-
-  box-shadow:
-    0 0 25px
-    rgba(0,180,255,.18);
-
+    border-color:#00cfff;
 }
-
 
 .machineName{
-
-  font-size:17px;
-
-  font-weight:900;
-
-  color:#ffffff;
-
+    font-weight:900;
+    font-size:16px;
 }
 
-
-.machineMeta{
-
-  color:#81cce7;
-
-  font-size:12px;
-
-  line-height:1.7;
-
-  margin:
-    8px 0;
-
+.machineDetails{
+    color:#7fc5db;
+    font-size:12px;
+    line-height:1.75;
+    margin:9px 0 12px;
 }
 
-
-.machineButtons{
-
-  display:flex;
-
-  gap:7px;
-
+.machineActions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
 }
 
+/* =========================================================
+   SETUP
+========================================================= */
 
-.machineButtons button{
-
-  margin:0;
-
+.setupGrid{
+    display:grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px,1fr)
+        );
+    gap:12px;
 }
-
-
-.miniBtn{
-
-  padding:
-    9px 10px;
-
-  font-size:12px;
-
-}
-
-
-/* =====================================================
-   TWO COLUMN
-===================================================== */
-
-.twoColumn{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:16px;
-
-}
-
-
-@media(max-width:750px){
-
-  .twoColumn{
-
-    grid-template-columns:1fr;
-
-  }
-
-}
-
-
-/* =====================================================
-   FILE BOX
-===================================================== */
 
 .fileBox{
+    margin-top:7px;
+    padding:12px;
 
-  border:
-    1px dashed
-    rgba(0,217,255,.35);
+    border-radius:13px;
 
-  border-radius:15px;
+    border:
+        1px dashed rgba(0,210,255,.28);
 
-  padding:15px;
+    background:
+        rgba(0,150,255,.03);
+}
 
-  background:
-    rgba(0,150,255,.035</script>
+.fileName{
+    margin-top:7px;
+    color:#80e4fa;
+    font-size:12px;
+}
 
-</body>
-</html>
+/* =========================================================
+   DESIGN
+========================================================= */
+
+.two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.preview{
+    width:100%;
+    max-height:360px;
+    margin-top:12px;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    background:white;
+
+    border:1px solid
+        rgba(0,210,255,.15);
+}
+
+.toggleGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-top:10px;
+}
+
+.toggle{
+    margin:0;
+    padding:11px 5px;
+    font-size:12px;
+
+    background:#0a2743;
+
+    border:
+        1px solid rgba(0,210,255,.15);
+
+    color:#8fd9ed;
+}
+
+.toggle.active{
+    background:
+        linear-gradient(
+            90deg,
+            #0062ff,
+            #00cfff
+        );
+
+    color:white;
+    border-color:#00d9ff;
+}
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+.download{
+    display:block;
+    margin-top:12px;
+    padding:13px;
+
+    text-align:center;
+    text-decoration:none;
+
+    color:white;
+    font-weight:900;
