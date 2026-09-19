@@ -387,8 +387,9 @@
             origCtx.drawImage(uploadedImage, 0, 0);
 
             const targetWidth = parseInt(widthSelect.value);
+            // Strict proportional height calculation to prevent pick overflow
             let targetHeight = Math.round((uploadedImage.height / uploadedImage.width) * targetWidth);
-            if (targetHeight % 2 !== 0) targetHeight++;
+            if (targetHeight < 50) targetHeight = 200; // safety minimum to avoid line compression
 
             outputCanvas.width = targetWidth;
             outputCanvas.height = targetHeight;
@@ -436,6 +437,7 @@
                 return;
             }
 
+            // Fixed Tianmai/SAAZ Standard Header Format with correct byte padding
             let headerString = `PLC ${currentFileName}.BMP     005.005.000 ${currentFileName}.BMP  ÀB      ÀB    \`   \`         X@      X@  `;
             let encoderBytes = [];
             for(let i=0; i<headerString.length; i++) {
@@ -444,6 +446,7 @@
 
             const imgData = outputCanvas.getContext('2d').getImageData(0, 0, targetWidth, targetHeight);
             const data = imgData.data;
+            const bytesPerRow = Math.ceil(targetWidth / 8);
 
             for (let y = 0; y < targetHeight; y++) {
                 for (let x = 0; x < targetWidth; x += 8) {
@@ -458,6 +461,10 @@
                         }
                     }
                     encoderBytes.push(byteVal);
+                }
+                // Word alignment padding for Tianmai controller rows
+                for (let p = 0; p < (bytesPerRow % 2); p++) {
+                    encoderBytes.push(0);
                 }
             }
 
