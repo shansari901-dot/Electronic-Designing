@@ -3,246 +3,82 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Electronic Designing — EasyX Style</title>
-
 <style>
-*{
-  box-sizing:border-box;
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f7;color:#17202a}
+header{background:#17202a;color:#fff;padding:14px 18px;display:flex;justify-content:space-between}
+main{max-width:1200px;margin:auto;padding:16px}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 2px 10px #0001}
+h2{margin:0 0 12px;font-size:19px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{font-weight:600;font-size:13px;display:block;margin-bottom:5px}
+input,select,button{font:inherit}
+input[type=text],input[type=password],input[type=number],select{
+width:100%;padding:9px;border:1px solid #ccd3da;border-radius:7px
 }
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f3f5f7;
-  color:#17202a;
-}
-
-header{
-  background:#17202a;
-  color:#fff;
-  padding:14px 18px;
-  display:flex;
-  justify-content:space-between;
-}
-
-main{
-  max-width:1200px;
-  margin:auto;
-  padding:16px;
-}
-
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:16px;
-  box-shadow:0 2px 10px #0001;
-}
-
-h2{
-  margin:0 0 12px;
-  font-size:19px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-}
-
-label{
-  font-weight:600;
-  font-size:13px;
-  display:block;
-  margin-bottom:5px;
-}
-
-input,
-select,
-button{
-  font:inherit;
-}
-
-input[type=text],
-input[type=password],
-input[type=number],
-select{
-  width:100%;
-  padding:9px;
-  border:1px solid #ccd3da;
-  border-radius:7px;
-}
-
-button{
-  border:0;
-  border-radius:7px;
-  padding:9px 13px;
-  cursor:pointer;
-  background:#263746;
-  color:#fff;
-  margin:3px;
-}
-
-button.secondary{
-  background:#e8edf1;
-  color:#17202a;
-}
-
-button.danger{
-  background:#b42318;
-}
-
-button.ok{
-  background:#18794e;
-}
-
-.row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:end;
-}
-
-.grow{
-  flex:1;
-  min-width:180px;
-}
-
-#login{
-  position:fixed;
-  inset:0;
-  background:#17202a;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-}
-
-.loginbox{
-  background:white;
-  padding:24px;
-  border-radius:14px;
-  width:min(360px,90vw);
-}
-
-#app{
-  display:none;
-}
-
-.status{
-  padding:9px;
-  border-radius:7px;
-  background:#eef2f5;
-  margin-top:8px;
-}
-
-.error{
-  background:#fff0f0;
-  color:#9b1c1c;
-}
-
-.success{
-  background:#effaf3;
-  color:#17633f;
-}
-
-canvas{
-  max-width:100%;
-  border:1px solid #cfd6dc;
-  background:#fff;
-  image-rendering:pixelated;
-}
-
-.previewwrap{
-  overflow:auto;
-  max-height:520px;
-}
-
-.small{
-  font-size:12px;
-  color:#59636e;
-}
-
-.fingers{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.finger{
-  min-width:54px;
-  text-align:center;
-}
-
-.finger input{
-  width:18px;
-  height:18px;
-}
-
-.range-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-  font-size:13px;
-}
-
-.range-table th,
-.range-table td{
-  border:1px solid #d8dde2;
-  padding:7px;
-  text-align:center;
-}
+button{border:0;border-radius:7px;padding:9px 13px;cursor:pointer;background:#263746;color:#fff;margin:3px}
+button.secondary{background:#e8edf1;color:#17202a}
+.danger{background:#b42318}
+.ok{background:#18794e}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+.grow{flex:1;min-width:180px}
+#login{position:fixed;inset:0;background:#17202a;display:flex;align-items:center;justify-content:center;z-index:10}
+.loginbox{background:white;padding:24px;border-radius:14px;width:min(360px,90vw)}
+#app{display:none}
+.status{padding:9px;border-radius:7px;background:#eef2f5;margin-top:8px}
+.error{background:#fff0f0;color:#9b1c1c}
+.success{background:#effaf3;color:#17633f}
+canvas{max-width:100%;border:1px solid #cfd6dc;background:#fff;image-rendering:pixelated}
+.previewwrap{overflow:auto;max-height:520px}
+.small{font-size:12px;color:#59636e}
+.fingers{display:flex;gap:5px;flex-wrap:wrap}
+.finger{min-width:54px;text-align:center}
+.finger input{width:18px;height:18px}
+.range-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+.range-table th,.range-table td{border:1px solid #d8dde2;padding:7px;text-align:center}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="login">
+<div class="loginbox">
 
-  <div class="loginbox">
+<h2>Electronic Designing</h2>
 
-    <h2>Electronic Designing</h2>
+<p class="small">Admin login</p>
 
-    <p class="small">
-      Admin login
-    </p>
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
+<button
+class="ok"
+style="width:100%;margin-top:10px"
+onclick="login()"
+>
+Login
+</button>
 
-    <button
-      class="ok"
-      style="width:100%;margin-top:10px"
-      onclick="login()"
-    >
-      Login
-    </button>
+<div id="loginMsg" class="small"></div>
 
-    <div id="loginMsg" class="small"></div>
-
-  </div>
-
+</div>
 </div>
 
 
 <header>
 
-  <b>
-    Electronic Designing — EasyX Style
-  </b>
+<b>Electronic Designing — EasyX Style</b>
 
-  <button
-    class="secondary"
-    onclick="location.reload()"
-  >
-    Logout
-  </button>
+<button
+class="secondary"
+onclick="location.reload()"
+>
+Logout
+</button>
 
 </header>
 
@@ -250,465 +86,390 @@ canvas{
 <main id="app">
 
 
-<!-- MACHINE PROFILE -->
-
 <section class="card">
 
-  <h2>
-    1. Machine / Harness Profile
-  </h2>
+<h2>1. Machine / Harness Profile</h2>
 
-  <div class="grid">
+<div class="grid">
 
-    <div>
-      <label>Machine name</label>
+<div>
+<label>Machine name</label>
+<input
+id="machineName"
+placeholder="My Jacquard"
+>
+</div>
 
-      <input
-        id="machineName"
-        placeholder="My Jacquard"
-      >
-    </div>
+<div>
+<label>Hooks</label>
+<input
+id="hooks"
+type="number"
+min="1"
+value="672"
+>
+</div>
 
+<div>
+<label>Finger count (1–6)</label>
+<input
+id="fingerCount"
+type="number"
+min="1"
+max="6"
+value="2"
+>
+</div>
 
-    <div>
-      <label>Hooks</label>
+<div>
+<label>Threshold (0–255)</label>
+<input
+id="threshold"
+type="number"
+min="0"
+max="255"
+value="128"
+placeholder="128"
+>
+</div>
 
-      <input
-        id="hooks"
-        type="number"
-        min="1"
-        value="672"
-      >
-    </div>
+</div>
 
+<h3>Finger capacity / picks</h3>
 
-    <div>
-      <label>Finger count (1–6)</label>
+<div
+id="fingerInputs"
+class="grid"
+></div>
 
-      <input
-        id="fingerCount"
-        type="number"
-        min="1"
-        max="6"
-        value="2"
-      >
-    </div>
+<button onclick="saveProfile()">
+Save profile
+</button>
 
+<button
+class="secondary"
+onclick="loadProfile()"
+>
+Load profile
+</button>
 
-    <div>
-      <label>Threshold (0–255)</label>
-
-      <input
-        id="threshold"
-        type="number"
-        min="0"
-        max="255"
-        value="128"
-      >
-    </div>
-
-  </div>
-
-
-  <h3>
-    Finger capacity / picks
-  </h3>
-
-  <div
-    id="fingerInputs"
-    class="grid"
-  ></div>
-
-
-  <button onclick="saveProfile()">
-    Save profile
-  </button>
-
-  <button
-    class="secondary"
-    onclick="loadProfile()"
-  >
-    Load profile
-  </button>
-
-
-  <div
-    id="profileStatus"
-    class="status"
-  ></div>
+<div
+id="profileStatus"
+class="status"
+></div>
 
 </section>
 
 
 
-<!-- RUNNING EP -->
-
 <section class="card">
 
-  <h2>
-    2. Running EP / Machine Template
-  </h2>
+<h2>2. Running EP / Machine Template</h2>
 
-  <input
-    id="epFile"
-    type="file"
-    accept=".ep,.EP"
-  >
+<input
+id="epFile"
+type="file"
+accept=".ep,.EP"
+>
 
-  <div
-    id="epInfo"
-    class="status"
-  >
-    No running EP loaded.
-  </div>
+<div
+id="epInfo"
+class="status"
+>
+No running EP loaded.
+</div>
 
-  <div class="small">
+<div class="small">
 
-    Running EP is used only as a
-    template/header source.
+Running EP is used only as a
+template/header source.
 
-    Its old design rows are not copied.
+Its old design rows are not copied.
 
-  </div>
+</div>
 
 </section>
 
 
 
-<!-- DESIGN -->
-
 <section class="card">
 
-  <h2>
-    3. New Design Image
-  </h2>
+<h2>3. New Design Image</h2>
 
-  <input
-    id="designFile"
-    type="file"
-    accept="
-      .bmp,
-      .png,
-      .jpg,
-      .jpeg,
-      .webp,
-      image/bmp,
-      image/png,
-      image/jpeg,
-      image/webp
-    "
-  >
+<input
+id="designFile"
+type="file"
+accept=".bmp,.png,.jpg,.jpeg,.webp,
+image/bmp,image/png,image/jpeg,image/webp"
+>
 
+<div class="grid">
 
-  <div class="grid">
+<div>
+<label>Invert</label>
 
-    <div>
+<select id="invert">
+<option value="0">Normal</option>
+<option value="1">Invert</option>
+</select>
+</div>
 
-      <label>
-        Invert
-      </label>
+<div>
+<label>Mirror</label>
 
-      <select id="invert">
+<select id="mirror">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
 
-        <option value="0">
-          Normal
-        </option>
+<div>
+<label>Flip vertical</label>
 
-        <option value="1">
-          Invert
-        </option>
+<select id="flip">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
 
-      </select>
+</div>
 
-    </div>
+<button onclick="prepareDesign()">
+Prepare / Preview
+</button>
 
-
-    <div>
-
-      <label>
-        Mirror
-      </label>
-
-      <select id="mirror">
-
-        <option value="0">
-          No
-        </option>
-
-        <option value="1">
-          Yes
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div>
-
-      <label>
-        Flip vertical
-      </label>
-
-      <select id="flip">
-
-        <option value="0">
-          No
-        </option>
-
-        <option value="1">
-          Yes
-        </option>
-
-      </select>
-
-    </div>
-
-  </div>
-
-
-  <button onclick="prepareDesign()">
-    Prepare / Preview
-  </button>
-
-
-  <div
-    id="designInfo"
-    class="status"
-  >
-    No design loaded.
-  </div>
+<div
+id="designInfo"
+class="status"
+>
+No design loaded.
+</div>
 
 </section>
 
 
 
-<!-- FINGER CONTROL -->
-
 <section class="card">
 
-  <h2>
-    4. Finger / Peti Working Sequence
-  </h2>
+<h2>4. Finger / Peti Working Sequence</h2>
 
-  <p class="small">
+<p class="small">
 
-    Total picks automatic नहीं हैं।
-    आप finger capacities देंगे।
+Total picks automatic नहीं हैं।
+आप finger capacities देंगे।
 
-    फिर हर pick range में कौन-से
-    finger काम करेंगे, आप तय करेंगे।
+फिर हर pick range में कौन-से
+finger काम करेंगे, आप तय करेंगे।
 
-  </p>
+</p>
 
+<div class="row">
 
-  <div class="row">
+<div class="grow">
 
-    <div class="grow">
+<label>Start pick</label>
 
-      <label>
-        Start pick
-      </label>
+<input
+id="rangeStart"
+type="number"
+min="1"
+value="1"
+>
 
-      <input
-        id="rangeStart"
-        type="number"
-        min="1"
-        value="1"
-      >
-
-    </div>
+</div>
 
 
-    <div class="grow">
+<div class="grow">
 
-      <label>
-        End pick
-      </label>
+<label>End pick</label>
 
-      <input
-        id="rangeEnd"
-        type="number"
-        min="1"
-        value="40"
-      >
+<input
+id="rangeEnd"
+type="number"
+min="1"
+value="40"
+>
 
-    </div>
+</div>
 
 
-    <div class="grow">
+<div class="grow">
 
-      <label>
-        Active fingers
-      </label>
+<label>Active fingers</label>
 
-      <div
-        id="fingerChecks"
-        class="fingers"
-      ></div>
+<div
+id="fingerChecks"
+class="fingers"
+></div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <button onclick="applyRange()">
-    Apply range
-  </button>
+<button onclick="applyRange()">
+Apply range
+</button>
 
-  <button
-    class="secondary"
-    onclick="clearRange()"
-  >
-    Clear range
-  </button>
+<button
+class="secondary"
+onclick="clearRange()"
+>
+Clear range
+</button>
 
-  <button
-    class="secondary"
-    onclick="setAllF1()"
-  >
-    Set all F1
-  </button>
+<button
+class="secondary"
+onclick="setAllF1()"
+>
+Set all F1
+</button>
 
-  <button
-    class="danger"
-    onclick="resetSequence()"
-  >
-    Reset
-  </button>
-
-
-  <div
-    id="sequenceStatus"
-    class="status"
-  ></div>
+<button
+class="danger"
+onclick="resetSequence()"
+>
+Reset
+</button>
 
 
-  <table class="range-table">
+<div
+id="sequenceStatus"
+class="status"
+></div>
 
-    <thead>
 
-      <tr>
-        <th>Start</th>
-        <th>End</th>
-        <th>Active</th>
-        <th>Action</th>
-      </tr>
+<table class="range-table">
 
-    </thead>
+<thead>
 
-    <tbody
-      id="sequenceTable"
-    ></tbody>
+<tr>
+<th>Start</th>
+<th>End</th>
+<th>Active</th>
+<th>Action</th>
+</tr>
 
-  </table>
+</thead>
+
+<tbody
+id="sequenceTable"
+></tbody>
+
+</table>
 
 </section>
 
 
 
-<!-- PREVIEW -->
-
 <section class="card">
 
-  <h2>
-    5. Design → Hook Preview
-  </h2>
+<h2>5. Design → Hook Preview</h2>
 
-  <div class="small">
+<div class="small">
 
-    Design image से हर pick पर
-    hook ON/OFF pattern निकाला जाता है।
+Design image से हर pick पर
+hook ON/OFF pattern निकाला जाता है।
 
-    Finger sequence अलग से लागू होती है।
+Finger sequence अलग से लागू होती है।
 
-  </div>
+</div>
 
 
-  <div class="previewwrap">
+<div class="previewwrap">
 
-    <canvas
-      id="preview"
-    ></canvas>
+<canvas
+id="preview"
+></canvas>
 
-  </div>
+</div>
 
 
-  <div
-    id="previewInfo"
-    class="status"
-  ></div>
+<div
+class="row"
+style="margin-top:8px"
+>
+
+<button
+class="secondary"
+onclick="showOriginalDesign()"
+>
+Show Original
+</button>
+
+<button
+class="secondary"
+onclick="prepareDesign()"
+>
+Show Hook Pattern
+</button>
+
+</div>
+
+
+<div
+id="previewInfo"
+class="status"
+></div>
 
 </section>
 
 
 
-<!-- EXPORT -->
-
 <section class="card">
 
-  <h2>
-    6. Validation & EP Export
-  </h2>
+<h2>6. Validation & EP Export</h2>
 
+<div
+id="validation"
+class="status"
+>
+Profile, running template और
+new design पूरा करें.
+</div>
 
-  <div
-    id="validation"
-    class="status"
-  >
-    Profile, running template और
-    new design पूरा करें.
-  </div>
+<button
+class="ok"
+onclick="validateAndExport()"
+>
+Build & Download EP
+</button>
 
+<div class="small">
 
-  <button
-    class="ok"
-    onclick="validateAndExport()"
-  >
-    Build & Download EP
-  </button>
+महत्वपूर्ण:
 
+Exact machine Finger/Peti
+binary mapping अभी verified
+नहीं है; code में उसे guess
+नहीं किया गया है.
 
-  <div class="small">
-
-    Important:
-
-    Exact machine Finger/Peti
-    binary mapping अभी verified
-    नहीं है; code में उसे guess
-    नहीं किया गया है.
-
-  </div>
+</div>
 
 </section>
-
 
 </main>
 
 
 <script>
 
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD="admin123";
 
-let db = null;
+let db=null;
+let runningEP=null;
+let designImg=null;
+let designRows=null;
+let machineHeader=new Uint8Array();
 
-let runningEP = null;
+let capacities=[
+150,150,120,100,80,60
+];
 
-let designImg = null;
-
-let designRows = null;
-
-let machineHeader =
-  new Uint8Array();
-
-let capacities =
-  [150,150,120,100,80,60];
-
-let sequence = [];
+let sequence=[];
 
 
-const $ =
-  id => document.getElementById(id);
+const $=
+id=>document.getElementById(id);
 
 
 
@@ -716,27 +477,27 @@ const $ =
 
 function login(){
 
-  if(
-    $("password").value ===
-    ADMIN_PASSWORD
-  ){
+if(
+$("password").value===
+ADMIN_PASSWORD
+){
 
-    $("login").style.display =
-      "none";
+$("login").style.display=
+"none";
 
-    $("app").style.display =
-      "block";
+$("app").style.display=
+"block";
 
-    init();
+init();
 
-  }
+}
 
-  else{
+else{
 
-    $("loginMsg").textContent =
-      "Wrong password.";
+$("loginMsg").textContent=
+"Wrong password.";
 
-  }
+}
 
 }
 
@@ -746,66 +507,62 @@ function login(){
 
 async function init(){
 
-  try{
+try{
 
-    db =
-      await new Promise(
-        (resolve,reject)=>{
+db=await new Promise(
+(resolve,reject)=>{
 
-          const r =
-            indexedDB.open(
-              "ElectronicDesigningDB",
-              1
-            );
+const r=
+indexedDB.open(
+"ElectronicDesigningDB",
+1
+);
 
-          r.onupgradeneeded =
-            e => {
+r.onupgradeneeded=
+e=>{
 
-              if(
-                !e.target.result
-                .objectStoreNames
-                .contains("machines")
-              ){
+if(
+!e.target.result
+.objectStoreNames
+.contains("machines")
+){
 
-                e.target.result
-                  .createObjectStore(
-                    "machines",
-                    {
-                      keyPath:"id"
-                    }
-                  );
+e.target.result
+.createObjectStore(
+"machines",
+{
+keyPath:"id"
+}
+);
 
-              }
+}
 
-            };
+};
 
-          r.onsuccess =
-            e =>
-              resolve(
-                e.target.result
-              );
+r.onsuccess=
+e=>
+resolve(
+e.target.result
+);
 
-          r.onerror =
-            () =>
-              reject(r.error);
+r.onerror=
+()=>
+reject(r.error);
 
-        }
-      );
+}
+);
 
-  }
+}
 
-  catch(e){
+catch(e){
 
-    db = null;
+db=null;
 
-  }
+}
 
-
-  renderFingerInputs();
-
-  updateProfileStatus();
-
-  resetSequence();
+renderFingerInputs();
+updateProfileStatus();
+resetSequence();
 
 }
 
@@ -815,15 +572,15 @@ async function init(){
 
 function nF(){
 
-  return Math.max(
-    1,
-    Math.min(
-      6,
-      Number(
-        $("fingerCount").value
-      ) || 1
-    )
-  );
+return Math.max(
+1,
+Math.min(
+6,
+Number(
+$("fingerCount").value
+)||1
+)
+);
 
 }
 
@@ -833,12 +590,12 @@ function nF(){
 
 function total(){
 
-  return capacities
-    .slice(0,nF())
-    .reduce(
-      (a,b)=>a+b,
-      0
-    );
+return capacities
+.slice(0,nF())
+.reduce(
+(a,b)=>a+b,
+0
+);
 
 }
 
@@ -848,59 +605,56 @@ function total(){
 
 function renderFingerInputs(){
 
-  const box =
-    $("fingerInputs");
+const box=
+$("fingerInputs");
 
-  box.innerHTML = "";
-
-
-  for(
-    let i=0;
-    i<nF();
-    i++
-  ){
-
-    let d =
-      document.createElement(
-        "div"
-      );
+box.innerHTML="";
 
 
-    d.innerHTML = `
+for(
+let i=0;
+i<nF();
+i++
+){
 
-      <label>
-        F${i+1} capacity
-      </label>
+let d=
+document.createElement(
+"div"
+);
 
-      <input
-        id="cap${i}"
-        type="number"
-        min="1"
-        value="${capacities[i]}"
-      >
+d.innerHTML=`
 
-    `;
+<label>
+F${i+1} capacity
+</label>
+
+<input
+id="cap${i}"
+type="number"
+min="1"
+value="${capacities[i]}"
+>
+
+`;
+
+box.appendChild(d);
+
+}
 
 
-    box.appendChild(d);
-
-  }
-
-
-  renderChecks();
-
-  updateProfileStatus();
+renderChecks();
+updateProfileStatus();
 
 }
 
 
 
-$("fingerCount").oninput =
-  renderFingerInputs;
+$("fingerCount").oninput=
+renderFingerInputs;
 
 
-$("hooks").oninput =
-  updateProfileStatus;
+$("hooks").oninput=
+updateProfileStatus;
 
 
 
@@ -908,21 +662,21 @@ $("hooks").oninput =
 
 function readCaps(){
 
-  for(
-    let i=0;
-    i<nF();
-    i++
-  ){
+for(
+let i=0;
+i<nF();
+i++
+){
 
-    capacities[i] =
-      Math.max(
-        1,
-        Number(
-          $("cap"+i).value
-        ) || 1
-      );
+capacities[i]=
+Math.max(
+1,
+Number(
+$("cap"+i).value
+)||1
+);
 
-  }
+}
 
 }
 
@@ -932,31 +686,31 @@ function readCaps(){
 
 function capError(){
 
-  readCaps();
+readCaps();
 
 
-  for(
-    let i=0;
-    i<nF()-1;
-    i++
-  ){
+for(
+let i=0;
+i<nF()-1;
+i++
+){
 
-    if(
-      capacities[i] <
-      capacities[i+1]
-    ){
+if(
+capacities[i]<
+capacities[i+1]
+){
 
-      return `
-        Invalid order:
-        F${i+1} must be ≥ F${i+2}.
-      `;
+return`
+Invalid order:
+F${i+1} must be ≥ F${i+2}.
+`;
 
-    }
+}
 
-  }
+}
 
 
-  return "";
+return"";
 
 }
 
@@ -966,19 +720,48 @@ function capError(){
 
 function updateProfileStatus(){
 
-  let e =
-    capError();
+let e=
+capError();
+
+$("profileStatus").className=
+e
+?"status error"
+:"status";
+
+$("profileStatus").textContent=
+e||
+`${$("hooks").value}
+Hooks ×
+${total()}
+Picks`;
+
+}
 
 
-  $("profileStatus").className =
-    e
-      ? "status error"
-      : "status";
 
+/* SAFE THRESHOLD */
 
-  $("profileStatus").textContent =
-    e ||
-    `${$("hooks").value} Hooks × ${total()} Picks`;
+function getThreshold(){
+
+const v=
+Number(
+$("threshold").value
+);
+
+if(
+!Number.isFinite(v)||
+v<0||
+v>255
+){
+
+$("threshold").value=
+128;
+
+return 128;
+
+}
+
+return v;
 
 }
 
@@ -988,78 +771,71 @@ function updateProfileStatus(){
 
 async function saveProfile(){
 
-  let e =
-    capError();
+let e=
+capError();
+
+if(e){
+
+updateProfileStatus();
+return;
+
+}
 
 
-  if(e){
+let p={
 
-    updateProfileStatus();
+id:"default",
 
-    return;
+name:
+$("machineName").value,
 
-  }
+hooks:
+Number(
+$("hooks").value
+),
 
+fingerCount:
+nF(),
 
-  let p = {
+capacities:
+[...capacities],
 
-    id:"default",
+threshold:
+getThreshold()
 
-    name:
-      $("machineName").value,
-
-    hooks:
-      Number(
-        $("hooks").value
-      ),
-
-    fingerCount:
-      nF(),
-
-    capacities:
-      capacities,
-
-    threshold:
-      Number(
-        $("threshold").value
-      )
-
-  };
+};
 
 
-  try{
+try{
 
-    let t =
-      db.transaction(
-        "machines",
-        "readwrite"
-      );
+let t=
+db.transaction(
+"machines",
+"readwrite"
+);
 
+t.objectStore(
+"machines"
+).put(p);
 
-    t.objectStore(
-      "machines"
-    ).put(p);
+$("profileStatus")
+.textContent=
+"Profile saved.";
 
+}
 
-    $("profileStatus")
-      .textContent =
-      "Profile saved.";
+catch(x){
 
-  }
+localStorage.setItem(
+"ElectronicDesigningMachines",
+JSON.stringify(p)
+);
 
-  catch(x){
+$("profileStatus")
+.textContent=
+"Profile saved locally.";
 
-    localStorage.setItem(
-      "ElectronicDesigningMachines",
-      JSON.stringify(p)
-    );
-
-
-    $("profileStatus")
-      .textContent =
-      "Profile saved locally.";
-
-  }
+}
 
 }
 
@@ -1069,75 +845,75 @@ async function saveProfile(){
 
 async function loadProfile(){
 
-  let p = null;
+let p=null;
+
+try{
+
+p=
+await new Promise(
+(res,rej)=>{
+
+let t=
+db.transaction(
+"machines",
+"readonly"
+);
+
+let r=
+t.objectStore(
+"machines"
+).get("default");
+
+r.onsuccess=
+()=>
+res(r.result);
+
+r.onerror=
+()=>
+rej(r.error);
+
+}
+);
+
+}
+
+catch(e){
+
+p=
+JSON.parse(
+localStorage.getItem(
+"ElectronicDesigningMachines"
+)||"null"
+);
+
+}
 
 
-  try{
-
-    p =
-      await new Promise(
-        (res,rej)=>{
-
-          let t =
-            db.transaction(
-              "machines",
-              "readonly"
-            );
+if(!p)
+return;
 
 
-          let r =
-            t.objectStore(
-              "machines"
-            ).get("default");
+$("machineName").value=
+p.name||"";
 
+$("hooks").value=
+p.hooks;
 
-          r.onsuccess =
-            () =>
-              res(r.result);
+$("fingerCount").value=
+p.fingerCount;
 
-          r.onerror =
-            () =>
-              rej(r.error);
+$("threshold").value=
+Number.isFinite(
+Number(p.threshold)
+)
+?Number(p.threshold)
+:128;
 
-        }
-      );
+capacities=
+p.capacities;
 
-  }
-
-  catch(e){
-
-    p =
-      JSON.parse(
-        localStorage.getItem(
-          "ElectronicDesigningMachines"
-        ) || "null"
-      );
-
-  }
-
-
-  if(!p)
-    return;
-
-
-  $("machineName").value =
-    p.name || "";
-
-  $("hooks").value =
-    p.hooks;
-
-  $("fingerCount").value =
-    p.fingerCount;
-
-  $("threshold").value =
-    p.threshold;
-
-  capacities =
-    p.capacities;
-
-  renderFingerInputs();
-
-  updateProfileStatus();
+renderFingerInputs();
+updateProfileStatus();
 
 }
 
@@ -1145,92 +921,101 @@ async function loadProfile(){
 
 /* RUNNING EP */
 
-$("epFile").onchange =
-async e => {
+$("epFile").onchange=
+async e=>{
 
-  let f =
-    e.target.files[0];
+let f=
+e.target.files[0];
 
-  if(!f)
-    return;
-
-
-  runningEP =
-    new Uint8Array(
-      await f.arrayBuffer()
-    );
+if(!f)
+return;
 
 
-  machineHeader =
-    runningEP.slice(
-      0,
-      Math.min(
-        32,
-        runningEP.length
-      )
-    );
+runningEP=
+new Uint8Array(
+await f.arrayBuffer()
+);
 
 
-  $("epInfo").className =
-    "status success";
+machineHeader=
+runningEP.slice(
+0,
+Math.min(
+32,
+runningEP.length
+)
+);
 
 
-  $("epInfo").textContent =
-    `Template: ${f.name}
-     — ${runningEP.length}
-     bytes.
-     Old rows will not be copied.`;
+$("epInfo").className=
+"status success";
+
+$("epInfo").textContent=
+`Template:
+${f.name}
+—
+${runningEP.length}
+bytes.
+Old rows will not be copied.`;
 
 };
 
 
 
-/* DESIGN IMAGE */
+/* DESIGN UPLOAD */
 
-$("designFile").onchange =
-e => {
+$("designFile").onchange=
+e=>{
 
-  let f =
-    e.target.files[0];
+let f=
+e.target.files[0];
 
-  if(!f)
-    return;
-
-
-  let r =
-    new FileReader();
+if(!f)
+return;
 
 
-  r.onload =
-    x => {
-
-      let im =
-        new Image();
+let r=
+new FileReader();
 
 
-      im.onload =
-        () => {
+r.onload=
+x=>{
 
-          designImg =
-            im;
-
-
-          $("designInfo")
-            .textContent =
-            `${f.name}
-             — ${im.width}
-             × ${im.height}`;
-
-        };
+let im=
+new Image();
 
 
-      im.src =
-        x.target.result;
+im.onload=
+()=>{
 
-    };
+designImg=
+im;
+
+$("designInfo")
+.textContent=
+`${f.name}
+—
+${im.width}
+×
+${im.height}`;
 
 
-  r.readAsDataURL(f);
+/*
+AUTO PREVIEW
+*/
+
+prepareDesign();
+
+};
+
+
+im.src=
+x.target.result;
+
+};
+
+
+r.readAsDataURL(f);
 
 };
 
@@ -1240,35 +1025,41 @@ e => {
 
 function prepareDesign(){
 
-  if(!designImg){
+if(!designImg){
 
-    $("designInfo")
-      .className =
-      "status error";
+$("designInfo")
+.className=
+"status error";
 
-    $("designInfo")
-      .textContent =
-      "New design upload करें.";
+$("designInfo")
+.textContent=
+"New design upload करें.";
 
-    return;
+return;
 
-  }
-
-
-  designRows =
-    makeRows(
-      designImg,
-      Number(
-        $("hooks").value
-      ),
-      total(),
-      Number(
-        $("threshold").value
-      )
-    );
+}
 
 
-  drawPreview();
+const thr=
+getThreshold();
+
+
+$("threshold").value=
+thr;
+
+
+designRows=
+makeRows(
+designImg,
+Number(
+$("hooks").value
+),
+total(),
+thr
+);
+
+
+drawPreview();
 
 }
 
@@ -1277,132 +1068,142 @@ function prepareDesign(){
 /* IMAGE → HOOK ROWS */
 
 function makeRows(
-  im,
-  w,
-  h,
-  thr
+im,
+w,
+h,
+thr
 ){
 
-  let c =
-    document.createElement(
-      "canvas"
-    );
+let c=
+document.createElement(
+"canvas"
+);
+
+let x=
+c.getContext(
+"2d",
+{
+willReadFrequently:true
+}
+);
 
 
-  let x =
-    c.getContext(
-      "2d",
-      {
-        willReadFrequently:true
-      }
-    );
+c.width=w;
+c.height=h;
 
 
-  c.width = w;
-  c.height = h;
+x.save();
 
 
-  x.save();
+if(
+$("mirror").value==="1"
+){
+
+x.translate(
+w,
+0
+);
+
+x.scale(
+-1,
+1
+);
+
+}
 
 
-  if(
-    $("mirror").value === "1"
-  ){
+if(
+$("flip").value==="1"
+){
 
-    x.translate(w,0);
+x.translate(
+0,
+h
+);
 
-    x.scale(-1,1);
+x.scale(
+1,
+-1
+);
 
-  }
-
-
-  if(
-    $("flip").value === "1"
-  ){
-
-    x.translate(0,h);
-
-    x.scale(1,-1);
-
-  }
+}
 
 
-  x.drawImage(
-    im,
-    0,
-    0,
-    w,
-    h
-  );
+x.drawImage(
+im,
+0,
+0,
+w,
+h
+);
 
 
-  x.restore();
+x.restore();
 
 
-  let d =
-    x.getImageData(
-      0,
-      0,
-      w,
-      h
-    ).data;
+let d=
+x.getImageData(
+0,
+0,
+w,
+h
+).data;
 
 
-  let rows = [];
+let rows=[];
+
+let inv=
+$("invert").value==="1";
 
 
-  let inv =
-    $("invert").value === "1";
+for(
+let y=0;
+y<h;
+y++
+){
+
+let r=
+new Uint8Array(w);
 
 
-  for(
-    let y=0;
-    y<h;
-    y++
-  ){
+for(
+let k=0;
+k<w;
+k++
+){
 
-    let r =
-      new Uint8Array(w);
-
-
-    for(
-      let k=0;
-      k<w;
-      k++
-    ){
-
-      let p =
-        (y*w+k)*4;
+let p=
+(y*w+k)*4;
 
 
-      let l =
-        (
-          d[p]*299 +
-          d[p+1]*587 +
-          d[p+2]*114
-        ) / 1000;
+let l=
+(
+d[p]*299+
+d[p+1]*587+
+d[p+2]*114
+)/1000;
 
 
-      let on =
-        l < thr;
+let on=
+l<thr;
 
 
-      if(inv)
-        on = !on;
+if(inv)
+on=!on;
 
 
-      r[k] =
-        on ? 1 : 0;
+r[k]=
+on?1:0;
 
-    }
-
-
-    rows.push(r);
-
-  }
+}
 
 
-  return rows;
+rows.push(r);
+
+}
+
+
+return rows;
 
 }
 
@@ -1412,44 +1213,41 @@ function makeRows(
 
 function renderChecks(){
 
-  let b =
-    $("fingerChecks");
+let b=
+$("fingerChecks");
 
-  b.innerHTML = "";
-
-
-  for(
-    let i=0;
-    i<nF();
-    i++
-  ){
-
-    let l =
-      document.createElement(
-        "label"
-      );
+b.innerHTML="";
 
 
-    l.className =
-      "finger";
+for(
+let i=0;
+i<nF();
+i++
+){
 
+let l=
+document.createElement(
+"label"
+);
 
-    l.innerHTML = `
+l.className=
+"finger";
 
-      <input
-        id="f${i}"
-        type="checkbox"
-        ${i===0?"checked":""}
-      >
+l.innerHTML=`
 
-      F${i+1}
+<input
+id="f${i}"
+type="checkbox"
+${i===0?"checked":""}
+>
 
-    `;
+F${i+1}
 
+`;
 
-    b.appendChild(l);
+b.appendChild(l);
 
-  }
+}
 
 }
 
@@ -1459,28 +1257,28 @@ function renderChecks(){
 
 function mask(){
 
-  let m=0;
+let m=0;
 
 
-  for(
-    let i=0;
-    i<nF();
-    i++
-  ){
+for(
+let i=0;
+i<nF();
+i++
+){
 
-    if(
-      $("f"+i).checked
-    ){
+if(
+$("f"+i).checked
+){
 
-      m |=
-        1 << i;
+m |=
+1<<i;
 
-    }
+}
 
-  }
+}
 
 
-  return m;
+return m;
 
 }
 
@@ -1490,17 +1288,35 @@ function mask(){
 
 function resetSequence(){
 
-  sequence =
-    Array(
-      total()
-    ).fill(1);
+sequence=
+Array(
+total()
+).fill(1);
 
 
-  renderSequenceTable();
+renderSequenceTable();
 
 
-  if(designRows)
-    drawPreview();
+if(designRows)
+drawPreview();
+
+}
+
+
+
+/* SET ALL F1 */
+
+function setAllF1(){
+
+sequence=
+Array(
+total()
+).fill(1);
+
+renderSequenceTable();
+
+if(designRows)
+drawPreview();
 
 }
 
@@ -1510,49 +1326,48 @@ function resetSequence(){
 
 function applyRange(){
 
-  let s =
-    +$("rangeStart").value;
+let s=
++$("rangeStart").value;
 
-  let e =
-    +$("rangeEnd").value;
-
-
-  if(
-    s<1 ||
-    e<s ||
-    e>total()
-  ){
-
-    alert(
-      "Invalid pick range"
-    );
-
-    return;
-
-  }
+let e=
++$("rangeEnd").value;
 
 
-  let m =
-    mask();
+if(
+s<1||
+e<s||
+e>total()
+){
+
+alert(
+"Invalid pick range"
+);
+
+return;
+
+}
 
 
-  for(
-    let i=s-1;
-    i<e;
-    i++
-  ){
-
-    sequence[i] =
-      m;
-
-  }
+let m=
+mask();
 
 
-  renderSequenceTable();
+for(
+let i=s-1;
+i<e;
+i++
+){
+
+sequence[i]=m;
+
+}
 
 
-  if(designRows)
-    drawPreview();
+renderSequenceTable();
+
+
+if(designRows)
+drawPreview();
 
 }
 
@@ -1562,40 +1377,29 @@ function applyRange(){
 
 function clearRange(){
 
-  let s =
-    +$("rangeStart").value;
+let s=
++$("rangeStart").value;
 
-  let e =
-    +$("rangeEnd").value;
-
-
-  for(
-    let i=s-1;
-    i<e &&
-    i<sequence.length;
-    i++
-  ){
-
-    sequence[i] = 0;
-
-  }
+let e=
++$("rangeEnd").value;
 
 
-  renderSequenceTable();
+for(
+let i=s-1;
+i<e&&i<sequence.length;
+i++
+){
 
-
-  if(designRows)
-    drawPreview();
+sequence[i]=0;
 
 }
 
 
+renderSequenceTable();
 
-/* ALL F1 */
 
-function setAllF1(){
-
-  resetSequence();
+if(designRows)
+drawPreview();
 
 }
 
@@ -1605,32 +1409,33 @@ function setAllF1(){
 
 function txt(m){
 
-  let a=[];
+let a=[];
 
 
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
+for(
+let i=0;
+i<6;
+i++
+){
 
-    if(
-      m & (1<<i)
-    ){
+if(
+m&(1<<i)
+){
 
-      a.push(
-        "F"+(i+1)
-      );
+a.push(
+"F"+(i+1)
+);
 
-    }
+}
 
-  }
+}
 
 
-  return (
-    a.join(" + ") ||
-    "OFF"
-  );
+return(
+a.join(" + ")
+||
+"OFF"
+);
 
 }
 
@@ -1640,93 +1445,92 @@ function txt(m){
 
 function renderSequenceTable(){
 
-  let b =
-    $("sequenceTable");
+let b=
+$("sequenceTable");
+
+b.innerHTML="";
 
 
-  b.innerHTML = "";
+if(
+sequence.length!==total()
+){
+
+sequence=
+Array(
+total()
+).fill(1);
+
+}
 
 
-  if(
-    sequence.length !== total()
-  ){
-
-    sequence =
-      Array(
-        total()
-      ).fill(1);
-
-  }
+let s=1;
 
 
-  let s=1;
+for(
+let p=2;
+p<=total()+1;
+p++
+){
+
+if(
+p>total()||
+sequence[p-1]!==sequence[s-1]
+){
+
+let tr=
+document.createElement(
+"tr"
+);
 
 
-  for(
-    let p=2;
-    p<=total()+1;
-    p++
-  ){
+tr.innerHTML=`
 
-    if(
-      p>total() ||
-      sequence[p-1] !==
-      sequence[s-1]
-    ){
+<td>${s}</td>
 
-      let tr =
-        document.createElement(
-          "tr"
-        );
+<td>${p-1}</td>
 
+<td>
+${txt(
+sequence[s-1]
+)}
+</td>
 
-      tr.innerHTML = `
+<td>
 
-        <td>${s}</td>
+<button
+class="secondary"
+onclick="
+editRange(
+${s},
+${p-1},
+${sequence[s-1]}
+)
+"
+>
+Edit
+</button>
 
-        <td>${p-1}</td>
+</td>
 
-        <td>
-          ${txt(
-            sequence[s-1]
-          )}
-        </td>
-
-        <td>
-
-          <button
-            class="secondary"
-            onclick="
-              editRange(
-                ${s},
-                ${p-1},
-                ${sequence[s-1]}
-              )
-            "
-          >
-            Edit
-          </button>
-
-        </td>
-
-      `;
+`;
 
 
-      b.appendChild(tr);
+b.appendChild(tr);
+
+s=p;
+
+}
+
+}
 
 
-      s=p;
-
-    }
-
-  }
-
-
-  $("sequenceStatus")
-    .textContent =
-    `Total picks: ${total()}
-     | ${b.children.length}
-     working range(s)`;
+$("sequenceStatus")
+.textContent=
+`Total picks:
+${total()}
+|
+${b.children.length}
+working range(s)`;
 
 }
 
@@ -1735,174 +1539,287 @@ function renderSequenceTable(){
 /* EDIT RANGE */
 
 function editRange(
-  s,
-  e,
-  m
+s,
+e,
+m
 ){
 
-  $("rangeStart").value =
-    s;
+$("rangeStart").value=
+s;
 
-  $("rangeEnd").value =
-    e;
+$("rangeEnd").value=
+e;
 
 
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
+for(
+let i=0;
+i<6;
+i++
+){
 
-    if(
-      $("f"+i)
-    ){
+if(
+$("f"+i)
+){
 
-      $("f"+i).checked =
-        !!(
-          m &
-          (1<<i)
-        );
+$("f"+i).checked=
+!!(
+m&
+(1<<i)
+);
 
-    }
+}
 
-  }
+}
 
 }
 
 
 
-/* PREVIEW */
+/* SHOW ORIGINAL */
+
+function showOriginalDesign(){
+
+if(!designImg){
+
+$("previewInfo")
+.textContent=
+"Pehle design upload karein.";
+
+return;
+
+}
+
+
+const c=
+$("preview");
+
+const x=
+c.getContext("2d");
+
+
+const w=
+designImg.naturalWidth||
+designImg.width;
+
+const h=
+designImg.naturalHeight||
+designImg.height;
+
+
+const cw=
+Math.min(
+w,
+1200
+);
+
+const ch=
+Math.min(
+h,
+700
+);
+
+
+c.width=cw;
+c.height=ch;
+
+
+x.clearRect(
+0,
+0,
+cw,
+ch
+);
+
+
+x.drawImage(
+designImg,
+0,
+0,
+cw,
+ch
+);
+
+
+$("previewInfo")
+.textContent=
+`Original design:
+${w} × ${h}`;
+
+}
+
+
+
+/* HOOK PREVIEW */
 
 function drawPreview(){
 
-  let c =
-    $("preview");
+if(
+!designRows||
+!designRows.length
+){
+
+$("previewInfo")
+.textContent=
+"Design pattern ready nahi hai.";
+
+return;
+
+}
 
 
-  let x =
-    c.getContext("2d");
+let c=
+$("preview");
+
+let x=
+c.getContext("2d");
 
 
-  let w =
-    Number(
-      $("hooks").value
-    );
+let w=
+Number(
+$("hooks").value
+);
+
+let h=
+total();
 
 
-  let h =
-    total();
+let cw=
+Math.min(
+w,
+1200
+);
+
+let ch=
+Math.min(
+h,
+700
+);
 
 
-  let cw =
-    Math.min(
-      w,
-      1200
-    );
+c.width=cw;
+c.height=ch;
 
 
-  let ch =
-    Math.min(
-      h,
-      700
-    );
+let im=
+x.createImageData(
+cw,
+ch
+);
 
 
-  c.width =
-    cw;
+let sx=
+w/cw;
 
-  c.height =
-    ch;
-
-
-  let im =
-    x.createImageData(
-      cw,
-      ch
-    );
+let sy=
+h/ch;
 
 
-  let sx =
-    w/cw;
+for(
+let y=0;
+y<ch;
+y++
+){
+
+let yy=
+Math.min(
+h-1,
+Math.floor(
+y*sy
+)
+);
 
 
-  let sy =
-    h/ch;
+let m=
+sequence[yy]??1;
 
 
-  for(
-    let y=0;
-    y<ch;
-    y++
-  ){
+for(
+let k=0;
+k<cw;
+k++
+){
 
-    let yy =
-      Math.min(
-        h-1,
-        Math.floor(
-          y*sy
-        )
-      );
-
-
-    let m =
-      sequence[yy] ?? 1;
+let xx=
+Math.min(
+w-1,
+Math.floor(
+k*sx
+)
+);
 
 
-    for(
-      let k=0;
-      k<cw;
-      k++
-    ){
-
-      let xx =
-        Math.min(
-          w-1,
-          Math.floor(
-            k*sx
-          )
-        );
+let on=
+designRows[yy][xx]&&m;
 
 
-      let on =
-        designRows[yy][xx] &&
-        m;
+let q=
+(y*cw+k)*4;
 
 
-      let q =
-        (y*cw+k)*4;
+let v=
+on?0:255;
 
 
-      let v =
-        on ? 0 : 255;
+im.data[q]=v;
+im.data[q+1]=v;
+im.data[q+2]=v;
+im.data[q+3]=255;
+
+}
+
+}
 
 
-      im.data[q] =
-        v;
-
-      im.data[q+1] =
-        v;
-
-      im.data[q+2] =
-        v;
-
-      im.data[q+3] =
-        255;
-
-    }
-
-  }
+x.putImageData(
+im,
+0,
+0
+);
 
 
-  x.putImageData(
-    im,
-    0,
-    0
-  );
+/* ACTIVE CELL COUNT */
+
+let activeHooks=0;
 
 
-  $("previewInfo")
-    .textContent =
-    `${w} Hooks × ${h} Picks`;
+for(
+let y=0;
+y<h;
+y++
+){
+
+if(!sequence[y])
+continue;
+
+
+for(
+let k=0;
+k<w;
+k++
+){
+
+if(
+designRows[y][k]
+){
+
+activeHooks++;
+
+}
+
+}
+
+}
+
+
+$("previewInfo")
+.textContent=
+`${w} Hooks × ${h} Picks
+|
+Active hook cells:
+${activeHooks.toLocaleString()}
+|
+Threshold:
+${getThreshold()}`;
 
 }
 
@@ -1912,62 +1829,62 @@ function drawPreview(){
 
 function validate(){
 
-  let e =
-    capError();
+let e=
+capError();
 
 
-  if(e)
-    return e;
+if(e)
+return e;
 
 
-  if(!runningEP)
-    return
-      "Running EP/template upload करें.";
+if(!runningEP)
+return
+"Running EP/template upload करें.";
 
 
-  if(!designRows)
-    return
-      "Design prepare करें.";
+if(!designRows)
+return
+"Design prepare करें.";
 
 
-  return "";
+return "";
 
 }
 
 
 
-/* PACK HOOK DATA */
+/* PACK HOOKS */
 
 function pack(row){
 
-  let o =
-    new Uint8Array(
-      Math.ceil(
-        row.length/8
-      )
-    );
+let o=
+new Uint8Array(
+Math.ceil(
+row.length/8
+)
+);
 
 
-  for(
-    let i=0;
-    i<row.length;
-    i++
-  ){
+for(
+let i=0;
+i<row.length;
+i++
+){
 
-    if(row[i]){
+if(row[i]){
 
-      o[
-        Math.floor(i/8)
-      ] |=
-        128 >>
-        (i%8);
+o[
+Math.floor(i/8)
+] |=
+128>>
+(i%8);
 
-    }
+}
 
-  }
+}
 
 
-  return o;
+return o;
 
 }
 
@@ -1977,48 +1894,48 @@ function pack(row){
 
 function buildEP(){
 
-  let rows =
-    designRows.map(
-      (r,i)=>
-        sequence[i]
-          ? r
-          : new Uint8Array(
-              r.length
-            )
-    );
+let rows=
+designRows.map(
+(r,i)=>
+sequence[i]
+?r
+:new Uint8Array(
+r.length
+)
+);
 
 
-  let packed =
-    rows.map(pack);
+let packed=
+rows.map(pack);
 
 
-  let rb =
-    packed[0].length;
+let rb=
+packed[0].length;
 
 
-  let out =
-    new Uint8Array(
-      machineHeader.length +
-      packed.length*rb
-    );
+let out=
+new Uint8Array(
+machineHeader.length+
+packed.length*rb
+);
 
 
-  out.set(
-    machineHeader
-  );
+out.set(
+machineHeader
+);
 
 
-  packed.forEach(
-    (r,i)=>
-      out.set(
-        r,
-        machineHeader.length +
-        i*rb
-      )
-  );
+packed.forEach(
+(r,i)=>
+out.set(
+r,
+machineHeader.length+
+i*rb
+)
+);
 
 
-  return out;
+return out;
 
 }
 
@@ -2028,82 +1945,82 @@ function buildEP(){
 
 function validateAndExport(){
 
-  let e =
-    validate();
+let e=
+validate();
 
 
-  if(e){
+if(e){
 
-    $("validation")
-      .className =
-      "status error";
+$("validation")
+.className=
+"status error";
 
-    $("validation")
-      .textContent =
-      e;
+$("validation")
+.textContent=
+e;
 
-    return;
+return;
 
-  }
-
-
-  let blob =
-    new Blob(
-      [buildEP()],
-      {
-        type:
-          "application/octet-stream"
-      }
-    );
+}
 
 
-  let a =
-    document.createElement("a");
+let blob=
+new Blob(
+[buildEP()],
+{
+type:
+"application/octet-stream"
+}
+);
 
 
-  a.href =
-    URL.createObjectURL(
-      blob
-    );
+let a=
+document.createElement("a");
 
 
-  let base =
-    (
-      $("designFile")
-        .files[0]
-        ?.name ||
-      "Design"
-    )
-    .replace(
-      /\.[^.]+$/,
-      ""
-    );
+a.href=
+URL.createObjectURL(
+blob
+);
 
 
-  a.download =
-    `${base}_${total()}Picks.EP`;
+let base=
+(
+$("designFile")
+.files[0]
+?.name||
+"Design"
+)
+.replace(
+/\.[^.]+$/,
+""
+);
 
 
-  a.click();
+a.download=
+`${base}_${total()}Picks.EP`;
 
 
-  URL.revokeObjectURL(
-    a.href
-  );
+a.click();
 
 
-  $("validation")
-    .className =
-    "status success";
+URL.revokeObjectURL(
+a.href
+);
 
 
-  $("validation")
-    .textContent =
-    "Prototype EP generated.";
+$("validation")
+.className=
+"status success";
+
+
+$("validation")
+.textContent=
+"Prototype EP generated.";
 
 }
 
 </script>
 
 </body>
-        </html>
+</html>
