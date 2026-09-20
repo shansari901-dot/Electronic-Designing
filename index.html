@@ -645,8 +645,8 @@ async function selectMachineById(id){
  }
  selectedMachine=machine;
  $("machineSelect").value=String(machine.id);
- currentDesignMachineId=null;
- binaryBits=null;
+ currentDesignMachineId=machine.id;
+ if(designImage) renderBinary();
  showSelectedMachine();
  switchTab("design");
  toast(machine.name+" selected");
@@ -697,8 +697,14 @@ function showSelectedMachine(){
  updateDesignCheck();
 }
 
-/* LOAD DESIGN */
+/* LOAD DESIGN WITH STRICT VALIDATION */
 function loadDesign(file){
+ if(!selectedMachine){
+  alert("Pehle 'Machine Setup' se machine select karein!");
+  $("designFile").value="";
+  return;
+ }
+
  const url=URL.createObjectURL(file);
  const img=new Image();
  img.onload=()=>{
@@ -710,16 +716,25 @@ function loadDesign(file){
   $("originalPreview").src=url;
   $("originalPreview").dataset.objectUrl=url;
   $("originalPreview").classList.remove("hidden");
-  $("designInfo").className="status";
-  $("designInfo").textContent=img.naturalWidth+" × "+img.naturalHeight+" px • "+file.name;
-  currentDesignMachineId=selectedMachine?String(selectedMachine.id):null;
+  $("designInfo").className="status ok";
+  $("designInfoCH"]="";
+  $("designInfo").textContent="✓ Strict Design Loaded: "+img.naturalWidth+" × "+img.naturalHeight+" px • "+file.name;
+  
+  currentDesignMachineId=selectedMachine.id;
   renderBinary();
  };
- img.onerror=()=>{URL.revokeObjectURL(url);alert("Design file read nahi ho paayi.");};
+ img.onerror=()=>{
+  URL.revokeObjectURL(url);
+  $("designInfo").className="status err";
+  $("designInfo").textContent="Ghalat file format! Kripya sirf saaf image (.png, .jpg, .bmp) upload karein.";
+  designImage=null;
+  binaryBits=null;
+  updateDesignCheck();
+ };
  img.src=url;
 }
 
-/* BINARY RENDER - CLEAN PREVIEW */
+/* BINARY RENDER - EXACT USER DESIGN ONLY */
 function renderBinary(){
  if(!designImage || !selectedMachine) return;
 
@@ -734,8 +749,7 @@ function renderBinary(){
 
  if(left + right >= W){
   $("designCheck").className = "status err";
-  $("designCheck").textContent =
-   "Left + Right padding hook capacity se kam hona chahiye.";
+  $("designCheck").textContent = "Left + Right padding hook capacity se kam hona chahiye.";
   $("convertBtn").disabled = true;
   return;
  }
@@ -743,15 +757,12 @@ function renderBinary(){
  const drawWidth = W - left - right;
  $("targetPicks").value = H;
 
- /* Source image ko required dimensions mein draw karein */
+ /* Source image ko exact dimensions mein draw karein */
  const sourceCanvas = document.createElement("canvas");
  sourceCanvas.width = drawWidth;
  sourceCanvas.height = H;
 
- const sourceCtx = sourceCanvas.getContext("2d", {
-  willReadFrequently:true
- });
-
+ const sourceCtx = sourceCanvas.getContext("2d", { willReadFrequently: true });
  sourceCtx.imageSmoothingEnabled = false;
  sourceCtx.fillStyle = "#ffffff";
  sourceCtx.fillRect(0, 0, drawWidth, H);
@@ -769,7 +780,7 @@ function renderBinary(){
  let threshold = Number($("threshold").value);
  if(!Number.isFinite(threshold)) threshold = 128;
 
- /* Pixels ko binary hook data mein badlein */
+ /* Sirf user ke upload kiye gaye design pixels ko convert karein */
  for(let y = 0; y < H; y++){
   for(let x = 0; x < drawWidth; x++){
    const i = (y * drawWidth + x) * 4;
@@ -786,13 +797,10 @@ function renderBinary(){
   }
  }
 
- /* Machine-style preview dimensions */
+ /* Preview Canvas */
  const preview = $("binaryCanvas");
  const previewWidth = Math.min(900, W);
- const previewHeight = Math.min(
-  600,
-  Math.max(100, Math.round(H * previewWidth / W))
- );
+ const previewHeight = Math.min(600, Math.max(100, Math.round(H * previewWidth / W)));
 
  preview.width = previewWidth;
  preview.height = previewHeight;
@@ -804,7 +812,6 @@ function renderBinary(){
  const tempCtx = temp.getContext("2d");
  const image = tempCtx.createImageData(W, H);
 
- /* OFF pixels = cyan background; ON pixels = dark design */
  const background = [53, 213, 210];
  const designColor = [35, 58, 78];
 
@@ -825,7 +832,6 @@ function renderBinary(){
  previewCtx.imageSmoothingEnabled = false;
  previewCtx.drawImage(temp, 0, 0, previewWidth, previewHeight);
 
- /* Crisp border around the preview */
  previewCtx.strokeStyle = "#007f91";
  previewCtx.lineWidth = Math.max(1, Math.round(previewWidth / 450));
  previewCtx.strokeRect(0, 0, previewWidth, previewHeight);
@@ -835,29 +841,24 @@ function renderBinary(){
 
 /* DESIGN CHECK */
 function updateDesignCheck(){
- if(!selectedMachine||!designImage){
-  $("designCheck").className="status";
-  $("designCheck").textContent="Machine aur design select karein.";
-  $("convertBtn").disabled=true;
+ if(!selectedMachine || !designImage || currentDesignMachineId !== selectedMachine.id){
+  $("designCheck").className = "status warn";
+  $("designCheck").textContent = "Pehle valid machine select karein aur phir design upload karein.";
+  $("convertBtn").disabled = true;
   return;
  }
 
- const H=Math.max(1,Math.floor(Number($("targetPicks").value)||selectedMachine.picks));
- const expectedBpp=Math.ceil(selectedMachine.hooks/8);
- const outputSize=selectedMachine.headerLen+selectedMachine.bpp*H;
+ const H = Math.max(1, Math.floor(Number($("targetPicks").value) || selectedMachine.picks));
+ const expectedBpp = Math.ceil(selectedMachine.hooks / 8);
+ const outputSize = selectedMachine.headerLen + selectedMachine.bpp * H;
 
- $("designCheck").className="status ok";
- $("designCheck").innerHTML=
+ $("designCheck").className = "status ok";
+ $("designCheck").innerHTML =
   "✓ <b>"+escapeHtml(selectedMachine.name)+"</b> selected"+
-  "<br>"+selectedMachine.hooks+" Hooks × "+H+" Picks"+
-  "<br>Output size: "+outputSize.toLocaleString()+" bytes"+
-  "<br>Machine row width: "+selectedMachine.bpp+" bytes/pick";
+  "<br>Strict Design Ready: "+selectedMachine.hooks+" Hooks × "+H+" Picks"+
+  "<br>Output size: "+outputSize.toLocaleString()+" bytes";
 
- $("convertBtn").disabled=
-  String(currentDesignMachineId)!==String(selectedMachine.id)||
-  selectedMachine.bpp<expectedBpp||
-  !Number.isInteger(H)||H<1;
-
+ $("convertBtn").disabled = false;
  validatePreview();
 }
 
@@ -877,49 +878,51 @@ function validatePreview(){
   <div class="status">Magnets<br><b>${magnets}</b></div>
   <div class="status">Header<br><b>${selectedMachine.headerLen} bytes</b></div>
   <div class="status">Bytes/Pick<br><b>${selectedMachine.bpp}</b></div>
-  <div class="status">Running Picks<br><b>${selectedMachine.picks}</b></div>`;
+  <div class="status">Mode<br><b>100% Pure Design</b></div>`;
  updateHex();
 }
 
-/* BUILD EP - CLEAN DESIGN RENDER (NO MIXING BUG) */
+/* BUILD EP - 100% PURE UPLOADED DESIGN (NO MIXING, NO OLD FILES) */
 function buildNativeEP(){
- if(!selectedMachine)throw new Error("Pehle machine select karein.");
- if(!designImage||!binaryBits)throw new Error("Pehle design upload karein.");
- if(String(currentDesignMachineId)!==String(selectedMachine.id))
-  throw new Error("Design selected machine ke liye ready nahi hai. Design dobara select karein.");
+ if(!selectedMachine) throw new Error("Pehle machine select karein.");
+ if(!designImage || !binaryBits) throw new Error("Pehle saaf design file upload karein.");
+ if(currentDesignMachineId !== selectedMachine.id)
+  throw new Error("Machine badal gayi hai! Kripya design dobara select karke upload karein.");
 
- const H=Math.floor(Number($("targetPicks").value)||selectedMachine.picks);
- const bpp=Number(selectedMachine.bpp),hooks=Number(selectedMachine.hooks);
- const header=Number(selectedMachine.headerLen);
+ const H = Math.floor(Number($("targetPicks").value) || selectedMachine.picks);
+ const bpp = Number(selectedMachine.bpp), hooks = Number(selectedMachine.hooks);
+ const header = Number(selectedMachine.headerLen);
 
- if(!Number.isInteger(H)||H<1)throw new Error("Target picks valid nahi hain.");
- if(!Number.isInteger(bpp)||bpp<1||!Number.isInteger(hooks)||hooks<1)
+ if(!Number.isInteger(H) || H < 1) throw new Error("Target picks valid nahi hain.");
+ if(!Number.isInteger(bpp) || bpp < 1 || !Number.isInteger(hooks) || hooks < 1)
   throw new Error("Machine hooks/bytes per pick invalid hain.");
 
- const headerBytes=base64ToBytes(selectedMachine.header64);
- if(headerBytes.length!==header)
-  throw new Error("Saved machine header incomplete ya corrupt hai.");
+ const headerBytes = base64ToBytes(selectedMachine.header64);
+ if(headerBytes.length !== header)
+  throw new Error("Saved machine header corrupt hai.");
 
- const output=new Uint8Array(header+bpp*H);
- output.set(headerBytes,0);
+ /* Exact output buffer jo sirf aur sirf user ke naye design ko represent karega */
+ const output = new Uint8Array(header + bpp * H);
+ output.set(headerBytes, 0);
 
- /* Clean generation: Purana runningRows data copy nahi hoga, sirf fresh design pixels banenge */
- for(let y=0;y<H;y++){
-  const targetStart=header+y*bpp;
+ /* Har pick par sirf naye design ke binary bits dale jayenge, koi purana data nahi */
+ for(let y = 0; y < H; y++){
+  const targetStart = header + y * bpp;
 
-  for(let x=0;x<hooks;x++){
-   if(binaryBits[y*hooks+x]){
-    const byteIndex=x>>3;
-    const bit=7-(x&7);
-    output[targetStart+byteIndex]|=(1<<bit);
+  for(let x = 0; x < hooks; x++){
+   if(binaryBits[y * hooks + x]){
+    const byteIndex = x >> 3;
+    const bit = 7 - (x & 7);
+    output[targetStart + byteIndex] |= (1 << bit);
    }
   }
  }
 
- if(header>=6){
-  output[3]=H&255;
-  output[4]=(H>>8)&255;
-  output[5]=(H>>16)&255;
+ /* Header mein naye picks ki sankhya update karna */
+ if(header >= 6){
+  output[3] = H & 255;
+  output[4] = (H >> 8) & 255;
+  output[5] = (H >> 16) & 255;
  }
  return output;
 }
@@ -927,23 +930,23 @@ function buildNativeEP(){
 /* DOWNLOAD */
 function convertAndDownload(){
  try{
-  const output=buildNativeEP();
-  const blob=new Blob([output],{type:"application/octet-stream"});
-  const url=URL.createObjectURL(blob);
-  const base=designFileName.replace(/\.[^.]+$/,"")||"design";
-  const safeMachineName=selectedMachine.name.replace(/[^a-z0-9_-]+/gi,"_");
-  const fileName=base+"_"+safeMachineName+"_Native.EP";
-  const link=document.createElement("a");
-  link.href=url;link.download=fileName;
-  document.body.appendChild(link);link.click();link.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  const output = buildNativeEP();
+  const blob = new Blob([output], {type: "application/octet-stream"});
+  const url = URL.createObjectURL(blob);
+  const base = designFileName.replace(/\.[^.]+$/, "") || "design";
+  const safeMachineName = selectedMachine.name.replace(/[^a-z0-9_-]+/gi, "_");
+  const fileName = base+"_"+safeMachineName+"_PureDesign.EP";
+  const link = document.createElement("a");
+  link.href = url; link.download = fileName;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1500);
 
-  $("validation").innerHTML+=`
+  $("validation").innerHTML += `
    <div class="status ok" style="grid-column:1/-1">
-    ✓ Download requested: ${escapeHtml(fileName)}
-    <br>Size: ${output.length.toLocaleString()} bytes
+    ✓ Pure Design EP Downloaded: ${escapeHtml(fileName)}
+    <br>Size: ${output.length.toLocaleString()} bytes (No running file mixing)
    </div>`;
-  toast("EP download request bhej di gayi.");
+  toast("Pure design EP file download ho gayi.");
  }catch(error){
   alert("Conversion error:\n"+error.message);
  }
@@ -977,7 +980,7 @@ function escapeAttr(value){
 function switchTab(id){
  document.querySelectorAll(".tab").forEach(button=>button.classList.toggle("active",button.dataset.tab===id));
  document.querySelectorAll(".panel").forEach(panel=>panel.classList.toggle("active",panel.id===id));
- if(id==="design")showSelectedMachine();
+ if(id==="design") showSelectedMachine();
 }
 
 /* BACKUP EXPORT */
@@ -1108,8 +1111,9 @@ $("machineSelect").onchange=async()=>{
 
 $("designFile").onchange=event=>{
  const file=event.target.files[0];
- if(file)loadDesign(file);
+ if(file) loadDesign(file);
 };
+
 $("targetPicks").oninput=()=>designImage?renderBinary():updateDesignCheck();
 $("threshold").oninput=()=>{if(designImage)renderBinary()};
 $("leftPad").oninput=()=>{if(designImage)renderBinary()};
@@ -1130,6 +1134,7 @@ $("flipBtn").onclick=()=>{
  $("flipBtn").textContent="Flip: "+(flip?"ON":"OFF");
  if(designImage)renderBinary();
 };
+
 $("convertBtn").onclick=convertAndDownload;
 
 $("saveCreds").onclick=async()=>{
@@ -1145,7 +1150,7 @@ $("saveCreds").onclick=async()=>{
  }catch(error){alert("Login save error:\n"+error.message);}
 };
 
-$("exportBtn").onclick=exportBackup;
+$("exportBtn").exportBackup;
 $("importFile").onchange=event=>{
  const file=event.target.files[0];
  if(file)importBackup(file);
@@ -1172,4 +1177,4 @@ window.addEventListener("popstate",()=>{
 init();
 </script>
 </body>
-</html>
+ </html>
