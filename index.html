@@ -6,443 +6,449 @@
 <title>Electronic Designing</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#061525;
-  color:#eaf5ff;
+  background:#f3f6fa;
+  color:#17212b;
+}
+
+.hidden{
+  display:none !important;
 }
 
 header{
-  background:#07111f;
-  border-bottom:1px solid #21415d;
-  padding:18px 20px;
+  background:#17212b;
+  color:white;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
-.header-title{
-  font-size:27px;
-  font-weight:800;
-}
-
-.header-sub{
-  color:#9db2c5;
-  font-size:16px;
-  margin-top:4px;
+header h1{
+  margin:0;
+  font-size:22px;
 }
 
 .container{
-  max-width:1100px;
-  margin:auto;
-  padding:18px;
+  max-width:1250px;
+  margin:20px auto;
+  padding:0 15px;
 }
 
 .card{
-  background:#091b2b;
-  border:1px solid #21435e;
-  border-radius:24px;
+  background:white;
+  border-radius:12px;
   padding:20px;
   margin-bottom:18px;
-  box-shadow:0 8px 30px rgba(0,0,0,.18);
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
 }
 
-h2{margin:0 0 18px;font-size:25px}
-h3{margin:0 0 14px}
-
-label{
-  display:block;
-  color:#b3c7d9;
-  font-weight:700;
-  margin-bottom:7px;
-}
-
-input,select{
-  width:100%;
-  background:#071522;
-  color:#fff;
-  border:1px solid #315671;
-  border-radius:15px;
-  padding:15px;
-  font-size:18px;
-  outline:none;
-}
-
-input:focus,select:focus{
-  border-color:#159bea;
+.card h2{
+  margin-top:0;
+  font-size:19px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
 }
 
-@media(max-width:700px){
-  .grid,.preview-grid{
-    grid-template-columns:1fr;
-  }
+label{
+  font-weight:600;
+  display:block;
+  margin-bottom:7px;
+}
+
+input,
+select,
+button{
+  font:inherit;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select{
+  width:100%;
+  padding:10px 11px;
+  border:1px solid #cbd5df;
+  border-radius:7px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:#2774e6;
+}
+
+input[type="file"]{
+  width:100%;
+  padding:8px;
+  border:1px dashed #b9c4d0;
+  border-radius:7px;
+  background:#fafafa;
 }
 
 button{
   border:0;
-  border-radius:15px;
-  padding:15px 18px;
-  font-size:18px;
-  font-weight:800;
+  border-radius:7px;
+  padding:10px 15px;
   cursor:pointer;
-  background:#1598ea;
+  background:#2774e6;
   color:white;
-  width:100%;
+  font-weight:600;
 }
 
-button.secondary{background:#213b52}
-button.success{background:#0d8b68}
-button.danger{background:#8d2933}
+button:hover{
+  opacity:.92;
+}
 
 button:disabled{
   opacity:.45;
   cursor:not-allowed;
 }
 
-.filebox{
-  border:2px dashed #315b77;
-  border-radius:18px;
-  padding:18px;
-  background:#071522;
+.btn-danger{
+  background:#d83a3a;
+}
+
+.btn-secondary{
+  background:#667383;
+}
+
+.btn-success{
+  background:#198754;
 }
 
 .status{
-  padding:15px 18px;
-  border-radius:16px;
-  margin-top:14px;
-  line-height:1.45;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:7px;
+  background:#eef3f8;
+  font-size:14px;
 }
 
 .status.ok{
-  background:#073e30;
-  color:#8df0cf;
-}
-
-.status.warn{
-  background:#4b3810;
-  color:#ffe49a;
+  background:#e9f8ef;
+  color:#126b36;
 }
 
 .status.error{
-  background:#491b24;
-  color:#ffb5c0;
+  background:#fdecec;
+  color:#a52020;
 }
 
-.machine-item{
-  border:1px solid #294a62;
-  background:#0b2032;
-  padding:15px;
-  border-radius:15px;
-  margin-top:10px;
+.status.warn{
+  background:#fff5dc;
+  color:#7a5600;
 }
 
-.machine-item strong{font-size:19px}
-
-.machine-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:10px;
-}
-
-.finger-box{
-  border:1px solid #31546d;
-  background:#081a2a;
-  border-radius:18px;
-  padding:15px;
+.machine-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
   margin-top:12px;
 }
 
-.finger-title{
-  font-size:18px;
-  font-weight:800;
-  margin-bottom:10px;
+.machine-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
 }
 
-.finger-rule{
-  margin-top:14px;
-  padding:13px;
-  border-radius:14px;
-  background:#0b2235;
-  color:#a9c1d5;
-  font-size:14px;
-  line-height:1.5;
+.machine-item button{
+  padding:7px 10px;
+  background:#edf2f7;
+  color:#17212b;
+  border:1px solid #ccd5df;
 }
 
-.total-box{
-  margin-top:16px;
-  padding:18px;
-  border-radius:17px;
-  background:#073e30;
-  color:#9af1d0;
-  font-size:21px;
-  font-weight:800;
-  text-align:center;
+.machine-item button.active{
+  background:#2774e6;
+  color:white;
+}
+
+.machine-item .delete-machine{
+  background:#f7dddd;
+  color:#9a2020;
+  border-color:#efb5b5;
 }
 
 .preview-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:18px;
 }
 
-.preview-title{
-  color:#9db2c5;
-  font-weight:700;
-  margin-bottom:7px;
+.preview-box{
+  border:1px solid #d7dee7;
+  border-radius:10px;
+  padding:12px;
+  background:#fafbfd;
 }
 
-.preview{
-  width:100%;
-  min-height:180px;
-  background:#06111d;
-  border:2px solid #1ca7ec;
-  border-radius:8px;
+.preview-box h3{
+  margin:0 0 10px;
+  font-size:15px;
+}
+
+canvas{
   display:block;
-  object-fit:contain;
+  max-width:100%;
+  height:auto;
+  background:white;
+  border:1px solid #d6dde5;
+  image-rendering:pixelated;
 }
 
-.info{
+.finger-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+
+.finger-box{
+  background:#f6f8fb;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #d9e0e8;
+}
+
+.finger-box.invalid{
+  border-color:#d33;
+  background:#fff1f1;
+}
+
+.total-box{
   margin-top:15px;
-  padding:17px;
-  border-radius:17px;
-  background:#073e30;
-  color:#9af1d0;
-  line-height:1.55;
+  padding:13px;
+  background:#edf5ff;
+  border-radius:8px;
+  font-size:17px;
+  font-weight:bold;
 }
 
-.hidden{display:none!important}
-
-.small{
-  color:#91a8bb;
+.validation{
+  margin-top:10px;
   font-size:14px;
-  line-height:1.45;
+  font-weight:600;
 }
 
-hr{
-  border:0;
-  border-top:1px solid #21435e;
-  margin:20px 0;
+.info-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
 }
 
-#loginScreen{
+.info-table td{
+  border-bottom:1px solid #e3e8ee;
+  padding:8px;
+}
+
+.login-wrap{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
+  background:#eef2f6;
 }
 
-.login-box{
-  width:min(430px,100%);
-  background:#091b2b;
-  border:1px solid #21435e;
-  border-radius:24px;
-  padding:25px;
+.login-card{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:28px;
+  border-radius:14px;
+  box-shadow:0 5px 25px rgba(0,0,0,.12);
 }
 
-.invalid-input{
-  border-color:#ff5267!important;
+.login-card h1{
+  margin-top:0;
 }
 
-.valid-input{
-  border-color:#1ed39b!important;
+.small{
+  font-size:12px;
+  color:#687585;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e8eef6;
+  font-size:12px;
+  font-weight:bold;
+}
+
+@media(max-width:600px){
+  header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .container{
+    padding:0 10px;
+  }
+
+  .card{
+    padding:15px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <h1>Electronic Designing</h1>
+    <p>Admin Login</p>
 
-<div id="loginScreen">
-
-  <div class="login-box">
-
-    <h2>⚡ Electronic Designing</h2>
-
-    <p class="small">Admin Login</p>
-
-    <label>Password</label>
-
+    <label for="password">Password</label>
     <input
-      id="loginPassword"
+      id="password"
       type="password"
-      placeholder="Enter password">
+      placeholder="Enter password"
+      autocomplete="off"
+    >
 
-    <br><br>
+    <div class="actions">
+      <button id="loginBtn">Login</button>
+    </div>
 
-    <button id="loginBtn">LOGIN</button>
+    <div id="loginMsg" class="status hidden"></div>
 
-    <div id="loginMsg"></div>
-
+    <p class="small">
+      Default password: <b>admin123</b>
+    </p>
   </div>
-
 </div>
 
 
-<!-- ================= APP ================= -->
-
-<div id="app">
+<!-- MAIN APP -->
+<div id="app" class="hidden">
 
 <header>
-
-  <div class="header-title">
-    ⚡ Electronic Designing
-  </div>
-
-  <div class="header-sub">
-    Running EP → Machine Profile → New Design EP
-  </div>
-
+  <h1>Electronic Designing</h1>
+  <button id="logoutBtn" class="btn-secondary">Logout</button>
 </header>
-
 
 <div class="container">
 
-
-<!-- ================= MACHINE SETUP ================= -->
-
-<section class="card">
-
-  <h2>1. Machine Setup</h2>
-
-  <div class="filebox">
-
-    <label>Upload Running EP</label>
-
-    <input
-      id="runningEP"
-      type="file"
-      accept=".ep,application/octet-stream">
-
-    <div class="small">
-      Running EP sirf machine structure/profile ke liye
-      use hoga. Iski old design rows new design me
-      copy nahi hongi.
-    </div>
-
-  </div>
-
-
-  <div class="grid" style="margin-top:16px">
-
-    <div>
-      <label>Machine Name</label>
-      <input id="machineName"
-             placeholder="Example: SH Ansari">
-    </div>
-
-    <div>
-      <label>Hooks</label>
-      <input id="machineHooks"
-             type="number"
-             min="1"
-             placeholder="Example: 672">
-    </div>
-
-    <div>
-      <label>Header Length (Bytes)</label>
-      <input id="headerLength"
-             type="number"
-             min="0"
-             placeholder="Auto / Manual">
-    </div>
-
-    <div>
-      <label>Bytes Per Pick</label>
-      <input id="bytesPerPick"
-             type="number"
-             min="1"
-             placeholder="Example: 84">
-    </div>
-
-  </div>
-
-
-  <div style="margin-top:16px">
-
-    <button id="analyzeRunningBtn">
-      ANALYZE RUNNING EP
-    </button>
-
-  </div>
-
-  <div id="runningStatus"></div>
-
-
-  <div style="margin-top:16px">
-
-    <button
-      id="saveMachineBtn"
-      class="success"
-      disabled>
-      SAVE MACHINE PROFILE
-    </button>
-
-  </div>
-
-
-  <hr>
-
-  <h3>Saved Machine Profiles</h3>
-
-  <div id="machineList">
-    <div class="small">
-      No machine profile saved.
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ================= DESIGN ================= -->
-
-<section id="designSection" class="card hidden">
-
-  <h2>2. New Design</h2>
-
-  <div id="selectedMachineInfo" class="info"></div>
-
-
-  <div class="filebox" style="margin-top:16px">
-
-    <label>Upload COMPLETE DESIGN</label>
-
-    <input
-      id="designFile"
-      type="file"
-      accept=".bmp,.png,.jpg,.jpeg,.webp">
-
-    <div class="small">
-      Uploaded design hi new binary design ka source hoga.
-      Running EP ki design rows use nahi hongi.
-    </div>
-
-  </div>
-
-
-  <div id="designInfo" class="status hidden"></div>
-
-
-  <!-- ================= FINGER SETTINGS ================= -->
-
-  <div style="margin-top:20px">
-
-    <h3>Design Pick / Finger Settings</h3>
+  <!-- MACHINE SETUP -->
+  <section class="card">
+    <h2>1. Machine Setup</h2>
 
     <div class="grid">
 
       <div>
+        <label>Machine Name</label>
+        <input
+          id="machineName"
+          type="text"
+          placeholder="Example: Jacquard 672 Hook"
+        >
+      </div>
 
+      <div>
+        <label>Running EP File</label>
+        <input
+          id="runningEP"
+          type="file"
+          accept=".ep,.EP,.bin,.BIN"
+        >
+      </div>
+
+      <div>
+        <label>Hooks</label>
+        <input
+          id="hooks"
+          type="number"
+          min="1"
+          value="672"
+        >
+      </div>
+
+      <div>
+        <label>Header Length (bytes)</label>
+        <input
+          id="headerLength"
+          type="number"
+          min="0"
+          value="64"
+        >
+      </div>
+
+      <div>
+        <label>Bytes Per Pick</label>
+        <input
+          id="bytesPerPick"
+          type="number"
+          min="1"
+          value="84"
+        >
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button id="analyzeBtn">Analyze Running EP</button>
+      <button id="saveMachineBtn" class="btn-success">
+        Save Machine Profile
+      </button>
+    </div>
+
+    <div id="machineStatus" class="status">
+      No machine loaded.
+    </div>
+
+    <div id="storageStatus" class="status">
+      Initializing browser storage...
+    </div>
+
+    <h3>Saved Machine Profiles</h3>
+    <div id="machineList" class="machine-list"></div>
+  </section>
+
+
+  <!-- DESIGN -->
+  <section class="card">
+    <h2>2. New Design</h2>
+
+    <div class="grid">
+
+      <div>
+        <label>Design Image</label>
+        <input
+          id="designFile"
+          type="file"
+          accept=".bmp,.png,.jpg,.jpeg,.webp"
+        >
+        <div class="small">
+          Supported: BMP, PNG, JPG, JPEG, WEBP
+        </div>
+      </div>
+
+      <div>
         <label>Number of Fingers</label>
-
         <select id="fingerCount">
           <option value="1">1 Finger</option>
           <option value="2">2 Fingers</option>
@@ -451,339 +457,561 @@ hr{
           <option value="5">5 Fingers</option>
           <option value="6">6 Fingers</option>
         </select>
-
       </div>
-
-    </div>
-
-
-    <div class="finger-rule">
-
-      <strong>Finger Pick Rule:</strong><br>
-
-      Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
-      Finger 4 ≥ Finger 5 ≥ Finger 6
-
-      <br><br>
-
-      Finger 1 sabse zyada ya equal maximum rahega.
-      Finger 2 uske equal ya kam.
-      Uske baad har finger previous finger ke
-      equal ya kam honi chahiye.
-
-    </div>
-
-
-    <div id="fingerInputs"></div>
-
-
-    <div id="fingerValidation"></div>
-
-
-    <div id="totalPicks" class="total-box">
-      Total Design Picks: 0
-    </div>
-
-  </div>
-
-
-  <!-- ================= DESIGN OPTIONS ================= -->
-
-  <div style="margin-top:20px">
-
-    <h3>Design Options</h3>
-
-    <div class="grid">
 
       <div>
         <label>Threshold</label>
-        <input id="threshold"
-               type="number"
-               min="0"
-               max="255"
-               value="128">
+        <input
+          id="threshold"
+          type="number"
+          min="0"
+          max="255"
+          value="128"
+        >
       </div>
 
       <div>
         <label>Left Padding</label>
-        <input id="leftPadding"
-               type="number"
-               min="0"
-               value="0">
+        <input
+          id="leftPadding"
+          type="number"
+          min="0"
+          value="0"
+        >
       </div>
 
       <div>
         <label>Right Padding</label>
-        <input id="rightPadding"
-               type="number"
-               min="0"
-               value="0">
+        <input
+          id="rightPadding"
+          type="number"
+          min="0"
+          value="0"
+        >
       </div>
 
     </div>
 
+    <div class="finger-grid" id="fingerInputs"></div>
 
-    <div style="display:grid;gap:10px;margin-top:15px">
-
-      <button id="invertBtn" class="secondary">
-        Invert: OFF
-      </button>
-
-      <button id="mirrorBtn" class="secondary">
-        Mirror: OFF
-      </button>
-
-      <button id="flipBtn" class="secondary">
-        Flip: OFF
-      </button>
-
+    <div class="total-box">
+      Total Picks:
+      <span id="totalPicks">0</span>
     </div>
 
-  </div>
+    <div id="fingerValidation" class="validation"></div>
 
-</section>
+    <div class="grid" style="margin-top:15px;">
+
+      <label>
+        <input id="invert" type="checkbox">
+        Invert Design
+      </label>
+
+      <label>
+        <input id="mirror" type="checkbox">
+        Mirror Horizontal
+      </label>
+
+      <label>
+        <input id="flip" type="checkbox">
+        Flip Vertical
+      </label>
+
+    </div>
+  </section>
 
 
-<!-- ================= PREVIEW ================= -->
+  <!-- DESIGN INFO -->
+  <section class="card">
+    <h2>3. Design Information</h2>
 
-<section id="previewSection" class="card hidden">
+    <table class="info-table">
+      <tr>
+        <td>Design File</td>
+        <td id="designInfoName">-</td>
+      </tr>
+      <tr>
+        <td>Image Size</td>
+        <td id="designInfoSize">-</td>
+      </tr>
+      <tr>
+        <td>Hooks</td>
+        <td id="designInfoHooks">-</td>
+      </tr>
+      <tr>
+        <td>Total Picks</td>
+        <td id="designInfoPicks">-</td>
+      </tr>
+      <tr>
+        <td>Machine</td>
+        <td id="designInfoMachine">-</td>
+      </tr>
+    </table>
+  </section>
 
-  <h2>3. Preview & Convert</h2>
 
+  <!-- PREVIEW -->
+  <section class="card">
+    <h2>4. Preview</h2>
 
-  <div class="preview-grid">
+    <div class="preview-grid">
 
-    <div>
-
-      <div class="preview-title">
-        Uploaded Design — ONLY SOURCE
+      <div class="preview-box">
+        <h3>Uploaded Design</h3>
+        <canvas id="originalCanvas"></canvas>
       </div>
 
-      <canvas id="originalCanvas"
-              class="preview">
-      </canvas>
-
-    </div>
-
-
-    <div>
-
-      <div class="preview-title">
-        New Binary Design — ONLY NEW DESIGN
+      <div class="preview-box">
+        <h3>Binary / EP Design</h3>
+        <canvas id="binaryCanvas"></canvas>
       </div>
 
-      <canvas id="binaryCanvas"
-              class="preview">
-      </canvas>
-
     </div>
 
-  </div>
+    <div id="previewStatus" class="status">
+      Upload a design to preview.
+    </div>
+  </section>
 
 
-  <div id="conversionInfo" class="info"></div>
+  <!-- CONVERT -->
+  <section class="card">
+    <h2>5. Convert EP</h2>
 
+    <p>
+      Output rows are generated from the uploaded design.
+      Running EP ki old design rows copy nahi ki jayengi.
+    </p>
 
-  <div style="margin-top:18px">
+    <div class="actions">
+      <button id="convertBtn" class="btn-success" disabled>
+        Convert / Prepare EP
+      </button>
 
-    <button id="convertBtn" disabled>
-      CONVERT & DOWNLOAD NEW DESIGN EP
-    </button>
+      <button id="downloadBtn" disabled>
+        Download EP
+      </button>
+    </div>
 
-  </div>
-
-</section>
-
+    <div id="convertStatus" class="status">
+      Ready.
+    </div>
+  </section>
 
 </div>
 </div>
 
 
 <script>
+"use strict";
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const ADMIN_PASSWORD = "admin123";
+
+const DB_NAME = "ElectronicDesigningDB";
+const DB_VERSION = 1;
+const STORE_NAME = "machines";
+
+const LS_KEY = "ElectronicDesigningMachines";
+
+let db = null;
+let storageMode = "memory";
+
+let currentMachine = null;
+let currentRunningEP = null;
+let currentDesign = null;
+let currentOutputEP = null;
+
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-const $ = id => document.getElementById(id);
+function $(id){
+  return document.getElementById(id);
+}
+
+function show(el){
+  el.classList.remove("hidden");
+}
+
+function hide(el){
+  el.classList.add("hidden");
+}
+
+function setStatus(id, text, type=""){
+  const el = $(id);
+  el.textContent = text;
+  el.className = "status";
+
+  if(type){
+    el.classList.add(type);
+  }
+}
+
+function safeNumber(value, fallback=0){
+  const n = Number(value);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function generateId(){
+  return Date.now();
+}
 
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
-const ADMIN_PASSWORD = "admin";
+function doLogin(){
+  const password = $("password").value;
 
-$("loginBtn").onclick = function(){
+  if(password === ADMIN_PASSWORD){
+    sessionStorage.setItem("ed_logged_in","1");
 
-  if($("loginPassword").value === ADMIN_PASSWORD){
+    hide($("loginScreen"));
+    show($("app"));
 
-    $("loginScreen").style.display = "none";
-    $("app").style.display = "block";
-
+    initializeApp();
   }else{
-
-    $("loginMsg").innerHTML =
-      '<div class="status error">Wrong password.</div>';
-
+    show($("loginMsg"));
+    setStatus("loginMsg","Wrong password.","error");
   }
+}
 
-};
+function logout(){
+  sessionStorage.removeItem("ed_logged_in");
 
+  hide($("app"));
+  show($("loginScreen"));
 
-/* =========================================================
-   STATE
-========================================================= */
+  $("password").value = "";
+}
 
-let db = null;
+$("loginBtn").addEventListener("click",doLogin);
 
-let runningBytes = null;
+$("password").addEventListener("keydown",function(e){
+  if(e.key === "Enter"){
+    doLogin();
+  }
+});
 
-let selectedMachine = null;
-
-let currentDesignFile = null;
-
-let currentDesignImage = null;
-
-let binaryBits = null;
-
-let binaryWidth = 0;
-
-let binaryHeight = 0;
-
-let invertMode = false;
-
-let mirrorMode = false;
-
-let flipMode = false;
+$("logoutBtn").addEventListener("click",logout);
 
 
 /* =========================================================
    INDEXED DB
 ========================================================= */
 
-const DB_NAME = "ElectronicDesigningDB";
-const DB_VERSION = 1;
-
-function openDB(){
+function openIndexedDB(){
 
   return new Promise((resolve,reject)=>{
 
-    const request =
-      indexedDB.open(DB_NAME,DB_VERSION);
+    if(!window.indexedDB){
+      reject(new Error("IndexedDB unavailable"));
+      return;
+    }
 
-    request.onupgradeneeded = function(e){
+    let request;
 
-      const database = e.target.result;
+    try{
+      request = indexedDB.open(DB_NAME,DB_VERSION);
+    }catch(err){
+      reject(err);
+      return;
+    }
 
-      if(!database.objectStoreNames.contains("machines")){
+    let settled = false;
 
+    const finishResolve = value=>{
+      if(!settled){
+        settled = true;
+        resolve(value);
+      }
+    };
+
+    const finishReject = err=>{
+      if(!settled){
+        settled = true;
+        reject(err);
+      }
+    };
+
+    request.onupgradeneeded = function(event){
+
+      const database = event.target.result;
+
+      if(!database.objectStoreNames.contains(STORE_NAME)){
         database.createObjectStore(
-          "machines",
+          STORE_NAME,
           {
             keyPath:"id",
             autoIncrement:true
           }
         );
-
       }
-
     };
 
-    request.onsuccess = function(){
+    request.onsuccess = function(event){
 
-      db = request.result;
-      resolve(db);
+      const database = event.target.result;
 
+      database.onversionchange = function(){
+        database.close();
+      };
+
+      database.onerror = function(){
+        console.warn("IndexedDB runtime error");
+      };
+
+      finishResolve(database);
     };
 
     request.onerror = function(){
-      reject(request.error);
+      finishReject(
+        request.error ||
+        new Error("IndexedDB open failed")
+      );
     };
 
-  });
+    request.onblocked = function(){
+      finishReject(
+        new Error("IndexedDB is blocked by another tab/window")
+      );
+    };
 
-}
-
-
-function saveMachine(machine){
-
-  return new Promise((resolve,reject)=>{
-
-    const tx =
-      db.transaction("machines","readwrite");
-
-    const store =
-      tx.objectStore("machines");
-
-    const req =
-      store.add(machine);
-
-    req.onsuccess =
-      () => resolve(req.result);
-
-    req.onerror =
-      () => reject(req.error);
+    setTimeout(()=>{
+      if(!settled){
+        finishReject(
+          new Error("IndexedDB initialization timeout")
+        );
+      }
+    },5000);
 
   });
-
-}
-
-
-function getMachines(){
-
-  return new Promise((resolve,reject)=>{
-
-    const tx =
-      db.transaction("machines","readonly");
-
-    const req =
-      tx.objectStore("machines").getAll();
-
-    req.onsuccess =
-      () => resolve(req.result);
-
-    req.onerror =
-      () => reject(req.error);
-
-  });
-
-}
-
-
-function deleteMachine(id){
-
-  return new Promise((resolve,reject)=>{
-
-    const tx =
-      db.transaction("machines","readwrite");
-
-    tx.objectStore("machines").delete(id);
-
-    tx.oncomplete =
-      () => resolve();
-
-    tx.onerror =
-      () => reject(tx.error);
-
-  });
-
 }
 
 
 /* =========================================================
-   ESCAPE HTML
+   LOCAL STORAGE FALLBACK
 ========================================================= */
 
-function escapeHTML(value){
+function getLocalMachines(){
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  try{
 
+    const raw = localStorage.getItem(LS_KEY);
+
+    if(!raw){
+      return [];
+    }
+
+    const data = JSON.parse(raw);
+
+    if(!Array.isArray(data)){
+      return [];
+    }
+
+    return data;
+
+  }catch(err){
+
+    console.warn(
+      "LocalStorage read failed:",
+      err
+    );
+
+    return [];
+  }
+}
+
+function setLocalMachines(list){
+
+  localStorage.setItem(
+    LS_KEY,
+    JSON.stringify(list)
+  );
+}
+
+
+/* =========================================================
+   STORAGE INITIALIZATION
+========================================================= */
+
+async function initializeStorage(){
+
+  try{
+
+    db = await openIndexedDB();
+
+    storageMode = "indexeddb";
+
+    setStatus(
+      "storageStatus",
+      "Browser database ready. Machine profiles will persist on refresh.",
+      "ok"
+    );
+
+  }catch(err){
+
+    console.warn(
+      "IndexedDB unavailable. Using localStorage fallback.",
+      err
+    );
+
+    db = null;
+    storageMode = "localstorage";
+
+    setStatus(
+      "storageStatus",
+      "IndexedDB unavailable. LocalStorage fallback active; app will continue working.",
+      "warn"
+    );
+  }
+
+  await refreshMachineList();
+}
+
+
+/* =========================================================
+   MACHINE STORAGE
+========================================================= */
+
+async function getMachines(){
+
+  if(storageMode === "indexeddb" && db){
+
+    return new Promise((resolve,reject)=>{
+
+      try{
+
+        const tx = db.transaction(
+          STORE_NAME,
+          "readonly"
+        );
+
+        const store = tx.objectStore(STORE_NAME);
+
+        const request = store.getAll();
+
+        request.onsuccess = ()=>{
+          resolve(request.result || []);
+        };
+
+        request.onerror = ()=>{
+          reject(
+            request.error ||
+            new Error("Could not read machines")
+          );
+        };
+
+      }catch(err){
+        reject(err);
+      }
+
+    });
+
+  }
+
+  return getLocalMachines();
+}
+
+
+async function saveMachine(machine){
+
+  if(storageMode === "indexeddb" && db){
+
+    return new Promise((resolve,reject)=>{
+
+      try{
+
+        const tx = db.transaction(
+          STORE_NAME,
+          "readwrite"
+        );
+
+        const store = tx.objectStore(STORE_NAME);
+
+        const request = store.add(machine);
+
+        request.onsuccess = ()=>{
+          machine.id = request.result;
+          resolve(machine);
+        };
+
+        request.onerror = ()=>{
+          reject(
+            request.error ||
+            new Error("Could not save machine")
+          );
+        };
+
+      }catch(err){
+        reject(err);
+      }
+
+    });
+
+  }
+
+  const list = getLocalMachines();
+
+  machine.id = generateId();
+
+  list.push(machine);
+
+  setLocalMachines(list);
+
+  return machine;
+}
+
+
+async function deleteMachine(id){
+
+  if(storageMode === "indexeddb" && db){
+
+    return new Promise((resolve,reject)=>{
+
+      try{
+
+        const tx = db.transaction(
+          STORE_NAME,
+          "readwrite"
+        );
+
+        const store = tx.objectStore(STORE_NAME);
+
+        const request = store.delete(
+          Number(id)
+        );
+
+        request.onsuccess = ()=>{
+          resolve();
+        };
+
+        request.onerror = ()=>{
+          reject(
+            request.error ||
+            new Error("Could not delete machine")
+          );
+        };
+
+      }catch(err){
+        reject(err);
+      }
+
+    });
+
+  }
+
+  const list = getLocalMachines()
+    .filter(m => String(m.id) !== String(id));
+
+  setLocalMachines(list);
 }
 
 
@@ -793,395 +1021,244 @@ function escapeHTML(value){
 
 async function refreshMachineList(){
 
-  const machines =
-    await getMachines();
+  const listEl = $("machineList");
 
-  const box =
-    $("machineList");
+  listEl.innerHTML = "";
 
-  box.innerHTML = "";
+  let machines = [];
+
+  try{
+    machines = await getMachines();
+  }catch(err){
+
+    setStatus(
+      "storageStatus",
+      "Machine storage read failed. LocalStorage fallback enabled.",
+      "warn"
+    );
+
+    storageMode = "localstorage";
+
+    machines = getLocalMachines();
+  }
 
   if(!machines.length){
 
-    box.innerHTML =
-      '<div class="small">No machine profile saved.</div>';
+    listEl.innerHTML =
+      '<span class="small">No saved machine profiles.</span>';
 
     return;
-
   }
-
 
   machines.forEach(machine=>{
 
-    const div =
-      document.createElement("div");
+    const wrapper = document.createElement("div");
+    wrapper.className = "machine-item";
 
-    div.className =
-      "machine-item";
+    const selectBtn = document.createElement("button");
 
-    div.innerHTML = `
+    selectBtn.textContent =
+      machine.name || "Unnamed Machine";
 
-      <strong>${escapeHTML(machine.name)}</strong>
+    if(
+      currentMachine &&
+      String(currentMachine.id) === String(machine.id)
+    ){
+      selectBtn.classList.add("active");
+    }
 
-      <div class="small">
+    selectBtn.addEventListener(
+      "click",
+      ()=>{
+        loadMachine(machine);
+      }
+    );
 
-        ${machine.hooks} Hooks<br>
-        Header: ${machine.headerLen} Bytes<br>
-        Bytes/Pick: ${machine.bytesPerPick}
+    const deleteBtn = document.createElement("button");
 
-      </div>
+    deleteBtn.textContent = "×";
+    deleteBtn.title = "Delete machine";
+    deleteBtn.className = "delete-machine";
 
-      <div class="machine-actions">
-
-        <button
-          class="selectMachineBtn"
-          data-id="${machine.id}">
-          SELECT
-        </button>
-
-        <button
-          class="danger deleteMachineBtn"
-          data-id="${machine.id}">
-          DELETE
-        </button>
-
-      </div>
-    `;
-
-    box.appendChild(div);
-
-  });
-
-
-  document
-    .querySelectorAll(".selectMachineBtn")
-    .forEach(btn=>{
-
-      btn.onclick = async function(){
-
-        const id =
-          Number(this.dataset.id);
-
-        const machines =
-          await getMachines();
-
-        const machine =
-          machines.find(x=>x.id === id);
-
-        if(machine)
-          selectMachine(machine);
-
-      };
-
-    });
-
-
-  document
-    .querySelectorAll(".deleteMachineBtn")
-    .forEach(btn=>{
-
-      btn.onclick = async function(){
-
-        const id =
-          Number(this.dataset.id);
-
-        await deleteMachine(id);
-
+    deleteBtn.addEventListener(
+      "click",
+      async ()=>{
         if(
-          selectedMachine &&
-          selectedMachine.id === id
+          !confirm(
+            "Delete this machine profile?"
+          )
         ){
-
-          selectedMachine = null;
-
-          $("designSection")
-            .classList.add("hidden");
-
-          $("previewSection")
-            .classList.add("hidden");
-
+          return;
         }
 
-        refreshMachineList();
+        try{
 
-      };
+          await deleteMachine(machine.id);
 
-    });
+          if(
+            currentMachine &&
+            String(currentMachine.id) === String(machine.id)
+          ){
+            currentMachine = null;
 
+            setStatus(
+              "machineStatus",
+              "Machine profile deleted.",
+              "warn"
+            );
+          }
+
+          await refreshMachineList();
+
+        }catch(err){
+
+          setStatus(
+            "machineStatus",
+            "Could not delete machine.",
+            "error"
+          );
+        }
+      }
+    );
+
+    wrapper.appendChild(selectBtn);
+    wrapper.appendChild(deleteBtn);
+
+    listEl.appendChild(wrapper);
+  });
 }
 
 
 /* =========================================================
-   RUNNING EP
+   RUNNING EP ANALYSIS
 ========================================================= */
 
-$("runningEP").onchange = async function(){
+$("analyzeBtn").addEventListener(
+  "click",
+  analyzeRunningEP
+);
+
+async function analyzeRunningEP(){
 
   const file =
-    this.files[0];
+    $("runningEP").files[0];
 
-  if(!file) return;
+  if(!file){
 
-  runningBytes =
-    new Uint8Array(
-      await file.arrayBuffer()
+    setStatus(
+      "machineStatus",
+      "Please select a Running EP file.",
+      "error"
     );
 
-  $("runningStatus").innerHTML = `
-
-    <div class="status ok">
-
-      Running EP loaded.<br>
-
-      File:
-      ${escapeHTML(file.name)}<br>
-
-      Size:
-      ${runningBytes.length.toLocaleString()}
-      bytes
-
-    </div>
-
-  `;
-
-  $("saveMachineBtn").disabled = false;
-
-};
-
-
-/* =========================================================
-   ANALYZE RUNNING EP
-========================================================= */
-
-$("analyzeRunningBtn").onclick = function(){
-
-  if(!runningBytes){
-
-    $("runningStatus").innerHTML =
-      '<div class="status error">Please upload Running EP first.</div>';
-
     return;
-
   }
-
 
   const hooks =
-    Number($("machineHooks").value);
+    safeNumber($("hooks").value);
 
-  if(!hooks || hooks < 1){
+  const headerLength =
+    safeNumber($("headerLength").value);
 
-    $("runningStatus").innerHTML =
-      '<div class="status error">Enter Hooks.</div>';
+  const bytesPerPick =
+    safeNumber($("bytesPerPick").value);
 
+  if(hooks <= 0){
+    setStatus(
+      "machineStatus",
+      "Hooks must be greater than 0.",
+      "error"
+    );
     return;
-
   }
 
+  if(headerLength < 0){
+    setStatus(
+      "machineStatus",
+      "Header length is invalid.",
+      "error"
+    );
+    return;
+  }
 
-  let headerLen =
-    Number($("headerLength").value);
+  if(bytesPerPick <= 0){
+    setStatus(
+      "machineStatus",
+      "Bytes per pick must be greater than 0.",
+      "error"
+    );
+    return;
+  }
 
-  let bytesPerPick =
-    Number($("bytesPerPick").value);
+  try{
 
+    const buffer =
+      await file.arrayBuffer();
 
-  if(!headerLen || !bytesPerPick){
+    const bytes =
+      new Uint8Array(buffer);
 
-    const guessed =
-      guessEPStructure(
-        runningBytes,
-        hooks
+    if(bytes.length <= headerLength){
+
+      setStatus(
+        "machineStatus",
+        "Running EP is smaller than the specified header length.",
+        "error"
       );
 
-    if(guessed){
-
-      headerLen =
-        guessed.headerLen;
-
-      bytesPerPick =
-        guessed.bytesPerPick;
-
-      $("headerLength").value =
-        headerLen;
-
-      $("bytesPerPick").value =
-        bytesPerPick;
-
+      return;
     }
 
-  }
+    currentRunningEP = {
+      name:file.name,
+      size:file.size,
+      bytes:bytes
+    };
 
+    const dataBytes =
+      bytes.length - headerLength;
 
-  if(!headerLen || !bytesPerPick){
+    const detectedPicks =
+      Math.floor(
+        dataBytes / bytesPerPick
+      );
 
-    $("runningStatus").innerHTML = `
+    setStatus(
+      "machineStatus",
+      "Running EP analyzed. " +
+      "Header preserved: " +
+      headerLength +
+      " bytes. " +
+      "Existing design rows will NOT be copied.",
+      "ok"
+    );
 
-      <div class="status error">
+    $("designInfoHooks").textContent =
+      hooks.toLocaleString();
 
-        EP structure auto-detect nahi ho paya.<br>
+    $("designInfoMachine").textContent =
+      $("machineName").value || file.name;
 
-        Header Length aur Bytes Per Pick manually enter karein.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const dataLength =
-    runningBytes.length - headerLen;
-
-
-  if(dataLength < 0){
-
-    $("runningStatus").innerHTML =
-      '<div class="status error">Header length invalid.</div>';
-
-    return;
-
-  }
-
-
-  if(dataLength % bytesPerPick !== 0){
-
-    $("runningStatus").innerHTML = `
-
-      <div class="status error">
-
-        Header + Bytes/Pick mismatch.<br>
-
-        Data bytes: ${dataLength}<br>
-
-        Bytes/Pick: ${bytesPerPick}
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const runningPicks =
-    dataLength / bytesPerPick;
-
-  const capacity =
-    bytesPerPick * 8;
-
-
-  if(hooks > capacity){
-
-    $("runningStatus").innerHTML = `
-
-      <div class="status error">
-
-        Hooks ${hooks} hain, lekin
-        ${bytesPerPick} bytes/pick me maximum
-        ${capacity} hooks possible hain.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  $("runningStatus").innerHTML = `
-
-    <div class="status ok">
-
-      ✓ RUNNING EP ANALYZED<br><br>
-
-      Hooks: <strong>${hooks}</strong><br>
-      Header: <strong>${headerLen} bytes</strong><br>
-      Bytes/Pick: <strong>${bytesPerPick}</strong><br>
-      Running Picks: <strong>${runningPicks}</strong><br><br>
-
-      ⚠ Running EP ki old design rows
-      new design me COPY nahi hongi.
-
-    </div>
-
-  `;
-
-};
-
-
-/* =========================================================
-   EP GUESS
-========================================================= */
-
-function guessEPStructure(bytes,hooks){
-
-  const candidates = [];
-
-  for(let header=0;header<=512;header++){
-
-    const remaining =
-      bytes.length-header;
-
-    if(remaining<=0) continue;
-
-    for(
-      let bpp=1;
-      bpp<=Math.ceil(hooks/8)+8;
-      bpp++
-    ){
-
-      if(
-        remaining%bpp===0 &&
-        hooks<=bpp*8
-      ){
-
-        const picks =
-          remaining/bpp;
-
-        if(picks>0){
-
-          candidates.push({
-            headerLen:header,
-            bytesPerPick:bpp,
-            picks:picks
-          });
-
-        }
-
+    console.log(
+      "Running EP:",
+      {
+        size:bytes.length,
+        headerLength,
+        bytesPerPick,
+        detectedPicks
       }
+    );
 
-    }
+  }catch(err){
 
+    console.error(err);
+
+    setStatus(
+      "machineStatus",
+      "Could not read Running EP.",
+      "error"
+    );
   }
-
-
-  candidates.sort((a,b)=>{
-
-    const aScore =
-      a.headerLen +
-      Math.abs(
-        a.bytesPerPick-
-        Math.ceil(hooks/8)
-      )*20;
-
-    const bScore =
-      b.headerLen +
-      Math.abs(
-        b.bytesPerPick-
-        Math.ceil(hooks/8)
-      )*20;
-
-    return aScore-bScore;
-
-  });
-
-
-  return candidates[0] || null;
-
 }
 
 
@@ -1189,155 +1266,184 @@ function guessEPStructure(bytes,hooks){
    SAVE MACHINE
 ========================================================= */
 
-$("saveMachineBtn").onclick = async function(){
+$("saveMachineBtn").addEventListener(
+  "click",
+  saveCurrentMachine
+);
 
-  if(!runningBytes){
+async function saveCurrentMachine(){
 
-    alert("Running EP upload karein.");
+  if(!currentRunningEP){
+
+    setStatus(
+      "machineStatus",
+      "First analyze a Running EP file.",
+      "error"
+    );
+
     return;
-
   }
-
 
   const name =
     $("machineName").value.trim();
 
   const hooks =
-    Number($("machineHooks").value);
+    safeNumber($("hooks").value);
 
-  const headerLen =
-    Number($("headerLength").value);
+  const headerLength =
+    safeNumber($("headerLength").value);
 
   const bytesPerPick =
-    Number($("bytesPerPick").value);
-
+    safeNumber($("bytesPerPick").value);
 
   if(!name){
-    alert("Machine name enter karein.");
-    return;
-  }
 
-  if(!hooks){
-    alert("Hooks enter karein.");
-    return;
-  }
-
-  if(!Number.isInteger(headerLen)||headerLen<0){
-    alert("Valid Header Length enter karein.");
-    return;
-  }
-
-  if(!Number.isInteger(bytesPerPick)||bytesPerPick<1){
-    alert("Valid Bytes Per Pick enter karein.");
-    return;
-  }
-
-  if(hooks>bytesPerPick*8){
-    alert("Hooks bytes/pick capacity se zyada hain.");
-    return;
-  }
-
-  if(runningBytes.length<headerLen+bytesPerPick){
-    alert("Running EP structure invalid hai.");
-    return;
-  }
-
-
-  const header64 =
-    runningBytes.slice(
-      0,
-      headerLen
+    setStatus(
+      "machineStatus",
+      "Enter machine name.",
+      "error"
     );
 
+    return;
+  }
 
-  const machine = {
+  if(hooks <= 0){
 
-    name:name,
-    hooks:hooks,
-    headerLen:headerLen,
-    bytesPerPick:bytesPerPick,
-    header:Array.from(header64),
-    createdAt:Date.now()
+    setStatus(
+      "machineStatus",
+      "Hooks must be greater than 0.",
+      "error"
+    );
 
-  };
+    return;
+  }
 
+  if(
+    headerLength < 0 ||
+    headerLength >= currentRunningEP.bytes.length
+  ){
 
-  await saveMachine(machine);
+    setStatus(
+      "machineStatus",
+      "Invalid header length.",
+      "error"
+    );
 
-  alert("Machine profile saved successfully.");
+    return;
+  }
 
-  refreshMachineList();
+  if(bytesPerPick <= 0){
 
-};
+    setStatus(
+      "machineStatus",
+      "Invalid bytes per pick.",
+      "error"
+    );
 
+    return;
+  }
 
-/* =========================================================
-   SELECT MACHINE
-========================================================= */
+  try{
 
-function selectMachine(machine){
+    /*
+      IMPORTANT:
 
-  selectedMachine =
-    machine;
+      We only save the machine structure/header.
 
-  clearDesignState();
+      We DO NOT save the old running design rows
+      as the new design.
+    */
 
-  $("designSection")
-    .classList.remove("hidden");
+    const header =
+      Array.from(
+        currentRunningEP.bytes.slice(
+          0,
+          headerLength
+        )
+      );
 
-  $("previewSection")
-    .classList.add("hidden");
+    const machine = {
+      name,
+      hooks,
+      headerLength,
+      bytesPerPick,
+      header,
+      createdAt:new Date().toISOString()
+    };
 
+    const saved =
+      await saveMachine(machine);
 
-  $("selectedMachineInfo").innerHTML = `
+    currentMachine = saved;
 
-    <strong>
-      ✓ ${escapeHTML(machine.name)} selected
-    </strong><br><br>
+    setStatus(
+      "machineStatus",
+      "Machine profile saved successfully.",
+      "ok"
+    );
 
-    Hooks: ${machine.hooks}<br>
-    Header: ${machine.headerLen} bytes<br>
-    Bytes/Pick: ${machine.bytesPerPick}<br><br>
+    await refreshMachineList();
 
-    <strong>
-      Running EP design rows: NOT USED
-    </strong>
+    updateDesignInfo();
 
-  `;
+  }catch(err){
 
-  window.scrollTo({
-    top:$("designSection").offsetTop-10,
-    behavior:"smooth"
-  });
+    console.error(err);
 
+    setStatus(
+      "machineStatus",
+      "Could not save machine profile.",
+      "error"
+    );
+  }
 }
 
 
 /* =========================================================
-   CLEAR DESIGN
+   LOAD MACHINE
 ========================================================= */
 
-function clearDesignState(){
+function loadMachine(machine){
 
-  currentDesignFile = null;
-  currentDesignImage = null;
-  binaryBits = null;
-  binaryWidth = 0;
-  binaryHeight = 0;
+  currentMachine = {
+    ...machine
+  };
 
-  $("designFile").value = "";
+  /*
+    When changing machine, the previous output is cleared.
+    This prevents old machine/design data from leaking.
+  */
 
-  $("designInfo").classList.add("hidden");
+  currentOutputEP = null;
 
-  $("previewSection")
-    .classList.add("hidden");
+  $("downloadBtn").disabled = true;
+  $("convertBtn").disabled =
+    !currentDesign ||
+    !validateFingerPicks(false);
 
-  $("originalCanvas").width = 1;
-  $("originalCanvas").height = 1;
+  $("hooks").value =
+    machine.hooks || "";
 
-  $("binaryCanvas").width = 1;
-  $("binaryCanvas").height = 1;
+  $("headerLength").value =
+    machine.headerLength || "";
 
+  $("bytesPerPick").value =
+    machine.bytesPerPick || "";
+
+  $("machineName").value =
+    machine.name || "";
+
+  setStatus(
+    "machineStatus",
+    "Machine loaded: " +
+    machine.name +
+    ". Running design rows are NOT used.",
+    "ok"
+  );
+
+  updateDesignInfo();
+
+  refreshMachineList();
 }
 
 
@@ -1347,329 +1453,212 @@ function clearDesignState(){
 
 function createFingerInputs(){
 
-  const count =
-    Number($("fingerCount").value);
-
-  const box =
+  const container =
     $("fingerInputs");
 
-  box.innerHTML = "";
+  const count =
+    safeNumber(
+      $("fingerCount").value,
+      1
+    );
 
+  const oldValues = [];
+
+  container
+    .querySelectorAll("input[data-finger]")
+    .forEach(input=>{
+      oldValues[
+        Number(input.dataset.finger) - 1
+      ] = safeNumber(input.value);
+    });
+
+  container.innerHTML = "";
 
   for(let i=1;i<=count;i++){
 
-    const div =
+    const box =
       document.createElement("div");
 
-    div.className =
-      "finger-box";
+    box.className = "finger-box";
 
+    const label =
+      document.createElement("label");
 
-    div.innerHTML = `
+    label.textContent =
+      "Finger " + i + " Picks";
 
-      <div class="finger-title">
-        Finger ${i}
-      </div>
+    const input =
+      document.createElement("input");
 
-      <label>
-        Finger ${i} Picks
-      </label>
+    input.type = "number";
+    input.min = "1";
+    input.step = "1";
+    input.dataset.finger = String(i);
 
-      <input
-        class="fingerPickInput"
-        data-finger="${i}"
-        type="number"
-        min="0"
-        step="1"
-        value="0"
-        placeholder="Enter picks">
+    input.value =
+      oldValues[i-1] > 0
+        ? oldValues[i-1]
+        : "";
 
-    `;
+    input.placeholder =
+      "Enter picks";
 
-    box.appendChild(div);
-
-  }
-
-
-  document
-    .querySelectorAll(".fingerPickInput")
-    .forEach(input=>{
-
-      input.addEventListener(
-        "input",
-        onFingerPickChange
-      );
-
-    });
-
-
-  updateTotalPicks();
-
-}
-
-
-/* =========================================================
-   GET FINGER VALUES
-========================================================= */
-
-function getFingerPicks(){
-
-  const inputs =
-    document.querySelectorAll(
-      ".fingerPickInput"
+    input.addEventListener(
+      "input",
+      ()=>{
+        validateFingerPicks();
+        updateDesignInfo();
+        renderBinaryPreview();
+        updateButtons();
+      }
     );
 
-  const result = [];
+    box.appendChild(label);
+    box.appendChild(input);
 
-  inputs.forEach(input=>{
+    container.appendChild(box);
+  }
 
-    result.push({
-
-      finger:Number(
-        input.dataset.finger
-      ),
-
-      picks:Math.max(
-        0,
-        Number(input.value)||0
-      )
-
-    });
-
-  });
-
-  return result;
-
+  validateFingerPicks(false);
+  updateDesignInfo();
+  updateButtons();
 }
+
+$("fingerCount").addEventListener(
+  "change",
+  createFingerInputs
+);
 
 
 /* =========================================================
-   VALIDATION RULE
-   Finger 1 >= Finger 2 >= Finger 3...
+   FINGER VALIDATION
 ========================================================= */
 
-function validateFingerPicks(){
+function getFingerValues(){
 
-  const fingers =
-    getFingerPicks();
+  return Array.from(
+    document.querySelectorAll(
+      "#fingerInputs input[data-finger]"
+    )
+  ).map(input=>{
+    return safeNumber(input.value,0);
+  });
+}
 
 
-  /*
-    Empty / zero values are allowed while editing,
-    but final conversion requires every selected
-    finger to have a positive pick count.
-  */
+function validateFingerPicks(showMessage=true){
+
+  const values =
+    getFingerValues();
+
+  const boxes =
+    Array.from(
+      document.querySelectorAll(
+        "#fingerInputs .finger-box"
+      )
+    );
 
   let valid = true;
-
   let message = "";
 
+  if(!values.length){
 
-  for(let i=0;i<fingers.length;i++){
+    valid = false;
+    message = "Select at least one finger.";
 
-    const current =
-      fingers[i];
+  }else{
 
-    if(current.picks<=0){
+    for(let i=0;i<values.length;i++){
 
-      valid = false;
-
-      message =
-        `Finger ${current.finger} ka pick count enter karein.`;
-
-      break;
-
-    }
-
-
-    if(i>0){
-
-      const previous =
-        fingers[i-1];
-
-
-      if(current.picks>previous.picks){
+      if(values[i] <= 0){
 
         valid = false;
 
         message =
-          `Finger ${current.finger} picks (${current.picks}) ` +
-          `Finger ${previous.finger} (${previous.picks}) ` +
-          `se zyada nahi ho sakte.`;
+          "Finger " +
+          (i+1) +
+          " pick count enter karein.";
 
         break;
-
       }
-
     }
-
   }
-
-
-  const inputs =
-    document.querySelectorAll(
-      ".fingerPickInput"
-    );
-
-
-  inputs.forEach((input,index)=>{
-
-    const value =
-      Number(input.value)||0;
-
-    input.classList.remove(
-      "invalid-input",
-      "valid-input"
-    );
-
-
-    if(value<=0){
-
-      input.classList.add(
-        "invalid-input"
-      );
-
-    }else{
-
-      input.classList.add(
-        "valid-input"
-      );
-
-    }
-
-
-    if(index>0){
-
-      const previousValue =
-        Number(
-          inputs[index-1].value
-        )||0;
-
-
-      if(value>previousValue){
-
-        input.classList.add(
-          "invalid-input"
-        );
-
-      }
-
-    }
-
-  });
-
-
-  const box =
-    $("fingerValidation");
-
 
   if(valid){
 
-    box.innerHTML = `
+    /*
+      Required ordering:
 
-      <div class="status ok">
+      F1 >= F2 >= F3 >= F4 >= F5 >= F6
 
-        ✓ Finger pick order valid.<br>
+      Example valid:
+      150,150,120,100,80,60
 
-        Rule:
-        Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
-        Finger 4 ≥ Finger 5 ≥ Finger 6
+      Invalid:
+      150,180
+      150,120,160
+    */
 
-      </div>
+    for(let i=1;i<values.length;i++){
 
-    `;
+      if(values[i] > values[i-1]){
 
-  }else{
+        valid = false;
 
-    box.innerHTML = `
+        message =
+          "Invalid finger order: Finger " +
+          (i+1) +
+          " cannot be greater than Finger " +
+          i +
+          ".";
 
-      <div class="status error">
-
-        ✕ ${escapeHTML(message)}
-
-        <br><br>
-
-        Required:
-        Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
-        Finger 4 ≥ Finger 5 ≥ Finger 6
-
-      </div>
-
-    `;
-
+        break;
+      }
+    }
   }
 
+  boxes.forEach((box,index)=>{
 
-  return valid;
+    box.classList.remove("invalid");
 
-}
+    if(!valid && message.includes(
+      "Finger " + (index+1)
+    )){
+      box.classList.add("invalid");
+    }
+  });
 
-
-/* =========================================================
-   FINGER INPUT CHANGE
-========================================================= */
-
-function onFingerPickChange(){
-
-  const valid =
-    validateFingerPicks();
-
-  updateTotalPicks();
-
-
-  /*
-    Invalid finger distribution par
-    conversion disable.
-  */
-
-  if(!valid){
-
-    $("convertBtn").disabled = true;
-
-  }else if(binaryBits){
-
-    $("convertBtn").disabled = false;
-
-  }
-
-}
-
-
-/* =========================================================
-   TOTAL PICKS
-========================================================= */
-
-function getTotalPicks(){
-
-  return getFingerPicks()
-    .reduce(
-      (sum,item)=>sum+item.picks,
+  const total =
+    values.reduce(
+      (sum,value)=>sum + value,
       0
     );
 
-}
+  $("totalPicks").textContent =
+    total.toLocaleString();
 
+  if(showMessage){
 
-function updateTotalPicks(){
+    const el =
+      $("fingerValidation");
 
-  const total =
-    getTotalPicks();
+    if(valid){
 
+      el.textContent =
+        "✓ Finger pick order valid.";
 
-  $("totalPicks").innerHTML = `
+      el.style.color = "#198754";
 
-    Total Design Picks:
-    <strong>${total}</strong>
+    }else{
 
-  `;
+      el.textContent =
+        "✗ " + message;
 
-
-  if(binaryBits){
-
-    renderBinary();
-
+      el.style.color = "#c62828";
+    }
   }
 
+  return valid;
 }
 
 
@@ -1677,49 +1666,102 @@ function updateTotalPicks(){
    DESIGN FILE
 ========================================================= */
 
-$("designFile").onchange = async function(){
+$("designFile").addEventListener(
+  "change",
+  handleDesignFile
+);
+
+async function handleDesignFile(){
 
   const file =
-    this.files[0];
+    $("designFile").files[0];
 
-  if(!file) return;
+  currentDesign = null;
+  currentOutputEP = null;
 
+  $("downloadBtn").disabled = true;
 
-  clearCurrentDesignOnly();
+  if(!file){
 
+    $("designInfoName").textContent = "-";
+    $("designInfoSize").textContent = "-";
 
-  const allowedTypes = [
-    "image/png",
-    "image/jpeg",
-    "image/bmp",
-    "image/webp"
-  ];
-
-  const extension =
-    file.name
-      .split(".")
-      .pop()
-      .toLowerCase();
-
-  const allowedExtensions =
-    ["png","jpg","jpeg","bmp","webp"];
-
-
-  if(
-    !allowedTypes.includes(file.type) &&
-    !allowedExtensions.includes(extension)
-  ){
-
-    showDesignError(
-      "Only design image files are allowed."
+    setStatus(
+      "previewStatus",
+      "Upload a design to preview."
     );
 
-    return;
+    updateButtons();
 
+    return;
   }
 
+  const validExtension =
+    /\.(bmp|png|jpe?g|webp)$/i.test(
+      file.name
+    );
+
+  if(!validExtension){
+
+    setStatus(
+      "previewStatus",
+      "Unsupported image format.",
+      "error"
+    );
+
+    updateButtons();
+
+    return;
+  }
 
   try{
+
+    const bitmap =
+      await loadImage(file);
+
+    currentDesign = {
+      file,
+      bitmap
+    };
+
+    $("designInfoName").textContent =
+      file.name;
+
+    $("designInfoSize").textContent =
+      bitmap.width +
+      " × " +
+      bitmap.height;
+
+    setStatus(
+      "previewStatus",
+      "Design loaded. Pick count will NOT be guessed from image.",
+      "ok"
+    );
+
+    renderOriginalPreview();
+    renderBinaryPreview();
+
+    updateDesignInfo();
+    updateButtons();
+
+  }catch(err){
+
+    console.error(err);
+
+    setStatus(
+      "previewStatus",
+      "Could not load design image.",
+      "error"
+    );
+
+    updateButtons();
+  }
+}
+
+
+function loadImage(file){
+
+  return new Promise((resolve,reject)=>{
 
     const url =
       URL.createObjectURL(file);
@@ -1727,127 +1769,47 @@ $("designFile").onchange = async function(){
     const img =
       new Image();
 
-
-    img.onload = function(){
-
+    img.onload = ()=>{
       URL.revokeObjectURL(url);
-
-      currentDesignFile =
-        file;
-
-      currentDesignImage =
-        img;
-
-
-      $("designInfo").className =
-        "status ok";
-
-      $("designInfo")
-        .classList.remove("hidden");
-
-
-      $("designInfo").innerHTML = `
-
-        <strong>✓ DESIGN ACCEPTED</strong><br>
-
-        File:
-        ${escapeHTML(file.name)}<br>
-
-        Size:
-        ${img.naturalWidth} ×
-        ${img.naturalHeight} px<br>
-
-        <strong>
-          SOURCE: ONLY THIS DESIGN
-        </strong><br>
-
-        Running EP ki design rows use nahi hongi.
-
-      `;
-
-
-      drawOriginal();
-
-      renderBinary();
-
-      $("previewSection")
-        .classList.remove("hidden");
-
+      resolve(img);
     };
 
-
-    img.onerror = function(){
-
+    img.onerror = ()=>{
       URL.revokeObjectURL(url);
-
-      showDesignError(
-        "Design image read nahi ho payi."
+      reject(
+        new Error("Image load failed")
       );
-
     };
-
 
     img.src = url;
-
-  }catch(err){
-
-    showDesignError(
-      "Design load error."
-    );
-
-  }
-
-};
-
-
-function showDesignError(message){
-
-  $("designInfo").className =
-    "status error";
-
-  $("designInfo")
-    .classList.remove("hidden");
-
-  $("designInfo").innerHTML =
-    escapeHTML(message);
-
-}
-
-
-function clearCurrentDesignOnly(){
-
-  currentDesignFile = null;
-  currentDesignImage = null;
-  binaryBits = null;
-  binaryWidth = 0;
-  binaryHeight = 0;
-
+  });
 }
 
 
 /* =========================================================
-   ORIGINAL PREVIEW
+   CANVAS PREVIEW
 ========================================================= */
 
-function drawOriginal(){
+function renderOriginalPreview(){
 
-  if(!currentDesignImage)
+  if(!currentDesign){
     return;
+  }
 
+  const img =
+    currentDesign.bitmap;
 
   const canvas =
     $("originalCanvas");
 
-  const ctx =
-    canvas.getContext("2d");
-
-
   canvas.width =
-    currentDesignImage.naturalWidth;
+    img.width;
 
   canvas.height =
-    currentDesignImage.naturalHeight;
+    img.height;
 
+  const ctx =
+    canvas.getContext("2d");
 
   ctx.clearRect(
     0,
@@ -1856,592 +1818,442 @@ function drawOriginal(){
     canvas.height
   );
 
-
   ctx.drawImage(
-    currentDesignImage,
+    img,
     0,
     0
   );
-
 }
 
 
-/* =========================================================
-   BINARY DESIGN
-========================================================= */
+/*
+  This preview represents the NEW design only.
 
-function renderBinary(){
+  It does NOT read any running EP design rows.
+*/
 
-  if(
-    !currentDesignImage ||
-    !selectedMachine
-  ){
+function renderBinaryPreview(){
 
-    return;
+  if(!currentDesign){
 
-  }
+    const canvas =
+      $("binaryCanvas");
 
+    const ctx =
+      canvas.getContext("2d");
 
-  /*
-    Conversion se pehle finger validation.
-  */
-
-  const fingerValid =
-    validateFingerPicks();
-
-
-  if(!fingerValid){
-
-    binaryBits = null;
-
-    $("convertBtn").disabled = true;
-
-    $("conversionInfo").innerHTML = `
-
-      <strong>
-        Finger pick distribution invalid.
-      </strong><br>
-
-      Pehle finger picks correct karein.
-
-    `;
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
     return;
-
   }
 
+  if(!validateFingerPicks(false)){
+    return;
+  }
+
+  if(!currentMachine){
+    return;
+  }
+
+  const values =
+    getFingerValues();
 
   const totalPicks =
-    getTotalPicks();
-
-
-  if(totalPicks<=0){
-
-    binaryBits = null;
-
-    $("convertBtn").disabled = true;
-
-    return;
-
-  }
-
+    values.reduce(
+      (sum,v)=>sum+v,
+      0
+    );
 
   const hooks =
-    selectedMachine.hooks;
-
-
-  const left =
-    Math.max(
-      0,
-      Number($("leftPadding").value)||0
+    safeNumber(
+      currentMachine.hooks,
+      safeNumber($("hooks").value)
     );
 
+  if(hooks <= 0 || totalPicks <= 0){
+    return;
+  }
 
-  const right =
-    Math.max(
-      0,
-      Number($("rightPadding").value)||0
-    );
+  const canvas =
+    $("binaryCanvas");
 
+  canvas.width =
+    hooks;
 
-  const usableWidth =
-    Math.max(
-      1,
-      hooks-left-right
-    );
+  canvas.height =
+    totalPicks;
 
+  const ctx =
+    canvas.getContext("2d");
 
-  const srcW =
-    currentDesignImage.naturalWidth;
+  ctx.imageSmoothingEnabled = false;
 
-  const srcH =
-    currentDesignImage.naturalHeight;
+  /*
+    Temporary grayscale canvas.
+  */
 
-
-  const srcCanvas =
+  const temp =
     document.createElement("canvas");
 
-  srcCanvas.width =
-    srcW;
+  temp.width =
+    currentDesign.bitmap.width;
 
-  srcCanvas.height =
-    srcH;
+  temp.height =
+    currentDesign.bitmap.height;
 
+  const tctx =
+    temp.getContext("2d");
 
-  const srcCtx =
-    srcCanvas.getContext("2d");
-
-  srcCtx.drawImage(
-    currentDesignImage,
+  tctx.drawImage(
+    currentDesign.bitmap,
     0,
     0
   );
 
+  let sourceCanvas = temp;
 
-  const srcData =
-    srcCtx.getImageData(
-      0,
-      0,
-      srcW,
-      srcH
-    ).data;
+  /*
+    Mirror
+  */
 
+  if($("mirror").checked){
 
-  binaryWidth =
-    hooks;
+    const c =
+      document.createElement("canvas");
 
-  binaryHeight =
-    totalPicks;
+    c.width = temp.width;
+    c.height = temp.height;
 
+    const cctx =
+      c.getContext("2d");
 
-  binaryBits =
-    new Uint8Array(
-      binaryWidth*
-      binaryHeight
+    cctx.translate(
+      c.width,
+      0
     );
 
+    cctx.scale(-1,1);
+
+    cctx.drawImage(
+      temp,
+      0,
+      0
+    );
+
+    sourceCanvas = c;
+  }
+
+  /*
+    Flip vertical
+  */
+
+  if($("flip").checked){
+
+    const c =
+      document.createElement("canvas");
+
+    c.width = sourceCanvas.width;
+    c.height = sourceCanvas.height;
+
+    const cctx =
+      c.getContext("2d");
+
+    cctx.translate(
+      0,
+      c.height
+    );
+
+    cctx.scale(
+      1,
+      -1
+    );
+
+    cctx.drawImage(
+      sourceCanvas,
+      0,
+      0
+    );
+
+    sourceCanvas = c;
+  }
+
+  /*
+    Resize image to:
+      width = hooks
+      height = total picks
+  */
+
+  const resized =
+    document.createElement("canvas");
+
+  resized.width =
+    hooks;
+
+  resized.height =
+    totalPicks;
+
+  const rctx =
+    resized.getContext("2d");
+
+  rctx.imageSmoothingEnabled = false;
+
+  rctx.drawImage(
+    sourceCanvas,
+    0,
+    0,
+    hooks,
+    totalPicks
+  );
+
+  const imageData =
+    rctx.getImageData(
+      0,
+      0,
+      hooks,
+      totalPicks
+    );
 
   const threshold =
     Math.max(
       0,
       Math.min(
         255,
-        Number($("threshold").value)||128
+        safeNumber(
+          $("threshold").value,
+          128
+        )
       )
     );
 
-
-  /*
-    Uploaded image ko exact selected total
-    picks ki height me convert kiya ja raha hai.
-  */
-
-  for(let y=0;y<totalPicks;y++){
-
-    let sy =
-      Math.floor(
-        y*srcH/totalPicks
-      );
-
-
-    if(flipMode){
-
-      sy =
-        srcH-1-sy;
-
-    }
-
-
-    for(let x=0;x<hooks;x++){
-
-      let dx =
-        x-left;
-
-
-      if(
-        dx<0 ||
-        dx>=usableWidth
-      ){
-
-        binaryBits[
-          y*hooks+x
-        ]=0;
-
-        continue;
-
-      }
-
-
-      let sx =
-        Math.floor(
-          dx*srcW/usableWidth
-        );
-
-
-      if(mirrorMode){
-
-        sx =
-          srcW-1-sx;
-
-      }
-
-
-      const index =
-        (
-          sy*srcW+
-          sx
-        )*4;
-
-
-      const r =
-        srcData[index];
-
-      const g =
-        srcData[index+1];
-
-      const b =
-        srcData[index+2];
-
-      const a =
-        srcData[index+3];
-
-
-      let gray;
-
-
-      if(a<10){
-
-        gray=255;
-
-      }else{
-
-        gray =
-          0.299*r+
-          0.587*g+
-          0.114*b;
-
-      }
-
-
-      let bit =
-        gray<threshold
-          ?1
-          :0;
-
-
-      if(invertMode){
-
-        bit =
-          bit?0:1;
-
-      }
-
-
-      binaryBits[
-        y*hooks+x
-      ]=bit;
-
-    }
-
-  }
-
-
-  drawBinaryPreview();
-
-  updateConversionInfo();
-
-  $("convertBtn").disabled = false;
-
-}
-
-
-/* =========================================================
-   BINARY PREVIEW
-========================================================= */
-
-function drawBinaryPreview(){
-
-  if(!binaryBits)
-    return;
-
-
-  const canvas =
-    $("binaryCanvas");
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  canvas.width =
-    binaryWidth;
-
-  canvas.height =
-    binaryHeight;
-
-
-  const imageData =
+  const output =
     ctx.createImageData(
-      binaryWidth,
-      binaryHeight
+      hooks,
+      totalPicks
     );
-
 
   for(
     let i=0;
-    i<binaryBits.length;
-    i++
+    i<imageData.data.length;
+    i+=4
   ){
 
-    const v =
-      binaryBits[i]?0:255;
+    const r =
+      imageData.data[i];
 
-    const p =
-      i*4;
+    const g =
+      imageData.data[i+1];
 
-    imageData.data[p]=v;
-    imageData.data[p+1]=v;
-    imageData.data[p+2]=v;
-    imageData.data[p+3]=255;
+    const b =
+      imageData.data[i+2];
 
+    let gray =
+      0.299*r +
+      0.587*g +
+      0.114*b;
+
+    let isOn =
+      gray < threshold;
+
+    if($("invert").checked){
+      isOn = !isOn;
+    }
+
+    const color =
+      isOn ? 0 : 255;
+
+    output.data[i] =
+      color;
+
+    output.data[i+1] =
+      color;
+
+    output.data[i+2] =
+      color;
+
+    output.data[i+3] =
+      255;
   }
 
-
   ctx.putImageData(
-    imageData,
+    output,
     0,
     0
   );
-
 }
 
 
 /* =========================================================
-   CONVERSION INFO
+   DESIGN INFO
 ========================================================= */
 
-function updateConversionInfo(){
+function updateDesignInfo(){
 
-  if(
-    !selectedMachine ||
-    !binaryBits
-  ){
-    return;
-  }
+  $("designInfoHooks").textContent =
+    currentMachine
+      ? Number(
+          currentMachine.hooks
+        ).toLocaleString()
+      : "-";
 
-
-  const fingers =
-    getFingerPicks();
+  const values =
+    getFingerValues();
 
   const total =
-    getTotalPicks();
+    values.reduce(
+      (sum,v)=>sum+v,
+      0
+    );
 
+  $("designInfoPicks").textContent =
+    total
+      ? total.toLocaleString()
+      : "-";
 
-  const fingerText =
-    fingers
-      .map(
-        f =>
-          `Finger ${f.finger}: ${f.picks}`
-      )
-      .join("<br>");
-
-
-  const outputSize =
-    selectedMachine.headerLen+
-    selectedMachine.bytesPerPick*
-    total;
-
-
-  $("conversionInfo").innerHTML = `
-
-    <strong>
-      ✓ ${escapeHTML(selectedMachine.name)}
-      selected
-    </strong><br><br>
-
-    ${fingerText}<br><br>
-
-    <strong>
-      ${selectedMachine.hooks}
-      Hooks ×
-      ${total}
-      Picks
-    </strong><br>
-
-    Output size:
-    ${outputSize.toLocaleString()}
-    bytes<br><br>
-
-    Running EP design rows:
-    <strong>NOT USED</strong>
-
-  `;
-
+  $("designInfoMachine").textContent =
+    currentMachine
+      ? currentMachine.name
+      : "-";
 }
 
 
 /* =========================================================
-   INVERT / MIRROR / FLIP
+   BUTTON VALIDATION
 ========================================================= */
 
-$("invertBtn").onclick=function(){
+function updateButtons(){
 
-  invertMode=!invertMode;
+  const fingerValid =
+    validateFingerPicks(false);
 
-  this.innerText =
-    "Invert: "+
-    (invertMode?"ON":"OFF");
+  const ready =
+    !!currentMachine &&
+    !!currentDesign &&
+    fingerValid;
 
-  if(currentDesignImage)
-    renderBinary();
+  $("convertBtn").disabled =
+    !ready;
 
-};
+  if(!ready){
 
+    $("downloadBtn").disabled =
+      true;
 
-$("mirrorBtn").onclick=function(){
-
-  mirrorMode=!mirrorMode;
-
-  this.innerText =
-    "Mirror: "+
-    (mirrorMode?"ON":"OFF");
-
-  if(currentDesignImage)
-    renderBinary();
-
-};
-
-
-$("flipBtn").onclick=function(){
-
-  flipMode=!flipMode;
-
-  this.innerText =
-    "Flip: "+
-    (flipMode?"ON":"OFF");
-
-  if(currentDesignImage)
-    renderBinary();
-
-};
+    currentOutputEP = null;
+  }
+}
 
 
 /* =========================================================
-   DESIGN OPTION EVENTS
+   INPUT EVENTS
 ========================================================= */
 
 [
   "threshold",
   "leftPadding",
-  "rightPadding"
+  "rightPadding",
+  "invert",
+  "mirror",
+  "flip"
 ].forEach(id=>{
 
   $(id).addEventListener(
     "input",
-    function(){
-
-      if(currentDesignImage)
-        renderBinary();
-
+    ()=>{
+      renderBinaryPreview();
+      updateButtons();
     }
   );
 
+  $(id).addEventListener(
+    "change",
+    ()=>{
+      renderBinaryPreview();
+      updateButtons();
+    }
+  );
 });
 
 
-$("fingerCount").addEventListener(
-  "change",
-  function(){
-
-    createFingerInputs();
-
-    /*
-      Finger count change hone par validation
-      fresh start karegi.
-    */
-
-    $("convertBtn").disabled = true;
-
-  }
-);
-
-
 /* =========================================================
-   BUILD NEW EP
+   BUILD NATIVE EP
 ========================================================= */
 
 function buildNativeEP(){
 
-  if(
-    !selectedMachine ||
-    !binaryBits
-  ){
-
+  if(!currentMachine){
     throw new Error(
-      "Machine aur design required."
+      "Machine profile is not loaded."
     );
-
   }
 
-
-  /*
-    FINAL VALIDATION:
-    Finger 1 >= Finger 2 >= ... >= Finger 6
-  */
-
-  if(!validateFingerPicks()){
-
+  if(!currentDesign){
     throw new Error(
-      "Finger pick order invalid hai."
+      "Design image is not loaded."
     );
-
   }
 
+  if(!validateFingerPicks(false)){
+    throw new Error(
+      "Finger pick order is invalid."
+    );
+  }
 
-  const machine =
-    selectedMachine;
-
+  const values =
+    getFingerValues();
 
   const totalPicks =
-    getTotalPicks();
-
-
-  if(totalPicks<=0){
-
-    throw new Error(
-      "Total picks 0 hai."
+    values.reduce(
+      (sum,v)=>sum+v,
+      0
     );
 
-  }
+  const hooks =
+    Number(currentMachine.hooks);
 
+  const bytesPerPick =
+    Number(currentMachine.bytesPerPick);
 
-  const expectedBits =
-    machine.hooks*
-    totalPicks;
-
-
-  if(binaryBits.length!==expectedBits){
-
-    throw new Error(
-      "Binary design size mismatch."
-    );
-
-  }
-
-
-  const outputSize =
-    machine.headerLen+
-    machine.bytesPerPick*
-    totalPicks;
-
-
-  /*
-    New output completely ZERO se create hota hai.
-    Running EP ki old rows copy nahi hoti.
-  */
-
-  const output =
+  const header =
     new Uint8Array(
-      outputSize
+      currentMachine.header
     );
 
-
   /*
-    ONLY machine header copy.
+    IMPORTANT:
+
+    NEW output rows are created from ZERO.
+
+    Running EP old design rows are NEVER copied.
+
+    Only the saved machine header is reused.
   */
 
-  output.set(
-    new Uint8Array(machine.header),
-    0
-  );
-
-
-  const rowStart =
-    machine.headerLen;
-
+  const rows =
+    new Uint8Array(
+      totalPicks *
+      bytesPerPick
+    );
 
   /*
-    MSB-FIRST bit packing.
+    Generate the design directly from the
+    uploaded image.
+
+    MSB-first:
+      hook 0 = bit 7
+      hook 1 = bit 6
+      ...
   */
+
+  const source =
+    getBinaryMatrix(
+      hooks,
+      totalPicks
+    );
 
   for(
     let pick=0;
@@ -2450,201 +2262,436 @@ function buildNativeEP(){
   ){
 
     const rowOffset =
-      rowStart+
-      pick*machine.bytesPerPick;
-
+      pick *
+      bytesPerPick;
 
     for(
       let hook=0;
-      hook<machine.hooks;
+      hook<hooks;
       hook++
     ){
 
-      if(
-        binaryBits[
-          pick*machine.hooks+
-          hook
-        ]
-      ){
-
-        const byteIndex =
-          Math.floor(hook/8);
-
-        const bitIndex =
-          7-(hook%8);
-
-
-        output[
-          rowOffset+
-          byteIndex
-        ] |=
-          1<<bitIndex;
-
+      if(!source[pick][hook]){
+        continue;
       }
 
-    }
+      const byteIndex =
+        rowOffset +
+        Math.floor(hook / 8);
 
+      const bit =
+        7 -
+        (hook % 8);
+
+      if(
+        byteIndex <
+        rowOffset + bytesPerPick
+      ){
+
+        rows[byteIndex] |=
+          (1 << bit);
+      }
+    }
   }
 
+  /*
+    Final EP:
+
+    header + NEW rows
+
+    No running design rows.
+  */
+
+  const output =
+    new Uint8Array(
+      header.length +
+      rows.length
+    );
+
+  output.set(
+    header,
+    0
+  );
+
+  output.set(
+    rows,
+    header.length
+  );
 
   return output;
-
 }
+
+
+/* =========================================================
+   BINARY MATRIX
+========================================================= */
+
+function getBinaryMatrix(
+  hooks,
+  totalPicks
+){
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width =
+    hooks;
+
+  canvas.height =
+    totalPicks;
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.imageSmoothingEnabled = false;
+
+  /*
+    Source image
+  */
+
+  const source =
+    currentDesign.bitmap;
+
+  let sx = 0;
+  let sy = 0;
+  let sw = source.width;
+  let sh = source.height;
+
+  /*
+    Render transformed source into canvas
+  */
+
+  const transformed =
+    document.createElement("canvas");
+
+  transformed.width =
+    source.width;
+
+  transformed.height =
+    source.height;
+
+  const tctx =
+    transformed.getContext("2d");
+
+  tctx.imageSmoothingEnabled = false;
+
+  tctx.save();
+
+  if($("mirror").checked){
+
+    tctx.translate(
+      transformed.width,
+      0
+    );
+
+    tctx.scale(
+      -1,
+      1
+    );
+  }
+
+  if($("flip").checked){
+
+    tctx.translate(
+      0,
+      transformed.height
+    );
+
+    tctx.scale(
+      1,
+      -1
+    );
+  }
+
+  tctx.drawImage(
+    source,
+    0,
+    0
+  );
+
+  tctx.restore();
+
+  ctx.drawImage(
+    transformed,
+    sx,
+    sy,
+    sw,
+    sh,
+    0,
+    0,
+    hooks,
+    totalPicks
+  );
+
+  const data =
+    ctx.getImageData(
+      0,
+      0,
+      hooks,
+      totalPicks
+    ).data;
+
+  const threshold =
+    Math.max(
+      0,
+      Math.min(
+        255,
+        safeNumber(
+          $("threshold").value,
+          128
+        )
+      )
+    );
+
+  const matrix =
+    new Array(totalPicks);
+
+  for(
+    let y=0;
+    y<totalPicks;
+    y++
+  ){
+
+    matrix[y] =
+      new Array(hooks);
+
+    for(
+      let x=0;
+      x<hooks;
+      x++
+    ){
+
+      const idx =
+        (y*hooks+x)*4;
+
+      const r =
+        data[idx];
+
+      const g =
+        data[idx+1];
+
+      const b =
+        data[idx+2];
+
+      const gray =
+        0.299*r +
+        0.587*g +
+        0.114*b;
+
+      let on =
+        gray < threshold;
+
+      if($("invert").checked){
+        on = !on;
+      }
+
+      matrix[y][x] =
+        on;
+    }
+  }
+
+  return matrix;
+}
+
+
+/* =========================================================
+   CONVERT
+========================================================= */
+
+$("convertBtn").addEventListener(
+  "click",
+  ()=>{
+    try{
+
+      if(!validateFingerPicks()){
+
+        setStatus(
+          "convertStatus",
+          "Finger pick order invalid. Conversion blocked.",
+          "error"
+        );
+
+        return;
+      }
+
+      currentOutputEP =
+        buildNativeEP();
+
+      $("downloadBtn").disabled =
+        false;
+
+      const values =
+        getFingerValues();
+
+      const total =
+        values.reduce(
+          (sum,v)=>sum+v,
+          0
+        );
+
+      setStatus(
+        "convertStatus",
+        "EP prepared successfully: " +
+        currentMachine.hooks +
+        " Hooks × " +
+        total +
+        " Picks. Running EP old design rows were not copied.",
+        "ok"
+      );
+
+    }catch(err){
+
+      console.error(err);
+
+      currentOutputEP = null;
+
+      $("downloadBtn").disabled =
+        true;
+
+      setStatus(
+        "convertStatus",
+        err.message ||
+        "Conversion failed.",
+        "error"
+      );
+    }
+  }
+);
 
 
 /* =========================================================
    DOWNLOAD
 ========================================================= */
 
-$("convertBtn").onclick=function(){
+$("downloadBtn").addEventListener(
+  "click",
+  ()=>{
+    try{
 
-  try{
+      if(!currentOutputEP){
 
-    /*
-      FINAL CHECK BEFORE DOWNLOAD
-    */
-
-    if(!validateFingerPicks()){
-
-      alert(
-        "Finger pick order galat hai.\n\n"+
-        "Rule:\n"+
-        "Finger 1 ≥ Finger 2 ≥ Finger 3 ≥ "+
-        "Finger 4 ≥ Finger 5 ≥ Finger 6"
-      );
-
-      return;
-
-    }
-
-
-    if(!selectedMachine){
-
-      alert(
-        "Machine select karein."
-      );
-
-      return;
-
-    }
-
-
-    if(!currentDesignFile){
-
-      alert(
-        "Design upload karein."
-      );
-
-      return;
-
-    }
-
-
-    const total =
-      getTotalPicks();
-
-
-    if(total<=0){
-
-      alert(
-        "Finger-wise picks enter karein."
-      );
-
-      return;
-
-    }
-
-
-    const output =
-      buildNativeEP();
-
-
-    const blob =
-      new Blob(
-        [output],
-        {
-          type:"application/octet-stream"
-        }
-      );
-
-
-    const url =
-      URL.createObjectURL(blob);
-
-
-    const a =
-      document.createElement("a");
-
-
-    const originalName =
-      currentDesignFile.name
-        .replace(
-          /\.[^/.]+$/,
-          ""
+        setStatus(
+          "convertStatus",
+          "First convert the EP.",
+          "error"
         );
 
+        return;
+      }
 
-    a.href=url;
+      const originalName =
+        currentDesign &&
+        currentDesign.file
+          ? currentDesign.file.name
+          : "Design";
 
-    a.download =
-      originalName+
-      "_"+
-      total+
-      "Picks.EP";
+      const baseName =
+        originalName
+          .replace(
+            /\.[^/.]+$/,
+            ""
+          )
+          .replace(
+            /[^a-zA-Z0-9_-]/g,
+            "_"
+          );
 
+      const values =
+        getFingerValues();
 
-    document.body.appendChild(a);
+      const total =
+        values.reduce(
+          (sum,v)=>sum+v,
+          0
+        );
 
-    a.click();
+      const filename =
+        baseName +
+        "_" +
+        total +
+        "Picks.EP";
 
-    a.remove();
+      const blob =
+        new Blob(
+          [currentOutputEP],
+          {
+            type:"application/octet-stream"
+          }
+        );
 
+      const url =
+        URL.createObjectURL(blob);
 
-    setTimeout(
-      ()=>URL.revokeObjectURL(url),
-      1000
-    );
+      const a =
+        document.createElement("a");
 
+      a.href = url;
+      a.download = filename;
 
-  }catch(error){
+      document.body.appendChild(a);
 
-    console.error(error);
+      a.click();
 
-    alert(
-      "EP conversion error:\n"+
-      error.message
-    );
+      a.remove();
 
+      setTimeout(()=>{
+        URL.revokeObjectURL(url);
+      },1000);
+
+      setStatus(
+        "convertStatus",
+        "Download started: " +
+        filename,
+        "ok"
+      );
+
+    }catch(err){
+
+      console.error(err);
+
+      setStatus(
+        "convertStatus",
+        "Download failed.",
+        "error"
+      );
+    }
   }
-
-};
+);
 
 
 /* =========================================================
-   INITIALIZE
+   APP INITIALIZATION
 ========================================================= */
 
-(async function(){
+async function initializeApp(){
 
-  try{
+  createFingerInputs();
 
-    await openDB();
+  await initializeStorage();
 
-    await refreshMachineList();
+  updateDesignInfo();
+  updateButtons();
+}
 
-    createFingerInputs();
 
-  }catch(error){
+/* =========================================================
+   AUTO LOGIN SESSION
+========================================================= */
 
-    console.error(error);
+if(
+  sessionStorage.getItem("ed_logged_in") === "1"
+){
 
-    alert(
-      "Database initialization failed."
-    );
+  hide($("loginScreen"));
+  show($("app"));
 
-  }
+  initializeApp();
 
-})();
+}else{
+
+  show($("loginScreen"));
+  hide($("app"));
+}
 
 </script>
 
