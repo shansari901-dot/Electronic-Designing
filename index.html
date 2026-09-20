@@ -1,2099 +1,2470 @@
-<!-- Electronic Designing — EasyX Style V4 -->
-<!-- Password: admin123 -->
-<!--
-  Running EP:
-  - Automatically detects Hooks and Total Picks for the verified 34-byte-header format.
-  - Does NOT copy old running design rows into output.
-  - New design rows are generated from the uploaded design image.
-  - Finger sequence is manually controlled.
-  - Actual machine-specific finger byte mapping is intentionally NOT guessed.
--->
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Electronic Designing — EasyX Style V4</title>
+<title>Electronic Designing — EasyX Style V6</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
-header{background:#17202a;color:white;padding:14px 18px;font-size:20px;font-weight:700}
-main{max-width:1200px;margin:auto;padding:18px}
-.card{background:white;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 10px #0001}
-h2{margin:0 0 14px}
-h3{margin:16px 0 10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-label{display:block;font-weight:600;margin-bottom:5px}
-input,select,button{font:inherit}
-input[type=text],input[type=number],input[type=password],select{
- width:100%;padding:9px;border:1px solid #bbb;border-radius:7px
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#eef2f7;
+  color:#18212f
 }
-input[readonly]{background:#f0f2f4}
+button,input,select{font:inherit}
 button{
- border:0;border-radius:7px;padding:10px 14px;background:#1769aa;color:#fff;
- cursor:pointer;margin:4px
+  cursor:pointer;
+  border:0;
+  border-radius:8px;
+  padding:9px 13px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:700
 }
-button.secondary{background:#68727c}
-button.danger{background:#b3261e}
-.status{padding:10px;border-radius:7px;background:#eef1f4;margin-top:10px}
-.status.success{background:#e4f6e9;color:#176b35}
-.status.error{background:#fde7e7;color:#9c1c1c}
-.small{font-size:13px;color:#606870;margin-top:7px}
-#app{display:none}
-#login{
- position:fixed;inset:0;background:#17202a;display:flex;align-items:center;
- justify-content:center;z-index:100
+button.secondary{background:#475569}
+button.success{background:#15803d}
+button.danger{background:#dc2626}
+button.light{background:#e2e8f0;color:#172033}
+button:disabled{opacity:.55;cursor:not-allowed}
+
+.topbar{
+  height:58px;
+  background:#172033;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 16px;
+  gap:15px;
+  position:sticky;
+  top:0;
+  z-index:20
 }
-.loginbox{
- width:min(360px,90vw);background:white;padding:25px;border-radius:12px
+.brand{
+  font-size:19px;
+  font-weight:800;
+  white-space:nowrap
+}
+.status{
+  margin-left:auto;
+  font-size:12px;
+  opacity:.85
+}
+
+.wrap{
+  max-width:1450px;
+  margin:auto;
+  padding:14px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:330px 1fr 330px;
+  gap:14px;
+  align-items:start
+}
+
+.card{
+  background:#fff;
+  border:1px solid #d8e0ea;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:0 3px 12px rgba(15,23,42,.05)
+}
+.card h2,.card h3{
+  margin:0 0 12px
+}
+.card h2{font-size:16px}
+.card h3{font-size:14px}
+
+.row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin:7px 0
+}
+.row>*{min-width:0}
+.row label{
+  flex:1;
+  font-size:13px
+}
+.row input,.row select{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:7px;
+  padding:8px
+}
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+.three{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px
+}
+.small{
+  font-size:11px;
+  color:#64748b
+}
+.muted{
+  color:#64748b
+}
+hr{
+  border:0;
+  border-top:1px solid #e2e8f0;
+  margin:13px 0
+}
+
+.preview{
+  position:relative;
+  min-height:480px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:auto;
+  background:#f8fafc;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  padding:10px
 }
 canvas{
- width:100%;max-height:700px;border:1px solid #aaa;background:white;
- image-rendering:auto
+  image-rendering:pixelated;
+  max-width:100%;
+  height:auto;
+  border:1px solid #94a3b8;
+  background:#fff
 }
-.tablewrap{overflow:auto}
-table{border-collapse:collapse;width:100%;margin-top:10px}
-th,td{border:1px solid #ddd;padding:7px;text-align:left}
-th{background:#f0f2f4}
-.fingers{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.previewGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+.previewBox h3{
+  margin:0 0 6px;
+  font-size:13px
+}
+.previewBox canvas{
+  width:100%;
+  min-height:250px
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:8px 0
+}
+.badge{
+  background:#e0e7ff;
+  color:#3730a3;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700
+}
+
+.drop{
+  border:2px dashed #94a3b8;
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  background:#f8fafc;
+  margin-bottom:8px
+}
+.drop input{
+  width:100%
+}
+
+.kbar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+.kitem{
+  border:1px solid #d7dee8;
+  border-radius:8px;
+  padding:8px
+}
+.kitem label{
+  display:block;
+  font-size:12px;
+  margin-bottom:4px
+}
+.kitem input{
+  width:100%;
+  padding:7px;
+  border:1px solid #cbd5e1;
+  border-radius:6px
+}
+
 .finger{
- border:1px solid #bbb;padding:8px 12px;border-radius:7px;background:#fafafa;
- cursor:pointer
+  border:1px solid #d7dee8;
+  border-radius:9px;
+  padding:9px;
+  margin-bottom:8px
+}
+.fingerTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:6px
+}
+.ranges{
+  margin-top:6px
+}
+.range{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:5px;
+  margin:4px 0
+}
+.range input{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  padding:6px
+}
+.range button{
+  padding:5px 8px
+}
+
+.timeline{
+  overflow:auto;
+  max-height:260px;
+  border:1px solid #d8e0ea;
+  border-radius:8px
+}
+.timeline table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:11px
+}
+.timeline th,.timeline td{
+  border-bottom:1px solid #e2e8f0;
+  padding:5px;
+  text-align:left;
+  white-space:nowrap
+}
+.timeline th{
+  background:#f1f5f9;
+  position:sticky;
+  top:0
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px
+}
+.stat{
+  border:1px solid #d8e0ea;
+  border-radius:8px;
+  padding:8px;
+  background:#f8fafc
+}
+.stat b{
+  display:block;
+  font-size:15px
+}
+.stat span{
+  font-size:10px;
+  color:#64748b
+}
+
+.actionbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:10px
+}
+
+.login{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.78);
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px
+}
+.loginBox{
+  width:min(390px,100%);
+  background:#fff;
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 20px 70px rgba(0,0,0,.3)
+}
+.loginBox h1{
+  margin:0 0 6px;
+  font-size:22px
+}
+.loginBox input{
+  width:100%;
+  margin:12px 0;
+  padding:11px;
+  border:1px solid #cbd5e1;
+  border-radius:8px
+}
+.err{
+  color:#dc2626;
+  font-size:12px;
+  min-height:17px
+}
+
+.hidden{display:none!important}
+
+.notice{
+  padding:9px 10px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  border-radius:8px;
+  font-size:12px;
+  color:#1e40af;
+  margin:8px 0
+}
+
+.warning{
+  padding:9px 10px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  border-radius:8px;
+  font-size:12px;
+  color:#9a3412;
+  margin:8px 0
+}
+
+@media(max-width:1100px){
+  .grid{grid-template-columns:280px 1fr}
+  .rightCol{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .grid{grid-template-columns:1fr}
+  .previewGrid{grid-template-columns:1fr}
+  .topbar{height:auto;min-height:58px;flex-wrap:wrap;padding:9px}
+  .status{margin-left:0;width:100%}
 }
 </style>
 </head>
 
 <body>
 
-<header>Electronic Designing — EasyX Style V4</header>
-
-<div id="login">
-  <div class="loginbox">
-    <h2>Login</h2>
-    <label>Password</label>
-    <input id="password" type="password" placeholder="Enter password">
-    <button onclick="login()">Login</button>
-    <div id="loginMsg" class="status"></div>
+<div class="login" id="loginScreen">
+  <div class="loginBox">
+    <h1>Electronic Designing</h1>
+    <div class="small">EasyX Style V6</div>
+    <input id="loginPassword" type="password" placeholder="Password">
+    <div class="err" id="loginError"></div>
+    <button id="loginBtn" style="width:100%">Login</button>
   </div>
 </div>
 
-<main id="app">
+<header class="topbar">
+  <div class="brand">Electronic Designing — V6</div>
+  <div class="status" id="topStatus">Ready</div>
+</header>
+
+<main class="wrap">
+
+  <div class="actionbar">
+    <button id="newProjectBtn">New</button>
+    <button id="openProjectBtn" class="secondary">Open Project</button>
+    <button id="saveProjectBtn" class="success">Save</button>
+    <button id="saveAsBtn" class="secondary">Save As</button>
+    <button id="exportBtn">Export EP</button>
+    <input id="projectFileInput" type="file" accept=".edp,.json" class="hidden">
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT -->
+    <aside>
+
+      <section class="card">
+        <h2>1. Running EP / Machine</h2>
+
+        <div class="drop">
+          <b>Running EP Upload</b>
+          <div class="small">
+            Machine structure detect करने के लिए running EP दें।
+          </div>
+          <input id="runningInput" type="file" accept=".ep,.EP">
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <b id="detHeader">—</b>
+            <span>Header bytes</span>
+          </div>
+          <div class="stat">
+            <b id="detRow">—</b>
+            <span>Row bytes</span>
+          </div>
+          <div class="stat">
+            <b id="detHooks">—</b>
+            <span>Hooks</span>
+          </div>
+          <div class="stat">
+            <b id="detPicks">—</b>
+            <span>Picks</span>
+          </div>
+        </div>
+
+        <div id="epMessage" class="notice">
+          Running EP upload करने के बाद structure यहाँ दिखाई देगा।
+        </div>
+
+        <hr>
+
+        <h3>Machine Profile</h3>
+
+        <div class="row">
+          <label>Profile Name</label>
+          <input id="profileName" placeholder="Machine 1">
+        </div>
+
+        <div class="two">
+          <div>
+            <div class="small">Hooks</div>
+            <input id="profileHooks" type="number" min="1" value="672">
+          </div>
+          <div>
+            <div class="small">Picks</div>
+            <input id="profilePicks" type="number" min="1" value="0">
+          </div>
+        </div>
+
+        <div class="two" style="margin-top:8px">
+          <div>
+            <div class="small">Header bytes</div>
+            <input id="profileHeader" type="number" min="0" value="34">
+          </div>
+          <div>
+            <div class="small">Row bytes</div>
+            <input id="profileRow" type="number" min="1" value="84">
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Threshold</label>
+          <input id="threshold" type="number" min="0" max="255" value="128">
+        </div>
+
+        <div class="actionbar">
+          <button id="saveMachineBtn" class="success">Save Machine</button>
+          <button id="loadMachineBtn" class="secondary">Load</button>
+        </div>
+
+        <select id="machineSelect" style="width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px">
+          <option value="">Saved machines</option>
+        </select>
+
+      </section>
 
-<!-- ========================================================= -->
-<!-- 1. MACHINE SETUP -->
-<!-- ========================================================= -->
+      <section class="card">
+        <h2>2. New Design</h2>
 
-<section class="card">
-<h2>1. Machine Setup — Running EP se automatic</h2>
-
-<div class="grid">
-
-<div>
-<label>Machine name</label>
-<input id="machineName" type="text"
-       placeholder="Detected from running file / optional">
-</div>
-
-<div>
-<label>Hooks (auto)</label>
-<input id="hooks" type="number" readonly>
-</div>
-
-<div>
-<label>Total Picks (auto)</label>
-<input id="totalPicks" type="number" readonly>
-</div>
-
-<div>
-<label>Threshold (0–255)</label>
-<input id="threshold" type="number"
-       min="0" max="255" value="128">
-</div>
-
-</div>
-
-<div id="profileStatus" class="status">
-Pehle Running EP upload karein. Hooks aur Total Picks file se analyze honge.
-</div>
-
-<div class="small">
-Is section me Hooks/Picks manually enter nahi karne hain.
-Running EP ki machine structure use hogi; purani design rows copy nahi hongi.
-</div>
-
-<br>
-
-<button onclick="saveProfile()">Save Profile</button>
-<button class="secondary" onclick="loadProfile()">Load Profile</button>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- 2. RUNNING EP -->
-<!-- ========================================================= -->
-
-<section class="card">
-
-<h2>2. Running EP — Analyze</h2>
-
-<input id="epFile" type="file" accept=".ep,.EP">
-
-<div id="epInfo" class="status">
-No running EP loaded.
-</div>
-
-<div class="grid" style="margin-top:10px">
-
-<div>
-<label>Detected Header</label>
-<input id="detHeader" readonly>
-</div>
-
-<div>
-<label>Detected Row Bytes</label>
-<input id="detRowBytes" readonly>
-</div>
-
-<div>
-<label>Detected Hooks</label>
-<input id="detHooks" readonly>
-</div>
-
-<div>
-<label>Detected Picks</label>
-<input id="detPicks" readonly>
-</div>
-
-</div>
-
-<div class="small">
-Running file ka old design data sirf analysis ke liye read hota hai.
-Export me old design rows copy nahi hoti.
-</div>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- 3. NEW DESIGN -->
-<!-- ========================================================= -->
-
-<section class="card">
-
-<h2>3. New Design</h2>
-
-<input id="designFile"
-       type="file"
-       accept=".bmp,.png,.jpg,.jpeg,.webp">
-
-<div id="designInfo" class="status">
-No new design loaded.
-</div>
-
-<div class="grid" style="margin-top:10px">
-
-<div>
-<label>Invert</label>
-<select id="invert">
-<option value="0">Normal</option>
-<option value="1">Invert</option>
-</select>
-</div>
-
-<div>
-<label>Mirror</label>
-<select id="mirror">
-<option value="0">Normal</option>
-<option value="1">Mirror</option>
-</select>
-</div>
-
-<div>
-<label>Flip</label>
-<select id="flip">
-<option value="0">Normal</option>
-<option value="1">Flip</option>
-</select>
-</div>
-
-</div>
-
-<button onclick="prepareDesign()">Prepare New Design</button>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- 4. FINGER WORKING SEQUENCE -->
-<!-- ========================================================= -->
-
-<section class="card">
-
-<h2>4. New Design — Finger / Peti Working Sequence</h2>
-
-<p class="small">
-Total Picks Running EP se automatic aate hain.
-Aap sirf New Design ke liye decide karenge ki kis pick range me
-kaun-se finger(s) kaam karein.
-</p>
-
-<div class="grid">
-
-<div>
-<label>Start Pick</label>
-<input id="rangeStart" type="number" min="1" value="1">
-</div>
-
-<div>
-<label>End Pick</label>
-<input id="rangeEnd" type="number" min="1" value="40">
-</div>
-
-</div>
-
-<label style="margin-top:12px">
-Finger selection
-</label>
-
-<div id="fingerChecks" class="fingers"></div>
-
-<button onclick="applyRange()">Apply Range</button>
-<button class="secondary" onclick="clearRange()">Clear Range</button>
-<button class="secondary" onclick="setAllF1()">Set All F1</button>
-<button class="danger" onclick="resetSequence()">Reset Sequence</button>
-
-<div id="sequenceStatus" class="status"></div>
-
-<div class="tablewrap">
-<table>
-<thead>
-<tr>
-<th>Start Pick</th>
-<th>End Pick</th>
-<th>Working Finger(s)</th>
-<th>Edit</th>
-</tr>
-</thead>
-<tbody id="sequenceTable"></tbody>
-</table>
-</div>
-
-<div class="small">
-Example:
-1–40 = F1,
-41–80 = F1 + F2,
-81–120 = F2,
-121–150 = F1 + F3
-</div>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- 5. HOOK PREVIEW -->
-<!-- ========================================================= -->
-
-<section class="card">
-
-<h2>5. Design → Hook Preview</h2>
-
-<div>
-<button onclick="showOriginalDesign()">
-Show Original
-</button>
-
-<button class="secondary" onclick="prepareDesign()">
-Show Hook Pattern
-</button>
-</div>
-
-<canvas id="preview"></canvas>
-
-<div id="previewInfo" class="status">
-Preview ready nahi hai.
-</div>
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- 6. EXPORT -->
-<!-- ========================================================= -->
-
-<section class="card">
-
-<h2>6. Validate & Generate New EP</h2>
-
-<button onclick="validateAndExport()">
-Generate New EP
-</button>
-
-<div id="validation" class="status">
-Ready.
-</div>
-
-<div class="small">
-Output file:
-Running EP ka machine/header structure + NEW uploaded design.
-Old running design rows copy nahi hongi.
-</div>
-
-</section>
-
+        <div class="drop">
+          <b>Design Image</b>
+          <div class="small">BMP / PNG / JPG / JPEG / WEBP</div>
+          <input id="designInput" type="file" accept=".bmp,.png,.jpg,.jpeg,.webp,image/*">
+        </div>
+
+        <div class="row">
+          <label>Pattern threshold</label>
+          <input id="designThreshold" type="number" min="0" max="255" value="128">
+        </div>
+
+        <div class="two">
+          <button id="mirrorBtn" class="light">Mirror</button>
+          <button id="flipBtn" class="light">Flip</button>
+        </div>
+
+        <div class="two" style="margin-top:7px">
+          <button id="invertBtn" class="light">Invert</button>
+          <button id="resetTransformBtn" class="light">Reset</button>
+        </div>
+
+        <div class="badges">
+          <span class="badge" id="patternStatus">Pattern: —</span>
+          <span class="badge" id="activeCount">Active: 0</span>
+        </div>
+
+      </section>
+
+      <section class="card">
+        <h2>3. Kinara / Border</h2>
+
+        <div class="notice">
+          Kinara को चारों तरफ independently set कर सकते हैं।
+        </div>
+
+        <div class="kbar">
+
+          <div class="kitem">
+            <label>Left hooks</label>
+            <input id="kinLeft" type="number" min="0" value="0">
+          </div>
+
+          <div class="kitem">
+            <label>Right hooks</label>
+            <input id="kinRight" type="number" min="0" value="0">
+          </div>
+
+          <div class="kitem">
+            <label>Top picks</label>
+            <input id="kinTop" type="number" min="0" value="0">
+          </div>
+
+          <div class="kitem">
+            <label>Bottom picks</label>
+            <input id="kinBottom" type="number" min="0" value="0">
+          </div>
+
+        </div>
+
+        <div class="two" style="margin-top:8px">
+          <button id="applyKinaraBtn">Apply Kinara</button>
+          <button id="clearKinaraBtn" class="light">Clear</button>
+        </div>
+
+      </section>
+
+    </aside>
+
+    <!-- CENTER -->
+    <section>
+
+      <section class="card">
+
+        <h2>Design Preview</h2>
+
+        <div class="previewGrid">
+
+          <div class="previewBox">
+            <h3>Original Design</h3>
+            <div class="preview">
+              <canvas id="originalCanvas" width="500" height="350"></canvas>
+            </div>
+          </div>
+
+          <div class="previewBox">
+            <h3>Hook / Pick Pattern</h3>
+            <div class="preview">
+              <canvas id="patternCanvas" width="500" height="350"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="stats" style="margin-top:10px">
+          <div class="stat">
+            <b id="gridHooks">—</b>
+            <span>Output hooks</span>
+          </div>
+          <div class="stat">
+            <b id="gridPicks">—</b>
+            <span>Output picks</span>
+          </div>
+          <div class="stat">
+            <b id="gridActive">—</b>
+            <span>Active cells</span>
+          </div>
+          <div class="stat">
+            <b id="gridDensity">—</b>
+            <span>Pattern density</span>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card" style="margin-top:14px">
+        <h2>Automatic Pattern Analysis</h2>
+
+        <div class="notice" id="analysisText">
+          Design upload करने पर pattern analysis होगा।
+        </div>
+
+        <div class="three">
+          <div class="stat">
+            <b id="srcWidth">—</b>
+            <span>Source width</span>
+          </div>
+          <div class="stat">
+            <b id="srcHeight">—</b>
+            <span>Source height</span>
+          </div>
+          <div class="stat">
+            <b id="srcType">—</b>
+            <span>Source type</span>
+          </div>
+        </div>
+
+      </section>
+
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="rightCol">
+
+      <section class="card">
+        <h2>4. Finger Control</h2>
+
+        <div class="warning">
+          हर finger की अपनी multiple ranges हो सकती हैं।
+          Overlap allowed है।
+        </div>
+
+        <div id="fingerContainer"></div>
+
+        <div class="actionbar">
+          <button id="setAllF1Btn" class="light">All → F1</button>
+          <button id="clearAllFingerBtn" class="light">Clear All</button>
+          <button id="resetFingerBtn" class="secondary">Reset</button>
+        </div>
+
+      </section>
+
+      <section class="card">
+        <h2>5. Combined Pick Timeline</h2>
+
+        <div class="small" style="margin-bottom:7px">
+          प्रत्येक pick पर कौन-कौन से fingers active हैं।
+        </div>
+
+        <div class="timeline">
+          <table>
+            <thead>
+              <tr>
+                <th>Start</th>
+                <th>Stop</th>
+                <th>Finger(s)</th>
+              </tr>
+            </thead>
+            <tbody id="timelineBody"></tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <section class="card">
+        <h2>6. Output</h2>
+
+        <div class="notice">
+          Export में running EP की पुरानी design rows copy नहीं की जाएँगी।
+          नया pattern नई design से बनाया जाएगा।
+        </div>
+
+        <div class="row">
+          <label>Output name</label>
+          <input id="outputName" value="New_Design">
+        </div>
+
+        <button id="buildPreviewBtn" style="width:100%">Build Output Preview</button>
+
+        <div id="buildMessage" class="small" style="margin-top:8px"></div>
+      </section>
+
+    </aside>
+
+  </div>
 </main>
 
-
 <script>
+"use strict";
 
 /* =========================================================
-   BASIC SETTINGS
+   CONSTANTS
 ========================================================= */
 
-const ADMIN_PASSWORD = "admin123";
+const LOGIN_PASSWORD = "admin123";
+const DEFAULT_HEADER_BYTES = 34;
+const DEFAULT_ROW_BYTES = 84;
 
-const EP_HEADER_BYTES = 34;
+const DB_NAME = "ElectronicDesigningDB_V6";
+const DB_VERSION = 1;
+const MACHINE_STORE = "machines";
 
-let db = null;
+/* =========================================================
+   STATE
+========================================================= */
 
-let runningEP = null;
-let designImg = null;
-let designRows = null;
+const state = {
+  runningBytes: null,
+  runningName: "",
+  machineHeader: null,
 
-let machineHeader = new Uint8Array();
-
-let detected = {
-  hooks: 0,
+  headerBytes: DEFAULT_HEADER_BYTES,
+  rowBytes: DEFAULT_ROW_BYTES,
+  hooks: 672,
   picks: 0,
-  rowBytes: 0,
-  headerBytes: 0,
-  format: ""
+
+  designFile: null,
+  designImage: null,
+  designName: "",
+
+  sourceWidth: 0,
+  sourceHeight: 0,
+
+  threshold: 128,
+
+  mirror: false,
+  flip: false,
+  invert: false,
+
+  pattern: null,
+  originalImageData: null,
+
+  kinara: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+  },
+
+  fingers: {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: []
+  },
+
+  projectName: "Untitled"
 };
 
-let sequence = [];
-
-
 /* =========================================================
-   SHORTCUT
+   HELPERS
 ========================================================= */
 
-const $ = id => document.getElementById(id);
+function $(id){
+  return document.getElementById(id);
+}
 
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
+}
+
+function readLE16(bytes,offset){
+  if(!bytes || offset+1 >= bytes.length) return 0;
+  return bytes[offset] | (bytes[offset+1] << 8);
+}
+
+function readLE32(bytes,offset){
+  if(!bytes || offset+3 >= bytes.length) return 0;
+  return (
+    bytes[offset] |
+    (bytes[offset+1] << 8) |
+    (bytes[offset+2] << 16) |
+    (bytes[offset+3] << 24)
+  ) >>> 0;
+}
+
+function writeLE16(bytes,offset,value){
+  bytes[offset] = value & 255;
+  bytes[offset+1] = (value >> 8) & 255;
+}
+
+function setStatus(text){
+  $("topStatus").textContent = text;
+}
+
+function downloadBlob(blob,name){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(()=>{
+    URL.revokeObjectURL(url);
+  },1000);
+}
+
+function cloneBytes(bytes){
+  return new Uint8Array(bytes);
+}
+
+function cloneObject(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
-function login(){
+function doLogin(){
+  const value = $("loginPassword").value;
 
-  if($("password").value === ADMIN_PASSWORD){
-
-    $("login").style.display = "none";
-    $("app").style.display = "block";
-
-    init();
-
+  if(value === LOGIN_PASSWORD){
+    $("loginScreen").classList.add("hidden");
+    setStatus("Logged in");
   }else{
-
-    $("loginMsg").textContent = "Wrong password.";
-
+    $("loginError").textContent = "Password गलत है";
   }
-
 }
 
+$("loginBtn").addEventListener("click",doLogin);
+
+$("loginPassword").addEventListener("keydown",e=>{
+  if(e.key === "Enter") doLogin();
+});
+
+/* =========================================================
+   INDEXED DB
+========================================================= */
+
+let dbPromise = null;
+
+function openDB(){
+  if(!window.indexedDB){
+    return Promise.resolve(null);
+  }
+
+  if(dbPromise) return dbPromise;
+
+  dbPromise = new Promise((resolve,reject)=>{
+    const req = indexedDB.open(DB_NAME,DB_VERSION);
+
+    req.onupgradeneeded = ()=>{
+      const db = req.result;
+
+      if(!db.objectStoreNames.contains(MACHINE_STORE)){
+        db.createObjectStore(MACHINE_STORE,{keyPath:"name"});
+      }
+    };
+
+    req.onsuccess = ()=>{
+      resolve(req.result);
+    };
+
+    req.onerror = ()=>{
+      resolve(null);
+    };
+  });
+
+  return dbPromise;
+}
+
+async function saveMachineProfile(profile){
+  const db = await openDB();
+
+  if(!db){
+    const list = JSON.parse(localStorage.getItem("ED_MACHINE_PROFILES") || "[]");
+
+    const idx = list.findIndex(x=>x.name === profile.name);
+
+    if(idx >= 0){
+      list[idx] = profile;
+    }else{
+      list.push(profile);
+    }
+
+    localStorage.setItem("ED_MACHINE_PROFILES",JSON.stringify(list));
+    return;
+  }
+
+  return new Promise(resolve=>{
+    const tx = db.transaction(MACHINE_STORE,"readwrite");
+
+    tx.objectStore(MACHINE_STORE).put(profile);
+
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = ()=>resolve();
+  });
+}
+
+async function getMachineProfiles(){
+  const db = await openDB();
+
+  if(!db){
+    return JSON.parse(localStorage.getItem("ED_MACHINE_PROFILES") || "[]");
+  }
+
+  return new Promise(resolve=>{
+    const tx = db.transaction(MACHINE_STORE,"readonly");
+    const req = tx.objectStore(MACHINE_STORE).getAll();
+
+    req.onsuccess = ()=>{
+      resolve(req.result || []);
+    };
+
+    req.onerror = ()=>{
+      resolve([]);
+    };
+  });
+}
+
+async function refreshMachineSelect(){
+  const list = await getMachineProfiles();
+
+  const select = $("machineSelect");
+
+  select.innerHTML = '<option value="">Saved machines</option>';
+
+  list.forEach(profile=>{
+    const option = document.createElement("option");
+    option.value = profile.name;
+    option.textContent = profile.name;
+    select.appendChild(option);
+  });
+}
+
+async function loadMachineProfile(name){
+  const list = await getMachineProfiles();
+
+  const profile = list.find(x=>x.name === name);
+
+  if(!profile) return;
+
+  $("profileName").value = profile.name || "";
+  $("profileHooks").value = profile.hooks || 672;
+  $("profilePicks").value = profile.picks || 0;
+  $("profileHeader").value = profile.headerBytes || 34;
+  $("profileRow").value = profile.rowBytes || 84;
+  $("threshold").value = profile.threshold ?? 128;
+
+  state.hooks = Number(profile.hooks) || 672;
+  state.picks = Number(profile.picks) || 0;
+  state.headerBytes = Number(profile.headerBytes) || 34;
+  state.rowBytes = Number(profile.rowBytes) || 84;
+  state.threshold = Number(profile.threshold) || 128;
+
+  updateDetectedUI();
+
+  if(state.designImage){
+    prepareDesign();
+  }
+
+  setStatus("Machine profile loaded");
+}
+
+/* =========================================================
+   RUNNING EP ANALYSIS
+========================================================= */
+
+function analyzeRunningEP(bytes,fileName){
+  state.runningBytes = cloneBytes(bytes);
+  state.runningName = fileName || "running.EP";
+
+  /*
+    This parser is based on the currently known EP family:
+    header = 34 bytes
+    pick count stored as little-endian 16-bit at offset 3
+    remaining payload = rows
+    rowBytes * 8 = hooks
+
+    It intentionally validates the structure rather than
+    silently treating an unknown binary format as compatible.
+  */
+
+  const length = bytes.length;
+
+  let headerBytes = DEFAULT_HEADER_BYTES;
+  let picks = readLE16(bytes,3);
+
+  let payload = length - headerBytes;
+  let rowBytes = 0;
+  let hooks = 0;
+
+  if(picks > 0 && payload > 0 && payload % picks === 0){
+    rowBytes = payload / picks;
+    hooks = rowBytes * 8;
+  }else{
+    /*
+      Fallback attempt:
+      Try common 34-byte header and infer a row size from
+      common hook byte counts.
+    */
+
+    const commonRows = [
+      80,
+      84,
+      96,
+      120,
+      128,
+      160,
+      168,
+      192,
+      256,
+      336
+    ];
+
+    for(const rb of commonRows){
+      if(payload % rb === 0){
+        rowBytes = rb;
+        hooks = rb * 8;
+        picks = payload / rb;
+        break;
+      }
+    }
+  }
+
+  if(rowBytes <= 0 || picks <= 0){
+    $("epMessage").className = "warning";
+    $("epMessage").textContent =
+      "EP structure automatically verify नहीं हो सकी। Manual profile values की जरूरत हो सकती है।";
+    return false;
+  }
+
+  state.headerBytes = headerBytes;
+  state.rowBytes = rowBytes;
+  state.hooks = hooks;
+  state.picks = picks;
+
+  state.machineHeader = bytes.slice(0,headerBytes);
+
+  $("profileHooks").value = hooks;
+  $("profilePicks").value = picks;
+  $("profileHeader").value = headerBytes;
+  $("profileRow").value = rowBytes;
+
+  updateDetectedUI();
+
+  $("epMessage").className = "notice";
+  $("epMessage").textContent =
+    "Running EP analyzed successfully. पुरानी design rows नई design में copy नहीं होंगी।";
+
+  if(state.designImage){
+    prepareDesign();
+  }
+
+  return true;
+}
+
+function updateDetectedUI(){
+  $("detHeader").textContent = state.headerBytes || "—";
+  $("detRow").textContent = state.rowBytes || "—";
+  $("detHooks").textContent = state.hooks || "—";
+  $("detPicks").textContent = state.picks || "—";
+
+  $("gridHooks").textContent = state.hooks || "—";
+  $("gridPicks").textContent = state.picks || "—";
+}
+
+/* =========================================================
+   RUNNING INPUT
+========================================================= */
+
+$("runningInput").addEventListener("change",async e=>{
+  const file = e.target.files && e.target.files[0];
+
+  if(!file) return;
+
+  try{
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+
+    analyzeRunningEP(bytes,file.name);
+
+    setStatus("Running EP loaded: " + file.name);
+  }catch(err){
+    console.error(err);
+
+    $("epMessage").className = "warning";
+    $("epMessage").textContent =
+      "Running EP पढ़ने में error आया।";
+  }
+});
+
+/* =========================================================
+   MACHINE PROFILE
+========================================================= */
+
+$("saveMachineBtn").addEventListener("click",async ()=>{
+  const name = $("profileName").value.trim() || "Machine";
+
+  const profile = {
+    name,
+    hooks: Number($("profileHooks").value) || 672,
+    picks: Number($("profilePicks").value) || 0,
+    headerBytes: Number($("profileHeader").value) || 34,
+    rowBytes: Number($("profileRow").value) || 84,
+    threshold: Number($("threshold").value)
+  };
+
+  await saveMachineProfile(profile);
+  await refreshMachineSelect();
+
+  setStatus("Machine profile saved");
+});
+
+$("loadMachineBtn").addEventListener("click",()=>{
+  const name = $("machineSelect").value;
+
+  if(name){
+    loadMachineProfile(name);
+  }
+});
+
+$("machineSelect").addEventListener("change",()=>{
+  const name = $("machineSelect").value;
+
+  if(name){
+    loadMachineProfile(name);
+  }
+});
+
+$("threshold").addEventListener("change",()=>{
+  state.threshold = clamp(
+    Number($("threshold").value) || 128,
+    0,
+    255
+  );
+
+  $("designThreshold").value = state.threshold;
+
+  if(state.designImage){
+    prepareDesign();
+  }
+});
+
+/* =========================================================
+   IMAGE LOADING
+========================================================= */
+
+$("designInput").addEventListener("change",async e=>{
+  const file = e.target.files && e.target.files[0];
+
+  if(!file) return;
+
+  try{
+    const url = URL.createObjectURL(file);
+
+    const img = new Image();
+
+    img.onload = ()=>{
+      URL.revokeObjectURL(url);
+
+      state.designFile = file;
+      state.designImage = img;
+      state.designName = file.name;
+
+      state.sourceWidth = img.naturalWidth || img.width;
+      state.sourceHeight = img.naturalHeight || img.height;
+
+      $("srcWidth").textContent = state.sourceWidth;
+      $("srcHeight").textContent = state.sourceHeight;
+      $("srcType").textContent = file.type || "image";
+
+      const originalCanvas = $("originalCanvas");
+
+      originalCanvas.width = state.sourceWidth;
+      originalCanvas.height = state.sourceHeight;
+
+      const ctx = originalCanvas.getContext("2d");
+      ctx.clearRect(0,0,originalCanvas.width,originalCanvas.height);
+      ctx.drawImage(img,0,0);
+
+      state.mirror = false;
+      state.flip = false;
+      state.invert = false;
+
+      prepareDesign();
+
+      setStatus("Design loaded: " + file.name);
+    };
+
+    img.onerror = ()=>{
+      URL.revokeObjectURL(url);
+
+      $("analysisText").className = "warning";
+      $("analysisText").textContent =
+        "Image load नहीं हो सकी।";
+    };
+
+    img.src = url;
+
+  }catch(err){
+    console.error(err);
+  }
+});
+
+/* =========================================================
+   DESIGN TRANSFORMS
+========================================================= */
+
+$("mirrorBtn").addEventListener("click",()=>{
+  state.mirror = !state.mirror;
+  prepareDesign();
+});
+
+$("flipBtn").addEventListener("click",()=>{
+  state.flip = !state.flip;
+  prepareDesign();
+});
+
+$("invertBtn").addEventListener("click",()=>{
+  state.invert = !state.invert;
+  prepareDesign();
+});
+
+$("resetTransformBtn").addEventListener("click",()=>{
+  state.mirror = false;
+  state.flip = false;
+  state.invert = false;
+  prepareDesign();
+});
+
+/* =========================================================
+   PATTERN PREPARATION
+========================================================= */
+
+function prepareDesign(){
+  if(!state.designImage) return;
+
+  const hooks = Math.max(
+    1,
+    Number($("profileHooks").value) ||
+    state.hooks ||
+    672
+  );
+
+  const picks = Math.max(
+    1,
+    Number($("profilePicks").value) ||
+    state.picks ||
+    1
+  );
+
+  state.hooks = hooks;
+  state.picks = picks;
+
+  state.threshold = clamp(
+    Number($("designThreshold").value) ||
+    Number($("threshold").value) ||
+    128,
+    0,
+    255
+  );
+
+  $("profileHooks").value = hooks;
+  $("profilePicks").value = picks;
+
+  const sourceCanvas = document.createElement("canvas");
+
+  sourceCanvas.width = state.sourceWidth;
+  sourceCanvas.height = state.sourceHeight;
+
+  const sctx = sourceCanvas.getContext("2d");
+
+  sctx.save();
+
+  if(state.mirror || state.flip){
+    sctx.translate(
+      state.mirror ? state.sourceWidth : 0,
+      state.flip ? state.sourceHeight : 0
+    );
+
+    sctx.scale(
+      state.mirror ? -1 : 1,
+      state.flip ? -1 : 1
+    );
+  }
+
+  sctx.drawImage(
+    state.designImage,
+    0,
+    0,
+    state.sourceWidth,
+    state.sourceHeight
+  );
+
+  sctx.restore();
+
+  const imgData = sctx.getImageData(
+    0,
+    0,
+    state.sourceWidth,
+    state.sourceHeight
+  );
+
+  state.originalImageData = imgData;
+
+  /*
+    Pattern matrix:
+    pattern[pick][hook] = 0 / 1
+
+    1 = active hook
+    0 = inactive hook
+
+    Source image is resampled into machine dimensions.
+    This is intentionally deterministic and does not use
+    the running EP's old pattern.
+  */
+
+  const pattern = new Uint8Array(hooks * picks);
+
+  let active = 0;
+
+  for(let p=0;p<picks;p++){
+
+    const sy = Math.min(
+      state.sourceHeight - 1,
+      Math.floor((p / picks) * state.sourceHeight)
+    );
+
+    for(let h=0;h<hooks;h++){
+
+      const sx = Math.min(
+        state.sourceWidth - 1,
+        Math.floor((h / hooks) * state.sourceWidth)
+      );
+
+      const idx = (sy * state.sourceWidth + sx) * 4;
+
+      let r = imgData.data[idx];
+      let g = imgData.data[idx+1];
+      let b = imgData.data[idx+2];
+      const a = imgData.data[idx+3];
+
+      if(a === 0){
+        r = g = b = 255;
+      }
+
+      let gray =
+        0.299 * r +
+        0.587 * g +
+        0.114 * b;
+
+      let on = gray < state.threshold ? 1 : 0;
+
+      if(state.invert){
+        on = on ? 0 : 1;
+      }
+
+      /*
+        Kinara:
+        Border area is preserved as inactive by default.
+        User can later fill/modify it through the kinara
+        controls.
+      */
+
+      if(
+        h < state.kinara.left ||
+        h >= hooks - state.kinara.right ||
+        p < state.kinara.top ||
+        p >= picks - state.kinara.bottom
+      ){
+        on = 0;
+      }
+
+      pattern[p * hooks + h] = on;
+
+      if(on) active++;
+    }
+  }
+
+  state.pattern = pattern;
+
+  $("gridHooks").textContent = hooks;
+  $("gridPicks").textContent = picks;
+  $("gridActive").textContent = active;
+
+  const total = hooks * picks;
+  const density = total
+    ? ((active / total) * 100).toFixed(2) + "%"
+    : "0%";
+
+  $("gridDensity").textContent = density;
+
+  $("activeCount").textContent = "Active: " + active;
+
+  $("patternStatus").textContent =
+    "Pattern: " +
+    hooks +
+    " × " +
+    picks;
+
+  $("analysisText").className = "notice";
+  $("analysisText").textContent =
+    "Pattern automatically analyzed: image को " +
+    hooks +
+    " hooks × " +
+    picks +
+    " picks में map किया गया।";
+
+  drawPatternCanvas();
+
+  updateTimeline();
+}
+
+/* =========================================================
+   PATTERN CANVAS
+========================================================= */
+
+function drawPatternCanvas(){
+  const canvas = $("patternCanvas");
+
+  const hooks = state.hooks || 1;
+  const picks = state.picks || 1;
+
+  const maxW = 900;
+  const maxH = 650;
+
+  /*
+    Pixel size is reduced for huge matrices so browser remains
+    responsive.
+  */
+
+  const scaleX = Math.max(1,Math.floor(maxW / hooks));
+  const scaleY = Math.max(1,Math.floor(maxH / picks));
+
+  const width = Math.min(maxW,Math.max(100,hooks * scaleX));
+  const height = Math.min(maxH,Math.max(100,picks * scaleY));
+
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0,0,width,height);
+
+  if(!state.pattern) return;
+
+  /*
+    Draw matrix by mapping every output pixel to the nearest
+    hook/pick cell.
+  */
+
+  const image = ctx.createImageData(width,height);
+
+  for(let y=0;y<height;y++){
+
+    const p = Math.min(
+      picks - 1,
+      Math.floor((y / height) * picks)
+    );
+
+    for(let x=0;x<width;x++){
+
+      const h = Math.min(
+        hooks - 1,
+        Math.floor((x / width) * hooks)
+      );
+
+      const on = state.pattern[p * hooks + h];
+
+      const idx = (y * width + x) * 4;
+
+      const v = on ? 0 : 255;
+
+      image.data[idx] = v;
+      image.data[idx+1] = v;
+      image.data[idx+2] = v;
+      image.data[idx+3] = 255;
+    }
+  }
+
+  ctx.putImageData(image,0,0);
+}
+
+/* =========================================================
+   KINARA
+========================================================= */
+
+function readKinara(){
+  state.kinara.left = Math.max(0,Number($("kinLeft").value) || 0);
+  state.kinara.right = Math.max(0,Number($("kinRight").value) || 0);
+  state.kinara.top = Math.max(0,Number($("kinTop").value) || 0);
+  state.kinara.bottom = Math.max(0,Number($("kinBottom").value) || 0);
+}
+
+$("applyKinaraBtn").addEventListener("click",()=>{
+  readKinara();
+
+  if(state.kinara.left + state.kinara.right >= state.hooks){
+    state.kinara.right = Math.max(
+      0,
+      state.hooks - state.kinara.left - 1
+    );
+    $("kinRight").value = state.kinara.right;
+  }
+
+  if(state.kinara.top + state.kinara.bottom >= state.picks){
+    state.kinara.bottom = Math.max(
+      0,
+      state.picks - state.kinara.top - 1
+    );
+    $("kinBottom").value = state.kinara.bottom;
+  }
+
+  prepareDesign();
+});
+
+$("clearKinaraBtn").addEventListener("click",()=>{
+  state.kinara = {
+    left:0,
+    right:0,
+    top:0,
+    bottom:0
+  };
+
+  $("kinLeft").value = 0;
+  $("kinRight").value = 0;
+  $("kinTop").value = 0;
+  $("kinBottom").value = 0;
+
+  prepareDesign();
+});
+
+/* =========================================================
+   FINGER UI
+========================================================= */
+
+function fingerMask(fingerList){
+  let mask = 0;
+
+  fingerList.forEach(range=>{
+    const bit = Number(range.finger) - 1;
+
+    if(bit >= 0 && bit < 6){
+      mask |= (1 << bit);
+    }
+  });
+
+  return mask;
+}
+
+function createFingerRangeElement(finger,start,stop,index){
+
+  const wrap = document.createElement("div");
+  wrap.className = "range";
+
+  const startInput = document.createElement("input");
+  startInput.type = "number";
+  startInput.min = 1;
+  startInput.value = start;
+
+  const stopInput = document.createElement("input");
+  stopInput.type = "number";
+  stopInput.min = 1;
+  stopInput.value = stop;
+
+  const removeBtn = document.createElement("button");
+  removeBtn.className = "danger";
+  removeBtn.textContent = "×";
+  removeBtn.title = "Remove range";
+
+  startInput.addEventListener("change",()=>{
+    state.fingers[finger][index].start =
+      clamp(Number(startInput.value)||1,1,Math.max(1,state.picks));
+
+    startInput.value = state.fingers[finger][index].start;
+
+    updateTimeline();
+  });
+
+  stopInput.addEventListener("change",()=>{
+    state.fingers[finger][index].stop =
+      clamp(Number(stopInput.value)||1,1,Math.max(1,state.picks));
+
+    stopInput.value = state.fingers[finger][index].stop;
+
+    updateTimeline();
+  });
+
+  removeBtn.addEventListener("click",()=>{
+    state.fingers[finger].splice(index,1);
+    renderFingers();
+    updateTimeline();
+  });
+
+  wrap.appendChild(startInput);
+  wrap.appendChild(stopInput);
+  wrap.appendChild(removeBtn);
+
+  return wrap;
+}
+
+function renderFingers(){
+
+  const container = $("fingerContainer");
+
+  container.innerHTML = "";
+
+  for(let f=1;f<=6;f++){
+
+    const card = document.createElement("div");
+    card.className = "finger";
+
+    const title = document.createElement("div");
+    title.className = "fingerTitle";
+
+    const label = document.createElement("span");
+    label.textContent = "F" + f;
+
+    const addBtn = document.createElement("button");
+    addBtn.className = "light";
+    addBtn.textContent = "+ Range";
+
+    const rangesBox = document.createElement("div");
+    rangesBox.className = "ranges";
+
+    addBtn.addEventListener("click",()=>{
+
+      const defaultStop = Math.max(
+        1,
+        state.picks || 1
+      );
+
+      state.fingers[f].push({
+        finger:f,
+        start:1,
+        stop:defaultStop
+      });
+
+      renderFingers();
+      updateTimeline();
+    });
+
+    title.appendChild(label);
+    title.appendChild(addBtn);
+
+    card.appendChild(title);
+
+    if(state.fingers[f].length === 0){
+      const empty = document.createElement("div");
+      empty.className = "small";
+      empty.textContent = "No range";
+      rangesBox.appendChild(empty);
+    }else{
+
+      state.fingers[f].forEach((range,index)=>{
+        rangesBox.appendChild(
+          createFingerRangeElement(
+            f,
+            range.start,
+            range.stop,
+            index
+          )
+        );
+      });
+    }
+
+    card.appendChild(rangesBox);
+
+    container.appendChild(card);
+  }
+}
+
+/* =========================================================
+   FINGER PRESETS
+========================================================= */
+
+$("setAllF1Btn").addEventListener("click",()=>{
+  const picks = Math.max(1,state.picks || 1);
+
+  state.fingers = {
+    1:[{
+      finger:1,
+      start:1,
+      stop:picks
+    }],
+    2:[],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
+
+  renderFingers();
+  updateTimeline();
+});
+
+$("clearAllFingerBtn").addEventListener("click",()=>{
+  state.fingers = {
+    1:[],
+    2:[],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
+
+  renderFingers();
+  updateTimeline();
+});
+
+$("resetFingerBtn").addEventListener("click",()=>{
+  const picks = Math.max(1,state.picks || 1);
+
+  state.fingers = {
+    1:[{
+      finger:1,
+      start:1,
+      stop:picks
+    }],
+    2:[],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
+
+  renderFingers();
+  updateTimeline();
+});
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+function getFingerMaskAtPick(pick){
+
+  let mask = 0;
+
+  for(let f=1;f<=6;f++){
+
+    const ranges = state.fingers[f] || [];
+
+    for(const range of ranges){
+
+      const start = Math.min(range.start,range.stop);
+      const stop = Math.max(range.start,range.stop);
+
+      if(
+        pick >= start &&
+        pick <= stop
+      ){
+        mask |= (1 << (f-1));
+        break;
+      }
+    }
+  }
+
+  return mask;
+}
+
+function maskText(mask){
+
+  if(!mask) return "None";
+
+  const names = [];
+
+  for(let f=1;f<=6;f++){
+
+    if(mask & (1 << (f-1))){
+      names.push("F" + f);
+    }
+  }
+
+  return names.join(" + ");
+}
+
+function buildTimelineSegments(){
+
+  const picks = Math.max(1,state.picks || 1);
+
+  const segments = [];
+
+  let previousMask = getFingerMaskAtPick(1);
+  let start = 1;
+
+  for(let p=2;p<=picks;p++){
+
+    const mask = getFingerMaskAtPick(p);
+
+    if(mask !== previousMask){
+
+      segments.push({
+        start,
+        stop:p-1,
+        mask:previousMask
+      });
+
+      start = p;
+      previousMask = mask;
+    }
+  }
+
+  segments.push({
+    start,
+    stop:picks,
+    mask:previousMask
+  });
+
+  return segments;
+}
+
+function updateTimeline(){
+
+  const body = $("timelineBody");
+
+  body.innerHTML = "";
+
+  const segments = buildTimelineSegments();
+
+  segments.forEach(seg=>{
+
+    const tr = document.createElement("tr");
+
+    const td1 = document.createElement("td");
+    td1.textContent = seg.start;
+
+    const td2 = document.createElement("td");
+    td2.textContent = seg.stop;
+
+    const td3 = document.createElement("td");
+    td3.textContent = maskText(seg.mask);
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+
+    body.appendChild(tr);
+  });
+}
+
+/* =========================================================
+   PROJECT SERIALIZATION
+========================================================= */
+
+function serializeProject(){
+
+  return {
+    version:6,
+
+    projectName:state.projectName,
+
+    machine:{
+      headerBytes:state.headerBytes,
+      rowBytes:state.rowBytes,
+      hooks:state.hooks,
+      picks:state.picks,
+      threshold:state.threshold,
+
+      machineHeader:
+        state.machineHeader
+          ? Array.from(state.machineHeader)
+          : null
+    },
+
+    design:{
+      name:state.designName,
+      threshold:state.threshold,
+      mirror:state.mirror,
+      flip:state.flip,
+      invert:state.invert
+    },
+
+    kinara:cloneObject(state.kinara),
+
+    fingers:cloneObject(state.fingers),
+
+    outputName:$("outputName").value || "New_Design"
+  };
+}
+
+function applyProjectData(data){
+
+  if(!data) return;
+
+  state.projectName =
+    data.projectName ||
+    "Untitled";
+
+  if(data.machine){
+
+    state.headerBytes =
+      Number(data.machine.headerBytes) ||
+      DEFAULT_HEADER_BYTES;
+
+    state.rowBytes =
+      Number(data.machine.rowBytes) ||
+      DEFAULT_ROW_BYTES;
+
+    state.hooks =
+      Number(data.machine.hooks) ||
+      672;
+
+    state.picks =
+      Number(data.machine.picks) ||
+      0;
+
+    state.threshold =
+      Number(data.machine.threshold);
+
+    if(!Number.isFinite(state.threshold)){
+      state.threshold = 128;
+    }
+
+    if(Array.isArray(data.machine.machineHeader)){
+      state.machineHeader =
+        new Uint8Array(data.machine.machineHeader);
+    }else{
+      state.machineHeader = null;
+    }
+  }
+
+  if(data.design){
+
+    state.designName =
+      data.design.name || "";
+
+    state.mirror =
+      !!data.design.mirror;
+
+    state.flip =
+      !!data.design.flip;
+
+    state.invert =
+      !!data.design.invert;
+
+    state.threshold =
+      Number(data.design.threshold) || state.threshold;
+  }
+
+  if(data.kinara){
+    state.kinara = {
+      left:Number(data.kinara.left)||0,
+      right:Number(data.kinara.right)||0,
+      top:Number(data.kinara.top)||0,
+      bottom:Number(data.kinara.bottom)||0
+    };
+  }
+
+  if(data.fingers){
+
+    state.fingers = {
+      1:Array.isArray(data.fingers[1])
+        ? data.fingers[1] : [],
+      2:Array.isArray(data.fingers[2])
+        ? data.fingers[2] : [],
+      3:Array.isArray(data.fingers[3])
+        ? data.fingers[3] : [],
+      4:Array.isArray(data.fingers[4])
+        ? data.fingers[4] : [],
+      5:Array.isArray(data.fingers[5])
+        ? data.fingers[5] : [],
+      6:Array.isArray(data.fingers[6])
+        ? data.fingers[6] : []
+    };
+  }
+
+  $("profileHooks").value = state.hooks;
+  $("profilePicks").value = state.picks;
+  $("profileHeader").value = state.headerBytes;
+  $("profileRow").value = state.rowBytes;
+
+  $("threshold").value = state.threshold;
+  $("designThreshold").value = state.threshold;
+
+  $("kinLeft").value = state.kinara.left;
+  $("kinRight").value = state.kinara.right;
+  $("kinTop").value = state.kinara.top;
+  $("kinBottom").value = state.kinara.bottom;
+
+  $("outputName").value =
+    data.outputName ||
+    "New_Design";
+
+  renderFingers();
+  updateTimeline();
+  updateDetectedUI();
+
+  if(state.designImage){
+    prepareDesign();
+  }
+}
+
+/* =========================================================
+   SAVE PROJECT
+========================================================= */
+
+function projectBlob(){
+
+  const data = serializeProject();
+
+  return new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  );
+}
+
+$("saveProjectBtn").addEventListener("click",()=>{
+  const name =
+    ($("outputName").value || "Electronic_Project")
+      .replace(/\.[^/.]+$/,"");
+
+  downloadBlob(
+    projectBlob(),
+    name + ".edp"
+  );
+
+  setStatus("Project saved");
+});
+
+$("saveAsBtn").addEventListener("click",()=>{
+  const current =
+    $("outputName").value ||
+    "Electronic_Project";
+
+  const name =
+    prompt(
+      "Project file name:",
+      current
+    );
+
+  if(!name) return;
+
+  downloadBlob(
+    projectBlob(),
+    name.replace(/\.[^/.]+$/,"") + ".edp"
+  );
+
+  setStatus("Project saved as " + name);
+});
+
+/* =========================================================
+   OPEN PROJECT
+========================================================= */
+
+$("openProjectBtn").addEventListener("click",()=>{
+  $("projectFileInput").click();
+});
+
+$("projectFileInput").addEventListener("change",async e=>{
+  const file = e.target.files && e.target.files[0];
+
+  if(!file) return;
+
+  try{
+
+    const text = await file.text();
+
+    const data = JSON.parse(text);
+
+    applyProjectData(data);
+
+    setStatus("Project opened: " + file.name);
+
+  }catch(err){
+
+    console.error(err);
+
+    alert("Project file सही format में नहीं है।");
+  }
+
+  e.target.value = "";
+});
+
+/* =========================================================
+   NEW PROJECT
+========================================================= */
+
+$("newProjectBtn").addEventListener("click",()=>{
+
+  const ok = confirm(
+    "New project शुरू करें? Current unsaved changes हट सकती हैं।"
+  );
+
+  if(!ok) return;
+
+  state.runningBytes = null;
+  state.runningName = "";
+  state.machineHeader = null;
+
+  state.headerBytes = DEFAULT_HEADER_BYTES;
+  state.rowBytes = DEFAULT_ROW_BYTES;
+  state.hooks = 672;
+  state.picks = 0;
+
+  state.designFile = null;
+  state.designImage = null;
+  state.designName = "";
+
+  state.sourceWidth = 0;
+  state.sourceHeight = 0;
+
+  state.threshold = 128;
+
+  state.mirror = false;
+  state.flip = false;
+  state.invert = false;
+
+  state.pattern = null;
+
+  state.kinara = {
+    left:0,
+    right:0,
+    top:0,
+    bottom:0
+  };
+
+  state.fingers = {
+    1:[],
+    2:[],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
+
+  $("runningInput").value = "";
+  $("designInput").value = "";
+
+  $("profileHooks").value = 672;
+  $("profilePicks").value = 0;
+  $("profileHeader").value = 34;
+  $("profileRow").value = 84;
+
+  $("threshold").value = 128;
+  $("designThreshold").value = 128;
+
+  $("kinLeft").value = 0;
+  $("kinRight").value = 0;
+  $("kinTop").value = 0;
+  $("kinBottom").value = 0;
+
+  $("srcWidth").textContent = "—";
+  $("srcHeight").textContent = "—";
+  $("srcType").textContent = "—";
+
+  $("analysisText").textContent =
+    "Design upload करने पर pattern analysis होगा.";
+
+  $("analysisText").className = "notice";
+
+  $("epMessage").textContent =
+    "Running EP upload करने के बाद structure यहाँ दिखाई देगा.";
+
+  $("epMessage").className = "notice";
+
+  $("originalCanvas").width = 500;
+  $("originalCanvas").height = 350;
+
+  const octx = $("originalCanvas").getContext("2d");
+  octx.clearRect(0,0,500,350);
+
+  $("patternCanvas").width = 500;
+  $("patternCanvas").height = 350;
+
+  const pctx = $("patternCanvas").getContext("2d");
+  pctx.clearRect(0,0,500,350);
+
+  $("outputName").value = "New_Design";
+
+  renderFingers();
+  updateTimeline();
+  updateDetectedUI();
+
+  setStatus("New project");
+});
+
+/* =========================================================
+   OUTPUT PACKING
+========================================================= */
+
+function packPatternRows(){
+
+  if(!state.pattern){
+    throw new Error("Design pattern तैयार नहीं है।");
+  }
+
+  const hooks = state.hooks;
+  const picks = state.picks;
+  const rowBytes = state.rowBytes;
+
+  if(rowBytes * 8 < hooks){
+    throw new Error(
+      "Detected row size hooks capacity से छोटी है।"
+    );
+  }
+
+  const output = new Uint8Array(
+    picks * rowBytes
+  );
+
+  /*
+    Finger ranges are used as a logical gate for preview/build.
+    IMPORTANT:
+    This does NOT claim to encode proprietary machine-specific
+    finger-control bytes. Those bytes require verified machine
+    format information.
+  */
+
+  for(let p=0;p<picks;p++){
+
+    const pickNumber = p + 1;
+
+    const fingerMask =
+      getFingerMaskAtPick(pickNumber);
+
+    /*
+      If no finger is assigned for a pick, output blank row.
+      If one or more fingers are assigned, the new design
+      pattern is written for that pick.
+    */
+
+    const rowOffset = p * rowBytes;
+
+    if(fingerMask === 0){
+      continue;
+    }
+
+    for(let h=0;h<hooks;h++){
+
+      const active =
+        state.pattern[p * hooks + h];
+
+      if(!active) continue;
+
+      const byteIndex =
+        rowOffset + Math.floor(h / 8);
+
+      const bit =
+        7 - (h % 8);
+
+      output[byteIndex] |= (1 << bit);
+    }
+  }
+
+  return output;
+}
+
+/* =========================================================
+   BUILD OUTPUT PREVIEW
+========================================================= */
+
+$("buildPreviewBtn").addEventListener("click",()=>{
+
+  try{
+
+    const rows = packPatternRows();
+
+    let activeBytes = 0;
+
+    for(const b of rows){
+      if(b) activeBytes++;
+    }
+
+    $("buildMessage").textContent =
+      "Output preview ready — " +
+      rows.length +
+      " bytes payload, " +
+      activeBytes +
+      " non-zero bytes.";
+
+    setStatus("Output built");
+
+  }catch(err){
+
+    console.error(err);
+
+    $("buildMessage").textContent =
+      "Build error: " + err.message;
+  }
+});
+
+/* =========================================================
+   EP EXPORT
+========================================================= */
+
+function createEPFile(){
+
+  if(!state.runningBytes){
+    throw new Error(
+      "पहले running EP upload करें।"
+    );
+  }
+
+  if(!state.pattern){
+    throw new Error(
+      "पहले नई design upload करें।"
+    );
+  }
+
+  if(!state.machineHeader){
+    state.machineHeader =
+      state.runningBytes.slice(
+        0,
+        state.headerBytes
+      );
+  }
+
+  const payload = packPatternRows();
+
+  const header =
+    cloneBytes(state.machineHeader);
+
+  /*
+    Keep header structure from running EP.
+    Pick count update is attempted at offset 3
+    because this is known for the currently supported
+    EP family.
+
+    This is deliberately limited to the verified family
+    instead of inventing an unknown controller format.
+  */
+
+  if(header.length >= 5){
+    writeLE16(
+      header,
+      3,
+      state.picks
+    );
+  }
+
+  const output = new Uint8Array(
+    header.length + payload.length
+  );
+
+  output.set(header,0);
+  output.set(payload,header.length);
+
+  return output;
+}
+
+$("exportBtn").addEventListener("click",()=>{
+
+  try{
+
+    const bytes = createEPFile();
+
+    let name =
+      $("outputName").value.trim() ||
+      "New_Design";
+
+    name =
+      name.replace(/\.[^/.]+$/,"");
+
+    const fileName =
+      name +
+      "_" +
+      state.picks +
+      "Picks.EP";
+
+    downloadBlob(
+      new Blob(
+        [bytes],
+        {type:"application/octet-stream"}
+      ),
+      fileName
+    );
+
+    setStatus("EP exported: " + fileName);
+
+  }catch(err){
+
+    console.error(err);
+
+    alert(
+      "EP Export Error:\n" +
+      err.message
+    );
+  }
+});
+
+/* =========================================================
+   DESIGN THRESHOLD
+========================================================= */
+
+$("designThreshold").addEventListener("input",()=>{
+  const value = clamp(
+    Number($("designThreshold").value) || 128,
+    0,
+    255
+  );
+
+  state.threshold = value;
+
+  if(state.designImage){
+    prepareDesign();
+  }
+});
+
+/* =========================================================
+   PROFILE INPUT SYNC
+========================================================= */
+
+$("profileHooks").addEventListener("change",()=>{
+
+  state.hooks = Math.max(
+    1,
+    Number($("profileHooks").value) || 672
+  );
+
+  if(state.designImage){
+    prepareDesign();
+  }
+
+  updateDetectedUI();
+});
+
+$("profilePicks").addEventListener("change",()=>{
+
+  state.picks = Math.max(
+    0,
+    Number($("profilePicks").value) || 0
+  );
+
+  if(state.designImage && state.picks > 0){
+    prepareDesign();
+  }
+
+  updateDetectedUI();
+});
+
+$("profileHeader").addEventListener("change",()=>{
+  state.headerBytes = Math.max(
+    0,
+    Number($("profileHeader").value) || 34
+  );
+});
+
+$("profileRow").addEventListener("change",()=>{
+  state.rowBytes = Math.max(
+    1,
+    Number($("profileRow").value) || 84
+  );
+});
 
 /* =========================================================
    INITIALIZE
 ========================================================= */
 
-async function init(){
+function initialize(){
 
-  try{
+  renderFingers();
 
-    db = await new Promise((resolve,reject)=>{
+  updateTimeline();
 
-      const r = indexedDB.open(
-        "ElectronicDesigningDB",
-        1
-      );
+  updateDetectedUI();
 
-      r.onupgradeneeded = e => {
+  refreshMachineSelect();
 
-        if(
-          !e.target.result.objectStoreNames.contains(
-            "machines"
-          )
-        ){
+  const original = $("originalCanvas");
+  original.width = 500;
+  original.height = 350;
 
-          e.target.result.createObjectStore(
-            "machines",
-            {keyPath:"id"}
-          );
+  const octx = original.getContext("2d");
+  octx.fillStyle = "#ffffff";
+  octx.fillRect(0,0,500,350);
 
-        }
+  const pattern = $("patternCanvas");
+  pattern.width = 500;
+  pattern.height = 350;
 
-      };
+  const pctx = pattern.getContext("2d");
+  pctx.fillStyle = "#ffffff";
+  pctx.fillRect(0,0,500,350);
 
-      r.onsuccess = e =>
-        resolve(e.target.result);
-
-      r.onerror = () =>
-        reject(r.error);
-
-    });
-
-  }catch(e){
-
-    db = null;
-
-  }
-
-  $("threshold").value = 128;
-
-  renderChecks();
-
-  updateProfileStatus();
-
+  setStatus("Ready");
 }
 
-
-/* =========================================================
-   SAFE THRESHOLD
-========================================================= */
-
-function getThreshold(){
-
-  const v = Number($("threshold").value);
-
-  if(
-    Number.isFinite(v) &&
-    v >= 0 &&
-    v <= 255
-  ){
-
-    return v;
-
-  }
-
-  return 128;
-
-}
-
-
-/* =========================================================
-   UPDATE DETECTED UI
-========================================================= */
-
-function setDetectedUI(){
-
-  $("hooks").value =
-    detected.hooks || "";
-
-  $("totalPicks").value =
-    detected.picks || "";
-
-  $("detHeader").value =
-    detected.headerBytes
-      ? `${detected.headerBytes} bytes`
-      : "";
-
-  $("detRowBytes").value =
-    detected.rowBytes || "";
-
-  $("detHooks").value =
-    detected.hooks || "";
-
-  $("detPicks").value =
-    detected.picks || "";
-
-  updateProfileStatus();
-
-}
-
-
-/* =========================================================
-   PROFILE STATUS
-========================================================= */
-
-function updateProfileStatus(){
-
-  if(!detected.picks){
-
-    $("profileStatus").className =
-      "status";
-
-    $("profileStatus").textContent =
-      "Pehle Running EP upload karein. Hooks aur Total Picks file se analyze honge.";
-
-    return;
-
-  }
-
-  $("profileStatus").className =
-    "status success";
-
-  $("profileStatus").textContent =
-    `Detected Machine Structure: ${detected.hooks} Hooks × ${detected.picks} Picks`;
-
-}
-
-
-/* =========================================================
-   TOTAL PICKS
-========================================================= */
-
-function total(){
-
-  return detected.picks || 0;
-
-}
-
-
-/* =========================================================
-   SAVE PROFILE
-========================================================= */
-
-async function saveProfile(){
-
-  if(!detected.picks){
-
-    $("profileStatus").className =
-      "status error";
-
-    $("profileStatus").textContent =
-      "Running EP analyze kiye bina profile save nahi hogi.";
-
-    return;
-
-  }
-
-  const p = {
-
-    id: "default",
-
-    name: $("machineName").value,
-
-    hooks: detected.hooks,
-
-    picks: detected.picks,
-
-    headerBytes: detected.headerBytes,
-
-    rowBytes: detected.rowBytes,
-
-    threshold: getThreshold()
-
-  };
-
-
-  try{
-
-    if(!db)
-      throw new Error("IndexedDB unavailable");
-
-    const t =
-      db.transaction(
-        "machines",
-        "readwrite"
-      );
-
-    t.objectStore("machines").put(p);
-
-    $("profileStatus").textContent =
-      "Profile saved.";
-
-  }catch(e){
-
-    localStorage.setItem(
-      "ElectronicDesigningMachines",
-      JSON.stringify(p)
-    );
-
-    $("profileStatus").textContent =
-      "Profile saved locally.";
-
-  }
-
-}
-
-
-/* =========================================================
-   LOAD PROFILE
-========================================================= */
-
-async function loadProfile(){
-
-  let p = null;
-
-  try{
-
-    if(!db)
-      throw new Error("no db");
-
-    p = await new Promise(
-      (res,rej)=>{
-
-        const t =
-          db.transaction(
-            "machines",
-            "readonly"
-          );
-
-        const r =
-          t.objectStore(
-            "machines"
-          ).get("default");
-
-        r.onsuccess =
-          () => res(r.result);
-
-        r.onerror =
-          () => rej(r.error);
-
-      }
-    );
-
-  }catch(e){
-
-    p = JSON.parse(
-      localStorage.getItem(
-        "ElectronicDesigningMachines"
-      ) || "null"
-    );
-
-  }
-
-  if(!p)
-    return;
-
-
-  detected = {
-
-    hooks: Number(p.hooks) || 0,
-
-    picks: Number(p.picks) || 0,
-
-    headerBytes:
-      Number(p.headerBytes) || 0,
-
-    rowBytes:
-      Number(p.rowBytes) || 0,
-
-    format: "saved"
-
-  };
-
-
-  $("machineName").value =
-    p.name || "";
-
-  $("threshold").value =
-    Number.isFinite(Number(p.threshold))
-      ? Number(p.threshold)
-      : 128;
-
-
-  setDetectedUI();
-
-
-  sequence =
-    Array(total()).fill(1);
-
-
-  renderSequenceTable();
-
-}
-
-
-/* =========================================================
-   LITTLE ENDIAN 16 BIT
-========================================================= */
-
-function readLE16(b,offset){
-
-  return (
-    (b[offset] || 0) |
-    ((b[offset+1] || 0) << 8)
-  );
-
-}
-
-
-/* =========================================================
-   RUNNING EP ANALYZER
-
-   Verified structure from supplied 672-hook samples:
-
-   Header = 34 bytes
-
-   Pick count is stored at bytes 3-4
-   as little-endian 16-bit value.
-
-   Remaining payload:
-   payload / picks = row bytes
-
-   row bytes × 8 = hooks
-========================================================= */
-
-function analyzeRunningEP(bytes,name){
-
-  if(
-    bytes.length <
-    EP_HEADER_BYTES + 1
-  ){
-
-    throw new Error(
-      "EP file bahut chhoti/invalid hai."
-    );
-
-  }
-
-
-  const picks =
-    readLE16(bytes,3);
-
-
-  if(picks < 1){
-
-    throw new Error(
-      "Running EP header me valid Total Picks nahi mila."
-    );
-
-  }
-
-
-  const payload =
-    bytes.length -
-    EP_HEADER_BYTES;
-
-
-  if(payload % picks !== 0){
-
-    throw new Error(
-      "EP structure match nahi hui: header/pick count se row size exact nahi nikal raha."
-    );
-
-  }
-
-
-  const rowBytes =
-    payload / picks;
-
-
-  const hooks =
-    rowBytes * 8;
-
-
-  if(
-    !Number.isInteger(rowBytes) ||
-    rowBytes < 1 ||
-    hooks < 1
-  ){
-
-    throw new Error(
-      "Invalid hook/row structure."
-    );
-
-  }
-
-
-  detected = {
-
-    hooks,
-
-    picks,
-
-    headerBytes:
-      EP_HEADER_BYTES,
-
-    rowBytes,
-
-    format:
-      "EP-34-header/bit-packed"
-
-  };
-
-
-  runningEP = bytes;
-
-  machineHeader =
-    bytes.slice(
-      0,
-      EP_HEADER_BYTES
-    );
-
-
-  setDetectedUI();
-
-
-  $("epInfo").className =
-    "status success";
-
-
-  $("epInfo").textContent =
-    `${name} analyzed — ${bytes.length.toLocaleString()} bytes | ${hooks} Hooks × ${picks} Picks | Old design rows will NOT be copied.`;
-
-
-  sequence =
-    Array(picks).fill(1);
-
-
-  renderSequenceTable();
-
-
-  if(designImg)
-    prepareDesign();
-
-}
-
-
-/* =========================================================
-   RUNNING EP UPLOAD
-========================================================= */
-
-$("epFile").onchange =
-async e => {
-
-  const f =
-    e.target.files[0];
-
-  if(!f)
-    return;
-
-
-  try{
-
-    const bytes =
-      new Uint8Array(
-        await f.arrayBuffer()
-      );
-
-    analyzeRunningEP(
-      bytes,
-      f.name
-    );
-
-  }catch(err){
-
-    runningEP = null;
-
-    machineHeader =
-      new Uint8Array();
-
-    detected = {
-
-      hooks: 0,
-      picks: 0,
-      rowBytes: 0,
-      headerBytes: 0,
-      format: ""
-
-    };
-
-    setDetectedUI();
-
-
-    $("epInfo").className =
-      "status error";
-
-
-    $("epInfo").textContent =
-      `Running EP analyze failed: ${err.message}`;
-
-  }
-
-};
-
-
-/* =========================================================
-   NEW DESIGN UPLOAD
-========================================================= */
-
-$("designFile").onchange =
-e => {
-
-  const f =
-    e.target.files[0];
-
-  if(!f)
-    return;
-
-
-  const r =
-    new FileReader();
-
-
-  r.onload =
-  x => {
-
-    const im =
-      new Image();
-
-
-    im.onload =
-    () => {
-
-      designImg = im;
-
-
-      $("designInfo").className =
-        "status success";
-
-
-      $("designInfo").textContent =
-        `${f.name} — ${im.width} × ${im.height}`;
-
-
-      if(detected.picks)
-        prepareDesign();
-
-    };
-
-
-    im.onerror =
-    () => {
-
-      $("designInfo").className =
-        "status error";
-
-      $("designInfo").textContent =
-        "Design image read nahi hui.";
-
-    };
-
-
-    im.src =
-      x.target.result;
-
-  };
-
-
-  r.readAsDataURL(f);
-
-};
-
-
-/* =========================================================
-   PREPARE DESIGN
-========================================================= */
-
-function prepareDesign(){
-
-  if(!designImg){
-
-    $("designInfo").className =
-      "status error";
-
-    $("designInfo").textContent =
-      "New design upload karein.";
-
-    return;
-
-  }
-
-
-  if(
-    !detected.hooks ||
-    !detected.picks
-  ){
-
-    $("designInfo").className =
-      "status error";
-
-    $("designInfo").textContent =
-      "Pehle Running EP analyze karein.";
-
-    return;
-
-  }
-
-
-  const thr =
-    getThreshold();
-
-
-  $("threshold").value =
-    thr;
-
-
-  designRows =
-    makeRows(
-      designImg,
-      detected.hooks,
-      detected.picks,
-      thr
-    );
-
-
-  if(
-    sequence.length !==
-    detected.picks
-  ){
-
-    sequence =
-      Array(detected.picks)
-      .fill(1);
-
-  }
-
-
-  drawPreview();
-
-}
-
-
-/* =========================================================
-   IMAGE → HOOK GRID
-========================================================= */
-
-function makeRows(
-  im,
-  w,
-  h,
-  thr
-){
-
-  const c =
-    document.createElement(
-      "canvas"
-    );
-
-
-  const x =
-    c.getContext(
-      "2d",
-      {willReadFrequently:true}
-    );
-
-
-  c.width = w;
-  c.height = h;
-
-
-  x.save();
-
-
-  if(
-    $("mirror").value === "1"
-  ){
-
-    x.translate(w,0);
-    x.scale(-1,1);
-
-  }
-
-
-  if(
-    $("flip").value === "1"
-  ){
-
-    x.translate(0,h);
-    x.scale(1,-1);
-
-  }
-
-
-  x.drawImage(
-    im,
-    0,
-    0,
-    w,
-    h
-  );
-
-
-  x.restore();
-
-
-  const d =
-    x.getImageData(
-      0,
-      0,
-      w,
-      h
-    ).data;
-
-
-  const rows = [];
-
-
-  const inv =
-    $("invert").value === "1";
-
-
-  for(
-    let y=0;
-    y<h;
-    y++
-  ){
-
-    const r =
-      new Uint8Array(w);
-
-
-    for(
-      let k=0;
-      k<w;
-      k++
-    ){
-
-      const p =
-        (y*w+k)*4;
-
-
-      const l =
-        (
-          d[p]*299 +
-          d[p+1]*587 +
-          d[p+2]*114
-        ) / 1000;
-
-
-      let on =
-        l < thr;
-
-
-      if(inv)
-        on = !on;
-
-
-      r[k] =
-        on ? 1 : 0;
-
-    }
-
-
-    rows.push(r);
-
-  }
-
-
-  return rows;
-
-}
-
-
-/* =========================================================
-   FINGER CHECKBOXES
-========================================================= */
-
-function renderChecks(){
-
-  const b =
-    $("fingerChecks");
-
-
-  b.innerHTML = "";
-
-
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
-
-    const l =
-      document.createElement(
-        "label"
-      );
-
-
-    l.className =
-      "finger";
-
-
-    l.innerHTML =
-      `<input id="f${i}" type="checkbox" ${i===0?"checked":""}> F${i+1}`;
-
-
-    b.appendChild(l);
-
-  }
-
-}
-
-
-/* =========================================================
-   FINGER MASK
-========================================================= */
-
-function mask(){
-
-  let m = 0;
-
-
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
-
-    if(
-      $("f"+i).checked
-    ){
-
-      m |=
-        1 << i;
-
-    }
-
-  }
-
-
-  return m;
-
-}
-
-
-/* =========================================================
-   RESET SEQUENCE
-========================================================= */
-
-function resetSequence(){
-
-  if(!total()){
-
-    sequence = [];
-
-    renderSequenceTable();
-
-    return;
-
-  }
-
-
-  sequence =
-    Array(total()).fill(1);
-
-
-  renderSequenceTable();
-
-
-  if(designRows)
-    drawPreview();
-
-}
-
-
-/* =========================================================
-   SET ALL F1
-========================================================= */
-
-function setAllF1(){
-
-  if(!total())
-    return;
-
-
-  sequence =
-    Array(total()).fill(1);
-
-
-  renderSequenceTable();
-
-
-  if(designRows)
-    drawPreview();
-
-}
-
-
-/* =========================================================
-   APPLY RANGE
-========================================================= */
-
-function applyRange(){
-
-  const s =
-    +$("rangeStart").value;
-
-
-  const e =
-    +$("rangeEnd").value;
-
-
-  if(
-    !total() ||
-    s < 1 ||
-    e < s ||
-    e > total()
-  ){
-
-    alert(
-      "Invalid pick range"
-    );
-
-    return;
-
-  }
-
-
-  const m =
-    mask();
-
-
-  for(
-    let i=s-1;
-    i<e;
-    i++
-  ){
-
-    sequence[i] = m;
-
-  }
-
-
-  renderSequenceTable();
-
-
-  if(designRows)
-    drawPreview();
-
-}
-
-
-/* =========================================================
-   CLEAR RANGE
-========================================================= */
-
-function clearRange(){
-
-  const s =
-    +$("rangeStart").value;
-
-
-  const e =
-    +$("rangeEnd").value;
-
-
-  if(
-    !total() ||
-    s < 1 ||
-    e < s ||
-    e > total()
-  ){
-
-    alert(
-      "Invalid pick range"
-    );
-
-    return;
-
-  }
-
-
-  for(
-    let i=s-1;
-    i<e;
-    i++
-  ){
-
-    sequence[i] = 0;
-
-  }
-
-
-  renderSequenceTable();
-
-
-  if(designRows)
-    drawPreview();
-
-}
-
-
-/* =========================================================
-   MASK TEXT
-========================================================= */
-
-function txt(m){
-
-  const a = [];
-
-
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
-
-    if(
-      m & (1<<i)
-    ){
-
-      a.push(
-        "F"+(i+1)
-      );
-
-    }
-
-  }
-
-
-  return (
-    a.join(" + ") ||
-    "OFF"
-  );
-
-}
-
-
-/* =========================================================
-   SEQUENCE TABLE
-========================================================= */
-
-function renderSequenceTable(){
-
-  const b =
-    $("sequenceTable");
-
-
-  b.innerHTML = "";
-
-
-  if(!total()){
-
-    $("sequenceStatus").textContent =
-      "Running EP analyze hone ke baad working sequence set karein.";
-
-    return;
-
-  }
-
-
-  if(
-    sequence.length !==
-    total()
-  ){
-
-    sequence =
-      Array(total()).fill(1);
-
-  }
-
-
-  let s = 1;
-
-
-  for(
-    let p=2;
-    p<=total()+1;
-    p++
-  ){
-
-    if(
-      p > total() ||
-      sequence[p-1] !==
-      sequence[s-1]
-    ){
-
-      const tr =
-        document.createElement(
-          "tr"
-        );
-
-
-      tr.innerHTML =
-        `<td>${s}</td>
-         <td>${p-1}</td>
-         <td>${txt(sequence[s-1])}</td>
-         <td>
-           <button class="secondary"
-             onclick="editRange(${s},${p-1},${sequence[s-1]})">
-             Edit
-           </button>
-         </td>`;
-
-
-      b.appendChild(tr);
-
-
-      s = p;
-
-    }
-
-  }
-
-
-  $("sequenceStatus").textContent =
-    `Total picks: ${total()} | ${b.children.length} working range(s)`;
-
-}
-
-
-/* =========================================================
-   EDIT RANGE
-========================================================= */
-
-function editRange(
-  s,
-  e,
-  m
-){
-
-  $("rangeStart").value =
-    s;
-
-  $("rangeEnd").value =
-    e;
-
-
-  for(
-    let i=0;
-    i<6;
-    i++
-  ){
-
-    $("f"+i).checked =
-      !!(
-        m & (1<<i)
-      );
-
-  }
-
-}
-
-
-/* =========================================================
-   SHOW ORIGINAL
-========================================================= */
-
-function showOriginalDesign(){
-
-  if(!designImg){
-
-    $("previewInfo").textContent =
-      "Pehle design upload karein.";
-
-    return;
-
-  }
-
-
-  const c =
-    $("preview");
-
-
-  const x =
-    c.getContext("2d");
-
-
-  const w =
-    designImg.naturalWidth ||
-    designImg.width;
-
-
-  const h =
-    designImg.naturalHeight ||
-    designImg.height;
-
-
-  const cw =
-    Math.min(w,1200);
-
-
-  const ch =
-    Math.min(h,700);
-
-
-  c.width = cw;
-  c.height = ch;
-
-
-  x.clearRect(
-    0,
-    0,
-    cw,
-    ch
-  );
-
-
-  x.drawImage(
-    designImg,
-    0,
-    0,
-    cw,
-    ch
-  );
-
-
-  $("previewInfo").textContent =
-    `Original design: ${w} × ${h}`;
-
-}
-
-
-/* =========================================================
-   HOOK PREVIEW
-========================================================= */
-
-function drawPreview(){
-
-  if(
-    !designRows ||
-    !designRows.length
-  ){
-
-    $("previewInfo").textContent =
-      "Design pattern ready nahi hai.";
-
-    return;
-
-  }
-
-
-  const c =
-    $("preview");
-
-
-  const x =
-    c.getContext("2d");
-
-
-  const w =
-    detected.hooks;
-
-
-  const h =
-    detected.picks;
-
-
-  const cw =
-    Math.min(w,1200);
-
-
-  const ch =
-    Math.min(h,700);
-
-
-  c.width = cw;
-  c.height = ch;
-
-
-  const im =
-    x.createImageData(
-      cw,
-      ch
-    );
-
-
-  const sx =
-    w / cw;
-
-
-  const sy =
-    h / ch;
-
-
-  for(
-    let y=0;
-    y<ch;
-    y++
-  ){
-
-    const yy =
-      Math.min(
-        h-1,
-        Math.floor(y*sy)
-      );
-
-
-    const m =
-      sequence[yy] ?? 1;
-
-
-    for(
-      let k=0;
-      k<cw;
-      k++
-    ){
-
-      const xx =
-        Math.min(
-          w-1,
-          Math.floor(k*sx)
-        );
-
-
-      const on =
-        designRows[yy][xx] &&
-        m;
-
-
-      const q =
-        (y*cw+k)*4;
-
-
-      const v =
-        on ? 0 : 255;
-
-
-      im.data[q] =
-        v;
-
-      im.data[q+1] =
-        v;
-
-      im.data[q+2] =
-        v;
-
-      im.data[q+3] =
-        255;
-
-    }
-
-  }
-
-
-  x.putImageData(
-    im,
-    0,
-    0
-  );
-
-
-  let activeHooks = 0;
-
-
-  for(
-    let y=0;
-    y<h;
-    y++
-  ){
-
-    if(!sequence[y])
-      continue;
-
-
-    for(
-      let k=0;
-      k<w;
-      k++
-    ){
-
-      if(
-        designRows[y][k]
-      ){
-
-        activeHooks++;
-
-      }
-
-    }
-
-  }
-
-
-  $("previewInfo").textContent =
-    `${w} Hooks × ${h} Picks | Active hook cells: ${activeHooks.toLocaleString()} | Threshold: ${getThreshold()}`;
-
-}
-
-
-/* =========================================================
-   VALIDATE
-========================================================= */
-
-function validate(){
-
-  if(
-    !runningEP ||
-    !detected.picks
-  ){
-
-    return "Running EP upload/analyze karein.";
-
-  }
-
-
-  if(!designRows){
-
-    return "New Design prepare karein.";
-
-  }
-
-
-  if(
-    detected.hooks < 1 ||
-    detected.picks < 1
-  ){
-
-    return "Running EP detection invalid hai.";
-
-  }
-
-
-  if(
-    machineHeader.length !==
-    detected.headerBytes
-  ){
-
-    return "Running EP header missing hai.";
-
-  }
-
-
-  if(
-    sequence.length !==
-    detected.picks
-  ){
-
-    return "Finger working sequence length mismatch.";
-
-  }
-
-
-  return "";
-
-}
-
-
-/* =========================================================
-   PACK HOOK ROW
-
-   MSB-FIRST
-========================================================= */
-
-function pack(row){
-
-  const o =
-    new Uint8Array(
-      Math.ceil(
-        row.length / 8
-      )
-    );
-
-
-  for(
-    let i=0;
-    i<row.length;
-    i++
-  ){
-
-    if(row[i]){
-
-      o[
-        Math.floor(i/8)
-      ] |=
-        128 >> (i%8);
-
-    }
-
-  }
-
-
-  return o;
-
-}
-
-
-/* =========================================================
-   BUILD NEW EP
-========================================================= */
-
-function buildEP(){
-
-  /*
-    IMPORTANT:
-
-    Running EP old design rows are NOT copied.
-
-    Only machine header is retained.
-
-    Every output row is generated again
-    from the newly uploaded design.
-  */
-
-
-  const rows =
-    designRows.map(
-      (r,i) =>
-        sequence[i]
-          ? r
-          : new Uint8Array(r.length)
-    );
-
-
-  const packed =
-    rows.map(pack);
-
-
-  const rb =
-    packed[0].length;
-
-
-  const out =
-    new Uint8Array(
-      machineHeader.length +
-      packed.length * rb
-    );
-
-
-  out.set(
-    machineHeader
-  );
-
-
-  packed.forEach(
-    (r,i)=>{
-
-      out.set(
-        r,
-        machineHeader.length +
-        i*rb
-      );
-
-    }
-  );
-
-
-  return out;
-
-}
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-function validateAndExport(){
-
-  const e =
-    validate();
-
-
-  if(e){
-
-    $("validation").className =
-      "status error";
-
-    $("validation").textContent =
-      e;
-
-    return;
-
-  }
-
-
-  const out =
-    buildEP();
-
-
-  const blob =
-    new Blob(
-      [out],
-      {
-        type:
-          "application/octet-stream"
-      }
-    );
-
-
-  const a =
-    document.createElement("a");
-
-
-  a.href =
-    URL.createObjectURL(blob);
-
-
-  const base =
-    (
-      $("designFile")
-      .files[0]
-      ?.name ||
-      "Design"
-    )
-    .replace(
-      /\.[^.]+$/,
-      ""
-    );
-
-
-  a.download =
-    `${base}_${detected.picks}Picks.EP`;
-
-
-  a.click();
-
-
-  setTimeout(
-    () =>
-      URL.revokeObjectURL(
-        a.href
-      ),
-    1000
-  );
-
-
-  $("validation").className =
-    "status success";
-
-
-  $("validation").textContent =
-    `New EP generated: ${detected.hooks} Hooks × ${detected.picks} Picks. Running file old design rows were not copied.`;
-
-}
-
-
-/* =========================================================
-   LIVE CONTROLS
-========================================================= */
-
-$("threshold").oninput =
-() => {
-
-  if(designRows)
-    drawPreview();
-
-};
-
-
-$("invert").onchange =
-() => {
-
-  if(
-    designImg &&
-    detected.picks
-  ){
-
-    prepareDesign();
-
-  }
-
-};
-
-
-$("mirror").onchange =
-() => {
-
-  if(
-    designImg &&
-    detected.picks
-  ){
-
-    prepareDesign();
-
-  }
-
-};
-
-
-$("flip").onchange =
-() => {
-
-  if(
-    designImg &&
-    detected.picks
-  ){
-
-    prepareDesign();
-
-  }
-
-};
+initialize();
 
 </script>
 
 </body>
-</html>
+                  </html>
