@@ -1,1798 +1,788 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Electronic Designing</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;
- font-family:Arial,system-ui,sans-serif;
- background:#06111f;
- color:#eaf7ff
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#061525;
+  color:#eaf5ff;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
 
-.top{
- position:sticky;
- top:0;
- z-index:50;
- background:#06111fee;
- backdrop-filter:blur(12px);
- border-bottom:1px solid #1c405c
+header{
+  background:#07111f;
+  border-bottom:1px solid #21415d;
+  padding:18px 20px;
 }
-.topin{
- max-width:1100px;
- margin:auto;
- padding:12px;
- display:flex;
- justify-content:space-between;
- align-items:center
-}
-.brand{font-size:20px;font-weight:900}
-.sub{font-size:11px;color:#8da8bd}
 
-.wrap{max-width:1100px;margin:auto;padding:12px}
+.header-title{
+  font-size:27px;
+  font-weight:800;
+}
+
+.header-sub{
+  color:#9db2c5;
+  font-size:16px;
+  margin-top:4px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
+}
 
 .card{
- background:#0b1b2c;
- border:1px solid #1d405b;
- border-radius:17px;
- padding:15px;
- margin:12px 0;
- box-shadow:0 8px 25px #0005
+  background:#091b2b;
+  border:1px solid #21435e;
+  border-radius:24px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.18);
 }
 
-h2{font-size:18px;margin:0 0 8px}
-h3{margin:0 0 5px}
+h2{margin:0 0 18px;font-size:25px}
+h3{margin:0 0 14px}
 
 label{
- display:block;
- margin:9px 0 5px;
- color:#a9c2d6;
- font-size:12px;
- font-weight:bold
+  display:block;
+  color:#b3c7d9;
+  font-weight:700;
+  margin-bottom:7px;
 }
 
 input,select{
- width:100%;
- padding:11px;
- border-radius:10px;
- border:1px solid #2b4e68;
- background:#081625;
- color:#fff;
- outline:none
+  width:100%;
+  background:#071522;
+  color:#fff;
+  border:1px solid #315671;
+  border-radius:15px;
+  padding:15px;
+  font-size:18px;
+  outline:none;
 }
-input:focus,select:focus{border-color:#00d9ff}
 
-button{
- border:0;
- padding:11px 15px;
- border-radius:10px;
- background:#078bea;
- color:white;
- font-weight:bold
+input:focus,select:focus{
+  border-color:#159bea;
 }
-button.secondary{background:#20374c}
-button.green{background:#079d6a}
-button.red{background:#c6324a}
-button.yellow{background:#a87613}
-button:disabled{opacity:.45;cursor:not-allowed}
-
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row>*{flex:1;min-width:150px}
 
 .grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:10px
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
 }
 
-.tabs{
- display:flex;
- gap:7px;
- overflow:auto;
- padding:4px 0 8px
+@media(max-width:700px){
+  .grid,.preview-grid{
+    grid-template-columns:1fr;
+  }
 }
-.tab{
- white-space:nowrap;
- background:#13273b
-}
-.tab.active{background:#00aee8}
 
-.panel{display:none}
-.panel.active{display:block}
+button{
+  border:0;
+  border-radius:15px;
+  padding:15px 18px;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  background:#1598ea;
+  color:white;
+  width:100%;
+}
+
+button.secondary{background:#213b52}
+button.success{background:#0d8b68}
+button.danger{background:#8d2933}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.filebox{
+  border:2px dashed #315b77;
+  border-radius:18px;
+  padding:18px;
+  background:#071522;
+}
 
 .status{
- padding:11px;
- border-radius:10px;
- background:#102b42;
- color:#aee4ff;
- margin-top:10px;
- font-size:13px;
- overflow-wrap:anywhere
-}
-.status.ok{background:#0a362b;color:#91f0cc}
-.status.err{background:#411e27;color:#ffb7c3}
-.status.warn{background:#3c2d0c;color:#ffe39a}
-
-.machine{
- background:#091827;
- border:1px solid #23465f;
- border-radius:13px;
- padding:12px;
- margin-top:9px
-}
-.machine:hover{border-color:#00cfff}
-
-.machine-title{
- display:flex;
- justify-content:space-between;
- gap:8px;
- align-items:center
-}
-.machine-name{
- font-size:16px;
- font-weight:bold;
- overflow-wrap:anywhere
+  padding:15px 18px;
+  border-radius:16px;
+  margin-top:14px;
+  line-height:1.45;
 }
 
-.plan{
- background:#071421;
- border:1px solid #27506b;
- border-radius:13px;
- padding:12px;
- margin-top:10px
-}
-.plan-title{
- font-size:15px;
- font-weight:900;
- color:#00d9ff;
- margin-bottom:7px
+.status.ok{
+  background:#073e30;
+  color:#8df0cf;
 }
 
-.pill{
- display:inline-block;
- padding:4px 8px;
- margin:3px 3px 0 0;
- border-radius:30px;
- border:1px solid #2c536d;
- color:#a9c5d9;
- font-size:11px
+.status.warn{
+  background:#4b3810;
+  color:#ffe49a;
 }
 
-/* PREVIEW */
+.status.error{
+  background:#491b24;
+  color:#ffb5c0;
+}
+
+.machine-item{
+  border:1px solid #294a62;
+  background:#0b2032;
+  padding:15px;
+  border-radius:15px;
+  margin-top:10px;
+}
+
+.machine-item strong{font-size:19px}
+
+.machine-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+
+.finger-box{
+  border:1px solid #31546d;
+  background:#081a2a;
+  border-radius:18px;
+  padding:15px;
+  margin-top:12px;
+}
+
+.finger-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.finger-rule{
+  margin-top:14px;
+  padding:13px;
+  border-radius:14px;
+  background:#0b2235;
+  color:#a9c1d5;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.total-box{
+  margin-top:16px;
+  padding:18px;
+  border-radius:17px;
+  background:#073e30;
+  color:#9af1d0;
+  font-size:21px;
+  font-weight:800;
+  text-align:center;
+}
+
+.preview-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.preview-title{
+  color:#9db2c5;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
 .preview{
- display:block;
- width:100%;
- max-width:100%;
- max-height:380px;
- height:auto;
- object-fit:contain;
- border:2px solid #00d9d5;
- border-radius:5px;
- background:#35d5d2;
- image-rendering:pixelated;
- image-rendering:crisp-edges
+  width:100%;
+  min-height:180px;
+  background:#06111d;
+  border:2px solid #1ca7ec;
+  border-radius:8px;
+  display:block;
+  object-fit:contain;
 }
 
-#binaryCanvas{
- background:#35d5d2;
- border:3px solid #00bfc5;
- border-radius:3px;
- box-shadow:0 0 8px #00d9d555
+.info{
+  margin-top:15px;
+  padding:17px;
+  border-radius:17px;
+  background:#073e30;
+  color:#9af1d0;
+  line-height:1.55;
 }
 
-.hex{
- background:#030a10;
- color:#8ef2ca;
- padding:12px;
- border-radius:10px;
- font:11px monospace;
- white-space:pre-wrap;
- word-break:break-all;
- max-height:220px;
- overflow:auto
+.hidden{display:none!important}
+
+.small{
+  color:#91a8bb;
+  font-size:14px;
+  line-height:1.45;
 }
 
-.login{max-width:420px;margin:8vh auto}
-
-.toast{
- position:fixed;
- left:50%;
- bottom:20px;
- transform:translateX(-50%);
- z-index:100;
- background:#102d45;
- border:1px solid #2c6684;
- padding:12px 17px;
- border-radius:12px;
- box-shadow:0 8px 30px #0009;
- max-width:90%
+hr{
+  border:0;
+  border-top:1px solid #21435e;
+  margin:20px 0;
 }
 
-.small-note{
- font-size:11px;
- color:#7f9db3;
- line-height:1.5
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-.file-box{
- border:1px dashed #2d6885;
- border-radius:12px;
- padding:12px;
- background:#071523
+.login-box{
+  width:min(430px,100%);
+  background:#091b2b;
+  border:1px solid #21435e;
+  border-radius:24px;
+  padding:25px;
 }
 
-.design-only{
- border-color:#00c98d;
- background:#06251e
+.invalid-input{
+  border-color:#ff5267!important;
 }
 
-@media(max-width:600px){
- .wrap{padding:9px}
- .card{padding:13px}
- .brand{font-size:17px}
- .grid{grid-template-columns:1fr 1fr}
- .row>*{min-width:100%}
- .machine .row>*{min-width:0}
+.valid-input{
+  border-color:#1ed39b!important;
 }
 </style>
 </head>
 
 <body>
 
-<header class="top">
- <div class="topin">
-  <div>
-   <div class="brand">⚡ Electronic Designing</div>
-   <div class="sub">Running EP → Machine Profile → New Design EP</div>
-  </div>
-  <button id="logoutBtn" class="secondary hidden">Logout</button>
- </div>
-</header>
+<!-- ================= LOGIN ================= -->
 
-<main class="wrap">
+<div id="loginScreen">
 
-<!-- LOGIN -->
-<section id="loginView" class="login">
- <div class="card">
-  <h2>Admin Login</h2>
+  <div class="login-box">
 
-  <div class="sub">
-   Admin credentials login screen par display nahi hote.
-  </div>
+    <h2>⚡ Electronic Designing</h2>
 
-  <label>Admin ID</label>
-  <input id="loginId" autocomplete="username">
+    <p class="small">Admin Login</p>
 
-  <label>Password</label>
-  <input id="loginPass" type="password" autocomplete="current-password">
+    <label>Password</label>
 
-  <button id="loginBtn" style="width:100%;margin-top:12px">
-   LOGIN
-  </button>
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Enter password">
 
-  <div id="loginMsg" class="status err hidden"></div>
- </div>
-</section>
+    <br><br>
 
+    <button id="loginBtn">LOGIN</button>
 
-<!-- APP -->
-<section id="appView" class="hidden">
-
- <div class="tabs">
-  <button class="tab active" data-tab="machines">
-   Machine Setup
-  </button>
-
-  <button class="tab" data-tab="design">
-   Create Design EP
-  </button>
-
-  <button class="tab" data-tab="settings">
-   Settings
-  </button>
- </div>
-
-
-<!-- MACHINE SETUP -->
-<div id="machines" class="panel active">
-
- <div class="card">
-
-  <h2>1. New Machine / Running EP</h2>
-
-  <div class="sub">
-   Running EP sirf machine ka structure/template samajhne ke liye use hogi.
-   Uska purana design output mein copy nahi hoga.
-  </div>
-
-  <label>Machine Name</label>
-  <input id="machineName" placeholder="Example: 79A Jacquard">
-
-  <label>Running .EP File</label>
-
-  <div class="file-box">
-   <input id="runningFile" type="file" accept=".ep,.EP">
-  </div>
-
-  <div id="runInfo" class="status">
-   Running file select nahi ki gayi.
-  </div>
-
-  <div class="row" style="margin-top:10px">
-   <button id="analyzeBtn" disabled>
-    Analyze Running EP
-   </button>
-
-   <button id="saveMachineBtn" class="green" disabled>
-    Save New Machine
-   </button>
-  </div>
-
- </div>
-
-
- <div class="card">
-
-  <h2>2. Machine Magnet Setup</h2>
-
-  <div class="small-note">
-   Magnet count machine information ke liye hai.
-   Magnet count apne aap harness/dori mapping prove nahi karta.
-  </div>
-
-  <div class="plan">
-
-   <div class="plan-title">
-    🧲 MAGNET COUNT
-   </div>
-
-   <label>
-    Machine mein kitne magnets hain?
-   </label>
-
-   <input
-    id="magnetCount"
-    type="number"
-    min="1"
-    max="256"
-    step="1"
-    value="1"
-   >
-
-   <div id="magnetInfo" class="status">
-    Magnet count: 1
-   </div>
+    <div id="loginMsg"></div>
 
   </div>
-
-
-  <div class="plan">
-
-   <div class="plan-title">
-    ⚙️ DESIGN STRUCTURE
-   </div>
-
-   <div class="grid">
-
-    <div>
-     <label>Ground / Background</label>
-
-     <select id="groundMode">
-      <option value="running">
-       Running EP se analyze
-      </option>
-      <option value="design">
-       Design pixels se
-      </option>
-     </select>
-    </div>
-
-    <div>
-     <label>Border / Kinara</label>
-
-     <select id="borderMode">
-      <option value="running">
-       Running EP se analyze
-      </option>
-      <option value="design">
-       Design pixels se
-      </option>
-     </select>
-    </div>
-
-    <div>
-     <label>Dori Pattern</label>
-
-     <select id="doriPattern">
-      <option value="running">
-       Running EP pattern preserve
-      </option>
-      <option value="design">
-       Design structure follow
-      </option>
-     </select>
-    </div>
-
-   </div>
-
-   <div class="small-note" style="margin-top:8px">
-    IMPORTANT: Create Design EP mein uploaded design ki binary rows hi
-    nayi design rows banayengi. Running EP ki old pattern rows copy nahi hongi.
-   </div>
-
-  </div>
-
- </div>
-
-
- <div class="card">
-
-  <h2>3. Automatically Detected Machine Parameters</h2>
-
-  <div class="grid">
-
-   <div>
-    <label>Detected Hooks</label>
-    <input id="hooks" type="number" min="8" step="8" value="672">
-   </div>
-
-   <div>
-    <label>Header Bytes</label>
-    <input id="headerLen" type="number" min="0" value="34">
-   </div>
-
-   <div>
-    <label>Bytes / Pick</label>
-    <input id="bytesPerPick" type="number" min="1" value="84">
-   </div>
-
-   <div>
-    <label>Original Picks</label>
-    <input id="originalPicks" type="number" min="1" value="1">
-   </div>
-
-  </div>
-
-  <div class="small-note">
-   Detected values editable hain, lekin manually badalne par file structure verify karein.
-  </div>
-
-  <div id="analysisBox" class="status">
-   EP analysis yahan dikhega.
-  </div>
-
- </div>
-
-
- <div class="card">
-
-  <h2>4. Saved Machines</h2>
-
-  <div class="sub">
-   Saved machine ko use karein ya delete karein.
-  </div>
-
-  <div id="machineList"></div>
-
- </div>
 
 </div>
 
 
-<!-- DESIGN -->
-<div id="design" class="panel">
+<!-- ================= APP ================= -->
 
- <div class="card">
+<div id="app">
 
-  <h2>1. Machine Select</h2>
+<header>
 
-  <select id="machineSelect">
-   <option value="">
-    -- Saved machine select karein --
-   </option>
-  </select>
-
-  <div id="selectedMachineInfo" class="status">
-   Pehle saved machine select karein.
+  <div class="header-title">
+    ⚡ Electronic Designing
   </div>
 
- </div>
-
-
- <div class="card">
-
-  <h2>2. ONLY DESIGN FILE</h2>
-
-  <div class="status design-only">
-   <b>DESIGN ONLY MODE</b>
-   <br>
-   Yahan sirf aapka uploaded design image input banega.
-   Running EP, previous design aur example image ki rows yahan use nahi hongi.
+  <div class="header-sub">
+    Running EP → Machine Profile → New Design EP
   </div>
 
-  <label>
-   Design File — PNG / JPG / JPEG / BMP
-  </label>
+</header>
 
-  <div class="file-box design-only">
-   <input
-    id="designFile"
-    type="file"
-    accept=".bmp,.png,.jpg,.jpeg,image/bmp,image/png,image/jpeg"
-   >
-  </div>
 
-  <div id="designInfo" class="status">
-   Design select nahi kiya.
-  </div>
+<div class="container">
 
-  <div class="grid">
 
-   <div>
-    <label>Target Picks</label>
+<!-- ================= MACHINE SETUP ================= -->
+
+<section class="card">
+
+  <h2>1. Machine Setup</h2>
+
+  <div class="filebox">
+
+    <label>Upload Running EP</label>
+
     <input
-     id="targetPicks"
-     type="number"
-     min="1"
-     value="972"
-    >
-   </div>
+      id="runningEP"
+      type="file"
+      accept=".ep,application/octet-stream">
 
-   <div>
-    <label>Threshold</label>
-    <input
-     id="threshold"
-     type="number"
-     min="0"
-     max="255"
-     value="128"
-    >
-   </div>
-
-   <div>
-    <label>Left Padding</label>
-    <input
-     id="leftPad"
-     type="number"
-     min="0"
-     value="0"
-    >
-   </div>
-
-   <div>
-    <label>Right Padding</label>
-    <input
-     id="rightPad"
-     type="number"
-     min="0"
-     value="0"
-    >
-   </div>
+    <div class="small">
+      Running EP sirf machine structure/profile ke liye
+      use hoga. Iski old design rows new design me
+      copy nahi hongi.
+    </div>
 
   </div>
 
-  <div class="row" style="margin-top:8px">
 
-   <button id="invertBtn" class="secondary">
-    Invert: OFF
-   </button>
+  <div class="grid" style="margin-top:16px">
 
-   <button id="mirrorBtn" class="secondary">
-    Mirror: OFF
-   </button>
+    <div>
+      <label>Machine Name</label>
+      <input id="machineName"
+             placeholder="Example: SH Ansari">
+    </div>
 
-   <button id="flipBtn" class="secondary">
-    Flip: OFF
-   </button>
+    <div>
+      <label>Hooks</label>
+      <input id="machineHooks"
+             type="number"
+             min="1"
+             placeholder="Example: 672">
+    </div>
+
+    <div>
+      <label>Header Length (Bytes)</label>
+      <input id="headerLength"
+             type="number"
+             min="0"
+             placeholder="Auto / Manual">
+    </div>
+
+    <div>
+      <label>Bytes Per Pick</label>
+      <input id="bytesPerPick"
+             type="number"
+             min="1"
+             placeholder="Example: 84">
+    </div>
 
   </div>
 
- </div>
+
+  <div style="margin-top:16px">
+
+    <button id="analyzeRunningBtn">
+      ANALYZE RUNNING EP
+    </button>
+
+  </div>
+
+  <div id="runningStatus"></div>
 
 
- <div class="card">
+  <div style="margin-top:16px">
+
+    <button
+      id="saveMachineBtn"
+      class="success"
+      disabled>
+      SAVE MACHINE PROFILE
+    </button>
+
+  </div>
+
+
+  <hr>
+
+  <h3>Saved Machine Profiles</h3>
+
+  <div id="machineList">
+    <div class="small">
+      No machine profile saved.
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ================= DESIGN ================= -->
+
+<section id="designSection" class="card hidden">
+
+  <h2>2. New Design</h2>
+
+  <div id="selectedMachineInfo" class="info"></div>
+
+
+  <div class="filebox" style="margin-top:16px">
+
+    <label>Upload COMPLETE DESIGN</label>
+
+    <input
+      id="designFile"
+      type="file"
+      accept=".bmp,.png,.jpg,.jpeg,.webp">
+
+    <div class="small">
+      Uploaded design hi new binary design ka source hoga.
+      Running EP ki design rows use nahi hongi.
+    </div>
+
+  </div>
+
+
+  <div id="designInfo" class="status hidden"></div>
+
+
+  <!-- ================= FINGER SETTINGS ================= -->
+
+  <div style="margin-top:20px">
+
+    <h3>Design Pick / Finger Settings</h3>
+
+    <div class="grid">
+
+      <div>
+
+        <label>Number of Fingers</label>
+
+        <select id="fingerCount">
+          <option value="1">1 Finger</option>
+          <option value="2">2 Fingers</option>
+          <option value="3">3 Fingers</option>
+          <option value="4">4 Fingers</option>
+          <option value="5">5 Fingers</option>
+          <option value="6">6 Fingers</option>
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div class="finger-rule">
+
+      <strong>Finger Pick Rule:</strong><br>
+
+      Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
+      Finger 4 ≥ Finger 5 ≥ Finger 6
+
+      <br><br>
+
+      Finger 1 sabse zyada ya equal maximum rahega.
+      Finger 2 uske equal ya kam.
+      Uske baad har finger previous finger ke
+      equal ya kam honi chahiye.
+
+    </div>
+
+
+    <div id="fingerInputs"></div>
+
+
+    <div id="fingerValidation"></div>
+
+
+    <div id="totalPicks" class="total-box">
+      Total Design Picks: 0
+    </div>
+
+  </div>
+
+
+  <!-- ================= DESIGN OPTIONS ================= -->
+
+  <div style="margin-top:20px">
+
+    <h3>Design Options</h3>
+
+    <div class="grid">
+
+      <div>
+        <label>Threshold</label>
+        <input id="threshold"
+               type="number"
+               min="0"
+               max="255"
+               value="128">
+      </div>
+
+      <div>
+        <label>Left Padding</label>
+        <input id="leftPadding"
+               type="number"
+               min="0"
+               value="0">
+      </div>
+
+      <div>
+        <label>Right Padding</label>
+        <input id="rightPadding"
+               type="number"
+               min="0"
+               value="0">
+      </div>
+
+    </div>
+
+
+    <div style="display:grid;gap:10px;margin-top:15px">
+
+      <button id="invertBtn" class="secondary">
+        Invert: OFF
+      </button>
+
+      <button id="mirrorBtn" class="secondary">
+        Mirror: OFF
+      </button>
+
+      <button id="flipBtn" class="secondary">
+        Flip: OFF
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PREVIEW ================= -->
+
+<section id="previewSection" class="card hidden">
 
   <h2>3. Preview & Convert</h2>
 
-  <div class="grid">
 
-   <div>
-    <div class="sub">
-     Uploaded Design — ONLY SOURCE
+  <div class="preview-grid">
+
+    <div>
+
+      <div class="preview-title">
+        Uploaded Design — ONLY SOURCE
+      </div>
+
+      <canvas id="originalCanvas"
+              class="preview">
+      </canvas>
+
     </div>
 
-    <img
-     id="originalPreview"
-     class="preview hidden"
-     alt="Uploaded design"
-    >
-   </div>
 
-   <div>
-    <div class="sub">
-     New Binary Design — ONLY NEW DESIGN
+    <div>
+
+      <div class="preview-title">
+        New Binary Design — ONLY NEW DESIGN
+      </div>
+
+      <canvas id="binaryCanvas"
+              class="preview">
+      </canvas>
+
     </div>
 
-    <canvas
-     id="binaryCanvas"
-     class="preview"
-    ></canvas>
-   </div>
-
   </div>
 
-  <div id="designCheck" class="status warn">
-   Machine aur design select karein.
+
+  <div id="conversionInfo" class="info"></div>
+
+
+  <div style="margin-top:18px">
+
+    <button id="convertBtn" disabled>
+      CONVERT & DOWNLOAD NEW DESIGN EP
+    </button>
+
   </div>
-
-  <button
-   id="convertBtn"
-   style="width:100%;margin-top:10px"
-   disabled
-  >
-   CONVERT & DOWNLOAD NEW DESIGN EP
-  </button>
-
- </div>
-
-
- <div class="card">
-
-  <h2>EP Validation</h2>
-
-  <div id="validation" class="grid"></div>
-
-  <div class="sub" style="margin-top:10px">
-   Header Hex
-  </div>
-
-  <div id="hexPreview" class="hex"></div>
-
- </div>
-
-</div>
-
-
-<!-- SETTINGS -->
-<div id="settings" class="panel">
-
- <div class="card">
-
-  <h2>Admin Settings</h2>
-
-  <div class="sub">
-   Default login: admin / 123456
-  </div>
-
-  <label>New Admin ID</label>
-  <input id="newAdminId">
-
-  <label>New Password</label>
-  <input id="newAdminPass" type="password">
-
-  <button
-   id="saveCreds"
-   class="green"
-   style="margin-top:10px"
-  >
-   Save Login
-  </button>
-
-  <div id="credMsg" class="status hidden"></div>
-
- </div>
-
-
- <div class="card">
-
-  <h2>Database Tools</h2>
-
-  <div class="sub">
-   Machine profiles IndexedDB mein save hote hain.
-  </div>
-
-  <button id="exportBtn" class="secondary">
-   Export Machine Backup
-  </button>
-
-  <input
-   id="importFile"
-   type="file"
-   accept="application/json"
-   style="margin-top:8px"
-  >
-
-  <button
-   id="clearAllBtn"
-   class="red"
-   style="margin-top:8px"
-  >
-   Delete ALL Machines
-  </button>
-
- </div>
-
-</div>
 
 </section>
-</main>
 
 
-<div id="toast" class="toast hidden"></div>
+</div>
+</div>
 
 
 <script>
-"use strict";
 
 /* =========================================================
-   CONSTANTS
-========================================================= */
-
-const DEFAULT_ID = "admin";
-const DEFAULT_PASS = "123456";
-
-const DB_NAME = "ElectronicDesigningMachineDB";
-const DB_VERSION = 4;
-
-const MACHINE_STORE = "machines";
-const SETTINGS_STORE = "settings";
-
-
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let db = null;
-
-let runningBytes = null;
-let runningName = "";
-let runningAnalysis = null;
-
-let designImage = null;
-let designFileName = "";
-let designObjectUrl = "";
-
-let binaryBits = null;
-
-let selectedMachine = null;
-let currentDesignMachineId = null;
-
-let invert = false;
-let mirror = false;
-let flip = false;
-
-
-/* =========================================================
-   SHORTCUT
+   HELPERS
 ========================================================= */
 
 const $ = id => document.getElementById(id);
 
 
 /* =========================================================
-   TOAST
+   LOGIN
 ========================================================= */
 
-function toast(message){
+const ADMIN_PASSWORD = "admin";
 
- const t = $("toast");
+$("loginBtn").onclick = function(){
 
- t.textContent = message;
+  if($("loginPassword").value === ADMIN_PASSWORD){
 
- t.classList.remove("hidden");
+    $("loginScreen").style.display = "none";
+    $("app").style.display = "block";
 
- clearTimeout(toast.timer);
+  }else{
 
- toast.timer = setTimeout(() => {
-  t.classList.add("hidden");
- }, 2600);
-}
+    $("loginMsg").innerHTML =
+      '<div class="status error">Wrong password.</div>';
+
+  }
+
+};
 
 
 /* =========================================================
-   ID
+   STATE
 ========================================================= */
 
-function makeId(){
+let db = null;
 
- return (
-  "machine_" +
-  Date.now().toString(36) +
-  "_" +
-  Math.random().toString(36).slice(2,10)
- );
+let runningBytes = null;
 
-}
+let selectedMachine = null;
+
+let currentDesignFile = null;
+
+let currentDesignImage = null;
+
+let binaryBits = null;
+
+let binaryWidth = 0;
+
+let binaryHeight = 0;
+
+let invertMode = false;
+
+let mirrorMode = false;
+
+let flipMode = false;
 
 
 /* =========================================================
-   BASE64
+   INDEXED DB
 ========================================================= */
 
-function bytesToBase64(bytes){
-
- let binary = "";
-
- const chunk = 0x8000;
-
- for(
-  let i = 0;
-  i < bytes.length;
-  i += chunk
- ){
-
-  binary += String.fromCharCode(
-   ...bytes.subarray(
-    i,
-    Math.min(i + chunk, bytes.length)
-   )
-  );
-
- }
-
- return btoa(binary);
-}
-
-
-function base64ToBytes(base64){
-
- if(!base64){
-  return new Uint8Array();
- }
-
- const binary = atob(base64);
-
- const bytes = new Uint8Array(binary.length);
-
- for(let i=0;i<binary.length;i++){
-  bytes[i] = binary.charCodeAt(i);
- }
-
- return bytes;
-}
-
-
-/* =========================================================
-   DATABASE
-========================================================= */
+const DB_NAME = "ElectronicDesigningDB";
+const DB_VERSION = 1;
 
 function openDB(){
 
- return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-  const request =
-   indexedDB.open(DB_NAME,DB_VERSION);
+    const request =
+      indexedDB.open(DB_NAME,DB_VERSION);
 
-  request.onupgradeneeded = function(){
+    request.onupgradeneeded = function(e){
 
-   const database = request.result;
+      const database = e.target.result;
 
-   if(
-    !database.objectStoreNames.contains(
-     MACHINE_STORE
-    )
-   ){
-    database.createObjectStore(
-     MACHINE_STORE,
-     {keyPath:"id"}
-    );
-   }
+      if(!database.objectStoreNames.contains("machines")){
 
-   if(
-    !database.objectStoreNames.contains(
-     SETTINGS_STORE
-    )
-   ){
-    database.createObjectStore(
-     SETTINGS_STORE
-    );
-   }
+        database.createObjectStore(
+          "machines",
+          {
+            keyPath:"id",
+            autoIncrement:true
+          }
+        );
 
-  };
+      }
 
+    };
 
-  request.onsuccess = () => {
+    request.onsuccess = function(){
 
-   db = request.result;
+      db = request.result;
+      resolve(db);
 
-   resolve();
+    };
 
-  };
+    request.onerror = function(){
+      reject(request.error);
+    };
 
-
-  request.onerror = () => {
-
-   reject(request.error);
-
-  };
-
- });
+  });
 
 }
 
 
-function dbGetAll(storeName){
+function saveMachine(machine){
 
- return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-  const req =
-   db
-   .transaction(storeName,"readonly")
-   .objectStore(storeName)
-   .getAll();
+    const tx =
+      db.transaction("machines","readwrite");
 
-  req.onsuccess =
-   () => resolve(req.result || []);
+    const store =
+      tx.objectStore("machines");
 
-  req.onerror =
-   () => reject(req.error);
+    const req =
+      store.add(machine);
 
- });
+    req.onsuccess =
+      () => resolve(req.result);
 
-}
+    req.onerror =
+      () => reject(req.error);
 
-
-function dbGet(storeName,key){
-
- return new Promise((resolve,reject)=>{
-
-  const req =
-   db
-   .transaction(storeName,"readonly")
-   .objectStore(storeName)
-   .get(key);
-
-  req.onsuccess =
-   () => resolve(req.result || null);
-
-  req.onerror =
-   () => reject(req.error);
-
- });
+  });
 
 }
 
 
-function dbPut(storeName,value,key){
+function getMachines(){
 
- return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-  const store =
-   db
-   .transaction(storeName,"readwrite")
-   .objectStore(storeName);
+    const tx =
+      db.transaction("machines","readonly");
 
-  const req =
-   key === undefined
-    ? store.put(value)
-    : store.put(value,key);
+    const req =
+      tx.objectStore("machines").getAll();
 
-  req.onsuccess =
-   () => resolve(req.result);
+    req.onsuccess =
+      () => resolve(req.result);
 
-  req.onerror =
-   () => reject(req.error);
+    req.onerror =
+      () => reject(req.error);
 
- });
+  });
 
 }
 
 
-function dbDelete(storeName,key){
+function deleteMachine(id){
 
- return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-  const req =
-   db
-   .transaction(storeName,"readwrite")
-   .objectStore(storeName)
-   .delete(key);
+    const tx =
+      db.transaction("machines","readwrite");
 
-  req.onsuccess =
-   () => resolve();
+    tx.objectStore("machines").delete(id);
 
-  req.onerror =
-   () => reject(req.error);
+    tx.oncomplete =
+      () => resolve();
 
- });
+    tx.onerror =
+      () => reject(tx.error);
 
-}
-
-
-function dbClear(storeName){
-
- return new Promise((resolve,reject)=>{
-
-  const req =
-   db
-   .transaction(storeName,"readwrite")
-   .objectStore(storeName)
-   .clear();
-
-  req.onsuccess =
-   () => resolve();
-
-  req.onerror =
-   () => reject(req.error);
-
- });
+  });
 
 }
 
 
 /* =========================================================
-   CREDENTIALS
+   ESCAPE HTML
 ========================================================= */
 
-async function getCredentials(){
-
- const id =
-  await dbGet(
-   SETTINGS_STORE,
-   "adminId"
-  );
-
- const pass =
-  await dbGet(
-   SETTINGS_STORE,
-   "adminPass"
-  );
-
- return {
-  id: id || DEFAULT_ID,
-  pass: pass || DEFAULT_PASS
- };
-
-}
-
-
-/* =========================================================
-   MAGNET
-========================================================= */
-
-function updateMagnetInfo(){
-
- let count =
-  Math.floor(
-   Number($("magnetCount").value)
-  );
-
- if(
-  !Number.isFinite(count) ||
-  count < 1
- ){
-  count = 1;
- }
-
- if(count > 256){
-  count = 256;
- }
-
- $("magnetCount").value = count;
-
- $("magnetInfo").textContent =
-  "Magnet count: " + count;
-
-}
-
-
-/* =========================================================
-   EP STRUCTURE DETECTION
-========================================================= */
-
-function readHeaderPickCount(bytes,header){
-
- if(header >= 6){
-
-  const n =
-   bytes[3] |
-   (bytes[4] << 8) |
-   (bytes[5] << 16);
-
-  if(n > 0){
-   return n;
-  }
-
- }
-
- return 0;
-}
-
-
-function detectEPStructure(bytes){
-
- const headers = [
-  34,81,32,64,80,82,83,84
- ];
-
- const commonBpp = [
-  84,80,96,64,48,40,32,
-  24,16,12,8,4,2,1
- ];
-
- const candidates = [];
-
-
- for(const header of headers){
-
-  if(bytes.length <= header){
-   continue;
-  }
-
-  const remaining =
-   bytes.length - header;
-
-  const declaredPicks =
-   readHeaderPickCount(
-    bytes,
-    header
-   );
-
-
-  if(
-   declaredPicks > 0 &&
-   remaining % declaredPicks === 0
-  ){
-
-   const bpp =
-    remaining / declaredPicks;
-
-   if(
-    Number.isInteger(bpp) &&
-    bpp >= 1 &&
-    bpp <= 512
-   ){
-
-    candidates.push({
-     headerLength:header,
-     bytesPerPick:bpp,
-     picks:declaredPicks,
-     score:
-      100 +
-      (commonBpp.includes(bpp) ? 20 : 0)
-    });
-
-   }
-
-  }
-
-
-  for(const bpp of commonBpp){
-
-   if(remaining % bpp !== 0){
-    continue;
-   }
-
-   const picks =
-    remaining / bpp;
-
-   if(picks < 1){
-    continue;
-   }
-
-   let score = 0;
-
-   if(commonBpp.includes(bpp)){
-    score += 10;
-   }
-
-   if(declaredPicks === picks){
-    score += 100;
-   }
-
-   if(header === 34){
-    score += 8;
-   }
-
-   if(bpp === 84){
-    score += 20;
-   }
-
-   if(picks < 1000000){
-    score += 1;
-   }
-
-   candidates.push({
-    headerLength:header,
-    bytesPerPick:bpp,
-    picks:picks,
-    score:score
-   });
-
-  }
-
- }
-
-
- if(!candidates.length){
-  return null;
- }
-
-
- candidates.sort(
-  (a,b) => b.score - a.score
- );
-
-
- const best =
-  candidates[0];
-
-
- return {
-
-  headerLength:
-   best.headerLength,
-
-  bytesPerPick:
-   best.bytesPerPick,
-
-  picks:
-   best.picks,
-
-  hooks:
-   best.bytesPerPick * 8,
-
-  confidence:
-   best.score >= 100
-    ? "Header/pick count supported"
-    : "Structure-based estimate"
-
- };
-
-}
-
-
-/* =========================================================
-   BIT COUNT
-========================================================= */
-
-function countBits(n){
-
- n =
-  n -
-  ((n >> 1) & 0x55);
-
- n =
-  (n & 0x33) +
-  ((n >> 2) & 0x33);
-
- return (
-  (n + (n >> 4)) & 0x0F
- );
-
-}
-
-
-/* =========================================================
-   RUNNING EP ANALYSIS
-   NOTE:
-   This analyzes machine structure only.
-   Design rows are NOT used later.
-========================================================= */
-
-function analyzeRunning(
- bytes,
- header,
- bpp,
- picks
-){
-
- if(
-  !Number.isInteger(header) ||
-  !Number.isInteger(bpp) ||
-  !Number.isInteger(picks) ||
-  header < 0 ||
-  bpp < 1 ||
-  picks < 1 ||
-  header + bpp * picks > bytes.length
- ){
-  throw new Error(
-   "Header, bytes/pick ya picks file size se match nahi karte."
-  );
- }
-
-
- const rows =
-  bytes.slice(
-   header,
-   header + bpp * picks
-  );
-
- const hookCount =
-  bpp * 8;
-
- const hookActivity =
-  new Uint32Array(hookCount);
-
- let totalOn = 0;
-
-
- for(let y=0;y<picks;y++){
-
-  for(let b=0;b<bpp;b++){
-
-   const value =
-    rows[y*bpp+b];
-
-   totalOn += countBits(value);
-
-
-   for(let bit=0;bit<8;bit++){
-
-    if(value & (1 << bit)){
-
-     hookActivity[
-      b*8+bit
-     ]++;
-
-    }
-
-   }
-
-  }
-
- }
-
-
- return {
-
-  totalOn,
-
-  averageOn:
-   picks
-    ? totalOn / picks
-    : 0,
-
-  hookActivity:
-   Array.from(hookActivity)
-
- };
-
-}
-
-
-/* =========================================================
-   RUNNING FILE
-========================================================= */
-
-async function handleRunningFile(file){
-
- try{
-
-  const bytes =
-   new Uint8Array(
-    await file.arrayBuffer()
-   );
-
-  runningBytes = bytes;
-  runningName = file.name;
-
-
-  const structure =
-   detectEPStructure(bytes);
-
-
-  if(!structure){
-
-   $("runInfo").className =
-    "status err";
-
-   $("runInfo").textContent =
-    "EP structure detect nahi ho paya. File format aur header verify karein.";
-
-   $("analyzeBtn").disabled = true;
-   $("saveMachineBtn").disabled = true;
-
-   return;
-  }
-
-
-  $("hooks").value =
-   structure.hooks;
-
-  $("headerLen").value =
-   structure.headerLength;
-
-  $("bytesPerPick").value =
-   structure.bytesPerPick;
-
-  $("originalPicks").value =
-   structure.picks;
-
-
-  runningAnalysis =
-   analyzeRunning(
-    bytes,
-    structure.headerLength,
-    structure.bytesPerPick,
-    structure.picks
-   );
-
-
-  $("runInfo").className =
-   "status ok";
-
-  $("runInfo").innerHTML =
-   "✓ " +
-   escapeHtml(file.name) +
-
-   "<br>Size: " +
-   bytes.length.toLocaleString() +
-   " bytes" +
-
-   "<br>Header: " +
-   structure.headerLength +
-   " bytes" +
-
-   "<br>Bytes/Pick: " +
-   structure.bytesPerPick +
-
-   "<br>Picks: " +
-   structure.picks +
-
-   "<br>Detected hook capacity: " +
-   structure.hooks +
-
-   "<br>Detection: " +
-   escapeHtml(structure.confidence);
-
-
-  $("analysisBox").className =
-   "status ok";
-
-  $("analysisBox").innerHTML =
-   "✓ Running EP structure analyzed" +
-
-   "<br>Hook capacity: " +
-   structure.hooks +
-
-   "<br>Average ON bits/pick: " +
-   runningAnalysis.averageOn.toFixed(2) +
-
-   "<br>Active hook positions: " +
-   runningAnalysis.hookActivity
-    .filter(v => v > 0)
-    .length +
-
-   "<br><b>Old running design rows output mein copy nahi hongi.</b>";
-
-
-  $("analyzeBtn").disabled = false;
-
-  updateSaveButton();
-
-
- }catch(error){
-
-  console.error(error);
-
-  $("runInfo").className =
-   "status err";
-
-  $("runInfo").textContent =
-   "File analysis error: " +
-   error.message;
-
-  $("analyzeBtn").disabled = true;
-  $("saveMachineBtn").disabled = true;
-
- }
-
-}
-
-
-function updateSaveButton(){
-
- $("saveMachineBtn").disabled =
-  !(
-   runningBytes &&
-   $("machineName").value.trim()
-  );
-
-}
-
-
-/* =========================================================
-   SAVE MACHINE
-========================================================= */
-
-async function saveNewMachine(){
-
- try{
-
-  const name =
-   $("machineName").value.trim();
-
-
-  if(!name){
-   alert("Machine Name bharna zaroori hai.");
-   return;
-  }
-
-
-  if(
-   !runningBytes ||
-   !runningAnalysis
-  ){
-   alert(
-    "Pehle valid Running EP analyze karein."
-   );
-   return;
-  }
-
-
-  const hooks =
-   Number($("hooks").value);
-
-  const headerLen =
-   Number($("headerLen").value);
-
-  const bpp =
-   Number($("bytesPerPick").value);
-
-  const picks =
-   Number($("originalPicks").value);
-
-  const magnets =
-   Math.floor(
-    Number($("magnetCount").value)
-   );
-
-
-  if(
-   !Number.isInteger(hooks) ||
-   hooks < 1 ||
-
-   !Number.isInteger(headerLen) ||
-   headerLen < 0 ||
-
-   !Number.isInteger(bpp) ||
-   bpp < 1 ||
-
-   !Number.isInteger(picks) ||
-   picks < 1 ||
-
-   !Number.isInteger(magnets) ||
-   magnets < 1 ||
-   magnets > 256
-  ){
-
-   alert(
-    "Machine parameters aur magnet count verify karein."
-   );
-
-   return;
-  }
-
-
-  if(
-   headerLen + bpp * picks !==
-   runningBytes.length
-  ){
-
-   alert(
-    "Header + bytes/pick × picks file size se match nahi karte."
-   );
-
-   return;
-  }
-
-
-  if(
-   Math.ceil(hooks / 8) > bpp
-  ){
-
-   alert(
-    "Hooks count bytes/pick capacity se zyada hai."
-   );
-
-   return;
-  }
-
-
-  const existing =
-   await dbGetAll(
-    MACHINE_STORE
-   );
-
-
-  if(
-   existing.some(
-    m =>
-     String(m.name || "")
-      .trim()
-      .toLowerCase() ===
-     name.toLowerCase()
-   )
-  ){
-
-   alert(
-    "Is naam ki machine pehle se saved hai. Doosra naam use karein."
-   );
-
-   return;
-  }
-
-
-  /*
-   IMPORTANT:
-
-   Header machine template ke liye save hota hai.
-   Running design rows save nahi ki ja rahi.
-  */
-
-  const header =
-   runningBytes.slice(
-    0,
-    headerLen
-   );
-
-
-  const machine = {
-
-   id: makeId(),
-
-   name,
-
-   hooks,
-
-   headerLen,
-
-   bpp,
-
-   picks,
-
-   fileName: runningName,
-
-   header64:
-    bytesToBase64(header),
-
-   averageOn:
-    runningAnalysis.averageOn,
-
-   hookActivity:
-    runningAnalysis.hookActivity,
-
-   magnetCount:magnets,
-
-   groundMode:
-    $("groundMode").value,
-
-   borderMode:
-    $("borderMode").value,
-
-   doriPattern:
-    $("doriPattern").value,
-
-   createdAt:
-    Date.now(),
-
-   version:10
-
-  };
-
-
-  $("saveMachineBtn").disabled = true;
-
-
-  await dbPut(
-   MACHINE_STORE,
-   machine
-  );
-
-
-  toast(
-   "Machine profile save ho gaya."
-  );
-
-
-  await refreshMachines(
-   machine.id
-  );
-
-
-  $("machineName").value = "";
-
-  $("runningFile").value = "";
-
-  runningBytes = null;
-  runningName = "";
-  runningAnalysis = null;
-
-
-  $("runInfo").className =
-   "status";
-
-  $("runInfo").textContent =
-   "Running file select nahi ki gayi.";
-
-
-  $("analysisBox").className =
-   "status";
-
-  $("analysisBox").textContent =
-   "EP analysis yahan dikhega.";
-
-
-  $("saveMachineBtn").disabled = true;
-
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Machine save error:\n" +
-   error.message
-  );
-
-  updateSaveButton();
-
- }
-
-}
-
-
-/* =========================================================
-   REFRESH MACHINES
-========================================================= */
-
-async function refreshMachines(
- preferredId = null
-){
-
- const machines =
-  await dbGetAll(
-   MACHINE_STORE
-  );
-
-
- machines.sort(
-  (a,b) =>
-   Number(b.createdAt || 0) -
-   Number(a.createdAt || 0)
- );
-
-
- renderMachineList(
-  machines
- );
-
- renderMachineSelect(
-  machines,
-  preferredId
- );
-
-
- if(preferredId !== null){
-
-  const found =
-   machines.find(
-    m =>
-     String(m.id) ===
-     String(preferredId)
-   );
-
-
-  if(found){
-
-   selectedMachine = found;
-
-   $("machineSelect").value =
-    String(found.id);
-
-   showSelectedMachine();
-
-  }
-
- }
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
@@ -1801,1503 +791,1703 @@ async function refreshMachines(
    MACHINE LIST
 ========================================================= */
 
-function renderMachineList(
- machines
-){
+async function refreshMachineList(){
 
- const box =
-  $("machineList");
+  const machines =
+    await getMachines();
 
+  const box =
+    $("machineList");
 
- if(!machines.length){
+  box.innerHTML = "";
 
-  box.innerHTML =
-   '<div class="status">Abhi koi machine saved nahi hai.</div>';
+  if(!machines.length){
 
-  return;
- }
+    box.innerHTML =
+      '<div class="small">No machine profile saved.</div>';
 
+    return;
 
- box.innerHTML =
-  machines.map(machine => {
-
-   const magnets =
-    Number(machine.magnetCount) ||
-    legacyMagnetCount(machine);
+  }
 
 
-   return `
+  machines.forEach(machine=>{
 
-    <div class="machine">
+    const div =
+      document.createElement("div");
 
-     <div class="machine-title">
+    div.className =
+      "machine-item";
 
-      <div class="machine-name">
-       ${escapeHtml(machine.name)}
+    div.innerHTML = `
+
+      <strong>${escapeHTML(machine.name)}</strong>
+
+      <div class="small">
+
+        ${machine.hooks} Hooks<br>
+        Header: ${machine.headerLen} Bytes<br>
+        Bytes/Pick: ${machine.bytesPerPick}
+
       </div>
 
-      <span class="pill">
-       ${Number(machine.hooks) || 0}
-       Hooks
-      </span>
+      <div class="machine-actions">
 
-     </div>
+        <button
+          class="selectMachineBtn"
+          data-id="${machine.id}">
+          SELECT
+        </button>
 
+        <button
+          class="danger deleteMachineBtn"
+          data-id="${machine.id}">
+          DELETE
+        </button>
 
-     <div style="margin-top:5px">
+      </div>
+    `;
 
-      <span class="pill">
-       ${magnets} Magnets
-      </span>
+    box.appendChild(div);
 
-      <span class="pill">
-       ${Number(machine.bpp) || 0}
-       Bytes/Pick
-      </span>
-
-      <span class="pill">
-       ${Number(machine.picks) || 0}
-       Picks
-      </span>
-
-     </div>
+  });
 
 
-     <div style="margin-top:5px">
+  document
+    .querySelectorAll(".selectMachineBtn")
+    .forEach(btn=>{
 
-      <span class="pill">
-       ${escapeHtml(
-        machine.fileName ||
-        "Running EP"
-       )}
-      </span>
+      btn.onclick = async function(){
 
-     </div>
+        const id =
+          Number(this.dataset.id);
 
+        const machines =
+          await getMachines();
 
-     <div class="row" style="margin-top:9px">
+        const machine =
+          machines.find(x=>x.id === id);
 
-      <button
-       class="green"
-       data-use-machine="${escapeAttr(machine.id)}"
-      >
-       Use Machine
-      </button>
+        if(machine)
+          selectMachine(machine);
 
-      <button
-       class="red"
-       data-delete-machine="${escapeAttr(machine.id)}"
-      >
-       Delete
-      </button>
+      };
 
-     </div>
-
-    </div>
-
-   `;
-
-  }).join("");
+    });
 
 
- box.querySelectorAll(
-  "[data-use-machine]"
- ).forEach(button => {
+  document
+    .querySelectorAll(".deleteMachineBtn")
+    .forEach(btn=>{
 
-  button.onclick = () =>
-   selectMachineById(
-    String(
-     button.dataset.useMachine
-    )
-   );
+      btn.onclick = async function(){
 
- });
+        const id =
+          Number(this.dataset.id);
 
+        await deleteMachine(id);
 
- box.querySelectorAll(
-  "[data-delete-machine]"
- ).forEach(button => {
+        if(
+          selectedMachine &&
+          selectedMachine.id === id
+        ){
 
-  button.onclick = () =>
-   deleteMachineById(
-    String(
-     button.dataset.deleteMachine
-    )
-   );
+          selectedMachine = null;
 
- });
+          $("designSection")
+            .classList.add("hidden");
 
-}
+          $("previewSection")
+            .classList.add("hidden");
 
+        }
 
-function legacyMagnetCount(machine){
+        refreshMachineList();
 
- const b =
-  machine.baver || {};
+      };
 
- const d =
-  machine.dadha || {};
-
- const total =
-  (Number(b.total) || 0) +
-  (Number(d.total) || 0);
-
- return total > 0
-  ? total
-  : 1;
+    });
 
 }
 
 
 /* =========================================================
-   MACHINE SELECT
+   RUNNING EP
 ========================================================= */
 
-function renderMachineSelect(
- machines,
- preferredId = null
-){
+$("runningEP").onchange = async function(){
 
- const select =
-  $("machineSelect");
+  const file =
+    this.files[0];
 
+  if(!file) return;
 
- const oldValue =
-  preferredId !== null
-   ? String(preferredId)
-   : String(select.value || "");
+  runningBytes =
+    new Uint8Array(
+      await file.arrayBuffer()
+    );
 
+  $("runningStatus").innerHTML = `
 
- select.innerHTML =
-  '<option value="">-- Saved machine select karein --</option>';
+    <div class="status ok">
 
+      Running EP loaded.<br>
 
- machines.forEach(machine => {
+      File:
+      ${escapeHTML(file.name)}<br>
 
-  const option =
-   document.createElement(
-    "option"
-   );
+      Size:
+      ${runningBytes.length.toLocaleString()}
+      bytes
 
-  option.value =
-   String(machine.id);
+    </div>
 
-  option.textContent =
-   (machine.name || "Unnamed") +
-   " • " +
-   (Number(machine.hooks) || 0) +
-   " Hooks";
+  `;
 
-  select.appendChild(option);
+  $("saveMachineBtn").disabled = false;
 
- });
+};
 
 
- select.value =
-  oldValue &&
-  machines.some(
-   m =>
-    String(m.id) ===
-    oldValue
-  )
-   ? oldValue
-   : "";
+/* =========================================================
+   ANALYZE RUNNING EP
+========================================================= */
+
+$("analyzeRunningBtn").onclick = function(){
+
+  if(!runningBytes){
+
+    $("runningStatus").innerHTML =
+      '<div class="status error">Please upload Running EP first.</div>';
+
+    return;
+
+  }
+
+
+  const hooks =
+    Number($("machineHooks").value);
+
+  if(!hooks || hooks < 1){
+
+    $("runningStatus").innerHTML =
+      '<div class="status error">Enter Hooks.</div>';
+
+    return;
+
+  }
+
+
+  let headerLen =
+    Number($("headerLength").value);
+
+  let bytesPerPick =
+    Number($("bytesPerPick").value);
+
+
+  if(!headerLen || !bytesPerPick){
+
+    const guessed =
+      guessEPStructure(
+        runningBytes,
+        hooks
+      );
+
+    if(guessed){
+
+      headerLen =
+        guessed.headerLen;
+
+      bytesPerPick =
+        guessed.bytesPerPick;
+
+      $("headerLength").value =
+        headerLen;
+
+      $("bytesPerPick").value =
+        bytesPerPick;
+
+    }
+
+  }
+
+
+  if(!headerLen || !bytesPerPick){
+
+    $("runningStatus").innerHTML = `
+
+      <div class="status error">
+
+        EP structure auto-detect nahi ho paya.<br>
+
+        Header Length aur Bytes Per Pick manually enter karein.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const dataLength =
+    runningBytes.length - headerLen;
+
+
+  if(dataLength < 0){
+
+    $("runningStatus").innerHTML =
+      '<div class="status error">Header length invalid.</div>';
+
+    return;
+
+  }
+
+
+  if(dataLength % bytesPerPick !== 0){
+
+    $("runningStatus").innerHTML = `
+
+      <div class="status error">
+
+        Header + Bytes/Pick mismatch.<br>
+
+        Data bytes: ${dataLength}<br>
+
+        Bytes/Pick: ${bytesPerPick}
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const runningPicks =
+    dataLength / bytesPerPick;
+
+  const capacity =
+    bytesPerPick * 8;
+
+
+  if(hooks > capacity){
+
+    $("runningStatus").innerHTML = `
+
+      <div class="status error">
+
+        Hooks ${hooks} hain, lekin
+        ${bytesPerPick} bytes/pick me maximum
+        ${capacity} hooks possible hain.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  $("runningStatus").innerHTML = `
+
+    <div class="status ok">
+
+      ✓ RUNNING EP ANALYZED<br><br>
+
+      Hooks: <strong>${hooks}</strong><br>
+      Header: <strong>${headerLen} bytes</strong><br>
+      Bytes/Pick: <strong>${bytesPerPick}</strong><br>
+      Running Picks: <strong>${runningPicks}</strong><br><br>
+
+      ⚠ Running EP ki old design rows
+      new design me COPY nahi hongi.
+
+    </div>
+
+  `;
+
+};
+
+
+/* =========================================================
+   EP GUESS
+========================================================= */
+
+function guessEPStructure(bytes,hooks){
+
+  const candidates = [];
+
+  for(let header=0;header<=512;header++){
+
+    const remaining =
+      bytes.length-header;
+
+    if(remaining<=0) continue;
+
+    for(
+      let bpp=1;
+      bpp<=Math.ceil(hooks/8)+8;
+      bpp++
+    ){
+
+      if(
+        remaining%bpp===0 &&
+        hooks<=bpp*8
+      ){
+
+        const picks =
+          remaining/bpp;
+
+        if(picks>0){
+
+          candidates.push({
+            headerLen:header,
+            bytesPerPick:bpp,
+            picks:picks
+          });
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  candidates.sort((a,b)=>{
+
+    const aScore =
+      a.headerLen +
+      Math.abs(
+        a.bytesPerPick-
+        Math.ceil(hooks/8)
+      )*20;
+
+    const bScore =
+      b.headerLen +
+      Math.abs(
+        b.bytesPerPick-
+        Math.ceil(hooks/8)
+      )*20;
+
+    return aScore-bScore;
+
+  });
+
+
+  return candidates[0] || null;
 
 }
+
+
+/* =========================================================
+   SAVE MACHINE
+========================================================= */
+
+$("saveMachineBtn").onclick = async function(){
+
+  if(!runningBytes){
+
+    alert("Running EP upload karein.");
+    return;
+
+  }
+
+
+  const name =
+    $("machineName").value.trim();
+
+  const hooks =
+    Number($("machineHooks").value);
+
+  const headerLen =
+    Number($("headerLength").value);
+
+  const bytesPerPick =
+    Number($("bytesPerPick").value);
+
+
+  if(!name){
+    alert("Machine name enter karein.");
+    return;
+  }
+
+  if(!hooks){
+    alert("Hooks enter karein.");
+    return;
+  }
+
+  if(!Number.isInteger(headerLen)||headerLen<0){
+    alert("Valid Header Length enter karein.");
+    return;
+  }
+
+  if(!Number.isInteger(bytesPerPick)||bytesPerPick<1){
+    alert("Valid Bytes Per Pick enter karein.");
+    return;
+  }
+
+  if(hooks>bytesPerPick*8){
+    alert("Hooks bytes/pick capacity se zyada hain.");
+    return;
+  }
+
+  if(runningBytes.length<headerLen+bytesPerPick){
+    alert("Running EP structure invalid hai.");
+    return;
+  }
+
+
+  const header64 =
+    runningBytes.slice(
+      0,
+      headerLen
+    );
+
+
+  const machine = {
+
+    name:name,
+    hooks:hooks,
+    headerLen:headerLen,
+    bytesPerPick:bytesPerPick,
+    header:Array.from(header64),
+    createdAt:Date.now()
+
+  };
+
+
+  await saveMachine(machine);
+
+  alert("Machine profile saved successfully.");
+
+  refreshMachineList();
+
+};
 
 
 /* =========================================================
    SELECT MACHINE
 ========================================================= */
 
-async function selectMachineById(id){
+function selectMachine(machine){
 
- const machine =
-  await dbGet(
-   MACHINE_STORE,
-   String(id)
-  );
+  selectedMachine =
+    machine;
 
+  clearDesignState();
 
- if(!machine){
+  $("designSection")
+    .classList.remove("hidden");
 
-  alert(
-   "Machine record nahi mila."
-  );
-
-  await refreshMachines();
-
-  return;
- }
+  $("previewSection")
+    .classList.add("hidden");
 
 
- selectedMachine = machine;
+  $("selectedMachineInfo").innerHTML = `
 
- $("machineSelect").value =
-  String(machine.id);
+    <strong>
+      ✓ ${escapeHTML(machine.name)} selected
+    </strong><br><br>
 
- currentDesignMachineId =
-  machine.id;
+    Hooks: ${machine.hooks}<br>
+    Header: ${machine.headerLen} bytes<br>
+    Bytes/Pick: ${machine.bytesPerPick}<br><br>
 
+    <strong>
+      Running EP design rows: NOT USED
+    </strong>
 
- /*
-  Agar already design loaded hai to
-  usi design ko selected machine ke
-  according dobara convert preview karein.
- */
- if(designImage){
-  renderBinary();
- }
+  `;
 
-
- showSelectedMachine();
-
- switchTab("design");
-
- toast(
-  machine.name +
-  " selected"
- );
+  window.scrollTo({
+    top:$("designSection").offsetTop-10,
+    behavior:"smooth"
+  });
 
 }
 
 
 /* =========================================================
-   DELETE MACHINE
+   CLEAR DESIGN
 ========================================================= */
 
-async function deleteMachineById(id){
-
- id = String(id);
-
- const machine =
-  await dbGet(
-   MACHINE_STORE,
-   id
-  );
-
-
- if(!machine){
-
-  await refreshMachines();
-
-  return;
-
- }
-
-
- if(
-  !confirm(
-   "Machine delete karni hai?\n\n" +
-   machine.name +
-   "\n\nYe action undo nahi hoga."
-  )
- ){
-  return;
- }
-
-
- try{
-
-  await dbDelete(
-   MACHINE_STORE,
-   id
-  );
-
-
-  if(
-   selectedMachine &&
-   String(selectedMachine.id) === id
-  ){
-
-   selectedMachine = null;
-
-   currentDesignMachineId = null;
-
-   binaryBits = null;
-
-  }
-
-
-  await refreshMachines();
-
-  showSelectedMachine();
-
-  toast(
-   machine.name +
-   " delete ho gayi."
-  );
-
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Delete error:\n" +
-   error.message
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   SHOW SELECTED MACHINE
-========================================================= */
-
-function showSelectedMachine(){
-
- if(!selectedMachine){
-
-  $("selectedMachineInfo").className =
-   "status";
-
-  $("selectedMachineInfo").textContent =
-   "Pehle saved machine select karein.";
-
-  $("targetPicks").value = 1;
-
-  updateDesignCheck();
-
-  return;
- }
-
-
- const magnets =
-  Number(
-   selectedMachine.magnetCount
-  ) ||
-  legacyMagnetCount(
-   selectedMachine
-  );
-
-
- $("selectedMachineInfo").className =
-  "status ok";
-
-
- $("selectedMachineInfo").innerHTML =
-
-  "<b>" +
-  escapeHtml(
-   selectedMachine.name
-  ) +
-  "</b> selected" +
-
-  "<br>" +
-
-  selectedMachine.hooks +
-  " Hooks • " +
-
-  selectedMachine.bpp +
-  " Bytes/Pick • " +
-
-  selectedMachine.picks +
-  " Running Picks" +
-
-  "<br>" +
-
-  "<span class='pill'>" +
-  "Magnets: " +
-  magnets +
-  "</span>" +
-
-  "<br>" +
-
-  "<span class='sub'>" +
-  "Machine template: " +
-  escapeHtml(
-   selectedMachine.fileName || ""
-  ) +
-  "</span>";
-
-
- $("targetPicks").value =
-  selectedMachine.picks;
-
-
- updateDesignCheck();
-
-}
-
-
-/* =========================================================
-   DESIGN FILE VALIDATION
-========================================================= */
-
-function isSupportedDesignFile(file){
-
- if(!file){
-  return false;
- }
-
-
- const allowedExtensions =
-  /\.(png|jpe?g|bmp)$/i;
-
-
- if(
-  !allowedExtensions.test(
-   file.name
-  )
- ){
-  return false;
- }
-
-
- const allowedTypes = [
-  "",
-  "image/png",
-  "image/jpeg",
-  "image/bmp",
-  "image/x-ms-bmp"
- ];
-
-
- if(
-  file.type &&
-  !allowedTypes.includes(
-   file.type
-  )
- ){
-  return false;
- }
-
-
- return true;
-
-}
-
-
-/* =========================================================
-   STRICT DESIGN LOAD
-========================================================= */
-
-function loadDesign(file){
-
- /*
-  No machine = no design.
- */
-
- if(!selectedMachine){
-
-  alert(
-   "Pehle Machine Setup se machine select karein."
-  );
+function clearDesignState(){
+
+  currentDesignFile = null;
+  currentDesignImage = null;
+  binaryBits = null;
+  binaryWidth = 0;
+  binaryHeight = 0;
 
   $("designFile").value = "";
 
-  return;
+  $("designInfo").classList.add("hidden");
 
- }
+  $("previewSection")
+    .classList.add("hidden");
 
+  $("originalCanvas").width = 1;
+  $("originalCanvas").height = 1;
 
- /*
-  File type validation.
- */
+  $("binaryCanvas").width = 1;
+  $("binaryCanvas").height = 1;
 
- if(
-  !isSupportedDesignFile(file)
- ){
-
-  $("designInfo").className =
-   "status err";
-
-  $("designInfo").textContent =
-   "Sirf PNG, JPG, JPEG ya BMP design image accept hogi. Dusri file reject kar di gayi.";
-
-  $("designFile").value = "";
-
-  return;
-
- }
+}
 
 
- /*
-  Previous design completely clear.
- */
+/* =========================================================
+   FINGER INPUTS
+========================================================= */
 
- designImage = null;
+function createFingerInputs(){
 
- binaryBits = null;
+  const count =
+    Number($("fingerCount").value);
 
- designFileName = "";
+  const box =
+    $("fingerInputs");
 
- currentDesignMachineId = null;
-
-
- /*
-  Previous object URL remove.
- */
-
- if(designObjectUrl){
-
-  URL.revokeObjectURL(
-   designObjectUrl
-  );
-
-  designObjectUrl = "";
-
- }
+  box.innerHTML = "";
 
 
- $("originalPreview").removeAttribute(
-  "src"
- );
+  for(let i=1;i<=count;i++){
 
- $("originalPreview").classList.add(
-  "hidden"
- );
+    const div =
+      document.createElement("div");
 
-
- $("convertBtn").disabled = true;
+    div.className =
+      "finger-box";
 
 
- /*
-  New object URL.
- */
+    div.innerHTML = `
 
- const url =
-  URL.createObjectURL(
-   file
-  );
+      <div class="finger-title">
+        Finger ${i}
+      </div>
 
- designObjectUrl = url;
+      <label>
+        Finger ${i} Picks
+      </label>
 
+      <input
+        class="fingerPickInput"
+        data-finger="${i}"
+        type="number"
+        min="0"
+        step="1"
+        value="0"
+        placeholder="Enter picks">
 
- const img =
-  new Image();
+    `;
 
-
- img.onload = () => {
-
-  /*
-   Basic dimension validation.
-  */
-
-  if(
-   !img.naturalWidth ||
-   !img.naturalHeight
-  ){
-
-   URL.revokeObjectURL(url);
-
-   designObjectUrl = "";
-
-   $("designInfo").className =
-    "status err";
-
-   $("designInfo").textContent =
-    "Design image ki dimensions read nahi ho paayi.";
-
-   return;
+    box.appendChild(div);
 
   }
 
 
+  document
+    .querySelectorAll(".fingerPickInput")
+    .forEach(input=>{
+
+      input.addEventListener(
+        "input",
+        onFingerPickChange
+      );
+
+    });
+
+
+  updateTotalPicks();
+
+}
+
+
+/* =========================================================
+   GET FINGER VALUES
+========================================================= */
+
+function getFingerPicks(){
+
+  const inputs =
+    document.querySelectorAll(
+      ".fingerPickInput"
+    );
+
+  const result = [];
+
+  inputs.forEach(input=>{
+
+    result.push({
+
+      finger:Number(
+        input.dataset.finger
+      ),
+
+      picks:Math.max(
+        0,
+        Number(input.value)||0
+      )
+
+    });
+
+  });
+
+  return result;
+
+}
+
+
+/* =========================================================
+   VALIDATION RULE
+   Finger 1 >= Finger 2 >= Finger 3...
+========================================================= */
+
+function validateFingerPicks(){
+
+  const fingers =
+    getFingerPicks();
+
+
   /*
-   Minimum usable image.
+    Empty / zero values are allowed while editing,
+    but final conversion requires every selected
+    finger to have a positive pick count.
   */
 
-  if(
-   img.naturalWidth < 2 ||
-   img.naturalHeight < 2
-  ){
+  let valid = true;
 
-   URL.revokeObjectURL(url);
+  let message = "";
 
-   designObjectUrl = "";
 
-   $("designInfo").className =
-    "status err";
+  for(let i=0;i<fingers.length;i++){
 
-   $("designInfo").textContent =
-    "Design image bahut chhoti hai.";
+    const current =
+      fingers[i];
 
-   return;
+    if(current.picks<=0){
+
+      valid = false;
+
+      message =
+        `Finger ${current.finger} ka pick count enter karein.`;
+
+      break;
+
+    }
+
+
+    if(i>0){
+
+      const previous =
+        fingers[i-1];
+
+
+      if(current.picks>previous.picks){
+
+        valid = false;
+
+        message =
+          `Finger ${current.finger} picks (${current.picks}) ` +
+          `Finger ${previous.finger} (${previous.picks}) ` +
+          `se zyada nahi ho sakte.`;
+
+        break;
+
+      }
+
+    }
 
   }
 
 
-  designImage = img;
-
-  designFileName =
-   file.name;
-
-  currentDesignMachineId =
-   selectedMachine.id;
+  const inputs =
+    document.querySelectorAll(
+      ".fingerPickInput"
+    );
 
 
-  $("originalPreview").src =
-   url;
+  inputs.forEach((input,index)=>{
 
-  $("originalPreview").classList.remove(
-   "hidden"
-  );
+    const value =
+      Number(input.value)||0;
 
+    input.classList.remove(
+      "invalid-input",
+      "valid-input"
+    );
+
+
+    if(value<=0){
+
+      input.classList.add(
+        "invalid-input"
+      );
+
+    }else{
+
+      input.classList.add(
+        "valid-input"
+      );
+
+    }
+
+
+    if(index>0){
+
+      const previousValue =
+        Number(
+          inputs[index-1].value
+        )||0;
+
+
+      if(value>previousValue){
+
+        input.classList.add(
+          "invalid-input"
+        );
+
+      }
+
+    }
+
+  });
+
+
+  const box =
+    $("fingerValidation");
+
+
+  if(valid){
+
+    box.innerHTML = `
+
+      <div class="status ok">
+
+        ✓ Finger pick order valid.<br>
+
+        Rule:
+        Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
+        Finger 4 ≥ Finger 5 ≥ Finger 6
+
+      </div>
+
+    `;
+
+  }else{
+
+    box.innerHTML = `
+
+      <div class="status error">
+
+        ✕ ${escapeHTML(message)}
+
+        <br><br>
+
+        Required:
+        Finger 1 ≥ Finger 2 ≥ Finger 3 ≥
+        Finger 4 ≥ Finger 5 ≥ Finger 6
+
+      </div>
+
+    `;
+
+  }
+
+
+  return valid;
+
+}
+
+
+/* =========================================================
+   FINGER INPUT CHANGE
+========================================================= */
+
+function onFingerPickChange(){
+
+  const valid =
+    validateFingerPicks();
+
+  updateTotalPicks();
+
+
+  /*
+    Invalid finger distribution par
+    conversion disable.
+  */
+
+  if(!valid){
+
+    $("convertBtn").disabled = true;
+
+  }else if(binaryBits){
+
+    $("convertBtn").disabled = false;
+
+  }
+
+}
+
+
+/* =========================================================
+   TOTAL PICKS
+========================================================= */
+
+function getTotalPicks(){
+
+  return getFingerPicks()
+    .reduce(
+      (sum,item)=>sum+item.picks,
+      0
+    );
+
+}
+
+
+function updateTotalPicks(){
+
+  const total =
+    getTotalPicks();
+
+
+  $("totalPicks").innerHTML = `
+
+    Total Design Picks:
+    <strong>${total}</strong>
+
+  `;
+
+
+  if(binaryBits){
+
+    renderBinary();
+
+  }
+
+}
+
+
+/* =========================================================
+   DESIGN FILE
+========================================================= */
+
+$("designFile").onchange = async function(){
+
+  const file =
+    this.files[0];
+
+  if(!file) return;
+
+
+  clearCurrentDesignOnly();
+
+
+  const allowedTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/bmp",
+    "image/webp"
+  ];
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+  const allowedExtensions =
+    ["png","jpg","jpeg","bmp","webp"];
+
+
+  if(
+    !allowedTypes.includes(file.type) &&
+    !allowedExtensions.includes(extension)
+  ){
+
+    showDesignError(
+      "Only design image files are allowed."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const url =
+      URL.createObjectURL(file);
+
+    const img =
+      new Image();
+
+
+    img.onload = function(){
+
+      URL.revokeObjectURL(url);
+
+      currentDesignFile =
+        file;
+
+      currentDesignImage =
+        img;
+
+
+      $("designInfo").className =
+        "status ok";
+
+      $("designInfo")
+        .classList.remove("hidden");
+
+
+      $("designInfo").innerHTML = `
+
+        <strong>✓ DESIGN ACCEPTED</strong><br>
+
+        File:
+        ${escapeHTML(file.name)}<br>
+
+        Size:
+        ${img.naturalWidth} ×
+        ${img.naturalHeight} px<br>
+
+        <strong>
+          SOURCE: ONLY THIS DESIGN
+        </strong><br>
+
+        Running EP ki design rows use nahi hongi.
+
+      `;
+
+
+      drawOriginal();
+
+      renderBinary();
+
+      $("previewSection")
+        .classList.remove("hidden");
+
+    };
+
+
+    img.onerror = function(){
+
+      URL.revokeObjectURL(url);
+
+      showDesignError(
+        "Design image read nahi ho payi."
+      );
+
+    };
+
+
+    img.src = url;
+
+  }catch(err){
+
+    showDesignError(
+      "Design load error."
+    );
+
+  }
+
+};
+
+
+function showDesignError(message){
 
   $("designInfo").className =
-   "status ok";
+    "status error";
 
+  $("designInfo")
+    .classList.remove("hidden");
 
   $("designInfo").innerHTML =
-   "✓ <b>DESIGN ACCEPTED</b>" +
+    escapeHTML(message);
 
-   "<br>File: " +
-   escapeHtml(file.name) +
-
-   "<br>Size: " +
-   img.naturalWidth +
-   " × " +
-   img.naturalHeight +
-   " px" +
-
-   "<br><b>Source: ONLY THIS DESIGN</b>" +
-
-   "<br>Running EP ki design rows use nahi hongi.";
+}
 
 
-  renderBinary();
+function clearCurrentDesignOnly(){
 
- };
-
-
- img.onerror = () => {
-
-  URL.revokeObjectURL(url);
-
-  designObjectUrl = "";
-
-  designImage = null;
-
+  currentDesignFile = null;
+  currentDesignImage = null;
   binaryBits = null;
-
-  currentDesignMachineId = null;
-
-
-  $("designInfo").className =
-   "status err";
-
-
-  $("designInfo").textContent =
-   "Design image read nahi ho paayi. Valid PNG/JPG/JPEG/BMP design file upload karein.";
-
-
-  $("originalPreview").classList.add(
-   "hidden"
-  );
-
-
-  $("convertBtn").disabled = true;
-
-
-  updateDesignCheck();
-
- };
-
-
- img.src = url;
+  binaryWidth = 0;
+  binaryHeight = 0;
 
 }
 
 
 /* =========================================================
-   BINARY RENDER
-   IMPORTANT:
-   ONLY uploaded design image is used.
-   NO running rows.
-   NO example image.
-   NO previous design.
+   ORIGINAL PREVIEW
+========================================================= */
+
+function drawOriginal(){
+
+  if(!currentDesignImage)
+    return;
+
+
+  const canvas =
+    $("originalCanvas");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  canvas.width =
+    currentDesignImage.naturalWidth;
+
+  canvas.height =
+    currentDesignImage.naturalHeight;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  ctx.drawImage(
+    currentDesignImage,
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
+   BINARY DESIGN
 ========================================================= */
 
 function renderBinary(){
 
- if(
-  !designImage ||
-  !selectedMachine
- ){
-  return;
- }
-
-
- const W =
-  Number(
-   selectedMachine.hooks
-  );
-
-
- const H =
-  Math.max(
-   1,
-   Math.floor(
-    Number(
-     $("targetPicks").value
-    ) ||
-    selectedMachine.picks
-   )
-  );
-
-
- const left =
-  Math.max(
-   0,
-   Math.floor(
-    Number(
-     $("leftPad").value
-    ) || 0
-   )
-  );
-
-
- const right =
-  Math.max(
-   0,
-   Math.floor(
-    Number(
-     $("rightPad").value
-    ) || 0
-   )
-  );
-
-
- if(
-  !Number.isInteger(W) ||
-  W < 1
- ){
-
-  $("designCheck").className =
-   "status err";
-
-  $("designCheck").textContent =
-   "Machine hook count invalid hai.";
-
-  $("convertBtn").disabled = true;
-
-  return;
-
- }
-
-
- if(
-  left + right >= W
- ){
-
-  $("designCheck").className =
-   "status err";
-
-  $("designCheck").textContent =
-   "Left + Right padding hook capacity se kam hona chahiye.";
-
-  $("convertBtn").disabled = true;
-
-  return;
-
- }
-
-
- const drawWidth =
-  W - left - right;
-
-
- $("targetPicks").value =
-  H;
-
-
- /*
-  SOURCE CANVAS
-  Sirf uploaded image.
- */
-
- const sourceCanvas =
-  document.createElement(
-   "canvas"
-  );
-
- sourceCanvas.width =
-  drawWidth;
-
- sourceCanvas.height =
-  H;
-
-
- const sourceCtx =
-  sourceCanvas.getContext(
-   "2d",
-   {willReadFrequently:true}
-  );
-
-
- sourceCtx.imageSmoothingEnabled =
-  false;
-
-
- /*
-  White base only for transparent/empty
-  area. It is NOT running EP.
- */
-
- sourceCtx.fillStyle =
-  "#ffffff";
-
- sourceCtx.fillRect(
-  0,
-  0,
-  drawWidth,
-  H
- );
-
-
- /*
-  User transformations.
- */
-
- sourceCtx.save();
-
- sourceCtx.translate(
-  mirror ? drawWidth : 0,
-  flip ? H : 0
- );
-
- sourceCtx.scale(
-  mirror ? -1 : 1,
-  flip ? -1 : 1
- );
-
-
- /*
-  IMPORTANT:
-  Uploaded design is the ONLY visual source.
- */
-
- sourceCtx.drawImage(
-  designImage,
-  0,
-  0,
-  drawWidth,
-  H
- );
-
-
- sourceCtx.restore();
-
-
- const pixels =
-  sourceCtx.getImageData(
-   0,
-   0,
-   drawWidth,
-   H
-  ).data;
-
-
- /*
-  New binary buffer.
-  Completely fresh every render.
- */
-
- binaryBits =
-  new Uint8Array(
-   W * H
-  );
-
-
- let threshold =
-  Number(
-   $("threshold").value
-  );
-
-
- if(
-  !Number.isFinite(threshold)
- ){
-  threshold = 128;
- }
-
-
- /*
-  Convert ONLY uploaded image pixels.
- */
-
- for(let y=0;y<H;y++){
-
-  for(let x=0;x<drawWidth;x++){
-
-   const i =
-    (y * drawWidth + x) * 4;
-
-
-   const alpha =
-    pixels[i + 3];
-
-
-   /*
-    Transparent pixels are treated
-    as background/off.
-   */
-
-   if(alpha < 10){
-    continue;
-   }
-
-
-   const gray =
-    0.299 * pixels[i] +
-    0.587 * pixels[i + 1] +
-    0.114 * pixels[i + 2];
-
-
-   let on =
-    gray < threshold
-     ? 1
-     : 0;
-
-
-   if(invert){
-    on = on ? 0 : 1;
-   }
-
-
-   binaryBits[
-    y * W +
-    left +
-    x
-   ] = on;
+  if(
+    !currentDesignImage ||
+    !selectedMachine
+  ){
+
+    return;
 
   }
 
- }
+
+  /*
+    Conversion se pehle finger validation.
+  */
+
+  const fingerValid =
+    validateFingerPicks();
 
 
- /*
-  PREVIEW
- */
+  if(!fingerValid){
 
- const preview =
-  $("binaryCanvas");
+    binaryBits = null;
+
+    $("convertBtn").disabled = true;
+
+    $("conversionInfo").innerHTML = `
+
+      <strong>
+        Finger pick distribution invalid.
+      </strong><br>
+
+      Pehle finger picks correct karein.
+
+    `;
+
+    return;
+
+  }
 
 
- const previewWidth =
-  Math.min(
-   900,
-   W
+  const totalPicks =
+    getTotalPicks();
+
+
+  if(totalPicks<=0){
+
+    binaryBits = null;
+
+    $("convertBtn").disabled = true;
+
+    return;
+
+  }
+
+
+  const hooks =
+    selectedMachine.hooks;
+
+
+  const left =
+    Math.max(
+      0,
+      Number($("leftPadding").value)||0
+    );
+
+
+  const right =
+    Math.max(
+      0,
+      Number($("rightPadding").value)||0
+    );
+
+
+  const usableWidth =
+    Math.max(
+      1,
+      hooks-left-right
+    );
+
+
+  const srcW =
+    currentDesignImage.naturalWidth;
+
+  const srcH =
+    currentDesignImage.naturalHeight;
+
+
+  const srcCanvas =
+    document.createElement("canvas");
+
+  srcCanvas.width =
+    srcW;
+
+  srcCanvas.height =
+    srcH;
+
+
+  const srcCtx =
+    srcCanvas.getContext("2d");
+
+  srcCtx.drawImage(
+    currentDesignImage,
+    0,
+    0
   );
 
 
- const previewHeight =
-  Math.min(
-   600,
-   Math.max(
-    100,
-    Math.round(
-     H *
-     previewWidth /
-     W
-    )
-   )
-  );
+  const srcData =
+    srcCtx.getImageData(
+      0,
+      0,
+      srcW,
+      srcH
+    ).data;
 
 
- preview.width =
-  previewWidth;
+  binaryWidth =
+    hooks;
 
- preview.height =
-  previewHeight;
-
-
- const temp =
-  document.createElement(
-   "canvas"
-  );
-
- temp.width = W;
- temp.height = H;
+  binaryHeight =
+    totalPicks;
 
 
- const tempCtx =
-  temp.getContext(
-   "2d"
-  );
+  binaryBits =
+    new Uint8Array(
+      binaryWidth*
+      binaryHeight
+    );
 
 
- const image =
-  tempCtx.createImageData(
-   W,
-   H
-  );
+  const threshold =
+    Math.max(
+      0,
+      Math.min(
+        255,
+        Number($("threshold").value)||128
+      )
+    );
 
 
- /*
-  Preview colors only.
-  They are NOT written into EP.
- */
+  /*
+    Uploaded image ko exact selected total
+    picks ki height me convert kiya ja raha hai.
+  */
 
- const background =
-  [53,213,210];
+  for(let y=0;y<totalPicks;y++){
 
- const designColor =
-  [35,58,78];
-
-
- for(
-  let i=0;
-  i<binaryBits.length;
-  i++
- ){
-
-  const color =
-   binaryBits[i]
-    ? designColor
-    : background;
+    let sy =
+      Math.floor(
+        y*srcH/totalPicks
+      );
 
 
-  const j =
-   i * 4;
+    if(flipMode){
+
+      sy =
+        srcH-1-sy;
+
+    }
 
 
-  image.data[j] =
-   color[0];
+    for(let x=0;x<hooks;x++){
 
-  image.data[j+1] =
-   color[1];
-
-  image.data[j+2] =
-   color[2];
-
-  image.data[j+3] =
-   255;
-
- }
+      let dx =
+        x-left;
 
 
- tempCtx.putImageData(
-  image,
-  0,
-  0
- );
+      if(
+        dx<0 ||
+        dx>=usableWidth
+      ){
+
+        binaryBits[
+          y*hooks+x
+        ]=0;
+
+        continue;
+
+      }
 
 
- const previewCtx =
-  preview.getContext(
-   "2d"
-  );
+      let sx =
+        Math.floor(
+          dx*srcW/usableWidth
+        );
 
 
- previewCtx.clearRect(
-  0,
-  0,
-  previewWidth,
-  previewHeight
- );
+      if(mirrorMode){
+
+        sx =
+          srcW-1-sx;
+
+      }
 
 
- previewCtx.imageSmoothingEnabled =
-  false;
+      const index =
+        (
+          sy*srcW+
+          sx
+        )*4;
 
 
- previewCtx.drawImage(
-  temp,
-  0,
-  0,
-  previewWidth,
-  previewHeight
- );
+      const r =
+        srcData[index];
+
+      const g =
+        srcData[index+1];
+
+      const b =
+        srcData[index+2];
+
+      const a =
+        srcData[index+3];
 
 
- previewCtx.strokeStyle =
-  "#007f91";
-
- previewCtx.lineWidth =
-  Math.max(
-   1,
-   Math.round(
-    previewWidth / 450
-   )
-  );
+      let gray;
 
 
- previewCtx.strokeRect(
-  0,
-  0,
-  previewWidth,
-  previewHeight
- );
+      if(a<10){
+
+        gray=255;
+
+      }else{
+
+        gray =
+          0.299*r+
+          0.587*g+
+          0.114*b;
+
+      }
 
 
- updateDesignCheck();
+      let bit =
+        gray<threshold
+          ?1
+          :0;
+
+
+      if(invertMode){
+
+        bit =
+          bit?0:1;
+
+      }
+
+
+      binaryBits[
+        y*hooks+x
+      ]=bit;
+
+    }
+
+  }
+
+
+  drawBinaryPreview();
+
+  updateConversionInfo();
+
+  $("convertBtn").disabled = false;
 
 }
 
 
 /* =========================================================
-   DESIGN CHECK
+   BINARY PREVIEW
 ========================================================= */
 
-function updateDesignCheck(){
+function drawBinaryPreview(){
 
- if(
-  !selectedMachine ||
-  !designImage ||
-  currentDesignMachineId !==
-   selectedMachine.id
- ){
-
-  $("designCheck").className =
-   "status warn";
-
-  $("designCheck").textContent =
-   "Pehle valid machine select karein aur phir design upload karein.";
-
-  $("convertBtn").disabled =
-   true;
-
-  return;
-
- }
+  if(!binaryBits)
+    return;
 
 
- const H =
-  Math.max(
-   1,
-   Math.floor(
-    Number(
-     $("targetPicks").value
-    ) ||
-    selectedMachine.picks
-   )
+  const canvas =
+    $("binaryCanvas");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  canvas.width =
+    binaryWidth;
+
+  canvas.height =
+    binaryHeight;
+
+
+  const imageData =
+    ctx.createImageData(
+      binaryWidth,
+      binaryHeight
+    );
+
+
+  for(
+    let i=0;
+    i<binaryBits.length;
+    i++
+  ){
+
+    const v =
+      binaryBits[i]?0:255;
+
+    const p =
+      i*4;
+
+    imageData.data[p]=v;
+    imageData.data[p+1]=v;
+    imageData.data[p+2]=v;
+    imageData.data[p+3]=255;
+
+  }
+
+
+  ctx.putImageData(
+    imageData,
+    0,
+    0
   );
-
-
- const outputSize =
-  selectedMachine.headerLen +
-  selectedMachine.bpp * H;
-
-
- $("designCheck").className =
-  "status ok";
-
-
- $("designCheck").innerHTML =
-
-  "✓ <b>" +
-  escapeHtml(
-   selectedMachine.name
-  ) +
-  "</b> selected" +
-
-  "<br>" +
-
-  "<b>ONLY uploaded design</b>" +
-
-  "<br>" +
-
-  selectedMachine.hooks +
-  " Hooks × " +
-  H +
-  " Picks" +
-
-  "<br>" +
-
-  "Output size: " +
-  outputSize.toLocaleString() +
-  " bytes" +
-
-  "<br>" +
-
-  "Running EP design rows: <b>NOT USED</b>";
-
-
- $("convertBtn").disabled =
-  false;
-
-
- validatePreview();
 
 }
 
 
 /* =========================================================
-   VALIDATION
+   CONVERSION INFO
 ========================================================= */
 
-function validatePreview(){
+function updateConversionInfo(){
 
- if(!selectedMachine){
-
-  $("validation").innerHTML =
-   "";
-
-  $("hexPreview").textContent =
-   "";
-
-  return;
-
- }
+  if(
+    !selectedMachine ||
+    !binaryBits
+  ){
+    return;
+  }
 
 
- const H =
-  Math.max(
-   1,
-   Math.floor(
-    Number(
-     $("targetPicks").value
-    ) ||
-    selectedMachine.picks
-   )
-  );
+  const fingers =
+    getFingerPicks();
+
+  const total =
+    getTotalPicks();
 
 
- const magnets =
-  Number(
-   selectedMachine.magnetCount
-  ) ||
-  legacyMagnetCount(
-   selectedMachine
-  );
+  const fingerText =
+    fingers
+      .map(
+        f =>
+          `Finger ${f.finger}: ${f.picks}`
+      )
+      .join("<br>");
 
 
- $("validation").innerHTML = `
-
-  <div class="status">
-   Hooks<br>
-   <b>${selectedMachine.hooks}</b>
-  </div>
-
-  <div class="status">
-   Picks<br>
-   <b>${H}</b>
-  </div>
-
-  <div class="status">
-   Magnets<br>
-   <b>${magnets}</b>
-  </div>
-
-  <div class="status">
-   Header<br>
-   <b>${selectedMachine.headerLen} bytes</b>
-  </div>
-
-  <div class="status">
-   Bytes/Pick<br>
-   <b>${selectedMachine.bpp}</b>
-  </div>
-
-  <div class="status ok">
-   Mode<br>
-   <b>ONLY NEW DESIGN</b>
-  </div>
-
- `;
+  const outputSize =
+    selectedMachine.headerLen+
+    selectedMachine.bytesPerPick*
+    total;
 
 
- updateHex();
+  $("conversionInfo").innerHTML = `
+
+    <strong>
+      ✓ ${escapeHTML(selectedMachine.name)}
+      selected
+    </strong><br><br>
+
+    ${fingerText}<br><br>
+
+    <strong>
+      ${selectedMachine.hooks}
+      Hooks ×
+      ${total}
+      Picks
+    </strong><br>
+
+    Output size:
+    ${outputSize.toLocaleString()}
+    bytes<br><br>
+
+    Running EP design rows:
+    <strong>NOT USED</strong>
+
+  `;
 
 }
 
 
 /* =========================================================
-   BUILD EP
-   CRITICAL:
+   INVERT / MIRROR / FLIP
+========================================================= */
 
-   1. Fresh output buffer.
-   2. Header = machine template only.
-   3. Rows = ONLY binaryBits.
-   4. Running rows are NEVER loaded.
-   5. Previous design is NEVER loaded.
-   6. No bitwise OR with old running rows.
+$("invertBtn").onclick=function(){
+
+  invertMode=!invertMode;
+
+  this.innerText =
+    "Invert: "+
+    (invertMode?"ON":"OFF");
+
+  if(currentDesignImage)
+    renderBinary();
+
+};
+
+
+$("mirrorBtn").onclick=function(){
+
+  mirrorMode=!mirrorMode;
+
+  this.innerText =
+    "Mirror: "+
+    (mirrorMode?"ON":"OFF");
+
+  if(currentDesignImage)
+    renderBinary();
+
+};
+
+
+$("flipBtn").onclick=function(){
+
+  flipMode=!flipMode;
+
+  this.innerText =
+    "Flip: "+
+    (flipMode?"ON":"OFF");
+
+  if(currentDesignImage)
+    renderBinary();
+
+};
+
+
+/* =========================================================
+   DESIGN OPTION EVENTS
+========================================================= */
+
+[
+  "threshold",
+  "leftPadding",
+  "rightPadding"
+].forEach(id=>{
+
+  $(id).addEventListener(
+    "input",
+    function(){
+
+      if(currentDesignImage)
+        renderBinary();
+
+    }
+  );
+
+});
+
+
+$("fingerCount").addEventListener(
+  "change",
+  function(){
+
+    createFingerInputs();
+
+    /*
+      Finger count change hone par validation
+      fresh start karegi.
+    */
+
+    $("convertBtn").disabled = true;
+
+  }
+);
+
+
+/* =========================================================
+   BUILD NEW EP
 ========================================================= */
 
 function buildNativeEP(){
 
- if(!selectedMachine){
+  if(
+    !selectedMachine ||
+    !binaryBits
+  ){
 
-  throw new Error(
-   "Pehle machine select karein."
-  );
-
- }
-
-
- if(
-  !designImage ||
-  !binaryBits
- ){
-
-  throw new Error(
-   "Pehle valid design file upload karein."
-  );
-
- }
-
-
- if(
-  currentDesignMachineId !==
-  selectedMachine.id
- ){
-
-  throw new Error(
-   "Machine badal gayi hai. Design dobara select karein."
-  );
-
- }
-
-
- const H =
-  Math.floor(
-   Number(
-    $("targetPicks").value
-   ) ||
-   selectedMachine.picks
-  );
-
-
- const bpp =
-  Number(
-   selectedMachine.bpp
-  );
-
-
- const hooks =
-  Number(
-   selectedMachine.hooks
-  );
-
-
- const headerLen =
-  Number(
-   selectedMachine.headerLen
-  );
-
-
- if(
-  !Number.isInteger(H) ||
-  H < 1
- ){
-
-  throw new Error(
-   "Target picks valid nahi hain."
-  );
-
- }
-
-
- if(
-  !Number.isInteger(bpp) ||
-  bpp < 1 ||
-  !Number.isInteger(hooks) ||
-  hooks < 1
- ){
-
-  throw new Error(
-   "Machine hooks/bytes per pick invalid hain."
-  );
-
- }
-
-
- const headerBytes =
-  base64ToBytes(
-   selectedMachine.header64
-  );
-
-
- if(
-  headerBytes.length !==
-  headerLen
- ){
-
-  throw new Error(
-   "Saved machine header corrupt hai."
-  );
-
- }
-
-
- /*
-  NEW OUTPUT
-  Zero-filled.
-  Ismein running EP rows nahi hain.
- */
-
- const output =
-  new Uint8Array(
-   headerLen +
-   bpp * H
-  );
-
-
- /*
-  Machine header only.
- */
-
- output.set(
-  headerBytes,
-  0
- );
-
-
- /*
-  NEW DESIGN ROWS ONLY.
- */
-
- for(let y=0;y<H;y++){
-
-  const targetStart =
-   headerLen +
-   y * bpp;
-
-
-  for(let x=0;x<hooks;x++){
-
-   if(
-    binaryBits[
-     y * hooks + x
-    ]
-   ){
-
-    const byteIndex =
-     x >> 3;
-
-    /*
-     Current mapping:
-     hook 0 = MSB of byte 0.
-
-     IMPORTANT:
-     Machine-specific bit order is
-     not yet verified.
-    */
-
-    const bit =
-     7 -
-     (x & 7);
-
-
-    output[
-     targetStart +
-     byteIndex
-    ] |=
-     (1 << bit);
-
-   }
+    throw new Error(
+      "Machine aur design required."
+    );
 
   }
 
- }
+
+  /*
+    FINAL VALIDATION:
+    Finger 1 >= Finger 2 >= ... >= Finger 6
+  */
+
+  if(!validateFingerPicks()){
+
+    throw new Error(
+      "Finger pick order invalid hai."
+    );
+
+  }
 
 
- /*
-  IMPORTANT:
-  Previous code was changing bytes 3-5
-  assuming those bytes are pick count.
+  const machine =
+    selectedMachine;
 
-  We DO NOT change the header here because
-  that field has not been verified for this
-  machine format.
- */
 
- return output;
+  const totalPicks =
+    getTotalPicks();
+
+
+  if(totalPicks<=0){
+
+    throw new Error(
+      "Total picks 0 hai."
+    );
+
+  }
+
+
+  const expectedBits =
+    machine.hooks*
+    totalPicks;
+
+
+  if(binaryBits.length!==expectedBits){
+
+    throw new Error(
+      "Binary design size mismatch."
+    );
+
+  }
+
+
+  const outputSize =
+    machine.headerLen+
+    machine.bytesPerPick*
+    totalPicks;
+
+
+  /*
+    New output completely ZERO se create hota hai.
+    Running EP ki old rows copy nahi hoti.
+  */
+
+  const output =
+    new Uint8Array(
+      outputSize
+    );
+
+
+  /*
+    ONLY machine header copy.
+  */
+
+  output.set(
+    new Uint8Array(machine.header),
+    0
+  );
+
+
+  const rowStart =
+    machine.headerLen;
+
+
+  /*
+    MSB-FIRST bit packing.
+  */
+
+  for(
+    let pick=0;
+    pick<totalPicks;
+    pick++
+  ){
+
+    const rowOffset =
+      rowStart+
+      pick*machine.bytesPerPick;
+
+
+    for(
+      let hook=0;
+      hook<machine.hooks;
+      hook++
+    ){
+
+      if(
+        binaryBits[
+          pick*machine.hooks+
+          hook
+        ]
+      ){
+
+        const byteIndex =
+          Math.floor(hook/8);
+
+        const bitIndex =
+          7-(hook%8);
+
+
+        output[
+          rowOffset+
+          byteIndex
+        ] |=
+          1<<bitIndex;
+
+      }
+
+    }
+
+  }
+
+
+  return output;
 
 }
 
@@ -3306,1137 +2496,157 @@ function buildNativeEP(){
    DOWNLOAD
 ========================================================= */
 
-function convertAndDownload(){
-
- try{
-
-  const output =
-   buildNativeEP();
-
-
-  const blob =
-   new Blob(
-    [output],
-    {
-     type:
-      "application/octet-stream"
-    }
-   );
-
-
-  const url =
-   URL.createObjectURL(
-    blob
-   );
-
-
-  const base =
-   designFileName.replace(
-    /\.[^.]+$/,
-    ""
-   ) ||
-   "design";
-
-
-  const safeMachineName =
-   selectedMachine.name.replace(
-    /[^a-z0-9_-]+/gi,
-    "_"
-   );
-
-
-  const fileName =
-   base +
-   "_" +
-   safeMachineName +
-   "_NEW_DESIGN.EP";
-
-
-  const link =
-   document.createElement(
-    "a"
-   );
-
-
-  link.href = url;
-
-  link.download =
-   fileName;
-
-
-  document.body.appendChild(
-   link
-  );
-
-
-  link.click();
-
-  link.remove();
-
-
-  setTimeout(
-   () =>
-    URL.revokeObjectURL(url),
-   1500
-  );
-
-
-  $("validation").innerHTML += `
-
-   <div
-    class="status ok"
-    style="grid-column:1/-1"
-   >
-
-    ✓ New Design EP Downloaded:
-
-    ${escapeHtml(fileName)}
-
-    <br>
-
-    Size:
-    ${output.length.toLocaleString()}
-    bytes
-
-    <br>
-
-    <b>
-     Running design rows NOT copied.
-    </b>
-
-   </div>
-
-  `;
-
-
-  toast(
-   "Naya design EP download ho gaya."
-  );
-
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Conversion error:\n" +
-   error.message
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   HEX
-========================================================= */
-
-function updateHex(){
-
- if(!selectedMachine){
-
-  $("hexPreview").textContent =
-   "";
-
-  return;
-
- }
-
-
- $("hexPreview").textContent =
-  makeHex(
-   base64ToBytes(
-    selectedMachine.header64
-   ),
-   96
-  );
-
-}
-
-
-function makeHex(
- bytes,
- max
-){
-
- let output = "";
-
-
- for(
-  let i=0;
-  i<Math.min(
-   max,
-   bytes.length
-  );
-  i++
- ){
-
-  output +=
-   bytes[i]
-    .toString(16)
-    .padStart(2,"0")
-    .toUpperCase() +
-   " ";
-
-
-  if(
-   (i+1) % 16 === 0
-  ){
-
-   output += "\n";
-
-  }
-
- }
-
-
- return output;
-
-}
-
-
-/* =========================================================
-   ESCAPE
-========================================================= */
-
-function escapeHtml(value){
-
- return String(value)
-  .replace(
-   /[&<>"']/g,
-   c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-   }[c])
-  );
-
-}
-
-
-function escapeAttr(value){
-
- return String(value)
-  .replace(
-   /&/g,
-   "&amp;"
-  )
-  .replace(
-   /"/g,
-   "&quot;"
-  )
-  .replace(
-   /</g,
-   "&lt;"
-  );
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-function switchTab(id){
-
- document
-  .querySelectorAll(".tab")
-  .forEach(button => {
-
-   button.classList.toggle(
-    "active",
-    button.dataset.tab === id
-   );
-
-  });
-
-
- document
-  .querySelectorAll(".panel")
-  .forEach(panel => {
-
-   panel.classList.toggle(
-    "active",
-    panel.id === id
-   );
-
-  });
-
-
- if(id === "design"){
-  showSelectedMachine();
- }
-
-}
-
-
-/* =========================================================
-   BACKUP EXPORT
-========================================================= */
-
-async function exportBackup(){
-
- try{
-
-  const machines =
-   await dbGetAll(
-    MACHINE_STORE
-   );
-
-
-  const backup = {
-
-   version:10,
-
-   createdAt:
-    new Date().toISOString(),
-
-   machines
-
-  };
-
-
-  const blob =
-   new Blob(
-    [
-     JSON.stringify(
-      backup,
-      null,
-      2
-     )
-    ],
-    {
-     type:
-      "application/json"
-    }
-   );
-
-
-  const url =
-   URL.createObjectURL(
-    blob
-   );
-
-
-  const a =
-   document.createElement(
-    "a"
-   );
-
-
-  a.href = url;
-
-  a.download =
-   "electronic-designing-machine-backup.json";
-
-
-  document.body.appendChild(a);
-
-  a.click();
-
-  a.remove();
-
-
-  setTimeout(
-   () =>
-    URL.revokeObjectURL(url),
-   1000
-  );
-
-
-  toast(
-   "Backup export ho gaya."
-  );
-
-
- }catch(error){
-
-  alert(
-   "Backup export error:\n" +
-   error.message
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   BACKUP IMPORT
-========================================================= */
-
-async function importBackup(file){
-
- try{
-
-  const data =
-   JSON.parse(
-    await file.text()
-   );
-
-
-  if(
-   !Array.isArray(
-    data.machines
-   )
-  ){
-
-   throw new Error(
-    "Backup file invalid hai."
-   );
-
-  }
-
-
-  let imported = 0;
-  let skipped = 0;
-
-
-  const current =
-   await dbGetAll(
-    MACHINE_STORE
-   );
-
-
-  const names =
-   new Set(
-    current.map(
-     m =>
-      String(
-       m.name || ""
-      )
-       .trim()
-       .toLowerCase()
-    )
-   );
-
-
-  for(
-   const original
-   of data.machines
-  ){
-
-   if(
-    !original ||
-    !original.name ||
-    !original.header64 ||
-    !Number.isFinite(
-     Number(original.hooks)
-    ) ||
-    !Number.isFinite(
-     Number(original.bpp)
-    ) ||
-    !Number.isFinite(
-     Number(original.picks)
-    )
-   ){
-
-    skipped++;
-
-    continue;
-
-   }
-
-
-   let name =
-    String(
-     original.name
-    ).trim();
-
-
-   if(
-    names.has(
-     name.toLowerCase()
-    )
-   ){
-
-    name =
-     name +
-     " (Imported " +
-     new Date()
-      .toLocaleDateString() +
-     ")";
-
-
-    let suffix = 2;
-
-    const base = name;
-
-
-    while(
-     names.has(
-      name.toLowerCase()
-     )
-    ){
-
-     name =
-      base +
-      " " +
-      suffix++;
-
-    }
-
-   }
-
-
-   names.add(
-    name.toLowerCase()
-   );
-
-
-   const machine = {
-
-    ...original,
-
-    id:makeId(),
-
-    name,
-
-    magnetCount:
-     Number(
-      original.magnetCount
-     ) ||
-     legacyMagnetCount(
-      original
-     ),
-
-    importedAt:
-     Date.now()
-
-   };
-
-
-   await dbPut(
-    MACHINE_STORE,
-    machine
-   );
-
-
-   imported++;
-
-  }
-
-
-  await refreshMachines();
-
-
-  toast(
-   imported +
-   " machines import hui; " +
-   skipped +
-   " skipped."
-  );
-
-
- }catch(error){
-
-  alert(
-   "Import error:\n" +
-   error.message
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-function showApp(){
-
- $("loginView")
-  .classList.add(
-   "hidden"
-  );
-
- $("appView")
-  .classList.remove(
-   "hidden"
-  );
-
- $("logoutBtn")
-  .classList.remove(
-   "hidden"
-  );
-
-}
-
-
-function logout(){
-
- localStorage.removeItem(
-  "electronic_designing_login"
- );
-
- location.reload();
-
-}
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-async function init(){
-
- try{
-
-  await openDB();
-
-  updateMagnetInfo();
-
-  await refreshMachines();
-
-
-  const credentials =
-   await getCredentials();
-
-
-  $("newAdminId").value =
-   credentials.id;
-
-  $("newAdminPass").value =
-   credentials.pass;
-
-
-  if(
-   localStorage.getItem(
-    "electronic_designing_login"
-   ) === "1"
-  ){
-
-   showApp();
-
-  }
-
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Database open nahi ho paya:\n" +
-   error.message
-  );
-
- }
-
-}
-
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
-$("loginBtn").onclick =
- async () => {
+$("convertBtn").onclick=function(){
 
   try{
 
-   const credentials =
-    await getCredentials();
+    /*
+      FINAL CHECK BEFORE DOWNLOAD
+    */
+
+    if(!validateFingerPicks()){
+
+      alert(
+        "Finger pick order galat hai.\n\n"+
+        "Rule:\n"+
+        "Finger 1 ≥ Finger 2 ≥ Finger 3 ≥ "+
+        "Finger 4 ≥ Finger 5 ≥ Finger 6"
+      );
+
+      return;
+
+    }
 
 
-   if(
-    $("loginId").value ===
-     credentials.id &&
+    if(!selectedMachine){
 
-    $("loginPass").value ===
-     credentials.pass
-   ){
+      alert(
+        "Machine select karein."
+      );
 
-    localStorage.setItem(
-     "electronic_designing_login",
-     "1"
+      return;
+
+    }
+
+
+    if(!currentDesignFile){
+
+      alert(
+        "Design upload karein."
+      );
+
+      return;
+
+    }
+
+
+    const total =
+      getTotalPicks();
+
+
+    if(total<=0){
+
+      alert(
+        "Finger-wise picks enter karein."
+      );
+
+      return;
+
+    }
+
+
+    const output =
+      buildNativeEP();
+
+
+    const blob =
+      new Blob(
+        [output],
+        {
+          type:"application/octet-stream"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const a =
+      document.createElement("a");
+
+
+    const originalName =
+      currentDesignFile.name
+        .replace(
+          /\.[^/.]+$/,
+          ""
+        );
+
+
+    a.href=url;
+
+    a.download =
+      originalName+
+      "_"+
+      total+
+      "Picks.EP";
+
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+
+    setTimeout(
+      ()=>URL.revokeObjectURL(url),
+      1000
     );
 
 
-    $("loginMsg")
-     .classList.add(
-      "hidden"
-     );
-
-
-    showApp();
-
-
-   }else{
-
-    $("loginMsg").textContent =
-     "Admin ID ya password galat hai.";
-
-    $("loginMsg")
-     .classList.remove(
-      "hidden"
-     );
-
-   }
-
   }catch(error){
 
-   alert(
-    "Login error:\n" +
-    error.message
-   );
+    console.error(error);
+
+    alert(
+      "EP conversion error:\n"+
+      error.message
+    );
 
   }
 
 };
 
 
-$("loginPass").onkeydown =
- event => {
-
-  if(
-   event.key === "Enter"
-  ){
-
-   $("loginBtn").click();
-
-  }
-
-};
-
-
-$("logoutBtn").onclick =
- logout;
-
-
-/* TABS */
-
-document
- .querySelectorAll(".tab")
- .forEach(button => {
-
-  button.onclick =
-   () =>
-    switchTab(
-     button.dataset.tab
-    );
-
- });
-
-
-/* MAGNET */
-
-$("magnetCount").oninput =
- updateMagnetInfo;
-
-
-/* MACHINE NAME */
-
-$("machineName").oninput =
- updateSaveButton;
-
-
-/* RUNNING FILE */
-
-$("runningFile").onchange =
- event => {
-
-  const file =
-   event.target.files[0];
-
-  if(file){
-
-   handleRunningFile(
-    file
-   );
-
-  }
-
- };
-
-
-/* ANALYZE */
-
-$("analyzeBtn").onclick =
- async () => {
-
-  if(!runningBytes){
-
-   alert(
-    "Pehle Running EP select karein."
-   );
-
-   return;
-
-  }
-
-
-  await handleRunningFile(
-   new File(
-    [runningBytes],
-    runningName ||
-    "running.EP"
-   )
-  );
-
- };
-
-
-/* SAVE MACHINE */
-
-$("saveMachineBtn").onclick =
- saveNewMachine;
-
-
-/* MACHINE SELECT */
-
-$("machineSelect").onchange =
- async () => {
-
-  const id =
-   String(
-    $("machineSelect").value ||
-    ""
-   );
-
-
-  if(!id){
-
-   selectedMachine = null;
-
-   currentDesignMachineId =
-    null;
-
-   binaryBits = null;
-
-   showSelectedMachine();
-
-   return;
-
-  }
-
-
-  await selectMachineById(
-   id
-  );
-
- };
-
-
-/* DESIGN FILE */
-
-$("designFile").onchange =
- event => {
-
-  const file =
-   event.target.files[0];
-
-  if(file){
-
-   loadDesign(
-    file
-   );
-
-  }
-
- };
-
-
-/* DESIGN PARAMETERS */
-
-$("targetPicks").oninput =
- () => {
-
-  if(designImage){
-
-   renderBinary();
-
-  }else{
-
-   updateDesignCheck();
-
-  }
-
- };
-
-
-$("threshold").oninput =
- () => {
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-$("leftPad").oninput =
- () => {
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-$("rightPad").oninput =
- () => {
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-/* INVERT */
-
-$("invertBtn").onclick =
- () => {
-
-  invert = !invert;
-
-  $("invertBtn").textContent =
-   "Invert: " +
-   (invert ? "ON" : "OFF");
-
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-/* MIRROR */
-
-$("mirrorBtn").onclick =
- () => {
-
-  mirror = !mirror;
-
-  $("mirrorBtn").textContent =
-   "Mirror: " +
-   (mirror ? "ON" : "OFF");
-
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-/* FLIP */
-
-$("flipBtn").onclick =
- () => {
-
-  flip = !flip;
-
-  $("flipBtn").textContent =
-   "Flip: " +
-   (flip ? "ON" : "OFF");
-
-
-  if(designImage){
-   renderBinary();
-  }
-
- };
-
-
-/* CONVERT */
-
-$("convertBtn").onclick =
- convertAndDownload;
-
-
-/* SAVE CREDENTIALS */
-
-$("saveCreds").onclick =
- async () => {
-
-  const id =
-   $("newAdminId")
-    .value
-    .trim();
-
-  const pass =
-   $("newAdminPass")
-    .value;
-
-
-  if(!id || !pass){
-
-   alert(
-    "Admin ID aur password dono bharna hai."
-   );
-
-   return;
-
-  }
-
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+(async function(){
 
   try{
 
-   await dbPut(
-    SETTINGS_STORE,
-    id,
-    "adminId"
-   );
+    await openDB();
 
+    await refreshMachineList();
 
-   await dbPut(
-    SETTINGS_STORE,
-    pass,
-    "adminPass"
-   );
+    createFingerInputs();
 
+  }catch(error){
 
-   $("credMsg").className =
-    "status ok";
+    console.error(error);
 
-
-   $("credMsg").textContent =
-    "Login settings save ho gayi.";
-
-
-   $("credMsg")
-    .classList.remove(
-     "hidden"
+    alert(
+      "Database initialization failed."
     );
 
-
-   toast(
-    "Login update ho gaya."
-   );
-
-
-  }catch(error){
-
-   alert(
-    "Login save error:\n" +
-    error.message
-   );
-
   }
 
- };
-
-
-/* EXPORT — FIXED */
-
-$("exportBtn").onclick =
- exportBackup;
-
-
-/* IMPORT */
-
-$("importFile").onchange =
- event => {
-
-  const file =
-   event.target.files[0];
-
-  if(file){
-
-   importBackup(
-    file
-   );
-
-  }
-
-  event.target.value = "";
-
- };
-
-
-/* DELETE ALL */
-
-$("clearAllBtn").onclick =
- async () => {
-
-  if(
-   !confirm(
-    "WARNING!\n\n" +
-    "ALL saved machines permanently delete karni hain?"
-   )
-  ){
-
-   return;
-
-  }
-
-
-  try{
-
-   await dbClear(
-    MACHINE_STORE
-   );
-
-
-   selectedMachine = null;
-
-   currentDesignMachineId =
-    null;
-
-   binaryBits = null;
-
-
-   await refreshMachines();
-
-   showSelectedMachine();
-
-
-   toast(
-    "Sab machines delete ho gayi."
-   );
-
-
-  }catch(error){
-
-   alert(
-    "Delete all error:\n" +
-    error.message
-   );
-
-  }
-
- };
-
-
-/* =========================================================
-   MOBILE BACK BUTTON
-========================================================= */
-
-history.replaceState(
- {page:"app"},
- "",
- location.href
-);
-
-
-window.addEventListener(
- "popstate",
- () => {
-
-  history.pushState(
-   {page:"app"},
-   "",
-   location.href
-  );
-
- }
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-init();
+})();
 
 </script>
 
 </body>
- </html>
+</html>
