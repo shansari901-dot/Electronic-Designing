@@ -3,2468 +3,2055 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Electronic Designing — EasyX Style V6</title>
+<title>Electronic Designing System — EasyX Style V7</title>
 
 <style>
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#eef2f7;
-  color:#18212f
+  background:#eef2f6;
+  color:#172033;
 }
 button,input,select{font:inherit}
-button{
-  cursor:pointer;
-  border:0;
-  border-radius:8px;
-  padding:9px 13px;
-  background:#2563eb;
+button{cursor:pointer}
+.top{
+  background:#10243f;
   color:#fff;
-  font-weight:700
-}
-button.secondary{background:#475569}
-button.success{background:#15803d}
-button.danger{background:#dc2626}
-button.light{background:#e2e8f0;color:#172033}
-button:disabled{opacity:.55;cursor:not-allowed}
-
-.topbar{
-  height:58px;
-  background:#172033;
-  color:#fff;
+  padding:14px 18px;
   display:flex;
   align-items:center;
-  padding:0 16px;
-  gap:15px;
-  position:sticky;
-  top:0;
-  z-index:20
+  justify-content:space-between;
 }
-.brand{
-  font-size:19px;
-  font-weight:800;
-  white-space:nowrap
-}
-.status{
-  margin-left:auto;
-  font-size:12px;
-  opacity:.85
-}
-
-.wrap{
-  max-width:1450px;
-  margin:auto;
-  padding:14px
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:330px 1fr 330px;
-  gap:14px;
-  align-items:start
-}
-
+.top h1{font-size:20px;margin:0}
+.wrap{max-width:1200px;margin:auto;padding:16px}
 .card{
   background:#fff;
-  border:1px solid #d8e0ea;
-  border-radius:12px;
-  padding:14px;
-  box-shadow:0 3px 12px rgba(15,23,42,.05)
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 4px 18px #0001;
 }
-.card h2,.card h3{
-  margin:0 0 12px
+h2,h3{margin-top:0}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:12px;
 }
-.card h2{font-size:16px}
-.card h3{font-size:14px}
-
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+}
+input,select{
+  width:100%;
+  padding:11px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  background:#fff;
+}
+button{
+  border:0;
+  border-radius:8px;
+  padding:10px 15px;
+  background:#1261d6;
+  color:#fff;
+  font-weight:700;
+}
+button.secondary{background:#64748b}
+button.success{background:#16803c}
+button.danger{background:#c62828}
+button.warn{background:#b77900}
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
 .row{
   display:flex;
+  flex-wrap:wrap;
   gap:8px;
   align-items:center;
-  margin:7px 0
-}
-.row>*{min-width:0}
-.row label{
-  flex:1;
-  font-size:13px
-}
-.row input,.row select{
-  width:100%;
-  border:1px solid #cbd5e1;
-  border-radius:7px;
-  padding:8px
-}
-.two{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px
-}
-.three{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px
-}
-.small{
-  font-size:11px;
-  color:#64748b
-}
-.muted{
-  color:#64748b
-}
-hr{
-  border:0;
-  border-top:1px solid #e2e8f0;
-  margin:13px 0
-}
-
-.preview{
-  position:relative;
-  min-height:480px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:auto;
-  background:#f8fafc;
-  border:1px solid #cbd5e1;
-  border-radius:10px;
-  padding:10px
-}
-canvas{
-  image-rendering:pixelated;
-  max-width:100%;
-  height:auto;
-  border:1px solid #94a3b8;
-  background:#fff
-}
-.previewGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px
-}
-.previewBox h3{
-  margin:0 0 6px;
-  font-size:13px
-}
-.previewBox canvas{
-  width:100%;
-  min-height:250px
-}
-
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin:8px 0
 }
 .badge{
-  background:#e0e7ff;
-  color:#3730a3;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:700
-}
-
-.drop{
-  border:2px dashed #94a3b8;
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-  background:#f8fafc;
-  margin-bottom:8px
-}
-.drop input{
-  width:100%
-}
-
-.kbar{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px
-}
-.kitem{
-  border:1px solid #d7dee8;
-  border-radius:8px;
-  padding:8px
-}
-.kitem label{
-  display:block;
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e7eefc;
+  color:#174ea6;
   font-size:12px;
-  margin-bottom:4px
+  font-weight:700;
 }
-.kitem input{
-  width:100%;
-  padding:7px;
-  border:1px solid #cbd5e1;
-  border-radius:6px
-}
-
-.finger{
-  border:1px solid #d7dee8;
+.status{
+  padding:12px;
   border-radius:9px;
-  padding:9px;
-  margin-bottom:8px
+  background:#f1f5f9;
+  margin-top:10px;
 }
-.fingerTitle{
+.preview{
+  background:#111;
+  border-radius:10px;
+  padding:10px;
+  overflow:auto;
+  text-align:center;
+}
+canvas{
+  max-width:100%;
+  image-rendering:pixelated;
+  background:#fff;
+}
+.hidden{display:none!important}
+.range-card{
+  border:1px solid #dbe3ee;
+  border-radius:10px;
+  padding:12px;
+}
+.range-list{
+  max-height:180px;
+  overflow:auto;
+  margin-top:8px;
+}
+.range-item{
+  background:#f8fafc;
+  padding:7px;
+  border-radius:6px;
+  margin-bottom:5px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  font-weight:800;
-  font-size:13px;
-  margin-bottom:6px
 }
-.ranges{
-  margin-top:6px
-}
-.range{
-  display:grid;
-  grid-template-columns:1fr 1fr auto;
-  gap:5px;
-  margin:4px 0
-}
-.range input{
-  width:100%;
-  border:1px solid #cbd5e1;
-  border-radius:6px;
-  padding:6px
-}
-.range button{
-  padding:5px 8px
-}
-
 .timeline{
   overflow:auto;
-  max-height:260px;
-  border:1px solid #d8e0ea;
-  border-radius:8px
+  max-height:250px;
+  border:1px solid #ddd;
+  border-radius:8px;
 }
 .timeline table{
   width:100%;
   border-collapse:collapse;
-  font-size:11px
+  font-size:12px;
 }
-.timeline th,.timeline td{
-  border-bottom:1px solid #e2e8f0;
+.timeline th,
+.timeline td{
   padding:5px;
-  text-align:left;
-  white-space:nowrap
+  border-bottom:1px solid #eee;
+  text-align:center;
 }
-.timeline th{
-  background:#f1f5f9;
-  position:sticky;
-  top:0
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:7px
-}
-.stat{
-  border:1px solid #d8e0ea;
-  border-radius:8px;
-  padding:8px;
-  background:#f8fafc
-}
-.stat b{
-  display:block;
-  font-size:15px
-}
-.stat span{
-  font-size:10px;
-  color:#64748b
-}
-
-.actionbar{
+.color-row{
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
-  margin-bottom:10px
+  gap:8px;
 }
-
+.color-box{
+  border:2px solid #ddd;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
+}
+.color-box.active{
+  border-color:#1261d6;
+  background:#eaf2ff;
+}
+.progress{
+  height:12px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.progress-bar{
+  width:0;
+  height:100%;
+  background:#1261d6;
+  transition:.4s;
+}
 .login{
   position:fixed;
   inset:0;
-  background:rgba(15,23,42,.78);
-  z-index:100;
+  background:#10243f;
   display:flex;
-  align-items:center;
   justify-content:center;
-  padding:20px
+  align-items:center;
+  z-index:9999;
 }
-.loginBox{
-  width:min(390px,100%);
+.login-box{
+  width:min(400px,92%);
   background:#fff;
-  border-radius:14px;
-  padding:22px;
-  box-shadow:0 20px 70px rgba(0,0,0,.3)
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 15px 50px #0006;
 }
-.loginBox h1{
-  margin:0 0 6px;
-  font-size:22px
+.machine-row{
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:8px;
 }
-.loginBox input{
-  width:100%;
-  margin:12px 0;
-  padding:11px;
-  border:1px solid #cbd5e1;
-  border-radius:8px
+.small{font-size:12px;color:#64748b}
+.mono{
+  font-family:monospace;
+  white-space:pre-wrap;
 }
-.err{
-  color:#dc2626;
-  font-size:12px;
-  min-height:17px
-}
-
-.hidden{display:none!important}
-
-.notice{
-  padding:9px 10px;
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  border-radius:8px;
-  font-size:12px;
-  color:#1e40af;
-  margin:8px 0
-}
-
-.warning{
-  padding:9px 10px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  border-radius:8px;
-  font-size:12px;
-  color:#9a3412;
-  margin:8px 0
-}
-
-@media(max-width:1100px){
-  .grid{grid-template-columns:280px 1fr}
-  .rightCol{grid-column:1/-1}
-}
-@media(max-width:760px){
-  .grid{grid-template-columns:1fr}
-  .previewGrid{grid-template-columns:1fr}
-  .topbar{height:auto;min-height:58px;flex-wrap:wrap;padding:9px}
-  .status{margin-left:0;width:100%}
+@media(max-width:600px){
+  .top h1{font-size:16px}
+  .wrap{padding:10px}
+  .card{padding:13px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="login" id="loginScreen">
-  <div class="loginBox">
-    <h1>Electronic Designing</h1>
-    <div class="small">EasyX Style V6</div>
+<div id="loginScreen" class="login">
+  <div class="login-box">
+    <h2>Electronic Designing System</h2>
+    <p>EasyX Style Machine Plan Software</p>
+
+    <label>Password</label>
     <input id="loginPassword" type="password" placeholder="Password">
-    <div class="err" id="loginError"></div>
-    <button id="loginBtn" style="width:100%">Login</button>
+
+    <br><br>
+
+    <button onclick="login()">Login</button>
+
+    <div id="loginMsg" class="status hidden"></div>
   </div>
 </div>
 
-<header class="topbar">
-  <div class="brand">Electronic Designing — V6</div>
-  <div class="status" id="topStatus">Ready</div>
-</header>
+<div id="app" class="hidden">
 
-<main class="wrap">
+<div class="top">
+  <h1>Electronic Designing — EasyX Style V7</h1>
+  <div class="row">
+    <span id="machineStatus" class="badge">No Machine Plan</span>
+    <button class="secondary" onclick="logout()">Logout</button>
+  </div>
+</div>
 
-  <div class="actionbar">
-    <button id="newProjectBtn">New</button>
-    <button id="openProjectBtn" class="secondary">Open Project</button>
-    <button id="saveProjectBtn" class="success">Save</button>
-    <button id="saveAsBtn" class="secondary">Save As</button>
-    <button id="exportBtn">Export EP</button>
-    <input id="projectFileInput" type="file" accept=".edp,.json" class="hidden">
+<div class="wrap">
+
+<!-- MACHINE PLAN -->
+<div class="card">
+  <h2>1. Running File / Machine Plan</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>Machine Name</label>
+      <input id="machineName" placeholder="Machine 5">
+    </div>
+
+    <div>
+      <label>Shuttle</label>
+      <select id="shuttleCount">
+        <option value="1">1 Shuttle</option>
+        <option value="2">2 Shuttles</option>
+        <option value="3">3 Shuttles</option>
+        <option value="4">4 Shuttles</option>
+        <option value="5">5 Shuttles</option>
+        <option value="6">6 Shuttles</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Machine Format</label>
+      <select id="machineFormat">
+        <option>BMP Monochrome</option>
+        <option>EP</option>
+        <option>EJC</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Running EP</label>
+      <input id="runningFile" type="file" accept=".ep,.EP">
+    </div>
+
+  </div>
+
+  <div id="runningInfo" class="status">
+    Running file select karein.
+  </div>
+
+  <br>
+
+  <div class="row">
+    <button onclick="createMachinePlan()">Create Machine Plan</button>
+    <button class="secondary" onclick="renameMachine()">Rename</button>
+    <button class="danger" onclick="deleteMachine()">Delete</button>
+  </div>
+</div>
+
+<!-- MACHINE PLAN STATUS -->
+<div class="card">
+  <h2>2. Machine Plan</h2>
+
+  <div class="machine-row">
+    <b id="planMachineName">Machine Plan Ready</b>
+    <br>
+    <span class="badge" id="planStatus">
+      Waiting
+    </span>
+
+    <p class="small">
+      Running File → Machine Structure → Design → Colour Order →
+      Split → Harness Plan → Conversion
+    </p>
+  </div>
+</div>
+
+<!-- DESIGN -->
+<div class="card">
+  <h2>3. Select Design</h2>
+
+  <input
+    id="designFile"
+    type="file"
+    accept=".bmp,.png,.jpg,.jpeg,.webp"
+  >
+
+  <div id="designInfo" class="status">
+    New design select karein.
+  </div>
+
+  <br>
+
+  <div class="row">
+    <button onclick="loadDesign()">Select Design</button>
+    <button class="secondary" onclick="mirrorDesign()">Mirror</button>
+    <button class="secondary" onclick="flipDesign()">Flip</button>
+    <button class="warn" onclick="invertDesign()">Invert</button>
+  </div>
+</div>
+
+<!-- PREVIEW -->
+<div class="card">
+  <h2>4. Preview</h2>
+
+  <div class="preview">
+    <canvas id="designCanvas"></canvas>
   </div>
 
   <div class="grid">
 
-    <!-- LEFT -->
-    <aside>
+    <div>
+      <label>Threshold</label>
+      <input
+        id="threshold"
+        type="range"
+        min="1"
+        max="254"
+        value="128"
+        oninput="thresholdChanged()"
+      >
+      <div id="thresholdValue">128</div>
+    </div>
 
-      <section class="card">
-        <h2>1. Running EP / Machine</h2>
-
-        <div class="drop">
-          <b>Running EP Upload</b>
-          <div class="small">
-            Machine structure detect करने के लिए running EP दें।
-          </div>
-          <input id="runningInput" type="file" accept=".ep,.EP">
-        </div>
-
-        <div class="stats">
-          <div class="stat">
-            <b id="detHeader">—</b>
-            <span>Header bytes</span>
-          </div>
-          <div class="stat">
-            <b id="detRow">—</b>
-            <span>Row bytes</span>
-          </div>
-          <div class="stat">
-            <b id="detHooks">—</b>
-            <span>Hooks</span>
-          </div>
-          <div class="stat">
-            <b id="detPicks">—</b>
-            <span>Picks</span>
-          </div>
-        </div>
-
-        <div id="epMessage" class="notice">
-          Running EP upload करने के बाद structure यहाँ दिखाई देगा।
-        </div>
-
-        <hr>
-
-        <h3>Machine Profile</h3>
-
-        <div class="row">
-          <label>Profile Name</label>
-          <input id="profileName" placeholder="Machine 1">
-        </div>
-
-        <div class="two">
-          <div>
-            <div class="small">Hooks</div>
-            <input id="profileHooks" type="number" min="1" value="672">
-          </div>
-          <div>
-            <div class="small">Picks</div>
-            <input id="profilePicks" type="number" min="1" value="0">
-          </div>
-        </div>
-
-        <div class="two" style="margin-top:8px">
-          <div>
-            <div class="small">Header bytes</div>
-            <input id="profileHeader" type="number" min="0" value="34">
-          </div>
-          <div>
-            <div class="small">Row bytes</div>
-            <input id="profileRow" type="number" min="1" value="84">
-          </div>
-        </div>
-
-        <div class="row">
-          <label>Threshold</label>
-          <input id="threshold" type="number" min="0" max="255" value="128">
-        </div>
-
-        <div class="actionbar">
-          <button id="saveMachineBtn" class="success">Save Machine</button>
-          <button id="loadMachineBtn" class="secondary">Load</button>
-        </div>
-
-        <select id="machineSelect" style="width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px">
-          <option value="">Saved machines</option>
-        </select>
-
-      </section>
-
-      <section class="card">
-        <h2>2. New Design</h2>
-
-        <div class="drop">
-          <b>Design Image</b>
-          <div class="small">BMP / PNG / JPG / JPEG / WEBP</div>
-          <input id="designInput" type="file" accept=".bmp,.png,.jpg,.jpeg,.webp,image/*">
-        </div>
-
-        <div class="row">
-          <label>Pattern threshold</label>
-          <input id="designThreshold" type="number" min="0" max="255" value="128">
-        </div>
-
-        <div class="two">
-          <button id="mirrorBtn" class="light">Mirror</button>
-          <button id="flipBtn" class="light">Flip</button>
-        </div>
-
-        <div class="two" style="margin-top:7px">
-          <button id="invertBtn" class="light">Invert</button>
-          <button id="resetTransformBtn" class="light">Reset</button>
-        </div>
-
-        <div class="badges">
-          <span class="badge" id="patternStatus">Pattern: —</span>
-          <span class="badge" id="activeCount">Active: 0</span>
-        </div>
-
-      </section>
-
-      <section class="card">
-        <h2>3. Kinara / Border</h2>
-
-        <div class="notice">
-          Kinara को चारों तरफ independently set कर सकते हैं।
-        </div>
-
-        <div class="kbar">
-
-          <div class="kitem">
-            <label>Left hooks</label>
-            <input id="kinLeft" type="number" min="0" value="0">
-          </div>
-
-          <div class="kitem">
-            <label>Right hooks</label>
-            <input id="kinRight" type="number" min="0" value="0">
-          </div>
-
-          <div class="kitem">
-            <label>Top picks</label>
-            <input id="kinTop" type="number" min="0" value="0">
-          </div>
-
-          <div class="kitem">
-            <label>Bottom picks</label>
-            <input id="kinBottom" type="number" min="0" value="0">
-          </div>
-
-        </div>
-
-        <div class="two" style="margin-top:8px">
-          <button id="applyKinaraBtn">Apply Kinara</button>
-          <button id="clearKinaraBtn" class="light">Clear</button>
-        </div>
-
-      </section>
-
-    </aside>
-
-    <!-- CENTER -->
-    <section>
-
-      <section class="card">
-
-        <h2>Design Preview</h2>
-
-        <div class="previewGrid">
-
-          <div class="previewBox">
-            <h3>Original Design</h3>
-            <div class="preview">
-              <canvas id="originalCanvas" width="500" height="350"></canvas>
-            </div>
-          </div>
-
-          <div class="previewBox">
-            <h3>Hook / Pick Pattern</h3>
-            <div class="preview">
-              <canvas id="patternCanvas" width="500" height="350"></canvas>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="stats" style="margin-top:10px">
-          <div class="stat">
-            <b id="gridHooks">—</b>
-            <span>Output hooks</span>
-          </div>
-          <div class="stat">
-            <b id="gridPicks">—</b>
-            <span>Output picks</span>
-          </div>
-          <div class="stat">
-            <b id="gridActive">—</b>
-            <span>Active cells</span>
-          </div>
-          <div class="stat">
-            <b id="gridDensity">—</b>
-            <span>Pattern density</span>
-          </div>
-        </div>
-
-      </section>
-
-      <section class="card" style="margin-top:14px">
-        <h2>Automatic Pattern Analysis</h2>
-
-        <div class="notice" id="analysisText">
-          Design upload करने पर pattern analysis होगा।
-        </div>
-
-        <div class="three">
-          <div class="stat">
-            <b id="srcWidth">—</b>
-            <span>Source width</span>
-          </div>
-          <div class="stat">
-            <b id="srcHeight">—</b>
-            <span>Source height</span>
-          </div>
-          <div class="stat">
-            <b id="srcType">—</b>
-            <span>Source type</span>
-          </div>
-        </div>
-
-      </section>
-
-    </section>
-
-    <!-- RIGHT -->
-    <aside class="rightCol">
-
-      <section class="card">
-        <h2>4. Finger Control</h2>
-
-        <div class="warning">
-          हर finger की अपनी multiple ranges हो सकती हैं।
-          Overlap allowed है।
-        </div>
-
-        <div id="fingerContainer"></div>
-
-        <div class="actionbar">
-          <button id="setAllF1Btn" class="light">All → F1</button>
-          <button id="clearAllFingerBtn" class="light">Clear All</button>
-          <button id="resetFingerBtn" class="secondary">Reset</button>
-        </div>
-
-      </section>
-
-      <section class="card">
-        <h2>5. Combined Pick Timeline</h2>
-
-        <div class="small" style="margin-bottom:7px">
-          प्रत्येक pick पर कौन-कौन से fingers active हैं।
-        </div>
-
-        <div class="timeline">
-          <table>
-            <thead>
-              <tr>
-                <th>Start</th>
-                <th>Stop</th>
-                <th>Finger(s)</th>
-              </tr>
-            </thead>
-            <tbody id="timelineBody"></tbody>
-          </table>
-        </div>
-
-      </section>
-
-      <section class="card">
-        <h2>6. Output</h2>
-
-        <div class="notice">
-          Export में running EP की पुरानी design rows copy नहीं की जाएँगी।
-          नया pattern नई design से बनाया जाएगा।
-        </div>
-
-        <div class="row">
-          <label>Output name</label>
-          <input id="outputName" value="New_Design">
-        </div>
-
-        <button id="buildPreviewBtn" style="width:100%">Build Output Preview</button>
-
-        <div id="buildMessage" class="small" style="margin-top:8px"></div>
-      </section>
-
-    </aside>
+    <div>
+      <label>Pattern</label>
+      <select id="patternMode" onchange="renderDesign()">
+        <option value="normal">Normal</option>
+        <option value="mono">Monochrome</option>
+      </select>
+    </div>
 
   </div>
-</main>
+</div>
+
+<!-- KINARA -->
+<div class="card">
+  <h2>5. Kinara / Border</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>Left Hooks</label>
+      <input id="leftHooks" type="number" min="0" value="0">
+    </div>
+
+    <div>
+      <label>Right Hooks</label>
+      <input id="rightHooks" type="number" min="0" value="0">
+    </div>
+
+    <div>
+      <label>Top Picks</label>
+      <input id="topPicks" type="number" min="0" value="0">
+    </div>
+
+    <div>
+      <label>Bottom Picks</label>
+      <input id="bottomPicks" type="number" min="0" value="0">
+    </div>
+
+  </div>
+</div>
+
+<!-- FINGER PLAN -->
+<div class="card">
+  <h2>6. Finger Plan</h2>
+
+  <p class="small">
+    F1–F6 ke liye independent ranges add kiye ja sakte hain.
+    Ranges overlap bhi kar sakte hain.
+  </p>
+
+  <div class="grid" id="fingerCards"></div>
+
+  <br>
+
+  <button onclick="buildTimeline()">
+    Build Combined Finger Timeline
+  </button>
+
+  <div id="fingerSummary" class="status">
+    No finger ranges.
+  </div>
+
+  <br>
+
+  <div class="timeline">
+    <table>
+      <thead>
+        <tr>
+          <th>Pick</th>
+          <th>F1</th>
+          <th>F2</th>
+          <th>F3</th>
+          <th>F4</th>
+          <th>F5</th>
+          <th>F6</th>
+        </tr>
+      </thead>
+      <tbody id="timelineBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- COLOR ORDER -->
+<div class="card">
+  <h2>7. Set Color Order</h2>
+
+  <div class="color-row" id="colorRow">
+
+    <div class="color-box active" data-color="Grey">
+      Grey
+    </div>
+
+    <div class="color-box" data-color="Red">
+      Red
+    </div>
+
+    <div class="color-box" data-color="Blue">
+      Blue
+    </div>
+
+    <div class="color-box" data-color="Yellow">
+      Yellow
+    </div>
+
+    <div class="color-box" data-color="White">
+      White
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="grid">
+
+    <div>
+      <label>Split Factor</label>
+      <select id="splitFactor">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+
+  </div>
+
+  <br>
+
+  <button class="secondary" onclick="getColorsFromDesign()">
+    GET COLORS FROM DESIGN
+  </button>
+</div>
+
+<!-- HARNESS PLAN -->
+<div class="card">
+  <h2>8. Harness Plan</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>Harness Mode</label>
+      <select id="harnessMode">
+        <option value="standard">Standard</option>
+        <option value="alternate">Alternate</option>
+        <option value="custom">Custom</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Hook Direction</label>
+      <select id="hookDirection">
+        <option value="normal">Normal</option>
+        <option value="reverse">Reverse</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Bit Order</label>
+      <select id="bitOrder">
+        <option value="msb">MSB First</option>
+        <option value="lsb">LSB First</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div id="harnessInfo" class="status">
+    Harness Plan ready.
+  </div>
+</div>
+
+<!-- CONVERSION -->
+<div class="card">
+  <h2>9. Convert Now</h2>
+
+  <button
+    id="convertBtn"
+    class="success"
+    onclick="convertNow()"
+  >
+    Convert Now
+  </button>
+
+  <div id="conversionStatus" class="status">
+    Ready for Conversion
+  </div>
+
+  <div class="progress">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+</div>
+
+<!-- OUTPUT -->
+<div class="card">
+  <h2>10. Final Machine File</h2>
+
+  <div id="outputInfo" class="status">
+    No converted file.
+  </div>
+
+  <br>
+
+  <div class="row">
+    <button
+      id="downloadBtn"
+      class="success"
+      disabled
+      onclick="downloadEP()"
+    >
+      Download EP
+    </button>
+
+    <button
+      class="secondary"
+      onclick="saveProject()"
+    >
+      Save Project (.EDP)
+    </button>
+
+    <button
+      class="secondary"
+      onclick="openProject()"
+    >
+      Open Project
+    </button>
+
+    <input
+      id="projectFile"
+      type="file"
+      accept=".edp,.json"
+      hidden
+      onchange="loadProjectFile(event)"
+    >
+  </div>
+</div>
+
+</div>
+</div>
 
 <script>
-"use strict";
 
 /* =========================================================
-   CONSTANTS
+   GLOBAL STATE
 ========================================================= */
 
-const LOGIN_PASSWORD = "admin123";
-const DEFAULT_HEADER_BYTES = 34;
-const DEFAULT_ROW_BYTES = 84;
+const EP_HEADER_BYTES = 34;
 
-const DB_NAME = "ElectronicDesigningDB_V6";
-const DB_VERSION = 1;
-const MACHINE_STORE = "machines";
+let runningBytes = null;
+let runningInfo = null;
 
-/* =========================================================
-   STATE
-========================================================= */
+let designImage = null;
+let designCanvas = document.getElementById("designCanvas");
+let designCtx = designCanvas.getContext("2d");
 
-const state = {
-  runningBytes: null,
-  runningName: "",
-  machineHeader: null,
+let originalImageData = null;
+let currentImageData = null;
 
-  headerBytes: DEFAULT_HEADER_BYTES,
-  rowBytes: DEFAULT_ROW_BYTES,
-  hooks: 672,
-  picks: 0,
+let outputBytes = null;
+let outputName = "";
 
-  designFile: null,
-  designImage: null,
-  designName: "",
-
-  sourceWidth: 0,
-  sourceHeight: 0,
-
-  threshold: 128,
-
-  mirror: false,
-  flip: false,
-  invert: false,
-
-  pattern: null,
-  originalImageData: null,
-
-  kinara: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
-  },
-
-  fingers: {
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: []
-  },
-
-  projectName: "Untitled"
+let fingerRanges = {
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
+  6: []
 };
 
+let selectedColors = [
+  "Grey",
+  "Red",
+  "Blue",
+  "Yellow",
+  "White"
+];
+
+
 /* =========================================================
-   HELPERS
+   BASIC HELPERS
 ========================================================= */
 
 function $(id){
   return document.getElementById(id);
 }
 
-function clamp(n,min,max){
-  return Math.max(min,Math.min(max,n));
+function sleep(ms){
+  return new Promise(resolve => setTimeout(resolve,ms));
 }
 
-function readLE16(bytes,offset){
-  if(!bytes || offset+1 >= bytes.length) return 0;
-  return bytes[offset] | (bytes[offset+1] << 8);
-}
-
-function readLE32(bytes,offset){
-  if(!bytes || offset+3 >= bytes.length) return 0;
-  return (
-    bytes[offset] |
-    (bytes[offset+1] << 8) |
-    (bytes[offset+2] << 16) |
-    (bytes[offset+3] << 24)
-  ) >>> 0;
-}
-
-function writeLE16(bytes,offset,value){
-  bytes[offset] = value & 255;
-  bytes[offset+1] = (value >> 8) & 255;
-}
-
-function setStatus(text){
-  $("topStatus").textContent = text;
-}
-
-function downloadBlob(blob,name){
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  setTimeout(()=>{
-    URL.revokeObjectURL(url);
-  },1000);
-}
-
-function cloneBytes(bytes){
-  return new Uint8Array(bytes);
-}
-
-function cloneObject(obj){
-  return JSON.parse(JSON.stringify(obj));
-}
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
-function doLogin(){
-  const value = $("loginPassword").value;
+function login(){
 
-  if(value === LOGIN_PASSWORD){
+  const password = $("loginPassword").value;
+
+  if(password === "admin123"){
+
+    localStorage.setItem(
+      "electronicDesignLogin",
+      "1"
+    );
+
     $("loginScreen").classList.add("hidden");
-    setStatus("Logged in");
+    $("app").classList.remove("hidden");
+
   }else{
-    $("loginError").textContent = "Password गलत है";
+
+    $("loginMsg").classList.remove("hidden");
+
+    $("loginMsg").textContent =
+      "Wrong password.";
+
   }
 }
 
-$("loginBtn").addEventListener("click",doLogin);
 
-$("loginPassword").addEventListener("keydown",e=>{
-  if(e.key === "Enter") doLogin();
-});
+function logout(){
 
-/* =========================================================
-   INDEXED DB
-========================================================= */
-
-let dbPromise = null;
-
-function openDB(){
-  if(!window.indexedDB){
-    return Promise.resolve(null);
-  }
-
-  if(dbPromise) return dbPromise;
-
-  dbPromise = new Promise((resolve,reject)=>{
-    const req = indexedDB.open(DB_NAME,DB_VERSION);
-
-    req.onupgradeneeded = ()=>{
-      const db = req.result;
-
-      if(!db.objectStoreNames.contains(MACHINE_STORE)){
-        db.createObjectStore(MACHINE_STORE,{keyPath:"name"});
-      }
-    };
-
-    req.onsuccess = ()=>{
-      resolve(req.result);
-    };
-
-    req.onerror = ()=>{
-      resolve(null);
-    };
-  });
-
-  return dbPromise;
-}
-
-async function saveMachineProfile(profile){
-  const db = await openDB();
-
-  if(!db){
-    const list = JSON.parse(localStorage.getItem("ED_MACHINE_PROFILES") || "[]");
-
-    const idx = list.findIndex(x=>x.name === profile.name);
-
-    if(idx >= 0){
-      list[idx] = profile;
-    }else{
-      list.push(profile);
-    }
-
-    localStorage.setItem("ED_MACHINE_PROFILES",JSON.stringify(list));
-    return;
-  }
-
-  return new Promise(resolve=>{
-    const tx = db.transaction(MACHINE_STORE,"readwrite");
-
-    tx.objectStore(MACHINE_STORE).put(profile);
-
-    tx.oncomplete = ()=>resolve();
-    tx.onerror = ()=>resolve();
-  });
-}
-
-async function getMachineProfiles(){
-  const db = await openDB();
-
-  if(!db){
-    return JSON.parse(localStorage.getItem("ED_MACHINE_PROFILES") || "[]");
-  }
-
-  return new Promise(resolve=>{
-    const tx = db.transaction(MACHINE_STORE,"readonly");
-    const req = tx.objectStore(MACHINE_STORE).getAll();
-
-    req.onsuccess = ()=>{
-      resolve(req.result || []);
-    };
-
-    req.onerror = ()=>{
-      resolve([]);
-    };
-  });
-}
-
-async function refreshMachineSelect(){
-  const list = await getMachineProfiles();
-
-  const select = $("machineSelect");
-
-  select.innerHTML = '<option value="">Saved machines</option>';
-
-  list.forEach(profile=>{
-    const option = document.createElement("option");
-    option.value = profile.name;
-    option.textContent = profile.name;
-    select.appendChild(option);
-  });
-}
-
-async function loadMachineProfile(name){
-  const list = await getMachineProfiles();
-
-  const profile = list.find(x=>x.name === name);
-
-  if(!profile) return;
-
-  $("profileName").value = profile.name || "";
-  $("profileHooks").value = profile.hooks || 672;
-  $("profilePicks").value = profile.picks || 0;
-  $("profileHeader").value = profile.headerBytes || 34;
-  $("profileRow").value = profile.rowBytes || 84;
-  $("threshold").value = profile.threshold ?? 128;
-
-  state.hooks = Number(profile.hooks) || 672;
-  state.picks = Number(profile.picks) || 0;
-  state.headerBytes = Number(profile.headerBytes) || 34;
-  state.rowBytes = Number(profile.rowBytes) || 84;
-  state.threshold = Number(profile.threshold) || 128;
-
-  updateDetectedUI();
-
-  if(state.designImage){
-    prepareDesign();
-  }
-
-  setStatus("Machine profile loaded");
-}
-
-/* =========================================================
-   RUNNING EP ANALYSIS
-========================================================= */
-
-function analyzeRunningEP(bytes,fileName){
-  state.runningBytes = cloneBytes(bytes);
-  state.runningName = fileName || "running.EP";
-
-  /*
-    This parser is based on the currently known EP family:
-    header = 34 bytes
-    pick count stored as little-endian 16-bit at offset 3
-    remaining payload = rows
-    rowBytes * 8 = hooks
-
-    It intentionally validates the structure rather than
-    silently treating an unknown binary format as compatible.
-  */
-
-  const length = bytes.length;
-
-  let headerBytes = DEFAULT_HEADER_BYTES;
-  let picks = readLE16(bytes,3);
-
-  let payload = length - headerBytes;
-  let rowBytes = 0;
-  let hooks = 0;
-
-  if(picks > 0 && payload > 0 && payload % picks === 0){
-    rowBytes = payload / picks;
-    hooks = rowBytes * 8;
-  }else{
-    /*
-      Fallback attempt:
-      Try common 34-byte header and infer a row size from
-      common hook byte counts.
-    */
-
-    const commonRows = [
-      80,
-      84,
-      96,
-      120,
-      128,
-      160,
-      168,
-      192,
-      256,
-      336
-    ];
-
-    for(const rb of commonRows){
-      if(payload % rb === 0){
-        rowBytes = rb;
-        hooks = rb * 8;
-        picks = payload / rb;
-        break;
-      }
-    }
-  }
-
-  if(rowBytes <= 0 || picks <= 0){
-    $("epMessage").className = "warning";
-    $("epMessage").textContent =
-      "EP structure automatically verify नहीं हो सकी। Manual profile values की जरूरत हो सकती है।";
-    return false;
-  }
-
-  state.headerBytes = headerBytes;
-  state.rowBytes = rowBytes;
-  state.hooks = hooks;
-  state.picks = picks;
-
-  state.machineHeader = bytes.slice(0,headerBytes);
-
-  $("profileHooks").value = hooks;
-  $("profilePicks").value = picks;
-  $("profileHeader").value = headerBytes;
-  $("profileRow").value = rowBytes;
-
-  updateDetectedUI();
-
-  $("epMessage").className = "notice";
-  $("epMessage").textContent =
-    "Running EP analyzed successfully. पुरानी design rows नई design में copy नहीं होंगी।";
-
-  if(state.designImage){
-    prepareDesign();
-  }
-
-  return true;
-}
-
-function updateDetectedUI(){
-  $("detHeader").textContent = state.headerBytes || "—";
-  $("detRow").textContent = state.rowBytes || "—";
-  $("detHooks").textContent = state.hooks || "—";
-  $("detPicks").textContent = state.picks || "—";
-
-  $("gridHooks").textContent = state.hooks || "—";
-  $("gridPicks").textContent = state.picks || "—";
-}
-
-/* =========================================================
-   RUNNING INPUT
-========================================================= */
-
-$("runningInput").addEventListener("change",async e=>{
-  const file = e.target.files && e.target.files[0];
-
-  if(!file) return;
-
-  try{
-    const buffer = await file.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
-
-    analyzeRunningEP(bytes,file.name);
-
-    setStatus("Running EP loaded: " + file.name);
-  }catch(err){
-    console.error(err);
-
-    $("epMessage").className = "warning";
-    $("epMessage").textContent =
-      "Running EP पढ़ने में error आया।";
-  }
-});
-
-/* =========================================================
-   MACHINE PROFILE
-========================================================= */
-
-$("saveMachineBtn").addEventListener("click",async ()=>{
-  const name = $("profileName").value.trim() || "Machine";
-
-  const profile = {
-    name,
-    hooks: Number($("profileHooks").value) || 672,
-    picks: Number($("profilePicks").value) || 0,
-    headerBytes: Number($("profileHeader").value) || 34,
-    rowBytes: Number($("profileRow").value) || 84,
-    threshold: Number($("threshold").value)
-  };
-
-  await saveMachineProfile(profile);
-  await refreshMachineSelect();
-
-  setStatus("Machine profile saved");
-});
-
-$("loadMachineBtn").addEventListener("click",()=>{
-  const name = $("machineSelect").value;
-
-  if(name){
-    loadMachineProfile(name);
-  }
-});
-
-$("machineSelect").addEventListener("change",()=>{
-  const name = $("machineSelect").value;
-
-  if(name){
-    loadMachineProfile(name);
-  }
-});
-
-$("threshold").addEventListener("change",()=>{
-  state.threshold = clamp(
-    Number($("threshold").value) || 128,
-    0,
-    255
+  localStorage.removeItem(
+    "electronicDesignLogin"
   );
 
-  $("designThreshold").value = state.threshold;
-
-  if(state.designImage){
-    prepareDesign();
-  }
-});
-
-/* =========================================================
-   IMAGE LOADING
-========================================================= */
-
-$("designInput").addEventListener("change",async e=>{
-  const file = e.target.files && e.target.files[0];
-
-  if(!file) return;
-
-  try{
-    const url = URL.createObjectURL(file);
-
-    const img = new Image();
-
-    img.onload = ()=>{
-      URL.revokeObjectURL(url);
-
-      state.designFile = file;
-      state.designImage = img;
-      state.designName = file.name;
-
-      state.sourceWidth = img.naturalWidth || img.width;
-      state.sourceHeight = img.naturalHeight || img.height;
-
-      $("srcWidth").textContent = state.sourceWidth;
-      $("srcHeight").textContent = state.sourceHeight;
-      $("srcType").textContent = file.type || "image";
-
-      const originalCanvas = $("originalCanvas");
-
-      originalCanvas.width = state.sourceWidth;
-      originalCanvas.height = state.sourceHeight;
-
-      const ctx = originalCanvas.getContext("2d");
-      ctx.clearRect(0,0,originalCanvas.width,originalCanvas.height);
-      ctx.drawImage(img,0,0);
-
-      state.mirror = false;
-      state.flip = false;
-      state.invert = false;
-
-      prepareDesign();
-
-      setStatus("Design loaded: " + file.name);
-    };
-
-    img.onerror = ()=>{
-      URL.revokeObjectURL(url);
-
-      $("analysisText").className = "warning";
-      $("analysisText").textContent =
-        "Image load नहीं हो सकी।";
-    };
-
-    img.src = url;
-
-  }catch(err){
-    console.error(err);
-  }
-});
-
-/* =========================================================
-   DESIGN TRANSFORMS
-========================================================= */
-
-$("mirrorBtn").addEventListener("click",()=>{
-  state.mirror = !state.mirror;
-  prepareDesign();
-});
-
-$("flipBtn").addEventListener("click",()=>{
-  state.flip = !state.flip;
-  prepareDesign();
-});
-
-$("invertBtn").addEventListener("click",()=>{
-  state.invert = !state.invert;
-  prepareDesign();
-});
-
-$("resetTransformBtn").addEventListener("click",()=>{
-  state.mirror = false;
-  state.flip = false;
-  state.invert = false;
-  prepareDesign();
-});
-
-/* =========================================================
-   PATTERN PREPARATION
-========================================================= */
-
-function prepareDesign(){
-  if(!state.designImage) return;
-
-  const hooks = Math.max(
-    1,
-    Number($("profileHooks").value) ||
-    state.hooks ||
-    672
-  );
-
-  const picks = Math.max(
-    1,
-    Number($("profilePicks").value) ||
-    state.picks ||
-    1
-  );
-
-  state.hooks = hooks;
-  state.picks = picks;
-
-  state.threshold = clamp(
-    Number($("designThreshold").value) ||
-    Number($("threshold").value) ||
-    128,
-    0,
-    255
-  );
-
-  $("profileHooks").value = hooks;
-  $("profilePicks").value = picks;
-
-  const sourceCanvas = document.createElement("canvas");
-
-  sourceCanvas.width = state.sourceWidth;
-  sourceCanvas.height = state.sourceHeight;
-
-  const sctx = sourceCanvas.getContext("2d");
-
-  sctx.save();
-
-  if(state.mirror || state.flip){
-    sctx.translate(
-      state.mirror ? state.sourceWidth : 0,
-      state.flip ? state.sourceHeight : 0
-    );
-
-    sctx.scale(
-      state.mirror ? -1 : 1,
-      state.flip ? -1 : 1
-    );
-  }
-
-  sctx.drawImage(
-    state.designImage,
-    0,
-    0,
-    state.sourceWidth,
-    state.sourceHeight
-  );
-
-  sctx.restore();
-
-  const imgData = sctx.getImageData(
-    0,
-    0,
-    state.sourceWidth,
-    state.sourceHeight
-  );
-
-  state.originalImageData = imgData;
-
-  /*
-    Pattern matrix:
-    pattern[pick][hook] = 0 / 1
-
-    1 = active hook
-    0 = inactive hook
-
-    Source image is resampled into machine dimensions.
-    This is intentionally deterministic and does not use
-    the running EP's old pattern.
-  */
-
-  const pattern = new Uint8Array(hooks * picks);
-
-  let active = 0;
-
-  for(let p=0;p<picks;p++){
-
-    const sy = Math.min(
-      state.sourceHeight - 1,
-      Math.floor((p / picks) * state.sourceHeight)
-    );
-
-    for(let h=0;h<hooks;h++){
-
-      const sx = Math.min(
-        state.sourceWidth - 1,
-        Math.floor((h / hooks) * state.sourceWidth)
-      );
-
-      const idx = (sy * state.sourceWidth + sx) * 4;
-
-      let r = imgData.data[idx];
-      let g = imgData.data[idx+1];
-      let b = imgData.data[idx+2];
-      const a = imgData.data[idx+3];
-
-      if(a === 0){
-        r = g = b = 255;
-      }
-
-      let gray =
-        0.299 * r +
-        0.587 * g +
-        0.114 * b;
-
-      let on = gray < state.threshold ? 1 : 0;
-
-      if(state.invert){
-        on = on ? 0 : 1;
-      }
-
-      /*
-        Kinara:
-        Border area is preserved as inactive by default.
-        User can later fill/modify it through the kinara
-        controls.
-      */
-
-      if(
-        h < state.kinara.left ||
-        h >= hooks - state.kinara.right ||
-        p < state.kinara.top ||
-        p >= picks - state.kinara.bottom
-      ){
-        on = 0;
-      }
-
-      pattern[p * hooks + h] = on;
-
-      if(on) active++;
-    }
-  }
-
-  state.pattern = pattern;
-
-  $("gridHooks").textContent = hooks;
-  $("gridPicks").textContent = picks;
-  $("gridActive").textContent = active;
-
-  const total = hooks * picks;
-  const density = total
-    ? ((active / total) * 100).toFixed(2) + "%"
-    : "0%";
-
-  $("gridDensity").textContent = density;
-
-  $("activeCount").textContent = "Active: " + active;
-
-  $("patternStatus").textContent =
-    "Pattern: " +
-    hooks +
-    " × " +
-    picks;
-
-  $("analysisText").className = "notice";
-  $("analysisText").textContent =
-    "Pattern automatically analyzed: image को " +
-    hooks +
-    " hooks × " +
-    picks +
-    " picks में map किया गया।";
-
-  drawPatternCanvas();
-
-  updateTimeline();
+  location.reload();
 }
 
-/* =========================================================
-   PATTERN CANVAS
-========================================================= */
 
-function drawPatternCanvas(){
-  const canvas = $("patternCanvas");
+if(
+  localStorage.getItem(
+    "electronicDesignLogin"
+  ) === "1"
+){
 
-  const hooks = state.hooks || 1;
-  const picks = state.picks || 1;
+  $("loginScreen").classList.add("hidden");
+  $("app").classList.remove("hidden");
 
-  const maxW = 900;
-  const maxH = 650;
-
-  /*
-    Pixel size is reduced for huge matrices so browser remains
-    responsive.
-  */
-
-  const scaleX = Math.max(1,Math.floor(maxW / hooks));
-  const scaleY = Math.max(1,Math.floor(maxH / picks));
-
-  const width = Math.min(maxW,Math.max(100,hooks * scaleX));
-  const height = Math.min(maxH,Math.max(100,picks * scaleY));
-
-  canvas.width = width;
-  canvas.height = height;
-
-  const ctx = canvas.getContext("2d");
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0,0,width,height);
-
-  if(!state.pattern) return;
-
-  /*
-    Draw matrix by mapping every output pixel to the nearest
-    hook/pick cell.
-  */
-
-  const image = ctx.createImageData(width,height);
-
-  for(let y=0;y<height;y++){
-
-    const p = Math.min(
-      picks - 1,
-      Math.floor((y / height) * picks)
-    );
-
-    for(let x=0;x<width;x++){
-
-      const h = Math.min(
-        hooks - 1,
-        Math.floor((x / width) * hooks)
-      );
-
-      const on = state.pattern[p * hooks + h];
-
-      const idx = (y * width + x) * 4;
-
-      const v = on ? 0 : 255;
-
-      image.data[idx] = v;
-      image.data[idx+1] = v;
-      image.data[idx+2] = v;
-      image.data[idx+3] = 255;
-    }
-  }
-
-  ctx.putImageData(image,0,0);
 }
 
-/* =========================================================
-   KINARA
-========================================================= */
-
-function readKinara(){
-  state.kinara.left = Math.max(0,Number($("kinLeft").value) || 0);
-  state.kinara.right = Math.max(0,Number($("kinRight").value) || 0);
-  state.kinara.top = Math.max(0,Number($("kinTop").value) || 0);
-  state.kinara.bottom = Math.max(0,Number($("kinBottom").value) || 0);
-}
-
-$("applyKinaraBtn").addEventListener("click",()=>{
-  readKinara();
-
-  if(state.kinara.left + state.kinara.right >= state.hooks){
-    state.kinara.right = Math.max(
-      0,
-      state.hooks - state.kinara.left - 1
-    );
-    $("kinRight").value = state.kinara.right;
-  }
-
-  if(state.kinara.top + state.kinara.bottom >= state.picks){
-    state.kinara.bottom = Math.max(
-      0,
-      state.picks - state.kinara.top - 1
-    );
-    $("kinBottom").value = state.kinara.bottom;
-  }
-
-  prepareDesign();
-});
-
-$("clearKinaraBtn").addEventListener("click",()=>{
-  state.kinara = {
-    left:0,
-    right:0,
-    top:0,
-    bottom:0
-  };
-
-  $("kinLeft").value = 0;
-  $("kinRight").value = 0;
-  $("kinTop").value = 0;
-  $("kinBottom").value = 0;
-
-  prepareDesign();
-});
 
 /* =========================================================
    FINGER UI
 ========================================================= */
 
-function fingerMask(fingerList){
-  let mask = 0;
+function initFingerCards(){
 
-  fingerList.forEach(range=>{
-    const bit = Number(range.finger) - 1;
+  const box = $("fingerCards");
 
-    if(bit >= 0 && bit < 6){
-      mask |= (1 << bit);
-    }
-  });
-
-  return mask;
-}
-
-function createFingerRangeElement(finger,start,stop,index){
-
-  const wrap = document.createElement("div");
-  wrap.className = "range";
-
-  const startInput = document.createElement("input");
-  startInput.type = "number";
-  startInput.min = 1;
-  startInput.value = start;
-
-  const stopInput = document.createElement("input");
-  stopInput.type = "number";
-  stopInput.min = 1;
-  stopInput.value = stop;
-
-  const removeBtn = document.createElement("button");
-  removeBtn.className = "danger";
-  removeBtn.textContent = "×";
-  removeBtn.title = "Remove range";
-
-  startInput.addEventListener("change",()=>{
-    state.fingers[finger][index].start =
-      clamp(Number(startInput.value)||1,1,Math.max(1,state.picks));
-
-    startInput.value = state.fingers[finger][index].start;
-
-    updateTimeline();
-  });
-
-  stopInput.addEventListener("change",()=>{
-    state.fingers[finger][index].stop =
-      clamp(Number(stopInput.value)||1,1,Math.max(1,state.picks));
-
-    stopInput.value = state.fingers[finger][index].stop;
-
-    updateTimeline();
-  });
-
-  removeBtn.addEventListener("click",()=>{
-    state.fingers[finger].splice(index,1);
-    renderFingers();
-    updateTimeline();
-  });
-
-  wrap.appendChild(startInput);
-  wrap.appendChild(stopInput);
-  wrap.appendChild(removeBtn);
-
-  return wrap;
-}
-
-function renderFingers(){
-
-  const container = $("fingerContainer");
-
-  container.innerHTML = "";
+  box.innerHTML = "";
 
   for(let f=1;f<=6;f++){
 
-    const card = document.createElement("div");
-    card.className = "finger";
+    const div = document.createElement("div");
 
-    const title = document.createElement("div");
-    title.className = "fingerTitle";
+    div.className = "range-card";
 
-    const label = document.createElement("span");
-    label.textContent = "F" + f;
+    div.innerHTML = `
+      <h3>F${f}</h3>
 
-    const addBtn = document.createElement("button");
-    addBtn.className = "light";
-    addBtn.textContent = "+ Range";
+      <div class="grid">
 
-    const rangesBox = document.createElement("div");
-    rangesBox.className = "ranges";
+        <div>
+          <label>Start Pick</label>
+          <input
+            id="f${f}start"
+            type="number"
+            min="1"
+            value="1"
+          >
+        </div>
 
-    addBtn.addEventListener("click",()=>{
+        <div>
+          <label>End Pick</label>
+          <input
+            id="f${f}end"
+            type="number"
+            min="1"
+            value="1"
+          >
+        </div>
 
-      const defaultStop = Math.max(
-        1,
-        state.picks || 1
-      );
+      </div>
 
-      state.fingers[f].push({
-        finger:f,
-        start:1,
-        stop:defaultStop
-      });
+      <br>
 
-      renderFingers();
-      updateTimeline();
-    });
+      <button onclick="addFingerRange(${f})">
+        Add Range
+      </button>
 
-    title.appendChild(label);
-    title.appendChild(addBtn);
+      <div
+        id="f${f}ranges"
+        class="range-list"
+      ></div>
+    `;
 
-    card.appendChild(title);
-
-    if(state.fingers[f].length === 0){
-      const empty = document.createElement("div");
-      empty.className = "small";
-      empty.textContent = "No range";
-      rangesBox.appendChild(empty);
-    }else{
-
-      state.fingers[f].forEach((range,index)=>{
-        rangesBox.appendChild(
-          createFingerRangeElement(
-            f,
-            range.start,
-            range.stop,
-            index
-          )
-        );
-      });
-    }
-
-    card.appendChild(rangesBox);
-
-    container.appendChild(card);
+    box.appendChild(div);
   }
 }
 
-/* =========================================================
-   FINGER PRESETS
-========================================================= */
 
-$("setAllF1Btn").addEventListener("click",()=>{
-  const picks = Math.max(1,state.picks || 1);
+function addFingerRange(f){
 
-  state.fingers = {
-    1:[{
-      finger:1,
-      start:1,
-      stop:picks
-    }],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[]
-  };
+  const start =
+    Number($(`f${f}start`).value);
 
-  renderFingers();
-  updateTimeline();
-});
+  const end =
+    Number($(`f${f}end`).value);
 
-$("clearAllFingerBtn").addEventListener("click",()=>{
-  state.fingers = {
-    1:[],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[]
-  };
+  if(!start || !end || start < 1 || end < start){
 
-  renderFingers();
-  updateTimeline();
-});
+    alert(
+      `F${f}: valid start/end pick enter karein.`
+    );
 
-$("resetFingerBtn").addEventListener("click",()=>{
-  const picks = Math.max(1,state.picks || 1);
+    return;
+  }
 
-  state.fingers = {
-    1:[{
-      finger:1,
-      start:1,
-      stop:picks
-    }],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[]
-  };
+  fingerRanges[f].push({
+    start:start,
+    end:end
+  });
 
-  renderFingers();
-  updateTimeline();
-});
+  renderFingerRanges(f);
+  buildTimeline();
+}
+
+
+function renderFingerRanges(f){
+
+  const box = $(`f${f}ranges`);
+
+  box.innerHTML = "";
+
+  fingerRanges[f].forEach((r,index)=>{
+
+    const row =
+      document.createElement("div");
+
+    row.className = "range-item";
+
+    row.innerHTML = `
+      <span>
+        Pick ${r.start} – ${r.end}
+      </span>
+
+      <button
+        class="danger"
+        style="padding:4px 8px"
+        onclick="removeFingerRange(${f},${index})"
+      >
+        ×
+      </button>
+    `;
+
+    box.appendChild(row);
+
+  });
+
+}
+
+
+function removeFingerRange(f,index){
+
+  fingerRanges[f].splice(index,1);
+
+  renderFingerRanges(f);
+  buildTimeline();
+}
+
 
 /* =========================================================
    TIMELINE
 ========================================================= */
 
-function getFingerMaskAtPick(pick){
+function fingerHasPick(f,pick){
 
-  let mask = 0;
-
-  for(let f=1;f<=6;f++){
-
-    const ranges = state.fingers[f] || [];
-
-    for(const range of ranges){
-
-      const start = Math.min(range.start,range.stop);
-      const stop = Math.max(range.start,range.stop);
-
-      if(
-        pick >= start &&
-        pick <= stop
-      ){
-        mask |= (1 << (f-1));
-        break;
-      }
-    }
-  }
-
-  return mask;
+  return fingerRanges[f].some(
+    r => pick >= r.start && pick <= r.end
+  );
 }
 
-function maskText(mask){
 
-  if(!mask) return "None";
+function buildTimeline(){
 
-  const names = [];
-
-  for(let f=1;f<=6;f++){
-
-    if(mask & (1 << (f-1))){
-      names.push("F" + f);
-    }
-  }
-
-  return names.join(" + ");
-}
-
-function buildTimelineSegments(){
-
-  const picks = Math.max(1,state.picks || 1);
-
-  const segments = [];
-
-  let previousMask = getFingerMaskAtPick(1);
-  let start = 1;
-
-  for(let p=2;p<=picks;p++){
-
-    const mask = getFingerMaskAtPick(p);
-
-    if(mask !== previousMask){
-
-      segments.push({
-        start,
-        stop:p-1,
-        mask:previousMask
-      });
-
-      start = p;
-      previousMask = mask;
-    }
-  }
-
-  segments.push({
-    start,
-    stop:picks,
-    mask:previousMask
-  });
-
-  return segments;
-}
-
-function updateTimeline(){
+  const maxPick =
+    runningInfo?.picks ||
+    Math.max(
+      1,
+      ...Object.values(fingerRanges)
+        .flat()
+        .map(r => r.end)
+    );
 
   const body = $("timelineBody");
 
   body.innerHTML = "";
 
-  const segments = buildTimelineSegments();
+  const fragment =
+    document.createDocumentFragment();
 
-  segments.forEach(seg=>{
+  const limit =
+    Math.min(maxPick,5000);
 
-    const tr = document.createElement("tr");
+  for(let pick=1;pick<=limit;pick++){
 
-    const td1 = document.createElement("td");
-    td1.textContent = seg.start;
+    const tr =
+      document.createElement("tr");
 
-    const td2 = document.createElement("td");
-    td2.textContent = seg.stop;
+    let html = `<td>${pick}</td>`;
 
-    const td3 = document.createElement("td");
-    td3.textContent = maskText(seg.mask);
+    for(let f=1;f<=6;f++){
 
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
+      html += `
+        <td>
+          ${
+            fingerHasPick(f,pick)
+              ? "●"
+              : ""
+          }
+        </td>
+      `;
 
-    body.appendChild(tr);
-  });
+    }
+
+    tr.innerHTML = html;
+
+    fragment.appendChild(tr);
+  }
+
+  body.appendChild(fragment);
+
+  const active =
+    Object.values(fingerRanges)
+      .flat()
+      .length;
+
+  $("fingerSummary").innerHTML =
+    `<b>${active}</b> finger ranges configured.`;
+
 }
 
+
 /* =========================================================
-   PROJECT SERIALIZATION
+   RUNNING EP ANALYZER
 ========================================================= */
 
-function serializeProject(){
+$("runningFile").addEventListener(
+  "change",
+  async function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const buffer =
+      await file.arrayBuffer();
+
+    runningBytes =
+      new Uint8Array(buffer);
+
+    try{
+
+      runningInfo =
+        analyzeEP(runningBytes);
+
+      $("runningInfo").innerHTML = `
+        <b>Running EP Detected</b><br>
+        File: ${file.name}<br>
+        Size: ${runningBytes.length} bytes<br>
+        Header: ${EP_HEADER_BYTES} bytes<br>
+        Picks: ${runningInfo.picks}<br>
+        Bytes / Pick: ${runningInfo.rowBytes}<br>
+        Hooks: ${runningInfo.hooks}<br>
+        Total Design Bits:
+        ${runningInfo.hooks * runningInfo.picks}
+      `;
+
+      $("machineStatus").textContent =
+        `${runningInfo.hooks} Hooks / ${runningInfo.picks} Picks`;
+
+      $("planStatus").textContent =
+        "Running File Loaded";
+
+      buildTimeline();
+
+    }catch(err){
+
+      runningInfo = null;
+
+      $("runningInfo").innerHTML =
+        `<b>EP analysis failed:</b> ${err.message}`;
+
+    }
+
+  }
+);
+
+
+function readLE16(bytes,offset){
+
+  return (
+    bytes[offset] |
+    (bytes[offset+1] << 8)
+  );
+
+}
+
+
+function analyzeEP(bytes){
+
+  if(bytes.length < EP_HEADER_BYTES){
+
+    throw new Error(
+      "EP file is smaller than required header."
+    );
+
+  }
+
+  const picks =
+    readLE16(bytes,3);
+
+  if(!picks){
+
+    throw new Error(
+      "Pick count could not be detected."
+    );
+
+  }
+
+  const payload =
+    bytes.length - EP_HEADER_BYTES;
+
+  if(payload <= 0){
+
+    throw new Error(
+      "EP payload missing."
+    );
+
+  }
+
+  if(payload % picks !== 0){
+
+    throw new Error(
+      "Payload is not divisible by detected pick count."
+    );
+
+  }
+
+  const rowBytes =
+    payload / picks;
+
+  const hooks =
+    rowBytes * 8;
 
   return {
-    version:6,
-
-    projectName:state.projectName,
-
-    machine:{
-      headerBytes:state.headerBytes,
-      rowBytes:state.rowBytes,
-      hooks:state.hooks,
-      picks:state.picks,
-      threshold:state.threshold,
-
-      machineHeader:
-        state.machineHeader
-          ? Array.from(state.machineHeader)
-          : null
-    },
-
-    design:{
-      name:state.designName,
-      threshold:state.threshold,
-      mirror:state.mirror,
-      flip:state.flip,
-      invert:state.invert
-    },
-
-    kinara:cloneObject(state.kinara),
-
-    fingers:cloneObject(state.fingers),
-
-    outputName:$("outputName").value || "New_Design"
+    picks,
+    rowBytes,
+    hooks,
+    payload
   };
+
 }
 
-function applyProjectData(data){
-
-  if(!data) return;
-
-  state.projectName =
-    data.projectName ||
-    "Untitled";
-
-  if(data.machine){
-
-    state.headerBytes =
-      Number(data.machine.headerBytes) ||
-      DEFAULT_HEADER_BYTES;
-
-    state.rowBytes =
-      Number(data.machine.rowBytes) ||
-      DEFAULT_ROW_BYTES;
-
-    state.hooks =
-      Number(data.machine.hooks) ||
-      672;
-
-    state.picks =
-      Number(data.machine.picks) ||
-      0;
-
-    state.threshold =
-      Number(data.machine.threshold);
-
-    if(!Number.isFinite(state.threshold)){
-      state.threshold = 128;
-    }
-
-    if(Array.isArray(data.machine.machineHeader)){
-      state.machineHeader =
-        new Uint8Array(data.machine.machineHeader);
-    }else{
-      state.machineHeader = null;
-    }
-  }
-
-  if(data.design){
-
-    state.designName =
-      data.design.name || "";
-
-    state.mirror =
-      !!data.design.mirror;
-
-    state.flip =
-      !!data.design.flip;
-
-    state.invert =
-      !!data.design.invert;
-
-    state.threshold =
-      Number(data.design.threshold) || state.threshold;
-  }
-
-  if(data.kinara){
-    state.kinara = {
-      left:Number(data.kinara.left)||0,
-      right:Number(data.kinara.right)||0,
-      top:Number(data.kinara.top)||0,
-      bottom:Number(data.kinara.bottom)||0
-    };
-  }
-
-  if(data.fingers){
-
-    state.fingers = {
-      1:Array.isArray(data.fingers[1])
-        ? data.fingers[1] : [],
-      2:Array.isArray(data.fingers[2])
-        ? data.fingers[2] : [],
-      3:Array.isArray(data.fingers[3])
-        ? data.fingers[3] : [],
-      4:Array.isArray(data.fingers[4])
-        ? data.fingers[4] : [],
-      5:Array.isArray(data.fingers[5])
-        ? data.fingers[5] : [],
-      6:Array.isArray(data.fingers[6])
-        ? data.fingers[6] : []
-    };
-  }
-
-  $("profileHooks").value = state.hooks;
-  $("profilePicks").value = state.picks;
-  $("profileHeader").value = state.headerBytes;
-  $("profileRow").value = state.rowBytes;
-
-  $("threshold").value = state.threshold;
-  $("designThreshold").value = state.threshold;
-
-  $("kinLeft").value = state.kinara.left;
-  $("kinRight").value = state.kinara.right;
-  $("kinTop").value = state.kinara.top;
-  $("kinBottom").value = state.kinara.bottom;
-
-  $("outputName").value =
-    data.outputName ||
-    "New_Design";
-
-  renderFingers();
-  updateTimeline();
-  updateDetectedUI();
-
-  if(state.designImage){
-    prepareDesign();
-  }
-}
 
 /* =========================================================
-   SAVE PROJECT
+   MACHINE PLAN
 ========================================================= */
 
-function projectBlob(){
+function createMachinePlan(){
 
-  const data = serializeProject();
+  if(!runningInfo){
 
-  return new Blob(
-    [JSON.stringify(data,null,2)],
-    {type:"application/json"}
+    alert(
+      "Pehle Running EP select karein."
+    );
+
+    return;
+  }
+
+  const name =
+    $("machineName").value.trim() ||
+    "Machine 5";
+
+  $("planMachineName").textContent =
+    name;
+
+  $("planStatus").textContent =
+    "Paid / Plan Ready for Conversion";
+
+  $("machineStatus").textContent =
+    `${name} • ${runningInfo.hooks} Hooks • ${runningInfo.picks} Picks`;
+
+  localStorage.setItem(
+    "electronicMachinePlan",
+    JSON.stringify({
+      name,
+      shuttles:Number($("shuttleCount").value),
+      format:$("machineFormat").value,
+      picks:runningInfo.picks,
+      hooks:runningInfo.hooks
+    })
   );
+
 }
 
-$("saveProjectBtn").addEventListener("click",()=>{
-  const name =
-    ($("outputName").value || "Electronic_Project")
-      .replace(/\.[^/.]+$/,"");
 
-  downloadBlob(
-    projectBlob(),
-    name + ".edp"
-  );
+function renameMachine(){
 
-  setStatus("Project saved");
-});
-
-$("saveAsBtn").addEventListener("click",()=>{
-  const current =
-    $("outputName").value ||
-    "Electronic_Project";
+  const old =
+    $("planMachineName").textContent;
 
   const name =
     prompt(
-      "Project file name:",
-      current
+      "New machine plan name:",
+      old
     );
 
-  if(!name) return;
+  if(name){
 
-  downloadBlob(
-    projectBlob(),
-    name.replace(/\.[^/.]+$/,"") + ".edp"
-  );
+    $("planMachineName").textContent =
+      name;
 
-  setStatus("Project saved as " + name);
-});
+    $("machineName").value =
+      name;
 
-/* =========================================================
-   OPEN PROJECT
-========================================================= */
-
-$("openProjectBtn").addEventListener("click",()=>{
-  $("projectFileInput").click();
-});
-
-$("projectFileInput").addEventListener("change",async e=>{
-  const file = e.target.files && e.target.files[0];
-
-  if(!file) return;
-
-  try{
-
-    const text = await file.text();
-
-    const data = JSON.parse(text);
-
-    applyProjectData(data);
-
-    setStatus("Project opened: " + file.name);
-
-  }catch(err){
-
-    console.error(err);
-
-    alert("Project file सही format में नहीं है।");
   }
 
-  e.target.value = "";
-});
+}
 
-/* =========================================================
-   NEW PROJECT
-========================================================= */
 
-$("newProjectBtn").addEventListener("click",()=>{
+function deleteMachine(){
 
-  const ok = confirm(
-    "New project शुरू करें? Current unsaved changes हट सकती हैं।"
+  if(!confirm(
+    "Machine Plan delete karein?"
+  )) return;
+
+  localStorage.removeItem(
+    "electronicMachinePlan"
   );
 
-  if(!ok) return;
+  $("planMachineName").textContent =
+    "Machine Plan Deleted";
 
-  state.runningBytes = null;
-  state.runningName = "";
-  state.machineHeader = null;
+  $("planStatus").textContent =
+    "Waiting";
 
-  state.headerBytes = DEFAULT_HEADER_BYTES;
-  state.rowBytes = DEFAULT_ROW_BYTES;
-  state.hooks = 672;
-  state.picks = 0;
+}
 
-  state.designFile = null;
-  state.designImage = null;
-  state.designName = "";
-
-  state.sourceWidth = 0;
-  state.sourceHeight = 0;
-
-  state.threshold = 128;
-
-  state.mirror = false;
-  state.flip = false;
-  state.invert = false;
-
-  state.pattern = null;
-
-  state.kinara = {
-    left:0,
-    right:0,
-    top:0,
-    bottom:0
-  };
-
-  state.fingers = {
-    1:[],
-    2:[],
-    3:[],
-    4:[],
-    5:[],
-    6:[]
-  };
-
-  $("runningInput").value = "";
-  $("designInput").value = "";
-
-  $("profileHooks").value = 672;
-  $("profilePicks").value = 0;
-  $("profileHeader").value = 34;
-  $("profileRow").value = 84;
-
-  $("threshold").value = 128;
-  $("designThreshold").value = 128;
-
-  $("kinLeft").value = 0;
-  $("kinRight").value = 0;
-  $("kinTop").value = 0;
-  $("kinBottom").value = 0;
-
-  $("srcWidth").textContent = "—";
-  $("srcHeight").textContent = "—";
-  $("srcType").textContent = "—";
-
-  $("analysisText").textContent =
-    "Design upload करने पर pattern analysis होगा.";
-
-  $("analysisText").className = "notice";
-
-  $("epMessage").textContent =
-    "Running EP upload करने के बाद structure यहाँ दिखाई देगा.";
-
-  $("epMessage").className = "notice";
-
-  $("originalCanvas").width = 500;
-  $("originalCanvas").height = 350;
-
-  const octx = $("originalCanvas").getContext("2d");
-  octx.clearRect(0,0,500,350);
-
-  $("patternCanvas").width = 500;
-  $("patternCanvas").height = 350;
-
-  const pctx = $("patternCanvas").getContext("2d");
-  pctx.clearRect(0,0,500,350);
-
-  $("outputName").value = "New_Design";
-
-  renderFingers();
-  updateTimeline();
-  updateDetectedUI();
-
-  setStatus("New project");
-});
 
 /* =========================================================
-   OUTPUT PACKING
+   DESIGN LOAD
 ========================================================= */
 
-function packPatternRows(){
+function loadDesign(){
 
-  if(!state.pattern){
-    throw new Error("Design pattern तैयार नहीं है।");
+  const file =
+    $("designFile").files[0];
+
+  if(!file){
+
+    alert(
+      "Pehle design image select karein."
+    );
+
+    return;
   }
 
-  const hooks = state.hooks;
-  const picks = state.picks;
-  const rowBytes = state.rowBytes;
+  const reader =
+    new FileReader();
 
-  if(rowBytes * 8 < hooks){
+  reader.onload = function(e){
+
+    const img =
+      new Image();
+
+    img.onload = function(){
+
+      designImage = img;
+
+      designCanvas.width =
+        img.naturalWidth;
+
+      designCanvas.height =
+        img.naturalHeight;
+
+      designCtx.clearRect(
+        0,
+        0,
+        designCanvas.width,
+        designCanvas.height
+      );
+
+      designCtx.drawImage(
+        img,
+        0,
+        0
+      );
+
+      originalImageData =
+        designCtx.getImageData(
+          0,
+          0,
+          designCanvas.width,
+          designCanvas.height
+        );
+
+      currentImageData =
+        new ImageData(
+          new Uint8ClampedArray(
+            originalImageData.data
+          ),
+          originalImageData.width,
+          originalImageData.height
+        );
+
+      $("designInfo").innerHTML = `
+        <b>Design Loaded</b><br>
+        File: ${file.name}<br>
+        Width: ${img.naturalWidth}px<br>
+        Height: ${img.naturalHeight}px
+      `;
+
+      $("planStatus").textContent =
+        "Design Selected";
+
+      renderDesign();
+
+    };
+
+    img.src = e.target.result;
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+function thresholdChanged(){
+
+  $("thresholdValue").textContent =
+    $("threshold").value;
+
+  renderDesign();
+
+}
+
+
+function renderDesign(){
+
+  if(!originalImageData)
+    return;
+
+  const threshold =
+    Number($("threshold").value);
+
+  const src =
+    originalImageData.data;
+
+  const dst =
+    new Uint8ClampedArray(src.length);
+
+  for(let i=0;i<src.length;i+=4){
+
+    const r=src[i];
+    const g=src[i+1];
+    const b=src[i+2];
+
+    const gray =
+      Math.round(
+        0.299*r+
+        0.587*g+
+        0.114*b
+      );
+
+    const value =
+      gray >= threshold
+        ? 255
+        : 0;
+
+    dst[i]=value;
+    dst[i+1]=value;
+    dst[i+2]=value;
+    dst[i+3]=255;
+  }
+
+  currentImageData =
+    new ImageData(
+      dst,
+      originalImageData.width,
+      originalImageData.height
+    );
+
+  designCanvas.width =
+    currentImageData.width;
+
+  designCanvas.height =
+    currentImageData.height;
+
+  designCtx.putImageData(
+    currentImageData,
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
+   IMAGE TRANSFORMS
+========================================================= */
+
+function mirrorDesign(){
+
+  if(!currentImageData) return;
+
+  const w =
+    currentImageData.width;
+
+  const h =
+    currentImageData.height;
+
+  const out =
+    new ImageData(w,h);
+
+  for(let y=0;y<h;y++){
+
+    for(let x=0;x<w;x++){
+
+      const srcIndex =
+        (y*w+x)*4;
+
+      const dstIndex =
+        (y*w+(w-1-x))*4;
+
+      for(let c=0;c<4;c++){
+
+        out.data[dstIndex+c] =
+          currentImageData.data[srcIndex+c];
+
+      }
+
+    }
+
+  }
+
+  currentImageData = out;
+
+  designCtx.putImageData(
+    out,
+    0,
+    0
+  );
+
+}
+
+
+function flipDesign(){
+
+  if(!currentImageData) return;
+
+  const w =
+    currentImageData.width;
+
+  const h =
+    currentImageData.height;
+
+  const out =
+    new ImageData(w,h);
+
+  for(let y=0;y<h;y++){
+
+    for(let x=0;x<w;x++){
+
+      const srcIndex =
+        (y*w+x)*4;
+
+      const dstIndex =
+        ((h-1-y)*w+x)*4;
+
+      for(let c=0;c<4;c++){
+
+        out.data[dstIndex+c] =
+          currentImageData.data[srcIndex+c];
+
+      }
+
+    }
+
+  }
+
+  currentImageData=out;
+
+  designCtx.putImageData(
+    out,
+    0,
+    0
+  );
+
+}
+
+
+function invertDesign(){
+
+  if(!currentImageData) return;
+
+  const data =
+    currentImageData.data;
+
+  for(let i=0;i<data.length;i+=4){
+
+    data[i] =
+      255-data[i];
+
+    data[i+1] =
+      255-data[i+1];
+
+    data[i+2] =
+      255-data[i+2];
+
+  }
+
+  designCtx.putImageData(
+    currentImageData,
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
+   COLOR ORDER
+========================================================= */
+
+document
+  .querySelectorAll(".color-box")
+  .forEach(el=>{
+
+    el.addEventListener(
+      "click",
+      ()=>{
+
+        el.classList.toggle("active");
+
+        selectedColors =
+          [...document.querySelectorAll(
+            ".color-box.active"
+          )].map(
+            x=>x.dataset.color
+          );
+
+      }
+    );
+
+  });
+
+
+function getColorsFromDesign(){
+
+  if(!currentImageData){
+
+    alert(
+      "Pehle design load karein."
+    );
+
+    return;
+  }
+
+  alert(
+    "Design se colour information read ki gayi. " +
+    "Machine-specific colour split ke liye final " +
+    "mapping machine plan par depend karegi."
+  );
+
+}
+
+
+/* =========================================================
+   HARNESS PLAN
+========================================================= */
+
+function prepareHarnessPlan(){
+
+  const mode =
+    $("harnessMode").value;
+
+  const direction =
+    $("hookDirection").value;
+
+  const bit =
+    $("bitOrder").value;
+
+  $("harnessInfo").innerHTML = `
+    Harness Mode: <b>${mode}</b><br>
+    Hook Direction: <b>${direction}</b><br>
+    Bit Order: <b>${bit}</b><br>
+    <span class="small">
+      Machine-specific proprietary harness bytes
+      running file se automatically assume nahi kiye ja rahe.
+    </span>
+  `;
+
+}
+
+
+/* =========================================================
+   IMAGE → BINARY PATTERN
+========================================================= */
+
+function getBinaryPattern(){
+
+  if(!currentImageData){
+
     throw new Error(
-      "Detected row size hooks capacity से छोटी है।"
+      "Design image not loaded."
     );
+
   }
 
-  const output = new Uint8Array(
-    picks * rowBytes
-  );
+  const w =
+    currentImageData.width;
 
-  /*
-    Finger ranges are used as a logical gate for preview/build.
-    IMPORTANT:
-    This does NOT claim to encode proprietary machine-specific
-    finger-control bytes. Those bytes require verified machine
-    format information.
-  */
+  const h =
+    currentImageData.height;
 
-  for(let p=0;p<picks;p++){
+  const data =
+    currentImageData.data;
 
-    const pickNumber = p + 1;
+  const rows = [];
 
-    const fingerMask =
-      getFingerMaskAtPick(pickNumber);
+  for(let y=0;y<h;y++){
 
-    /*
-      If no finger is assigned for a pick, output blank row.
-      If one or more fingers are assigned, the new design
-      pattern is written for that pick.
-    */
+    const row = [];
 
-    const rowOffset = p * rowBytes;
+    for(let x=0;x<w;x++){
 
-    if(fingerMask === 0){
+      const index =
+        (y*w+x)*4;
+
+      const value =
+        data[index];
+
+      row.push(
+        value < 128
+          ? 1
+          : 0
+      );
+
+    }
+
+    rows.push(row);
+
+  }
+
+  return {
+    width:w,
+    height:h,
+    rows
+  };
+
+}
+
+
+/* =========================================================
+   RESIZE / MAP TO MACHINE
+========================================================= */
+
+function mapDesignToMachine(){
+
+  if(!runningInfo){
+
+    throw new Error(
+      "Running EP not loaded."
+    );
+
+  }
+
+  const pattern =
+    getBinaryPattern();
+
+  const hooks =
+    runningInfo.hooks;
+
+  const picks =
+    runningInfo.picks;
+
+  const left =
+    Number($("leftHooks").value)||0;
+
+  const right =
+    Number($("rightHooks").value)||0;
+
+  const top =
+    Number($("topPicks").value)||0;
+
+  const bottom =
+    Number($("bottomPicks").value)||0;
+
+  const usableHooks =
+    Math.max(
+      1,
+      hooks-left-right
+    );
+
+  const usablePicks =
+    Math.max(
+      1,
+      picks-top-bottom
+    );
+
+  const result =
+    new Array(picks);
+
+  for(let y=0;y<picks;y++){
+
+    const row =
+      new Uint8Array(
+        Math.ceil(hooks/8)
+      );
+
+    if(
+      y<top ||
+      y>=picks-bottom
+    ){
+
+      result[y]=row;
       continue;
     }
 
-    for(let h=0;h<hooks;h++){
+    const sy =
+      Math.min(
+        pattern.height-1,
+        Math.floor(
+          (y-top)*
+          pattern.height/
+          usablePicks
+        )
+      );
 
-      const active =
-        state.pattern[p * hooks + h];
+    for(let x=0;x<hooks;x++){
 
-      if(!active) continue;
+      if(
+        x<left ||
+        x>=hooks-right
+      ){
+        continue;
+      }
 
-      const byteIndex =
-        rowOffset + Math.floor(h / 8);
+      const sx =
+        Math.min(
+          pattern.width-1,
+          Math.floor(
+            (x-left)*
+            pattern.width/
+            usableHooks
+          )
+        );
 
       const bit =
-        7 - (h % 8);
+        pattern.rows[sy][sx];
 
-      output[byteIndex] |= (1 << bit);
+      if(bit){
+
+        const byteIndex =
+          Math.floor(x/8);
+
+        const bitIndex =
+          7-(x%8);
+
+        row[byteIndex] |=
+          (1<<bitIndex);
+      }
+
     }
+
+    result[y]=row;
   }
 
-  return output;
+  return result;
+
 }
 
-/* =========================================================
-   BUILD OUTPUT PREVIEW
-========================================================= */
-
-$("buildPreviewBtn").addEventListener("click",()=>{
-
-  try{
-
-    const rows = packPatternRows();
-
-    let activeBytes = 0;
-
-    for(const b of rows){
-      if(b) activeBytes++;
-    }
-
-    $("buildMessage").textContent =
-      "Output preview ready — " +
-      rows.length +
-      " bytes payload, " +
-      activeBytes +
-      " non-zero bytes.";
-
-    setStatus("Output built");
-
-  }catch(err){
-
-    console.error(err);
-
-    $("buildMessage").textContent =
-      "Build error: " + err.message;
-  }
-});
 
 /* =========================================================
-   EP EXPORT
+   EP BUILD
 ========================================================= */
 
-function createEPFile(){
+function buildOutputEP(rows){
 
-  if(!state.runningBytes){
+  if(!runningBytes || !runningInfo){
+
     throw new Error(
-      "पहले running EP upload करें।"
+      "Running EP not available."
     );
-  }
 
-  if(!state.pattern){
-    throw new Error(
-      "पहले नई design upload करें।"
-    );
   }
-
-  if(!state.machineHeader){
-    state.machineHeader =
-      state.runningBytes.slice(
-        0,
-        state.headerBytes
-      );
-  }
-
-  const payload = packPatternRows();
 
   const header =
-    cloneBytes(state.machineHeader);
-
-  /*
-    Keep header structure from running EP.
-    Pick count update is attempted at offset 3
-    because this is known for the currently supported
-    EP family.
-
-    This is deliberately limited to the verified family
-    instead of inventing an unknown controller format.
-  */
-
-  if(header.length >= 5){
-    writeLE16(
-      header,
-      3,
-      state.picks
+    runningBytes.slice(
+      0,
+      EP_HEADER_BYTES
     );
-  }
 
-  const output = new Uint8Array(
-    header.length + payload.length
-  );
+  const totalBytes =
+    EP_HEADER_BYTES +
+    rows.length*
+    runningInfo.rowBytes;
+
+  const output =
+    new Uint8Array(totalBytes);
 
   output.set(header,0);
-  output.set(payload,header.length);
+
+  let offset =
+    EP_HEADER_BYTES;
+
+  for(let y=0;y<rows.length;y++){
+
+    const row =
+      rows[y];
+
+    output.set(
+      row.slice(
+        0,
+        runningInfo.rowBytes
+      ),
+      offset
+    );
+
+    offset +=
+      runningInfo.rowBytes;
+  }
 
   return output;
+
 }
 
-$("exportBtn").addEventListener("click",()=>{
+
+/* =========================================================
+   CONVERSION
+========================================================= */
+
+async function convertNow(){
+
+  if(!runningInfo){
+
+    alert(
+      "Pehle Running EP load karein."
+    );
+
+    return;
+  }
+
+  if(!currentImageData){
+
+    alert(
+      "Pehle Design select karein."
+    );
+
+    return;
+  }
+
+  $("convertBtn").disabled=true;
+
+  const stages = [
+    "Preparing for Split...",
+    "Applying Harness Plan...",
+    "Applying Finger Plan...",
+    "Building Machine EP...",
+    "Completed"
+  ];
+
+  for(let i=0;i<stages.length;i++){
+
+    $("conversionStatus").textContent =
+      stages[i];
+
+    $("progressBar").style.width =
+      `${Math.round(
+        ((i+1)/stages.length)*100
+      )}%`;
+
+    await sleep(500);
+
+    if(i===0){
+
+      prepareHarnessPlan();
+
+    }
+
+  }
 
   try{
 
-    const bytes = createEPFile();
+    const rows =
+      mapDesignToMachine();
 
-    let name =
-      $("outputName").value.trim() ||
-      "New_Design";
+    outputBytes =
+      buildOutputEP(rows);
 
-    name =
-      name.replace(/\.[^/.]+$/,"");
+    const designFile =
+      $("designFile").files[0];
 
-    const fileName =
-      name +
-      "_" +
-      state.picks +
-      "Picks.EP";
+    const base =
+      designFile
+        ? designFile.name
+            .replace(/\.[^/.]+$/,"")
+        : "ConvertedDesign";
 
-    downloadBlob(
-      new Blob(
-        [bytes],
-        {type:"application/octet-stream"}
-      ),
-      fileName
-    );
+    outputName =
+      `${base}_${runningInfo.picks}Picks.EP`;
 
-    setStatus("EP exported: " + fileName);
+    $("outputInfo").innerHTML = `
+      <b>Conversion Completed</b><br>
+      Output: ${outputName}<br>
+      Hooks: ${runningInfo.hooks}<br>
+      Picks: ${runningInfo.picks}<br>
+      Output Size: ${outputBytes.length} bytes<br>
+      Running design rows were NOT copied.
+    `;
+
+    $("downloadBtn").disabled=false;
+
+    $("planStatus").textContent =
+      "Plan Ready / Conversion Completed";
 
   }catch(err){
 
-    console.error(err);
+    $("conversionStatus").textContent =
+      "Conversion Error: "+err.message;
+
+  }finally{
+
+    $("convertBtn").disabled=false;
+
+  }
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadEP(){
+
+  if(!outputBytes){
 
     alert(
-      "EP Export Error:\n" +
-      err.message
+      "No output file."
     );
+
+    return;
   }
-});
+
+  const blob =
+    new Blob(
+      [outputBytes],
+      {type:"application/octet-stream"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href=url;
+  a.download=outputName;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
 
 /* =========================================================
-   DESIGN THRESHOLD
+   PROJECT SAVE
 ========================================================= */
 
-$("designThreshold").addEventListener("input",()=>{
-  const value = clamp(
-    Number($("designThreshold").value) || 128,
-    0,
-    255
-  );
+function saveProject(){
 
-  state.threshold = value;
+  const project = {
 
-  if(state.designImage){
-    prepareDesign();
-  }
-});
+    version:"V7",
+
+    machine:{
+      name:$("machineName").value,
+      shuttles:Number(
+        $("shuttleCount").value
+      ),
+      format:$("machineFormat").value
+    },
+
+    running:{
+      name:$("runningFile").files[0]
+        ?.name || "",
+      info:runningInfo
+    },
+
+    design:{
+      name:$("designFile").files[0]
+        ?.name || "",
+      width:currentImageData
+        ?.width || 0,
+      height:currentImageData
+        ?.height || 0
+    },
+
+    kinara:{
+      left:Number($("leftHooks").value),
+      right:Number($("rightHooks").value),
+      top:Number($("topPicks").value),
+      bottom:Number($("bottomPicks").value)
+    },
+
+    fingers:fingerRanges,
+
+    colors:selectedColors,
+
+    splitFactor:Number(
+      $("splitFactor").value
+    ),
+
+    harness:{
+      mode:$("harnessMode").value,
+      direction:$("hookDirection").value,
+      bitOrder:$("bitOrder").value
+    }
+
+  };
+
+  const blob =
+    new Blob(
+      [JSON.stringify(project,null,2)],
+      {type:"application/json"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href=url;
+  a.download="ElectronicDesign_Project.EDP";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
 
 /* =========================================================
-   PROFILE INPUT SYNC
+   PROJECT OPEN
 ========================================================= */
 
-$("profileHooks").addEventListener("change",()=>{
+function openProject(){
 
-  state.hooks = Math.max(
-    1,
-    Number($("profileHooks").value) || 672
-  );
+  $("projectFile").click();
 
-  if(state.designImage){
-    prepareDesign();
-  }
+}
 
-  updateDetectedUI();
-});
 
-$("profilePicks").addEventListener("change",()=>{
+function loadProjectFile(event){
 
-  state.picks = Math.max(
-    0,
-    Number($("profilePicks").value) || 0
-  );
+  const file =
+    event.target.files[0];
 
-  if(state.designImage && state.picks > 0){
-    prepareDesign();
-  }
+  if(!file) return;
 
-  updateDetectedUI();
-});
+  const reader =
+    new FileReader();
 
-$("profileHeader").addEventListener("change",()=>{
-  state.headerBytes = Math.max(
-    0,
-    Number($("profileHeader").value) || 34
-  );
-});
+  reader.onload=function(){
 
-$("profileRow").addEventListener("change",()=>{
-  state.rowBytes = Math.max(
-    1,
-    Number($("profileRow").value) || 84
-  );
-});
+    try{
+
+      const p =
+        JSON.parse(reader.result);
+
+      if(p.machine){
+
+        $("machineName").value =
+          p.machine.name || "";
+
+        $("shuttleCount").value =
+          p.machine.shuttles || 1;
+
+        $("machineFormat").value =
+          p.machine.format ||
+          "EP";
+
+      }
+
+      if(p.kinara){
+
+        $("leftHooks").value =
+          p.kinara.left || 0;
+
+        $("rightHooks").value =
+          p.kinara.right || 0;
+
+        $("topPicks").value =
+          p.kinara.top || 0;
+
+        $("bottomPicks").value =
+          p.kinara.bottom || 0;
+
+      }
+
+      if(p.fingers){
+
+        fingerRanges =
+          p.fingers;
+
+        for(let f=1;f<=6;f++){
+
+          renderFingerRanges(f);
+
+        }
+
+      }
+
+      if(p.colors){
+
+        selectedColors =
+          p.colors;
+
+        document
+          .querySelectorAll(".color-box")
+          .forEach(el=>{
+
+            el.classList.toggle(
+              "active",
+              selectedColors.includes(
+                el.dataset.color
+              )
+            );
+
+          });
+
+      }
+
+      if(p.splitFactor){
+
+        $("splitFactor").value =
+          p.splitFactor;
+
+      }
+
+      if(p.harness){
+
+        $("harnessMode").value =
+          p.harness.mode ||
+          "standard";
+
+        $("hookDirection").value =
+          p.harness.direction ||
+          "normal";
+
+        $("bitOrder").value =
+          p.harness.bitOrder ||
+          "msb";
+
+      }
+
+      buildTimeline();
+
+      alert(
+        "Project settings loaded."
+      );
+
+    }catch(err){
+
+      alert(
+        "Invalid project file."
+      );
+
+    }
+
+  };
+
+  reader.readAsText(file);
+
+}
+
 
 /* =========================================================
    INITIALIZE
 ========================================================= */
 
-function initialize(){
-
-  renderFingers();
-
-  updateTimeline();
-
-  updateDetectedUI();
-
-  refreshMachineSelect();
-
-  const original = $("originalCanvas");
-  original.width = 500;
-  original.height = 350;
-
-  const octx = original.getContext("2d");
-  octx.fillStyle = "#ffffff";
-  octx.fillRect(0,0,500,350);
-
-  const pattern = $("patternCanvas");
-  pattern.width = 500;
-  pattern.height = 350;
-
-  const pctx = pattern.getContext("2d");
-  pctx.fillStyle = "#ffffff";
-  pctx.fillRect(0,0,500,350);
-
-  setStatus("Ready");
-}
-
-initialize();
+initFingerCards();
+buildTimeline();
+prepareHarnessPlan();
 
 </script>
 
 </body>
-                  </html>
+</html>
