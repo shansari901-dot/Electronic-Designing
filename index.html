@@ -1,213 +1,200 @@
-<!doctype html>
-<html lang="hi">
+<!-- Electronic Designing — EasyX Style V4 -->
+<!-- Password: admin123 -->
+<!--
+  Running EP:
+  - Automatically detects Hooks and Total Picks for the verified 34-byte-header format.
+  - Does NOT copy old running design rows into output.
+  - New design rows are generated from the uploaded design image.
+  - Finger sequence is manually controlled.
+  - Actual machine-specific finger byte mapping is intentionally NOT guessed.
+-->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Electronic Designing — EasyX Style</title>
+<title>Electronic Designing — EasyX Style V4</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f5f7;color:#17202a}
-header{background:#17202a;color:#fff;padding:14px 18px;display:flex;justify-content:space-between}
-main{max-width:1200px;margin:auto;padding:16px}
-.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 2px 10px #0001}
-h2{margin:0 0 12px;font-size:19px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-label{font-weight:600;font-size:13px;display:block;margin-bottom:5px}
+body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#17202a}
+header{background:#17202a;color:white;padding:14px 18px;font-size:20px;font-weight:700}
+main{max-width:1200px;margin:auto;padding:18px}
+.card{background:white;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 10px #0001}
+h2{margin:0 0 14px}
+h3{margin:16px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+label{display:block;font-weight:600;margin-bottom:5px}
 input,select,button{font:inherit}
-input[type=text],input[type=password],input[type=number],select{
-width:100%;padding:9px;border:1px solid #ccd3da;border-radius:7px
+input[type=text],input[type=number],input[type=password],select{
+ width:100%;padding:9px;border:1px solid #bbb;border-radius:7px
 }
-button{border:0;border-radius:7px;padding:9px 13px;cursor:pointer;background:#263746;color:#fff;margin:3px}
-button.secondary{background:#e8edf1;color:#17202a}
-.danger{background:#b42318}
-.ok{background:#18794e}
-.row{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
-.grow{flex:1;min-width:180px}
-#login{position:fixed;inset:0;background:#17202a;display:flex;align-items:center;justify-content:center;z-index:10}
-.loginbox{background:white;padding:24px;border-radius:14px;width:min(360px,90vw)}
+input[readonly]{background:#f0f2f4}
+button{
+ border:0;border-radius:7px;padding:10px 14px;background:#1769aa;color:#fff;
+ cursor:pointer;margin:4px
+}
+button.secondary{background:#68727c}
+button.danger{background:#b3261e}
+.status{padding:10px;border-radius:7px;background:#eef1f4;margin-top:10px}
+.status.success{background:#e4f6e9;color:#176b35}
+.status.error{background:#fde7e7;color:#9c1c1c}
+.small{font-size:13px;color:#606870;margin-top:7px}
 #app{display:none}
-.status{padding:9px;border-radius:7px;background:#eef2f5;margin-top:8px}
-.error{background:#fff0f0;color:#9b1c1c}
-.success{background:#effaf3;color:#17633f}
-canvas{max-width:100%;border:1px solid #cfd6dc;background:#fff;image-rendering:pixelated}
-.previewwrap{overflow:auto;max-height:520px}
-.small{font-size:12px;color:#59636e}
-.fingers{display:flex;gap:5px;flex-wrap:wrap}
-.finger{min-width:54px;text-align:center}
-.finger input{width:18px;height:18px}
-.range-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-.range-table th,.range-table td{border:1px solid #d8dde2;padding:7px;text-align:center}
+#login{
+ position:fixed;inset:0;background:#17202a;display:flex;align-items:center;
+ justify-content:center;z-index:100
+}
+.loginbox{
+ width:min(360px,90vw);background:white;padding:25px;border-radius:12px
+}
+canvas{
+ width:100%;max-height:700px;border:1px solid #aaa;background:white;
+ image-rendering:auto
+}
+.tablewrap{overflow:auto}
+table{border-collapse:collapse;width:100%;margin-top:10px}
+th,td{border:1px solid #ddd;padding:7px;text-align:left}
+th{background:#f0f2f4}
+.fingers{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.finger{
+ border:1px solid #bbb;padding:8px 12px;border-radius:7px;background:#fafafa;
+ cursor:pointer
+}
 </style>
 </head>
 
 <body>
 
+<header>Electronic Designing — EasyX Style V4</header>
+
 <div id="login">
-<div class="loginbox">
-
-<h2>Electronic Designing</h2>
-
-<p class="small">Admin login</p>
-
-<input
-id="password"
-type="password"
-placeholder="Password"
->
-
-<button
-class="ok"
-style="width:100%;margin-top:10px"
-onclick="login()"
->
-Login
-</button>
-
-<div id="loginMsg" class="small"></div>
-
+  <div class="loginbox">
+    <h2>Login</h2>
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter password">
+    <button onclick="login()">Login</button>
+    <div id="loginMsg" class="status"></div>
+  </div>
 </div>
-</div>
-
-
-<header>
-
-<b>Electronic Designing — EasyX Style</b>
-
-<button
-class="secondary"
-onclick="location.reload()"
->
-Logout
-</button>
-
-</header>
-
 
 <main id="app">
 
+<!-- ========================================================= -->
+<!-- 1. MACHINE SETUP -->
+<!-- ========================================================= -->
 
 <section class="card">
-
-<h2>1. Machine / Harness Profile</h2>
+<h2>1. Machine Setup — Running EP se automatic</h2>
 
 <div class="grid">
 
 <div>
 <label>Machine name</label>
-<input
-id="machineName"
-placeholder="My Jacquard"
->
+<input id="machineName" type="text"
+       placeholder="Detected from running file / optional">
 </div>
 
 <div>
-<label>Hooks</label>
-<input
-id="hooks"
-type="number"
-min="1"
-value="672"
->
+<label>Hooks (auto)</label>
+<input id="hooks" type="number" readonly>
 </div>
 
 <div>
-<label>Finger count (1–6)</label>
-<input
-id="fingerCount"
-type="number"
-min="1"
-max="6"
-value="2"
->
+<label>Total Picks (auto)</label>
+<input id="totalPicks" type="number" readonly>
 </div>
 
 <div>
 <label>Threshold (0–255)</label>
-<input
-id="threshold"
-type="number"
-min="0"
-max="255"
-value="128"
-placeholder="128"
->
+<input id="threshold" type="number"
+       min="0" max="255" value="128">
 </div>
 
 </div>
 
-<h3>Finger capacity / picks</h3>
-
-<div
-id="fingerInputs"
-class="grid"
-></div>
-
-<button onclick="saveProfile()">
-Save profile
-</button>
-
-<button
-class="secondary"
-onclick="loadProfile()"
->
-Load profile
-</button>
-
-<div
-id="profileStatus"
-class="status"
-></div>
-
-</section>
-
-
-
-<section class="card">
-
-<h2>2. Running EP / Machine Template</h2>
-
-<input
-id="epFile"
-type="file"
-accept=".ep,.EP"
->
-
-<div
-id="epInfo"
-class="status"
->
-No running EP loaded.
+<div id="profileStatus" class="status">
+Pehle Running EP upload karein. Hooks aur Total Picks file se analyze honge.
 </div>
 
 <div class="small">
+Is section me Hooks/Picks manually enter nahi karne hain.
+Running EP ki machine structure use hogi; purani design rows copy nahi hongi.
+</div>
 
-Running EP is used only as a
-template/header source.
+<br>
 
-Its old design rows are not copied.
+<button onclick="saveProfile()">Save Profile</button>
+<button class="secondary" onclick="loadProfile()">Load Profile</button>
 
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 2. RUNNING EP -->
+<!-- ========================================================= -->
+
+<section class="card">
+
+<h2>2. Running EP — Analyze</h2>
+
+<input id="epFile" type="file" accept=".ep,.EP">
+
+<div id="epInfo" class="status">
+No running EP loaded.
+</div>
+
+<div class="grid" style="margin-top:10px">
+
+<div>
+<label>Detected Header</label>
+<input id="detHeader" readonly>
+</div>
+
+<div>
+<label>Detected Row Bytes</label>
+<input id="detRowBytes" readonly>
+</div>
+
+<div>
+<label>Detected Hooks</label>
+<input id="detHooks" readonly>
+</div>
+
+<div>
+<label>Detected Picks</label>
+<input id="detPicks" readonly>
+</div>
+
+</div>
+
+<div class="small">
+Running file ka old design data sirf analysis ke liye read hota hai.
+Export me old design rows copy nahi hoti.
 </div>
 
 </section>
 
 
+<!-- ========================================================= -->
+<!-- 3. NEW DESIGN -->
+<!-- ========================================================= -->
 
 <section class="card">
 
-<h2>3. New Design Image</h2>
+<h2>3. New Design</h2>
 
-<input
-id="designFile"
-type="file"
-accept=".bmp,.png,.jpg,.jpeg,.webp,
-image/bmp,image/png,image/jpeg,image/webp"
->
+<input id="designFile"
+       type="file"
+       accept=".bmp,.png,.jpg,.jpeg,.webp">
 
-<div class="grid">
+<div id="designInfo" class="status">
+No new design loaded.
+</div>
+
+<div class="grid" style="margin-top:10px">
 
 <div>
 <label>Invert</label>
-
 <select id="invert">
 <option value="0">Normal</option>
 <option value="1">Invert</option>
@@ -216,234 +203,140 @@ image/bmp,image/png,image/jpeg,image/webp"
 
 <div>
 <label>Mirror</label>
-
 <select id="mirror">
-<option value="0">No</option>
-<option value="1">Yes</option>
+<option value="0">Normal</option>
+<option value="1">Mirror</option>
 </select>
 </div>
 
 <div>
-<label>Flip vertical</label>
-
+<label>Flip</label>
 <select id="flip">
-<option value="0">No</option>
-<option value="1">Yes</option>
+<option value="0">Normal</option>
+<option value="1">Flip</option>
 </select>
 </div>
 
 </div>
 
-<button onclick="prepareDesign()">
-Prepare / Preview
-</button>
-
-<div
-id="designInfo"
-class="status"
->
-No design loaded.
-</div>
+<button onclick="prepareDesign()">Prepare New Design</button>
 
 </section>
 
 
+<!-- ========================================================= -->
+<!-- 4. FINGER WORKING SEQUENCE -->
+<!-- ========================================================= -->
 
 <section class="card">
 
-<h2>4. Finger / Peti Working Sequence</h2>
+<h2>4. New Design — Finger / Peti Working Sequence</h2>
 
 <p class="small">
-
-Total picks automatic नहीं हैं।
-आप finger capacities देंगे।
-
-फिर हर pick range में कौन-से
-finger काम करेंगे, आप तय करेंगे।
-
+Total Picks Running EP se automatic aate hain.
+Aap sirf New Design ke liye decide karenge ki kis pick range me
+kaun-se finger(s) kaam karein.
 </p>
 
-<div class="row">
+<div class="grid">
 
-<div class="grow">
-
-<label>Start pick</label>
-
-<input
-id="rangeStart"
-type="number"
-min="1"
-value="1"
->
-
+<div>
+<label>Start Pick</label>
+<input id="rangeStart" type="number" min="1" value="1">
 </div>
 
-
-<div class="grow">
-
-<label>End pick</label>
-
-<input
-id="rangeEnd"
-type="number"
-min="1"
-value="40"
->
-
-</div>
-
-
-<div class="grow">
-
-<label>Active fingers</label>
-
-<div
-id="fingerChecks"
-class="fingers"
-></div>
-
+<div>
+<label>End Pick</label>
+<input id="rangeEnd" type="number" min="1" value="40">
 </div>
 
 </div>
 
+<label style="margin-top:12px">
+Finger selection
+</label>
 
-<button onclick="applyRange()">
-Apply range
-</button>
+<div id="fingerChecks" class="fingers"></div>
 
-<button
-class="secondary"
-onclick="clearRange()"
->
-Clear range
-</button>
+<button onclick="applyRange()">Apply Range</button>
+<button class="secondary" onclick="clearRange()">Clear Range</button>
+<button class="secondary" onclick="setAllF1()">Set All F1</button>
+<button class="danger" onclick="resetSequence()">Reset Sequence</button>
 
-<button
-class="secondary"
-onclick="setAllF1()"
->
-Set all F1
-</button>
+<div id="sequenceStatus" class="status"></div>
 
-<button
-class="danger"
-onclick="resetSequence()"
->
-Reset
-</button>
-
-
-<div
-id="sequenceStatus"
-class="status"
-></div>
-
-
-<table class="range-table">
-
+<div class="tablewrap">
+<table>
 <thead>
-
 <tr>
-<th>Start</th>
-<th>End</th>
-<th>Active</th>
-<th>Action</th>
+<th>Start Pick</th>
+<th>End Pick</th>
+<th>Working Finger(s)</th>
+<th>Edit</th>
 </tr>
-
 </thead>
-
-<tbody
-id="sequenceTable"
-></tbody>
-
+<tbody id="sequenceTable"></tbody>
 </table>
+</div>
+
+<div class="small">
+Example:
+1–40 = F1,
+41–80 = F1 + F2,
+81–120 = F2,
+121–150 = F1 + F3
+</div>
 
 </section>
 
 
+<!-- ========================================================= -->
+<!-- 5. HOOK PREVIEW -->
+<!-- ========================================================= -->
 
 <section class="card">
 
 <h2>5. Design → Hook Preview</h2>
 
-<div class="small">
-
-Design image से हर pick पर
-hook ON/OFF pattern निकाला जाता है।
-
-Finger sequence अलग से लागू होती है।
-
-</div>
-
-
-<div class="previewwrap">
-
-<canvas
-id="preview"
-></canvas>
-
-</div>
-
-
-<div
-class="row"
-style="margin-top:8px"
->
-
-<button
-class="secondary"
-onclick="showOriginalDesign()"
->
+<div>
+<button onclick="showOriginalDesign()">
 Show Original
 </button>
 
-<button
-class="secondary"
-onclick="prepareDesign()"
->
+<button class="secondary" onclick="prepareDesign()">
 Show Hook Pattern
 </button>
-
 </div>
 
+<canvas id="preview"></canvas>
 
-<div
-id="previewInfo"
-class="status"
-></div>
+<div id="previewInfo" class="status">
+Preview ready nahi hai.
+</div>
 
 </section>
 
 
+<!-- ========================================================= -->
+<!-- 6. EXPORT -->
+<!-- ========================================================= -->
 
 <section class="card">
 
-<h2>6. Validation & EP Export</h2>
+<h2>6. Validate & Generate New EP</h2>
 
-<div
-id="validation"
-class="status"
->
-Profile, running template और
-new design पूरा करें.
-</div>
-
-<button
-class="ok"
-onclick="validateAndExport()"
->
-Build & Download EP
+<button onclick="validateAndExport()">
+Generate New EP
 </button>
 
+<div id="validation" class="status">
+Ready.
+</div>
+
 <div class="small">
-
-महत्वपूर्ण:
-
-Exact machine Finger/Peti
-binary mapping अभी verified
-नहीं है; code में उसे guess
-नहीं किया गया है.
-
+Output file:
+Running EP ka machine/header structure + NEW uploaded design.
+Old running design rows copy nahi hongi.
 </div>
 
 </section>
@@ -453,1572 +346,1752 @@ binary mapping अभी verified
 
 <script>
 
-const ADMIN_PASSWORD="admin123";
+/* =========================================================
+   BASIC SETTINGS
+========================================================= */
 
-let db=null;
-let runningEP=null;
-let designImg=null;
-let designRows=null;
-let machineHeader=new Uint8Array();
+const ADMIN_PASSWORD = "admin123";
 
-let capacities=[
-150,150,120,100,80,60
-];
+const EP_HEADER_BYTES = 34;
 
-let sequence=[];
+let db = null;
+
+let runningEP = null;
+let designImg = null;
+let designRows = null;
+
+let machineHeader = new Uint8Array();
+
+let detected = {
+  hooks: 0,
+  picks: 0,
+  rowBytes: 0,
+  headerBytes: 0,
+  format: ""
+};
+
+let sequence = [];
 
 
-const $=
-id=>document.getElementById(id);
+/* =========================================================
+   SHORTCUT
+========================================================= */
+
+const $ = id => document.getElementById(id);
 
 
-
-/* LOGIN */
+/* =========================================================
+   LOGIN
+========================================================= */
 
 function login(){
 
-if(
-$("password").value===
-ADMIN_PASSWORD
-){
+  if($("password").value === ADMIN_PASSWORD){
 
-$("login").style.display=
-"none";
+    $("login").style.display = "none";
+    $("app").style.display = "block";
 
-$("app").style.display=
-"block";
+    init();
 
-init();
+  }else{
 
-}
+    $("loginMsg").textContent = "Wrong password.";
 
-else{
-
-$("loginMsg").textContent=
-"Wrong password.";
-
-}
+  }
 
 }
 
 
-
-/* INITIALIZE */
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 async function init(){
 
-try{
+  try{
 
-db=await new Promise(
-(resolve,reject)=>{
+    db = await new Promise((resolve,reject)=>{
 
-const r=
-indexedDB.open(
-"ElectronicDesigningDB",
-1
-);
+      const r = indexedDB.open(
+        "ElectronicDesigningDB",
+        1
+      );
 
-r.onupgradeneeded=
-e=>{
+      r.onupgradeneeded = e => {
 
-if(
-!e.target.result
-.objectStoreNames
-.contains("machines")
-){
+        if(
+          !e.target.result.objectStoreNames.contains(
+            "machines"
+          )
+        ){
 
-e.target.result
-.createObjectStore(
-"machines",
-{
-keyPath:"id"
-}
-);
+          e.target.result.createObjectStore(
+            "machines",
+            {keyPath:"id"}
+          );
 
-}
+        }
 
-};
+      };
 
-r.onsuccess=
-e=>
-resolve(
-e.target.result
-);
+      r.onsuccess = e =>
+        resolve(e.target.result);
 
-r.onerror=
-()=>
-reject(r.error);
+      r.onerror = () =>
+        reject(r.error);
 
-}
-);
+    });
 
-}
+  }catch(e){
 
-catch(e){
+    db = null;
 
-db=null;
+  }
 
-}
+  $("threshold").value = 128;
 
-renderFingerInputs();
-updateProfileStatus();
-resetSequence();
+  renderChecks();
+
+  updateProfileStatus();
 
 }
 
 
-
-/* FINGER COUNT */
-
-function nF(){
-
-return Math.max(
-1,
-Math.min(
-6,
-Number(
-$("fingerCount").value
-)||1
-)
-);
-
-}
-
-
-
-/* TOTAL PICKS */
-
-function total(){
-
-return capacities
-.slice(0,nF())
-.reduce(
-(a,b)=>a+b,
-0
-);
-
-}
-
-
-
-/* FINGER INPUTS */
-
-function renderFingerInputs(){
-
-const box=
-$("fingerInputs");
-
-box.innerHTML="";
-
-
-for(
-let i=0;
-i<nF();
-i++
-){
-
-let d=
-document.createElement(
-"div"
-);
-
-d.innerHTML=`
-
-<label>
-F${i+1} capacity
-</label>
-
-<input
-id="cap${i}"
-type="number"
-min="1"
-value="${capacities[i]}"
->
-
-`;
-
-box.appendChild(d);
-
-}
-
-
-renderChecks();
-updateProfileStatus();
-
-}
-
-
-
-$("fingerCount").oninput=
-renderFingerInputs;
-
-
-$("hooks").oninput=
-updateProfileStatus;
-
-
-
-/* READ CAPACITY */
-
-function readCaps(){
-
-for(
-let i=0;
-i<nF();
-i++
-){
-
-capacities[i]=
-Math.max(
-1,
-Number(
-$("cap"+i).value
-)||1
-);
-
-}
-
-}
-
-
-
-/* CAPACITY VALIDATION */
-
-function capError(){
-
-readCaps();
-
-
-for(
-let i=0;
-i<nF()-1;
-i++
-){
-
-if(
-capacities[i]<
-capacities[i+1]
-){
-
-return`
-Invalid order:
-F${i+1} must be ≥ F${i+2}.
-`;
-
-}
-
-}
-
-
-return"";
-
-}
-
-
-
-/* PROFILE STATUS */
-
-function updateProfileStatus(){
-
-let e=
-capError();
-
-$("profileStatus").className=
-e
-?"status error"
-:"status";
-
-$("profileStatus").textContent=
-e||
-`${$("hooks").value}
-Hooks ×
-${total()}
-Picks`;
-
-}
-
-
-
-/* SAFE THRESHOLD */
+/* =========================================================
+   SAFE THRESHOLD
+========================================================= */
 
 function getThreshold(){
 
-const v=
-Number(
-$("threshold").value
-);
+  const v = Number($("threshold").value);
 
-if(
-!Number.isFinite(v)||
-v<0||
-v>255
-){
+  if(
+    Number.isFinite(v) &&
+    v >= 0 &&
+    v <= 255
+  ){
 
-$("threshold").value=
-128;
+    return v;
 
-return 128;
+  }
 
-}
-
-return v;
+  return 128;
 
 }
 
 
+/* =========================================================
+   UPDATE DETECTED UI
+========================================================= */
 
-/* SAVE PROFILE */
+function setDetectedUI(){
+
+  $("hooks").value =
+    detected.hooks || "";
+
+  $("totalPicks").value =
+    detected.picks || "";
+
+  $("detHeader").value =
+    detected.headerBytes
+      ? `${detected.headerBytes} bytes`
+      : "";
+
+  $("detRowBytes").value =
+    detected.rowBytes || "";
+
+  $("detHooks").value =
+    detected.hooks || "";
+
+  $("detPicks").value =
+    detected.picks || "";
+
+  updateProfileStatus();
+
+}
+
+
+/* =========================================================
+   PROFILE STATUS
+========================================================= */
+
+function updateProfileStatus(){
+
+  if(!detected.picks){
+
+    $("profileStatus").className =
+      "status";
+
+    $("profileStatus").textContent =
+      "Pehle Running EP upload karein. Hooks aur Total Picks file se analyze honge.";
+
+    return;
+
+  }
+
+  $("profileStatus").className =
+    "status success";
+
+  $("profileStatus").textContent =
+    `Detected Machine Structure: ${detected.hooks} Hooks × ${detected.picks} Picks`;
+
+}
+
+
+/* =========================================================
+   TOTAL PICKS
+========================================================= */
+
+function total(){
+
+  return detected.picks || 0;
+
+}
+
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
 
 async function saveProfile(){
 
-let e=
-capError();
+  if(!detected.picks){
 
-if(e){
+    $("profileStatus").className =
+      "status error";
 
-updateProfileStatus();
-return;
+    $("profileStatus").textContent =
+      "Running EP analyze kiye bina profile save nahi hogi.";
 
-}
+    return;
 
+  }
 
-let p={
+  const p = {
 
-id:"default",
+    id: "default",
 
-name:
-$("machineName").value,
+    name: $("machineName").value,
 
-hooks:
-Number(
-$("hooks").value
-),
+    hooks: detected.hooks,
 
-fingerCount:
-nF(),
+    picks: detected.picks,
 
-capacities:
-[...capacities],
+    headerBytes: detected.headerBytes,
 
-threshold:
-getThreshold()
+    rowBytes: detected.rowBytes,
 
-};
+    threshold: getThreshold()
+
+  };
 
 
-try{
+  try{
 
-let t=
-db.transaction(
-"machines",
-"readwrite"
-);
+    if(!db)
+      throw new Error("IndexedDB unavailable");
 
-t.objectStore(
-"machines"
-).put(p);
+    const t =
+      db.transaction(
+        "machines",
+        "readwrite"
+      );
 
-$("profileStatus")
-.textContent=
-"Profile saved.";
+    t.objectStore("machines").put(p);
 
-}
+    $("profileStatus").textContent =
+      "Profile saved.";
 
-catch(x){
+  }catch(e){
 
-localStorage.setItem(
-"ElectronicDesigningMachines",
-JSON.stringify(p)
-);
+    localStorage.setItem(
+      "ElectronicDesigningMachines",
+      JSON.stringify(p)
+    );
 
-$("profileStatus")
-.textContent=
-"Profile saved locally.";
+    $("profileStatus").textContent =
+      "Profile saved locally.";
 
-}
+  }
 
 }
 
 
-
-/* LOAD PROFILE */
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
 
 async function loadProfile(){
 
-let p=null;
+  let p = null;
 
-try{
+  try{
 
-p=
-await new Promise(
-(res,rej)=>{
+    if(!db)
+      throw new Error("no db");
 
-let t=
-db.transaction(
-"machines",
-"readonly"
-);
+    p = await new Promise(
+      (res,rej)=>{
 
-let r=
-t.objectStore(
-"machines"
-).get("default");
+        const t =
+          db.transaction(
+            "machines",
+            "readonly"
+          );
 
-r.onsuccess=
-()=>
-res(r.result);
+        const r =
+          t.objectStore(
+            "machines"
+          ).get("default");
 
-r.onerror=
-()=>
-rej(r.error);
+        r.onsuccess =
+          () => res(r.result);
+
+        r.onerror =
+          () => rej(r.error);
+
+      }
+    );
+
+  }catch(e){
+
+    p = JSON.parse(
+      localStorage.getItem(
+        "ElectronicDesigningMachines"
+      ) || "null"
+    );
+
+  }
+
+  if(!p)
+    return;
+
+
+  detected = {
+
+    hooks: Number(p.hooks) || 0,
+
+    picks: Number(p.picks) || 0,
+
+    headerBytes:
+      Number(p.headerBytes) || 0,
+
+    rowBytes:
+      Number(p.rowBytes) || 0,
+
+    format: "saved"
+
+  };
+
+
+  $("machineName").value =
+    p.name || "";
+
+  $("threshold").value =
+    Number.isFinite(Number(p.threshold))
+      ? Number(p.threshold)
+      : 128;
+
+
+  setDetectedUI();
+
+
+  sequence =
+    Array(total()).fill(1);
+
+
+  renderSequenceTable();
 
 }
-);
-
-}
-
-catch(e){
-
-p=
-JSON.parse(
-localStorage.getItem(
-"ElectronicDesigningMachines"
-)||"null"
-);
-
-}
 
 
-if(!p)
-return;
+/* =========================================================
+   LITTLE ENDIAN 16 BIT
+========================================================= */
 
+function readLE16(b,offset){
 
-$("machineName").value=
-p.name||"";
-
-$("hooks").value=
-p.hooks;
-
-$("fingerCount").value=
-p.fingerCount;
-
-$("threshold").value=
-Number.isFinite(
-Number(p.threshold)
-)
-?Number(p.threshold)
-:128;
-
-capacities=
-p.capacities;
-
-renderFingerInputs();
-updateProfileStatus();
+  return (
+    (b[offset] || 0) |
+    ((b[offset+1] || 0) << 8)
+  );
 
 }
 
 
+/* =========================================================
+   RUNNING EP ANALYZER
 
-/* RUNNING EP */
+   Verified structure from supplied 672-hook samples:
 
-$("epFile").onchange=
-async e=>{
+   Header = 34 bytes
 
-let f=
-e.target.files[0];
+   Pick count is stored at bytes 3-4
+   as little-endian 16-bit value.
 
-if(!f)
-return;
+   Remaining payload:
+   payload / picks = row bytes
+
+   row bytes × 8 = hooks
+========================================================= */
+
+function analyzeRunningEP(bytes,name){
+
+  if(
+    bytes.length <
+    EP_HEADER_BYTES + 1
+  ){
+
+    throw new Error(
+      "EP file bahut chhoti/invalid hai."
+    );
+
+  }
 
 
-runningEP=
-new Uint8Array(
-await f.arrayBuffer()
-);
+  const picks =
+    readLE16(bytes,3);
 
 
-machineHeader=
-runningEP.slice(
-0,
-Math.min(
-32,
-runningEP.length
-)
-);
+  if(picks < 1){
+
+    throw new Error(
+      "Running EP header me valid Total Picks nahi mila."
+    );
+
+  }
 
 
-$("epInfo").className=
-"status success";
+  const payload =
+    bytes.length -
+    EP_HEADER_BYTES;
 
-$("epInfo").textContent=
-`Template:
-${f.name}
-—
-${runningEP.length}
-bytes.
-Old rows will not be copied.`;
+
+  if(payload % picks !== 0){
+
+    throw new Error(
+      "EP structure match nahi hui: header/pick count se row size exact nahi nikal raha."
+    );
+
+  }
+
+
+  const rowBytes =
+    payload / picks;
+
+
+  const hooks =
+    rowBytes * 8;
+
+
+  if(
+    !Number.isInteger(rowBytes) ||
+    rowBytes < 1 ||
+    hooks < 1
+  ){
+
+    throw new Error(
+      "Invalid hook/row structure."
+    );
+
+  }
+
+
+  detected = {
+
+    hooks,
+
+    picks,
+
+    headerBytes:
+      EP_HEADER_BYTES,
+
+    rowBytes,
+
+    format:
+      "EP-34-header/bit-packed"
+
+  };
+
+
+  runningEP = bytes;
+
+  machineHeader =
+    bytes.slice(
+      0,
+      EP_HEADER_BYTES
+    );
+
+
+  setDetectedUI();
+
+
+  $("epInfo").className =
+    "status success";
+
+
+  $("epInfo").textContent =
+    `${name} analyzed — ${bytes.length.toLocaleString()} bytes | ${hooks} Hooks × ${picks} Picks | Old design rows will NOT be copied.`;
+
+
+  sequence =
+    Array(picks).fill(1);
+
+
+  renderSequenceTable();
+
+
+  if(designImg)
+    prepareDesign();
+
+}
+
+
+/* =========================================================
+   RUNNING EP UPLOAD
+========================================================= */
+
+$("epFile").onchange =
+async e => {
+
+  const f =
+    e.target.files[0];
+
+  if(!f)
+    return;
+
+
+  try{
+
+    const bytes =
+      new Uint8Array(
+        await f.arrayBuffer()
+      );
+
+    analyzeRunningEP(
+      bytes,
+      f.name
+    );
+
+  }catch(err){
+
+    runningEP = null;
+
+    machineHeader =
+      new Uint8Array();
+
+    detected = {
+
+      hooks: 0,
+      picks: 0,
+      rowBytes: 0,
+      headerBytes: 0,
+      format: ""
+
+    };
+
+    setDetectedUI();
+
+
+    $("epInfo").className =
+      "status error";
+
+
+    $("epInfo").textContent =
+      `Running EP analyze failed: ${err.message}`;
+
+  }
 
 };
 
 
+/* =========================================================
+   NEW DESIGN UPLOAD
+========================================================= */
 
-/* DESIGN UPLOAD */
+$("designFile").onchange =
+e => {
 
-$("designFile").onchange=
-e=>{
+  const f =
+    e.target.files[0];
 
-let f=
-e.target.files[0];
-
-if(!f)
-return;
-
-
-let r=
-new FileReader();
+  if(!f)
+    return;
 
 
-r.onload=
-x=>{
-
-let im=
-new Image();
+  const r =
+    new FileReader();
 
 
-im.onload=
-()=>{
+  r.onload =
+  x => {
 
-designImg=
-im;
-
-$("designInfo")
-.textContent=
-`${f.name}
-—
-${im.width}
-×
-${im.height}`;
+    const im =
+      new Image();
 
 
-/*
-AUTO PREVIEW
-*/
+    im.onload =
+    () => {
 
-prepareDesign();
+      designImg = im;
+
+
+      $("designInfo").className =
+        "status success";
+
+
+      $("designInfo").textContent =
+        `${f.name} — ${im.width} × ${im.height}`;
+
+
+      if(detected.picks)
+        prepareDesign();
+
+    };
+
+
+    im.onerror =
+    () => {
+
+      $("designInfo").className =
+        "status error";
+
+      $("designInfo").textContent =
+        "Design image read nahi hui.";
+
+    };
+
+
+    im.src =
+      x.target.result;
+
+  };
+
+
+  r.readAsDataURL(f);
 
 };
 
 
-im.src=
-x.target.result;
-
-};
-
-
-r.readAsDataURL(f);
-
-};
-
-
-
-/* PREPARE DESIGN */
+/* =========================================================
+   PREPARE DESIGN
+========================================================= */
 
 function prepareDesign(){
 
-if(!designImg){
+  if(!designImg){
 
-$("designInfo")
-.className=
-"status error";
+    $("designInfo").className =
+      "status error";
 
-$("designInfo")
-.textContent=
-"New design upload करें.";
+    $("designInfo").textContent =
+      "New design upload karein.";
 
-return;
+    return;
+
+  }
+
+
+  if(
+    !detected.hooks ||
+    !detected.picks
+  ){
+
+    $("designInfo").className =
+      "status error";
+
+    $("designInfo").textContent =
+      "Pehle Running EP analyze karein.";
+
+    return;
+
+  }
+
+
+  const thr =
+    getThreshold();
+
+
+  $("threshold").value =
+    thr;
+
+
+  designRows =
+    makeRows(
+      designImg,
+      detected.hooks,
+      detected.picks,
+      thr
+    );
+
+
+  if(
+    sequence.length !==
+    detected.picks
+  ){
+
+    sequence =
+      Array(detected.picks)
+      .fill(1);
+
+  }
+
+
+  drawPreview();
 
 }
 
 
-const thr=
-getThreshold();
-
-
-$("threshold").value=
-thr;
-
-
-designRows=
-makeRows(
-designImg,
-Number(
-$("hooks").value
-),
-total(),
-thr
-);
-
-
-drawPreview();
-
-}
-
-
-
-/* IMAGE → HOOK ROWS */
+/* =========================================================
+   IMAGE → HOOK GRID
+========================================================= */
 
 function makeRows(
-im,
-w,
-h,
-thr
+  im,
+  w,
+  h,
+  thr
 ){
 
-let c=
-document.createElement(
-"canvas"
-);
-
-let x=
-c.getContext(
-"2d",
-{
-willReadFrequently:true
-}
-);
+  const c =
+    document.createElement(
+      "canvas"
+    );
 
 
-c.width=w;
-c.height=h;
+  const x =
+    c.getContext(
+      "2d",
+      {willReadFrequently:true}
+    );
 
 
-x.save();
+  c.width = w;
+  c.height = h;
 
 
-if(
-$("mirror").value==="1"
-){
-
-x.translate(
-w,
-0
-);
-
-x.scale(
--1,
-1
-);
-
-}
+  x.save();
 
 
-if(
-$("flip").value==="1"
-){
+  if(
+    $("mirror").value === "1"
+  ){
 
-x.translate(
-0,
-h
-);
+    x.translate(w,0);
+    x.scale(-1,1);
 
-x.scale(
-1,
--1
-);
-
-}
+  }
 
 
-x.drawImage(
-im,
-0,
-0,
-w,
-h
-);
+  if(
+    $("flip").value === "1"
+  ){
+
+    x.translate(0,h);
+    x.scale(1,-1);
+
+  }
 
 
-x.restore();
+  x.drawImage(
+    im,
+    0,
+    0,
+    w,
+    h
+  );
 
 
-let d=
-x.getImageData(
-0,
-0,
-w,
-h
-).data;
+  x.restore();
 
 
-let rows=[];
-
-let inv=
-$("invert").value==="1";
-
-
-for(
-let y=0;
-y<h;
-y++
-){
-
-let r=
-new Uint8Array(w);
+  const d =
+    x.getImageData(
+      0,
+      0,
+      w,
+      h
+    ).data;
 
 
-for(
-let k=0;
-k<w;
-k++
-){
-
-let p=
-(y*w+k)*4;
+  const rows = [];
 
 
-let l=
-(
-d[p]*299+
-d[p+1]*587+
-d[p+2]*114
-)/1000;
+  const inv =
+    $("invert").value === "1";
 
 
-let on=
-l<thr;
+  for(
+    let y=0;
+    y<h;
+    y++
+  ){
+
+    const r =
+      new Uint8Array(w);
 
 
-if(inv)
-on=!on;
+    for(
+      let k=0;
+      k<w;
+      k++
+    ){
+
+      const p =
+        (y*w+k)*4;
 
 
-r[k]=
-on?1:0;
+      const l =
+        (
+          d[p]*299 +
+          d[p+1]*587 +
+          d[p+2]*114
+        ) / 1000;
+
+
+      let on =
+        l < thr;
+
+
+      if(inv)
+        on = !on;
+
+
+      r[k] =
+        on ? 1 : 0;
+
+    }
+
+
+    rows.push(r);
+
+  }
+
+
+  return rows;
 
 }
 
 
-rows.push(r);
-
-}
-
-
-return rows;
-
-}
-
-
-
-/* FINGER CHECKBOXES */
+/* =========================================================
+   FINGER CHECKBOXES
+========================================================= */
 
 function renderChecks(){
 
-let b=
-$("fingerChecks");
-
-b.innerHTML="";
+  const b =
+    $("fingerChecks");
 
 
-for(
-let i=0;
-i<nF();
-i++
-){
+  b.innerHTML = "";
 
-let l=
-document.createElement(
-"label"
-);
 
-l.className=
-"finger";
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
 
-l.innerHTML=`
+    const l =
+      document.createElement(
+        "label"
+      );
 
-<input
-id="f${i}"
-type="checkbox"
-${i===0?"checked":""}
->
 
-F${i+1}
+    l.className =
+      "finger";
 
-`;
 
-b.appendChild(l);
+    l.innerHTML =
+      `<input id="f${i}" type="checkbox" ${i===0?"checked":""}> F${i+1}`;
 
-}
+
+    b.appendChild(l);
+
+  }
 
 }
 
 
-
-/* FINGER MASK */
+/* =========================================================
+   FINGER MASK
+========================================================= */
 
 function mask(){
 
-let m=0;
+  let m = 0;
 
 
-for(
-let i=0;
-i<nF();
-i++
-){
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
 
-if(
-$("f"+i).checked
-){
+    if(
+      $("f"+i).checked
+    ){
 
-m |=
-1<<i;
+      m |=
+        1 << i;
+
+    }
+
+  }
+
+
+  return m;
 
 }
 
-}
 
-
-return m;
-
-}
-
-
-
-/* RESET */
+/* =========================================================
+   RESET SEQUENCE
+========================================================= */
 
 function resetSequence(){
 
-sequence=
-Array(
-total()
-).fill(1);
+  if(!total()){
+
+    sequence = [];
+
+    renderSequenceTable();
+
+    return;
+
+  }
 
 
-renderSequenceTable();
+  sequence =
+    Array(total()).fill(1);
 
 
-if(designRows)
-drawPreview();
+  renderSequenceTable();
+
+
+  if(designRows)
+    drawPreview();
 
 }
 
 
-
-/* SET ALL F1 */
+/* =========================================================
+   SET ALL F1
+========================================================= */
 
 function setAllF1(){
 
-sequence=
-Array(
-total()
-).fill(1);
+  if(!total())
+    return;
 
-renderSequenceTable();
 
-if(designRows)
-drawPreview();
+  sequence =
+    Array(total()).fill(1);
+
+
+  renderSequenceTable();
+
+
+  if(designRows)
+    drawPreview();
 
 }
 
 
-
-/* APPLY RANGE */
+/* =========================================================
+   APPLY RANGE
+========================================================= */
 
 function applyRange(){
 
-let s=
-+$("rangeStart").value;
-
-let e=
-+$("rangeEnd").value;
+  const s =
+    +$("rangeStart").value;
 
 
-if(
-s<1||
-e<s||
-e>total()
-){
+  const e =
+    +$("rangeEnd").value;
 
-alert(
-"Invalid pick range"
-);
 
-return;
+  if(
+    !total() ||
+    s < 1 ||
+    e < s ||
+    e > total()
+  ){
+
+    alert(
+      "Invalid pick range"
+    );
+
+    return;
+
+  }
+
+
+  const m =
+    mask();
+
+
+  for(
+    let i=s-1;
+    i<e;
+    i++
+  ){
+
+    sequence[i] = m;
+
+  }
+
+
+  renderSequenceTable();
+
+
+  if(designRows)
+    drawPreview();
 
 }
 
 
-let m=
-mask();
-
-
-for(
-let i=s-1;
-i<e;
-i++
-){
-
-sequence[i]=m;
-
-}
-
-
-renderSequenceTable();
-
-
-if(designRows)
-drawPreview();
-
-}
-
-
-
-/* CLEAR RANGE */
+/* =========================================================
+   CLEAR RANGE
+========================================================= */
 
 function clearRange(){
 
-let s=
-+$("rangeStart").value;
-
-let e=
-+$("rangeEnd").value;
+  const s =
+    +$("rangeStart").value;
 
 
-for(
-let i=s-1;
-i<e&&i<sequence.length;
-i++
-){
+  const e =
+    +$("rangeEnd").value;
 
-sequence[i]=0;
+
+  if(
+    !total() ||
+    s < 1 ||
+    e < s ||
+    e > total()
+  ){
+
+    alert(
+      "Invalid pick range"
+    );
+
+    return;
+
+  }
+
+
+  for(
+    let i=s-1;
+    i<e;
+    i++
+  ){
+
+    sequence[i] = 0;
+
+  }
+
+
+  renderSequenceTable();
+
+
+  if(designRows)
+    drawPreview();
 
 }
 
 
-renderSequenceTable();
-
-
-if(designRows)
-drawPreview();
-
-}
-
-
-
-/* MASK TEXT */
+/* =========================================================
+   MASK TEXT
+========================================================= */
 
 function txt(m){
 
-let a=[];
+  const a = [];
 
 
-for(
-let i=0;
-i<6;
-i++
-){
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
 
-if(
-m&(1<<i)
-){
+    if(
+      m & (1<<i)
+    ){
 
-a.push(
-"F"+(i+1)
-);
+      a.push(
+        "F"+(i+1)
+      );
+
+    }
+
+  }
+
+
+  return (
+    a.join(" + ") ||
+    "OFF"
+  );
 
 }
 
-}
 
-
-return(
-a.join(" + ")
-||
-"OFF"
-);
-
-}
-
-
-
-/* SEQUENCE TABLE */
+/* =========================================================
+   SEQUENCE TABLE
+========================================================= */
 
 function renderSequenceTable(){
 
-let b=
-$("sequenceTable");
-
-b.innerHTML="";
+  const b =
+    $("sequenceTable");
 
 
-if(
-sequence.length!==total()
-){
-
-sequence=
-Array(
-total()
-).fill(1);
-
-}
+  b.innerHTML = "";
 
 
-let s=1;
+  if(!total()){
+
+    $("sequenceStatus").textContent =
+      "Running EP analyze hone ke baad working sequence set karein.";
+
+    return;
+
+  }
 
 
-for(
-let p=2;
-p<=total()+1;
-p++
-){
+  if(
+    sequence.length !==
+    total()
+  ){
 
-if(
-p>total()||
-sequence[p-1]!==sequence[s-1]
-){
+    sequence =
+      Array(total()).fill(1);
 
-let tr=
-document.createElement(
-"tr"
-);
+  }
 
 
-tr.innerHTML=`
-
-<td>${s}</td>
-
-<td>${p-1}</td>
-
-<td>
-${txt(
-sequence[s-1]
-)}
-</td>
-
-<td>
-
-<button
-class="secondary"
-onclick="
-editRange(
-${s},
-${p-1},
-${sequence[s-1]}
-)
-"
->
-Edit
-</button>
-
-</td>
-
-`;
+  let s = 1;
 
 
-b.appendChild(tr);
+  for(
+    let p=2;
+    p<=total()+1;
+    p++
+  ){
 
-s=p;
+    if(
+      p > total() ||
+      sequence[p-1] !==
+      sequence[s-1]
+    ){
 
-}
+      const tr =
+        document.createElement(
+          "tr"
+        );
+
+
+      tr.innerHTML =
+        `<td>${s}</td>
+         <td>${p-1}</td>
+         <td>${txt(sequence[s-1])}</td>
+         <td>
+           <button class="secondary"
+             onclick="editRange(${s},${p-1},${sequence[s-1]})">
+             Edit
+           </button>
+         </td>`;
+
+
+      b.appendChild(tr);
+
+
+      s = p;
+
+    }
+
+  }
+
+
+  $("sequenceStatus").textContent =
+    `Total picks: ${total()} | ${b.children.length} working range(s)`;
 
 }
 
 
-$("sequenceStatus")
-.textContent=
-`Total picks:
-${total()}
-|
-${b.children.length}
-working range(s)`;
-
-}
-
-
-
-/* EDIT RANGE */
+/* =========================================================
+   EDIT RANGE
+========================================================= */
 
 function editRange(
-s,
-e,
-m
+  s,
+  e,
+  m
 ){
 
-$("rangeStart").value=
-s;
+  $("rangeStart").value =
+    s;
 
-$("rangeEnd").value=
-e;
+  $("rangeEnd").value =
+    e;
 
 
-for(
-let i=0;
-i<6;
-i++
-){
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
 
-if(
-$("f"+i)
-){
+    $("f"+i).checked =
+      !!(
+        m & (1<<i)
+      );
 
-$("f"+i).checked=
-!!(
-m&
-(1<<i)
-);
-
-}
-
-}
+  }
 
 }
 
 
-
-/* SHOW ORIGINAL */
+/* =========================================================
+   SHOW ORIGINAL
+========================================================= */
 
 function showOriginalDesign(){
 
-if(!designImg){
+  if(!designImg){
 
-$("previewInfo")
-.textContent=
-"Pehle design upload karein.";
+    $("previewInfo").textContent =
+      "Pehle design upload karein.";
 
-return;
+    return;
 
-}
-
-
-const c=
-$("preview");
-
-const x=
-c.getContext("2d");
+  }
 
 
-const w=
-designImg.naturalWidth||
-designImg.width;
-
-const h=
-designImg.naturalHeight||
-designImg.height;
+  const c =
+    $("preview");
 
 
-const cw=
-Math.min(
-w,
-1200
-);
-
-const ch=
-Math.min(
-h,
-700
-);
+  const x =
+    c.getContext("2d");
 
 
-c.width=cw;
-c.height=ch;
+  const w =
+    designImg.naturalWidth ||
+    designImg.width;
 
 
-x.clearRect(
-0,
-0,
-cw,
-ch
-);
+  const h =
+    designImg.naturalHeight ||
+    designImg.height;
 
 
-x.drawImage(
-designImg,
-0,
-0,
-cw,
-ch
-);
+  const cw =
+    Math.min(w,1200);
 
 
-$("previewInfo")
-.textContent=
-`Original design:
-${w} × ${h}`;
+  const ch =
+    Math.min(h,700);
+
+
+  c.width = cw;
+  c.height = ch;
+
+
+  x.clearRect(
+    0,
+    0,
+    cw,
+    ch
+  );
+
+
+  x.drawImage(
+    designImg,
+    0,
+    0,
+    cw,
+    ch
+  );
+
+
+  $("previewInfo").textContent =
+    `Original design: ${w} × ${h}`;
 
 }
 
 
-
-/* HOOK PREVIEW */
+/* =========================================================
+   HOOK PREVIEW
+========================================================= */
 
 function drawPreview(){
 
-if(
-!designRows||
-!designRows.length
-){
+  if(
+    !designRows ||
+    !designRows.length
+  ){
 
-$("previewInfo")
-.textContent=
-"Design pattern ready nahi hai.";
+    $("previewInfo").textContent =
+      "Design pattern ready nahi hai.";
 
-return;
+    return;
 
-}
-
-
-let c=
-$("preview");
-
-let x=
-c.getContext("2d");
+  }
 
 
-let w=
-Number(
-$("hooks").value
-);
-
-let h=
-total();
+  const c =
+    $("preview");
 
 
-let cw=
-Math.min(
-w,
-1200
-);
-
-let ch=
-Math.min(
-h,
-700
-);
+  const x =
+    c.getContext("2d");
 
 
-c.width=cw;
-c.height=ch;
+  const w =
+    detected.hooks;
 
 
-let im=
-x.createImageData(
-cw,
-ch
-);
+  const h =
+    detected.picks;
 
 
-let sx=
-w/cw;
-
-let sy=
-h/ch;
+  const cw =
+    Math.min(w,1200);
 
 
-for(
-let y=0;
-y<ch;
-y++
-){
-
-let yy=
-Math.min(
-h-1,
-Math.floor(
-y*sy
-)
-);
+  const ch =
+    Math.min(h,700);
 
 
-let m=
-sequence[yy]??1;
+  c.width = cw;
+  c.height = ch;
 
 
-for(
-let k=0;
-k<cw;
-k++
-){
-
-let xx=
-Math.min(
-w-1,
-Math.floor(
-k*sx
-)
-);
+  const im =
+    x.createImageData(
+      cw,
+      ch
+    );
 
 
-let on=
-designRows[yy][xx]&&m;
+  const sx =
+    w / cw;
 
 
-let q=
-(y*cw+k)*4;
+  const sy =
+    h / ch;
 
 
-let v=
-on?0:255;
+  for(
+    let y=0;
+    y<ch;
+    y++
+  ){
+
+    const yy =
+      Math.min(
+        h-1,
+        Math.floor(y*sy)
+      );
 
 
-im.data[q]=v;
-im.data[q+1]=v;
-im.data[q+2]=v;
-im.data[q+3]=255;
-
-}
-
-}
+    const m =
+      sequence[yy] ?? 1;
 
 
-x.putImageData(
-im,
-0,
-0
-);
+    for(
+      let k=0;
+      k<cw;
+      k++
+    ){
+
+      const xx =
+        Math.min(
+          w-1,
+          Math.floor(k*sx)
+        );
 
 
-/* ACTIVE CELL COUNT */
-
-let activeHooks=0;
-
-
-for(
-let y=0;
-y<h;
-y++
-){
-
-if(!sequence[y])
-continue;
+      const on =
+        designRows[yy][xx] &&
+        m;
 
 
-for(
-let k=0;
-k<w;
-k++
-){
-
-if(
-designRows[y][k]
-){
-
-activeHooks++;
-
-}
-
-}
-
-}
+      const q =
+        (y*cw+k)*4;
 
 
-$("previewInfo")
-.textContent=
-`${w} Hooks × ${h} Picks
-|
-Active hook cells:
-${activeHooks.toLocaleString()}
-|
-Threshold:
-${getThreshold()}`;
+      const v =
+        on ? 0 : 255;
+
+
+      im.data[q] =
+        v;
+
+      im.data[q+1] =
+        v;
+
+      im.data[q+2] =
+        v;
+
+      im.data[q+3] =
+        255;
+
+    }
+
+  }
+
+
+  x.putImageData(
+    im,
+    0,
+    0
+  );
+
+
+  let activeHooks = 0;
+
+
+  for(
+    let y=0;
+    y<h;
+    y++
+  ){
+
+    if(!sequence[y])
+      continue;
+
+
+    for(
+      let k=0;
+      k<w;
+      k++
+    ){
+
+      if(
+        designRows[y][k]
+      ){
+
+        activeHooks++;
+
+      }
+
+    }
+
+  }
+
+
+  $("previewInfo").textContent =
+    `${w} Hooks × ${h} Picks | Active hook cells: ${activeHooks.toLocaleString()} | Threshold: ${getThreshold()}`;
 
 }
 
 
-
-/* VALIDATION */
+/* =========================================================
+   VALIDATE
+========================================================= */
 
 function validate(){
 
-let e=
-capError();
+  if(
+    !runningEP ||
+    !detected.picks
+  ){
+
+    return "Running EP upload/analyze karein.";
+
+  }
 
 
-if(e)
-return e;
+  if(!designRows){
+
+    return "New Design prepare karein.";
+
+  }
 
 
-if(!runningEP)
-return
-"Running EP/template upload करें.";
+  if(
+    detected.hooks < 1 ||
+    detected.picks < 1
+  ){
+
+    return "Running EP detection invalid hai.";
+
+  }
 
 
-if(!designRows)
-return
-"Design prepare करें.";
+  if(
+    machineHeader.length !==
+    detected.headerBytes
+  ){
+
+    return "Running EP header missing hai.";
+
+  }
 
 
-return "";
+  if(
+    sequence.length !==
+    detected.picks
+  ){
+
+    return "Finger working sequence length mismatch.";
+
+  }
+
+
+  return "";
 
 }
 
 
+/* =========================================================
+   PACK HOOK ROW
 
-/* PACK HOOKS */
+   MSB-FIRST
+========================================================= */
 
 function pack(row){
 
-let o=
-new Uint8Array(
-Math.ceil(
-row.length/8
-)
-);
+  const o =
+    new Uint8Array(
+      Math.ceil(
+        row.length / 8
+      )
+    );
 
 
-for(
-let i=0;
-i<row.length;
-i++
-){
+  for(
+    let i=0;
+    i<row.length;
+    i++
+  ){
 
-if(row[i]){
+    if(row[i]){
 
-o[
-Math.floor(i/8)
-] |=
-128>>
-(i%8);
+      o[
+        Math.floor(i/8)
+      ] |=
+        128 >> (i%8);
+
+    }
+
+  }
+
+
+  return o;
 
 }
 
-}
 
-
-return o;
-
-}
-
-
-
-/* BUILD EP */
+/* =========================================================
+   BUILD NEW EP
+========================================================= */
 
 function buildEP(){
 
-let rows=
-designRows.map(
-(r,i)=>
-sequence[i]
-?r
-:new Uint8Array(
-r.length
-)
-);
+  /*
+    IMPORTANT:
+
+    Running EP old design rows are NOT copied.
+
+    Only machine header is retained.
+
+    Every output row is generated again
+    from the newly uploaded design.
+  */
 
 
-let packed=
-rows.map(pack);
+  const rows =
+    designRows.map(
+      (r,i) =>
+        sequence[i]
+          ? r
+          : new Uint8Array(r.length)
+    );
 
 
-let rb=
-packed[0].length;
+  const packed =
+    rows.map(pack);
 
 
-let out=
-new Uint8Array(
-machineHeader.length+
-packed.length*rb
-);
+  const rb =
+    packed[0].length;
 
 
-out.set(
-machineHeader
-);
+  const out =
+    new Uint8Array(
+      machineHeader.length +
+      packed.length * rb
+    );
 
 
-packed.forEach(
-(r,i)=>
-out.set(
-r,
-machineHeader.length+
-i*rb
-)
-);
+  out.set(
+    machineHeader
+  );
 
 
-return out;
+  packed.forEach(
+    (r,i)=>{
+
+      out.set(
+        r,
+        machineHeader.length +
+        i*rb
+      );
+
+    }
+  );
+
+
+  return out;
 
 }
 
 
-
-/* EXPORT */
+/* =========================================================
+   EXPORT
+========================================================= */
 
 function validateAndExport(){
 
-let e=
-validate();
+  const e =
+    validate();
 
 
-if(e){
+  if(e){
 
-$("validation")
-.className=
-"status error";
+    $("validation").className =
+      "status error";
 
-$("validation")
-.textContent=
-e;
+    $("validation").textContent =
+      e;
 
-return;
+    return;
+
+  }
+
+
+  const out =
+    buildEP();
+
+
+  const blob =
+    new Blob(
+      [out],
+      {
+        type:
+          "application/octet-stream"
+      }
+    );
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href =
+    URL.createObjectURL(blob);
+
+
+  const base =
+    (
+      $("designFile")
+      .files[0]
+      ?.name ||
+      "Design"
+    )
+    .replace(
+      /\.[^.]+$/,
+      ""
+    );
+
+
+  a.download =
+    `${base}_${detected.picks}Picks.EP`;
+
+
+  a.click();
+
+
+  setTimeout(
+    () =>
+      URL.revokeObjectURL(
+        a.href
+      ),
+    1000
+  );
+
+
+  $("validation").className =
+    "status success";
+
+
+  $("validation").textContent =
+    `New EP generated: ${detected.hooks} Hooks × ${detected.picks} Picks. Running file old design rows were not copied.`;
 
 }
 
 
-let blob=
-new Blob(
-[buildEP()],
-{
-type:
-"application/octet-stream"
-}
-);
+/* =========================================================
+   LIVE CONTROLS
+========================================================= */
+
+$("threshold").oninput =
+() => {
+
+  if(designRows)
+    drawPreview();
+
+};
 
 
-let a=
-document.createElement("a");
+$("invert").onchange =
+() => {
+
+  if(
+    designImg &&
+    detected.picks
+  ){
+
+    prepareDesign();
+
+  }
+
+};
 
 
-a.href=
-URL.createObjectURL(
-blob
-);
+$("mirror").onchange =
+() => {
+
+  if(
+    designImg &&
+    detected.picks
+  ){
+
+    prepareDesign();
+
+  }
+
+};
 
 
-let base=
-(
-$("designFile")
-.files[0]
-?.name||
-"Design"
-)
-.replace(
-/\.[^.]+$/,
-""
-);
+$("flip").onchange =
+() => {
 
+  if(
+    designImg &&
+    detected.picks
+  ){
 
-a.download=
-`${base}_${total()}Picks.EP`;
+    prepareDesign();
 
+  }
 
-a.click();
-
-
-URL.revokeObjectURL(
-a.href
-);
-
-
-$("validation")
-.className=
-"status success";
-
-
-$("validation")
-.textContent=
-"Prototype EP generated.";
-
-}
+};
 
 </script>
 
