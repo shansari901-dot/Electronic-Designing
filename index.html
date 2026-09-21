@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Electronic Designing</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef7f8;color:#111}
+.app{max-width:430px;margin:auto;min-height:100vh;background:linear-gradient(150deg,#f4ffff,#dff3f5);padding:14px 18px 30px}
+.head{display:flex;align-items:center;gap:12px;margin-bottom:18px}.user{width:48px;height:48px;border-radius:50%;background:#050505;display:grid;place-items:center;color:#ffe600;font-size:27px}.head b{font-size:19px}.head small{display:block;font-size:14px;margin-top:3px}
+.card{background:#fff;border-radius:14px;padding:13px;margin-bottom:13px;box-shadow:0 2px 10px #0001}
+label{font-weight:700;font-size:14px;display:block;margin:9px 0 6px}input,select,textarea{width:100%;padding:12px;border:1.5px solid #333;border-radius:10px;background:#fff;font-size:16px}textarea{min-height:88px;resize:vertical}
+.btn{width:100%;border:0;border-radius:9px;padding:14px 10px;font-size:17px;font-weight:800;background:#ffe500;color:#111;cursor:pointer;margin-top:8px}.black{background:#050505;color:#ffe500}.green{color:#16b865;font-weight:900}.fileline{font-size:14px;margin:8px 0 2px;word-break:break-all}.hidden{display:none!important}
+.planbox{border:1.5px solid #222;border-radius:10px;min-height:190px;padding:12px;background:#fff}.plan{font-size:18px;color:#31a54c;font-weight:800}.radio{width:20px;height:20px;vertical-align:middle;margin-right:8px}
+.icons{display:flex;justify-content:center;gap:42px;background:#d5dadd;margin:0;padding:10px 0 7px}.iconbtn{background:#000;color:#ffe500;border:0;border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer}.ic{text-align:center;font-size:11px}.wide{display:flex;gap:8px;align-items:center}.wide .btn{flex:1}.eye{width:55px;height:55px;border-radius:50%;background:#000;color:#ffe500;border:0;font-size:25px;cursor:pointer}
+.colors{margin-top:10px}.colorrow{display:flex;align-items:center;gap:8px;margin:9px 0}.swatch{height:40px;flex:1;border:1.5px solid #333}.menu{width:38px;height:38px;border:0;border-radius:50%;background:#2499dc;color:#fff;font-size:22px}.split{border:1.5px solid #222;border-radius:10px;padding:10px 16px;width:max-content;margin:16px auto;font-size:18px;font-weight:700}.done{display:block;width:140px;margin:130px auto 10px}
+.preview{background:#111;border-radius:10px;padding:8px;text-align:center}.preview canvas{max-width:100%;height:auto;background:#fff;image-rendering:pixelated}.status{text-align:center;font-size:14px;margin:9px 0;line-height:1.45}.progress{height:10px;background:#ddd;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:#111;transition:.3s}.note{font-size:12px;color:#555}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head">
+    <div class="user">●</div>
+    <div><b>Welcome</b><small>Electronic Designing</small></div>
+  </div>
+
+  <section id="setup" class="card">
+    <button class="btn black" onclick="pickRunning()">SELECT RUNNING FILE <span id="runTick"></span></button>
+    <input id="running" type="file" accept=".ep,.bmp" class="hidden">
+    <div id="runningName" class="fileline"></div>
+
+    <label>Shuttle</label>
+    <select id="shuttle"><option>1 TO 4 SHUTTLE</option></select>
+
+    <label>Format</label>
+    <select id="format"><option>BMP MONOCHROME</option><option>EP</option><option>EJC</option></select>
+
+    <label>Machine</label>
+    <input id="machine" placeholder="Machine">
+
+    <label>Additional Instruction / Info</label>
+    <textarea id="instruction" placeholder="Enter instructions or info (optional)"></textarea>
+
+    <label>MOBILE NO. (Optional)</label>
+    <input id="mobile" inputmode="numeric">
+
+    <button class="btn black" onclick="createPlan()">CREATE MACHINE PLAN</button>
+  </section>
+
+  <section id="plans" class="hidden">
+    <div class="card">
+      <b>SELECT MACHINE PLAN:</b>
+      <div class="planbox" style="margin-top:10px">
+        <label style="font-weight:400;margin:0"><input id="planRadio" class="radio" type="radio" onchange="selectPlan()"><span id="planName" class="plan">Machine</span></label>
+      </div>
+      <div class="icons">
+        <div class="ic"><button class="iconbtn" onclick="createPlan()">+</button><br>Create</div>
+        <div class="ic"><button class="iconbtn" onclick="renamePlan()">✎</button><br>Rename</div>
+        <div class="ic"><button class="iconbtn" onclick="deletePlan()">▣</button><br>Delete</div>
+      </div>
+      <div id="selectMsg" class="status">Select a Plan to Continue</div>
+    </div>
+
+    <div class="card">
+      <div class="wide">
+        <button class="btn" onclick="selectDesign()">SELECT DESIGN</button>
+        <button class="eye" onclick="previewDesign()">◉</button>
+      </div>
+      <input id="design" type="file" accept=".bmp" class="hidden">
+      <div id="designName" class="fileline"></div>
+      <button class="btn" onclick="openColorOrder()">SET COLOR ORDER</button>
+      <button class="btn black" onclick="convertNow()">CONVERT NOW</button>
+    </div>
+  </section>
+
+  <section id="color" class="card hidden">
+    <button class="btn black" onclick="getColors()">GET COLORS FROM DESIGN</button>
+    <div class="colors">
+      <div class="colorrow"><div class="swatch" style="background:#f00"></div><button class="menu">≡</button></div>
+      <div class="colorrow"><div class="swatch" style="background:#999"></div><button class="menu">≡</button></div>
+      <div class="colorrow"><div class="swatch" style="background:#ffd400"></div><button class="menu">≡</button></div>
+      <div class="colorrow"><div class="swatch" style="background:#fff"></div><button class="menu">≡</button></div>
+    </div>
+    <div class="split">Split Factor : <span id="splitFactor">1</span></div>
+    <button class="btn black done" onclick="doneColor()">DONE</button>
+  </section>
+
+  <section id="conversion" class="card hidden">
+    <div id="stage" class="status">Starting...</div>
+    <div class="progress"><div id="bar" class="bar"></div></div>
+    <div id="output" class="status"></div>
+  </section>
+
+  <section id="designPreview" class="card hidden">
+    <b>DESIGN PREVIEW</b>
+    <div class="preview" style="margin-top:10px"><canvas id="canvas"></canvas></div>
+  </section>
+</div>
+
+<script>
+let runningBytes=null,runningMeta=null,designBytes=null,designMeta=null,designFile=null,outputBytes=null,plan=false;
+const $=id=>document.getElementById(id);
+function pickRunning(){$('running').click()}
+$('running').addEventListener('change',async e=>{
+ const f=e.target.files[0];if(!f)return;
+ $('runningName').textContent='Selected: '+f.name;
+ $('runTick').textContent='✓';
+ try{runningBytes=new Uint8Array(await f.arrayBuffer());runningMeta=analyzeEP(runningBytes)}catch(err){runningMeta=null}
+});
+function analyzeEP(b){
+ if(b.length<34)throw Error('Invalid running file');
+ const picks=b[3]|(b[4]<<8),payload=b.length-34;
+ if(!picks||payload%picks)throw Error('Invalid EP structure');
+ const rowBytes=payload/picks;
+ return{picks,rowBytes,hooks:rowBytes*8,header:b.slice(0,34)};
+}
+function createPlan(){
+ if(!$('machine').value.trim())$('machine').value='Machine';
+ plan=true;$('setup').classList.add('hidden');$('plans').classList.remove('hidden');
+ $('planName').textContent=$('machine').value;$('planRadio').checked=true;$('selectMsg').textContent='Select a Plan to Continue';
+}
+function selectPlan(){if($('planRadio').checked)$('selectMsg').textContent='Plan Selected'}
+function renamePlan(){if(!plan)return;const n=prompt('Machine name:',$('planName').textContent);if(n){$('planName').textContent=n;$('machine').value=n}}
+function deletePlan(){if(confirm('Delete Machine Plan?')){plan=false;$('plans').classList.add('hidden');$('setup').classList.remove('hidden')}}
+function selectDesign(){$('design').click()}
+$('design').addEventListener('change',async e=>{
+ const f=e.target.files[0];if(!f)return;
+ if(!/\.bmp$/i.test(f.name)){alert('Please select BMP design file.');$('design').value='';return}
+ designFile=f;$('designName').textContent='Selected: '+f.name;
+ try{designBytes=new Uint8Array(await f.arrayBuffer());designMeta=readBMP(designBytes);showBMP(designBytes,designMeta)}catch(err){designBytes=null;designMeta=null;alert(err.message);$('design').value='';$('designName').textContent=''}
+});
+function readBMP(b){
+ if(b.length<62||b[0]!==66||b[1]!==77)throw Error('Invalid BMP design file.');
+ const dv=new DataView(b.buffer,b.byteOffset,b.byteLength),off=dv.getUint32(10,true),dib=dv.getUint32(14,true),w=dv.getInt32(18,true),rh=dv.getInt32(22,true),planes=dv.getUint16(26,true),bits=dv.getUint16(28,true),comp=dv.getUint32(30,true);
+ if(dib<40||w!==640||planes!==1||bits!==1||comp!==0)throw Error('Design file must be an uncompressed 640px 1-bit BMP.');
+ const h=Math.abs(rh),stride=((Math.ceil(w/8)+3)>>2)<<2;if(off+stride*h>b.length)throw Error('BMP file is incomplete.');
+ return{w,h,off,stride,top:rh<0}
+}
+function showBMP(b,m){
+ const c=$('canvas');c.width=m.w;c.height=m.h;const ctx=c.getContext('2d'),im=ctx.createImageData(m.w,m.h);
+ for(let y=0;y<m.h;y++){const sy=m.top?y:m.h-1-y,base=m.off+sy*m.stride;for(let x=0;x<m.w;x++){const bit=(b[base+(x>>3)]>>(7-(x&7)))&1,v=bit?255:0,i=(y*m.w+x)*4;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}}
+ ctx.putImageData(im,0,0);
+}
+function previewDesign(){if(!designBytes){alert('Please select design BMP first.');return}$('designPreview').classList.remove('hidden');$('designPreview').scrollIntoView({behavior:'smooth'})}
+function openColorOrder(){if(!designBytes){alert('Please select design BMP first.');return}$('plans').classList.add('hidden');$('color').classList.remove('hidden')}
+function getColors(){if(!designBytes){alert('Please select design BMP first.');return}}
+function doneColor(){$('color').classList.add('hidden');$('plans').classList.remove('hidden')}
+async function convertNow(){
+ if(!plan){alert('Select a Machine Plan.');return}if(!runningMeta){alert('Select a valid Running File.');return}if(!designBytes){alert('Select the design BMP file.');return}
+ $('plans').classList.add('hidden');$('conversion').classList.remove('hidden');$('conversion').scrollIntoView({behavior:'smooth'});
+ const stages=['Preparing for Split...','Fetching Data...','Converting to Monochrome...','Applying Harness Plan...','Completed'];
+ for(let i=0;i<stages.length;i++){ $('stage').textContent=stages[i];$('bar').style.width=((i+1)/stages.length*100)+'%';await new Promise(r=>setTimeout(r,500)) }
+ outputBytes=buildOutput();
+ const base=(designFile?designFile.name:'Design').replace(/\.[^.]+$/,'');
+ const name=base+'.EP';
+ $('output').innerHTML='<b>Completed</b><br>'+name+'<br><button class="btn black" onclick="downloadOutput()">SAVE SAMPLE FILE</button>';
+}
+function buildOutput(){
+ const hooks=runningMeta.hooks,picks=runningMeta.picks,rowBytes=runningMeta.rowBytes;
+ const dv=new DataView(designBytes.buffer,designBytes.byteOffset,designBytes.byteLength),off=designMeta.off,stride=designMeta.stride;
+ const out=new Uint8Array(34+picks*rowBytes);out.set(runningMeta.header,0);
+ for(let y=0;y<picks;y++){
+  const sy=Math.floor(y*designMeta.h/picks);const base=off+(designMeta.top?sy:designMeta.h-1-sy)*stride;
+  for(let x=0;x<hooks;x++){
+   const sx=Math.floor(x*designMeta.w/hooks);const bit=(designBytes[base+(sx>>3)]>>(7-(sx&7)))&1;
+   if(bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
+  }
+ }
+ return out;
+}
+function downloadOutput(){if(!outputBytes)return;const blob=new Blob([outputBytes],{type:'application/octet-stream'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=((designFile?designFile.name:'Design').replace(/\.[^.]+$/,''))+'.EP';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+</script>
+</body>
+</html>
