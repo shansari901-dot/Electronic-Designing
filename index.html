@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Electronic Designing Pro — EasyX Style V8</title>
+<style>
+:root{--bg:#eef2f7;--card:#fff;--ink:#172033;--muted:#64748b;--line:#d8e0ea;--blue:#1261d6;--gold:#c49a00;--green:#16803c;--red:#c62828}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,select{font:inherit}button{border:0;border-radius:9px;padding:10px 14px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}button.secondary{background:#64748b}button.success{background:var(--green)}button.warn{background:#a96e00}button.danger{background:var(--red)}button:disabled{opacity:.45;cursor:not-allowed}
+.top{position:sticky;top:0;z-index:20;background:#10243f;color:#fff;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}.top h1{margin:0;font-size:19px}.top small{opacity:.8}
+.wrap{max-width:1250px;margin:auto;padding:14px}.card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 4px 18px #0001}.card h2{margin:0 0 12px;font-size:18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px}label{font-weight:700;font-size:13px;display:block;margin-bottom:5px}input,select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:var(--ink)}.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#e8eefc;color:#174ea6;font-size:12px;font-weight:700}.status{margin-top:10px;padding:11px;border-radius:9px;background:#f1f5f9;line-height:1.5}.small{font-size:12px;color:var(--muted)}.hidden{display:none!important}
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:14px}.step{background:#fff;border:1px solid var(--line);padding:8px;border-radius:8px;text-align:center;font-size:11px;font-weight:700}.step.active{background:#eaf2ff;border-color:#8bb3f4;color:#174ea6}
+.preview{background:#111;border-radius:10px;padding:10px;text-align:center;overflow:auto}.preview canvas{max-width:100%;height:auto;image-rendering:pixelated;background:#fff}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:10px}.kpi div{background:#f8fafc;border:1px solid var(--line);border-radius:9px;padding:10px}.kpi b{display:block;font-size:18px}
+.range-card{border:1px solid var(--line);border-radius:10px;padding:10px}.range-list{max-height:150px;overflow:auto;margin-top:7px}.range-item{display:flex;justify-content:space-between;gap:5px;background:#f8fafc;padding:6px;border-radius:6px;margin-bottom:4px;font-size:12px}
+.timeline{max-height:250px;overflow:auto;border:1px solid var(--line);border-radius:8px;margin-top:10px}.timeline table{width:100%;border-collapse:collapse;font-size:11px}.timeline th,.timeline td{padding:4px;text-align:center;border-bottom:1px solid #eee}.timeline th{position:sticky;top:0;background:#f8fafc}
+.color-box{display:inline-block;border:2px solid #d6dce5;border-radius:8px;padding:8px 12px;margin:3px;cursor:pointer}.color-box.active{border-color:var(--blue);background:#eaf2ff}
+.progress{height:11px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin-top:9px}.bar{height:100%;width:0;background:var(--blue);transition:.35s}
+.login{position:fixed;inset:0;background:#10243f;z-index:100;display:flex;align-items:center;justify-content:center}.loginbox{width:min(400px,92%);background:#fff;border-radius:16px;padding:24px;box-shadow:0 20px 60px #0006}
+table.info{width:100%;border-collapse:collapse;font-size:13px}table.info td{padding:6px;border-bottom:1px solid #eee}table.info td:first-child{font-weight:700;width:42%}
+@media(max-width:700px){.steps{grid-template-columns:repeat(3,1fr)}.top h1{font-size:15px}.wrap{padding:9px}.card{padding:12px}}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+  <div class="loginbox">
+    <h2>Electronic Designing Pro V8</h2>
+    <p>EasyX-style design conversion workflow</p>
+    <label>Password</label>
+    <input id="pw" type="password" placeholder="Password">
+    <br><br><button onclick="login()">Login</button>
+    <div id="loginMsg" class="status hidden"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<div class="top">
+  <div><h1>Electronic Designing Pro V8</h1><small>Design → Colour Order → Split → Harness → Machine File</small></div>
+  <div class="row"><span id="topStatus" class="badge">No machine plan</span><button class="secondary" onclick="logout()">Logout</button></div>
+</div>
+
+<div class="wrap">
+<div class="steps" id="steps">
+  <div class="step active">1 Machine</div><div class="step">2 Design</div><div class="step">3 Colour</div><div class="step">4 Split</div><div class="step">5 Harness</div><div class="step">6 Convert</div>
+</div>
+
+<!-- MACHINE -->
+<div class="card">
+<h2>1. Machine Plan / Running File</h2>
+<div class="grid">
+  <div><label>Machine Name</label><input id="machineName" placeholder="SH Ansari"></div>
+  <div><label>Shuttles</label><select id="shuttles"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+  <div><label>Input / Machine Format</label><select id="format"><option>EP</option><option>BMP Monochrome</option><option>EJC</option></select></div>
+  <div><label>Running EP</label><input id="running" type="file" accept=".ep,.EP"></div>
+  <div><label>Successful EasyX EP (optional reference)</label><input id="reference" type="file" accept=".ep,.EP"></div>
+</div>
+<div id="machineInfo" class="status">Running EP select karein. System header, picks, bytes/pick aur hooks automatically analyze karega.</div>
+<div class="row" style="margin-top:10px"><button onclick="makePlan()">Create / Update Machine Plan</button><button class="secondary" onclick="renamePlan()">Rename</button><button class="danger" onclick="deletePlan()">Delete</button></div>
+</div>
+
+<!-- DESIGN -->
+<div class="card">
+<h2>2. EasyX Design File</h2>
+
+<div class="status" style="background:#fff7df;border:1px solid #ead08a">
+  <b>Important:</b> EasyX Lite में सीधे JPG/PNG photo design के रूप में नहीं जाता।
+  पहले photo/image को <b>640px-width, 1-bit BMP</b> में तैयार करना है।
+  नीचे पहले photo को EasyX file में बदलें, फिर वही generated BMP design के रूप में इस्तेमाल होगा।
+</div>
+
+<h3>Step A — Photo/Image → EasyX BMP</h3>
+<div class="grid">
+  <div>
+    <label>Photo / Source Image</label>
+    <input id="photoSource" type="file" accept=".jpg,.jpeg,.png,.webp,.bmp">
+  </div>
+  <div>
+    <label>Required Width</label>
+    <input id="targetWidth" type="number" value="640" readonly>
+  </div>
+  <div>
+    <label>Height</label>
+    <select id="heightMode">
+      <option value="ratio">Keep original ratio</option>
+    </select>
+  </div>
+  <div>
+    <label>Black/White Threshold</label>
+    <input id="threshold" type="range" min="1" max="254" value="128">
+    <div id="tv">128</div>
+  </div>
+</div>
+
+<div class="row" style="margin-top:10px">
+  <button onclick="makeEasyXDesignFile()">MAKE EASYX DESIGN FILE</button>
+  <button class="secondary" onclick="downloadBMP()" id="bmpDownload" disabled>DOWNLOAD 640 BMP</button>
+</div>
+
+<div id="photoInfo" class="status">Photo select karke “MAKE EASYX DESIGN FILE” दबाएँ.</div>
+
+<h3 style="margin-top:18px">Step B — EasyX Design File</h3>
+<div class="grid">
+  <div>
+    <label>EasyX Design BMP (.bmp only)</label>
+    <input id="design" type="file" accept=".bmp,image/bmp">
+  </div>
+</div>
+
+<div id="designInfo" class="status">
+  यहाँ केवल तैयार किया हुआ <b>640px BMP</b> या कोई compatible 640px BMP चुनें।
+</div>
+
+<div class="row" style="margin-top:10px">
+  <button onclick="loadDesign()">SELECT DESIGN BMP</button>
+  <button class="secondary" onclick="mirror()">Mirror</button>
+  <button class="secondary" onclick="flip()">Flip</button>
+  <button class="warn" onclick="invert()">Invert</button>
+</div>
+
+<div class="preview" style="margin-top:10px">
+  <canvas id="canvas"></canvas>
+</div>
+
+<div id="patternInfo" class="status">No EasyX design file loaded.</div>
+</div>
+
+<!-- COLOUR -->
+<div class="card">
+<h2>3. Set Color Order</h2>
+<button class="secondary" onclick="getColors()">GET COLORS FROM DESIGN</button>
+<div id="colors" style="margin-top:8px">
+  <span class="color-box active" data-c="Black">Black</span><span class="color-box active" data-c="White">White"
+  </span>
+</div>
+<div id="colorInfo" class="status">Black / White monochrome design selected.</div>
+</div>
+
+<!-- SPLIT -->
+<div class="card">
+<h2>4. Split</h2>
+<div class="grid">
+  <div><label>Split Factor</label><select id="split"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+  <div><label>Split direction</label><select id="splitDir"><option value="picks">Picks</option><option value="hooks">Hooks</option></select></div>
+  <div><label>Odd/Even method</label><select id="splitMode"><option value="interleave">Interleave</option><option value="group">Group</option></select></div>
+</div>
+<div id="splitInfo" class="status">Split Factor 2 जैसा EasyX demo में दिखा था, लेकिन इसे बदल सकते हैं.</div>
+</div>
+
+<!-- HARNESS / FINGERS -->
+<div class="card">
+<h2>5. Harness Plan + Finger Plan</h2>
+<div class="grid">
+  <div><label>Header source</label><select id="headerSource"><option value="running">Running EP</option><option value="reference">Reference EP (only if structure matches)</option></select></div>
+  <div><label>Bit order</label><select id="bitOrder"><option value="msb">MSB First</option><option value="lsb">LSB First</option></select></div>
+  <div><label>Hook direction</label><select id="hookDir"><option value="normal">Normal</option><option value="reverse">Reverse</option></select></div>
+  <div><label>Pick direction</label><select id="pickDir"><option value="normal">Normal</option><option value="reverse">Reverse</option></select></div>
+  <div><label>Hook offset</label><input id="hookOffset" type="number" value="0"></div>
+</div>
+<div id="fingerCards" class="grid" style="margin-top:12px"></div>
+<div class="row" style="margin-top:10px"><button onclick="buildTimeline()">Build Finger Timeline</button><button class="secondary" onclick="clearFingers()">Clear Fingers</button></div>
+<div id="fingerSummary" class="status">No finger ranges.</div>
+<div class="timeline"><table><thead><tr><th>Pick</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>F5</th><th>F6</th></tr></thead><tbody id="tbody"></tbody></table></div>
+</div>
+
+<!-- CONVERT -->
+<div class="card">
+<h2>6. Convert Now</h2>
+<div class="row">
+<button id="convert" class="success" onclick="convert()">CONVERT NOW</button>
+<button class="secondary" onclick="analyzeReference()">Analyze Reference EP</button>
+<button class="secondary" onclick="saveProject()">Save Project</button>
+<button class="secondary" onclick="openProject()">Open Project</button>
+<input id="project" type="file" accept=".edp,.json" hidden onchange="loadProject(event)">
+</div>
+<div id="convertStatus" class="status">Ready for conversion.</div>
+<div class="progress"><div id="bar" class="bar"></div></div>
+</div>
+
+<!-- OUTPUT -->
+<div class="card">
+<h2>Final Machine File</h2>
+<div id="outInfo" class="status">No output file.</div>
+<div class="row" style="margin-top:10px">
+<button id="download" class="success" disabled onclick="downloadOutput()">Download EP</button>
+<button class="secondary" onclick="downloadBMP()">Download 640px BMP</button>
+</div>
+</div>
+
+<!-- DIAGNOSTICS -->
+<div class="card">
+<h2>Diagnostics / EP Analyzer</h2>
+<div id="diag" class="status">No analysis yet.</div>
+</div>
+</div>
+</div>
+
+<script>
+const HEADER=34;
+let runBytes=null, runMeta=null, refBytes=null, refMeta=null;
+let img=null, imgData=null, original=null, outBytes=null, outName="", generatedBMP=null, generatedBMPName="";
+let fingers={1:[],2:[],3:[],4:[],5:[],6:[]};
+
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+function login(){if($("pw").value==="admin123"){$("login").classList.add("hidden");$("app").classList.remove("hidden");localStorage.setItem("edp8","1")}else{$("loginMsg").classList.remove("hidden");$("loginMsg").textContent="Wrong password."}}
+function logout(){localStorage.removeItem("edp8");location.reload()}
+if(localStorage.getItem("edp8")==="1"){$("login").classList.add("hidden");$("app").classList.remove("hidden")}
+
+function le16(b,o){return b[o]|(b[o+1]<<8)}
+function analyze(b){
+  if(b.length<HEADER)throw Error("File is smaller than 34-byte EP header.");
+  const picks=le16(b,3), payload=b.length-HEADER;
+  if(!picks)throw Error("Pick count not found at EP header.");
+  if(payload%picks)throw Error("Payload is not divisible by detected picks.");
+  const rowBytes=payload/picks;
+  return {picks,rowBytes,hooks:rowBytes*8,size:b.length,header:b.slice(0,HEADER)};
+}
+function showMeta(m,label){
+  return `<b>${label}</b><br>Size: ${m.size} bytes<br>Picks: ${m.picks}<br>Bytes/Pick: ${m.rowBytes}<br>Hooks: ${m.hooks}<br>Header: 34 bytes`;
+}
+
+$("running").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  runBytes=new Uint8Array(await f.arrayBuffer());
+  try{runMeta=analyze(runBytes);$("machineInfo").innerHTML=showMeta(runMeta,"Running EP detected");$("topStatus").textContent=`${runMeta.hooks} Hooks / ${runMeta.picks} Picks`;buildTimeline()}catch(x){runMeta=null;$("machineInfo").textContent="EP error: "+x.message}
+});
+$("reference").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  refBytes=new Uint8Array(await f.arrayBuffer());
+  try{refMeta=analyze(refBytes);$("diag").innerHTML=showMeta(refMeta,"Reference EasyX EP")}catch(x){$("diag").textContent=x.message}
+});
+
+function makePlan(){
+  if(!runMeta){alert("Running EP select karein.");return}
+  $("topStatus").textContent=`${$("machineName").value||"Machine"} • ${runMeta.hooks}H • ${runMeta.picks}P`;
+  localStorage.setItem("edp8plan",JSON.stringify({name:$("machineName").value,shuttles:$("shuttles").value,format:$("format").value,meta:runMeta}));
+}
+function renamePlan(){const n=prompt("Machine plan name:",$("machineName").value||"Machine");if(n)$("machineName").value=n;makePlan()}
+function deletePlan(){if(confirm("Machine Plan delete karein?")){$("machineName").value="";localStorage.removeItem("edp8plan");$("topStatus").textContent="No machine plan"}}
+
+function render(){
+  if(!original)return;
+  const w=original.width,h=original.height,t=+$("threshold").value;
+  $("tv").textContent=t;
+  const d=new Uint8ClampedArray(original.data.length);
+  for(let i=0;i<d.length;i+=4){
+    const g=.299*original.data[i]+.587*original.data[i+1]+.114*original.data[i+2];
+    const v=g>=t?255:0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255;
+  }
+  imgData=new ImageData(d,w,h);
+  $("canvas").width=w;$("canvas").height=h;$("canvas").getContext("2d").putImageData(imgData,0,0);
+}
+$("threshold").addEventListener("input",()=>{
+  $("tv").textContent=$("threshold").value;
+  // Re-render only the generated/loaded EasyX bitmap, never the original photo.
+  if(original) render();
+});
+
+function imageToBinaryData(im){
+  const c=document.createElement("canvas");
+  c.width=im.naturalWidth;c.height=im.naturalHeight;
+  const x=c.getContext("2d");
+  x.drawImage(im,0,0);
+  return x.getImageData(0,0,c.width,c.height);
+}
+
+function make1BitBMPFromData(data,w,h){
+  const rowSize=Math.ceil(w/8);
+  const stride=((rowSize+3)>>2)<<2;
+  const pixelSize=stride*h;
+  const offset=14+40+8;
+  const total=offset+pixelSize;
+  const b=new ArrayBuffer(total),v=new DataView(b),u=new Uint8Array(b);
+  u[0]=0x42;u[1]=0x4d;
+  v.setUint32(2,total,true);v.setUint32(10,offset,true);
+  v.setUint32(14,40,true);v.setInt32(18,w,true);v.setInt32(22,-h,true);
+  v.setUint16(26,1,true);v.setUint16(28,1,true);v.setUint32(30,0,true);
+  v.setUint32(34,pixelSize,true);v.setInt32(38,3780,true);v.setInt32(42,3780,true);
+  v.setUint32(46,2,true);v.setUint32(50,2,true);
+  // Palette: index 0 black, index 1 white.
+  u.set([0,0,0,0,255,255,255,0],54);
+  const threshold=+$("threshold").value;
+  for(let y=0;y<h;y++){
+    const rowStart=offset+y*stride;
+    for(let x=0;x<w;x++){
+      const i=(y*w+x)*4;
+      const g=.299*data[i]+.587*data[i+1]+.114*data[i+2];
+      const bit=g>=threshold?1:0;
+      if(bit)u[rowStart+(x>>3)]|=(1<<(7-(x&7)));
+    }
+  }
+  return new Uint8Array(b);
+}
+
+function loadBinaryBMPToCanvas(bytes){
+  const dv=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+  if(bytes.length<62 || bytes[0]!==0x42 || bytes[1]!==0x4d) throw Error("यह valid BMP file नहीं है.");
+  const offset=dv.getUint32(10,true),w=dv.getInt32(18,true),rawH=dv.getInt32(22,true);
+  const bpp=dv.getUint16(28,true),compression=dv.getUint32(30,true);
+  if(w!==640) throw Error(`EasyX design BMP की width 640px होनी चाहिए। आपकी file ${w}px है.`);
+  if(bpp!==1 || compression!==0) throw Error("EasyX design BMP 1-bit uncompressed BMP होना चाहिए.");
+  const h=Math.abs(rawH),topDown=rawH<0,rowSize=Math.ceil(w/8),stride=((rowSize+3)>>2)<<2;
+  const out=new ImageData(w,h);
+  for(let y=0;y<h;y++){
+    const sy=topDown?y:(h-1-y),base=offset+sy*stride;
+    for(let x=0;x<w;x++){
+      const bit=(bytes[base+(x>>3)]>>(7-(x&7)))&1;
+      const v=bit?255:0,i=(y*w+x)*4;
+      out.data[i]=out.data[i+1]=out.data[i+2]=v;out.data[i+3]=255;
+    }
+  }
+  $("canvas").width=w;$("canvas").height=h;
+  $("canvas").getContext("2d").putImageData(out,0,0);
+  original=out;imgData=out;
+  $("patternInfo").innerHTML=`<b>EasyX Design File loaded</b><br>640 × ${h}px<br>1-bit Black/White BMP`;
+}
+
+function makeEasyXDesignFile(){
+  const f=$("photoSource").files[0];
+  if(!f){alert("पहले photo/image चुनें.");return}
+  const r=new FileReader();
+  r.onload=e=>{
+    const im=new Image();
+    im.onload=()=>{
+      const tw=640;
+      const th=Math.max(1,Math.round(im.naturalHeight*tw/im.naturalWidth));
+      const c=document.createElement("canvas");c.width=tw;c.height=th;
+      c.getContext("2d").drawImage(im,0,0,tw,th);
+      const data=c.getContext("2d").getImageData(0,0,tw,th);
+      generatedBMP=make1BitBMPFromData(data.data,tw,th);
+      generatedBMPName=(f.name.replace(/\.[^.]+$/,"")||"Design")+"_EasyX_640.bmp";
+
+      // The preview is the generated BMP, not the original photo.
+      loadBinaryBMPToCanvas(generatedBMP);
+
+      $("photoInfo").innerHTML=
+        `<b>EasyX file तैयार है ✅</b><br>`+
+        `Output: ${generatedBMPName}<br>`+
+        `Width: <b>${tw}px</b><br>`+
+        `Height: <b>${th}px</b><br>`+
+        `Format: <b>1-bit BMP</b><br>`+
+        `अब इसी generated BMP को नीचे Design File में इस्तेमाल करें।`;
+      $("bmpDownload").disabled=false;
+    };
+    im.onerror=()=>alert("Image read नहीं हो सकी.");
+    im.src=e.target.result;
+  };
+  r.readAsDataURL(f);
+}
+
+function loadDesign(){
+  const f=$("design").files[0];
+  if(!f){alert("EasyX Design BMP चुनें.");return}
+  if(!/\.bmp$/i.test(f.name)){alert("यहाँ केवल .BMP file चलेगी.");return}
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const b=new Uint8Array(e.target.result);
+      loadBinaryBMPToCanvas(b);
+      $("designInfo").innerHTML=
+        `<b>Valid EasyX Design File ✅</b><br>${f.name}<br>`+
+        `640 × ${imgData.height}px • 1-bit BMP`;
+    }catch(err){
+      $("designInfo").textContent="Invalid EasyX Design File: "+err.message;
+      imgData=null;original=null;
+      $("canvas").width=0;$("canvas").height=0;
+    }
+  };
+  r.readAsArrayBuffer(f);
+}
+
+function transform(type){
+  if(!imgData)return;
+  const w=imgData.width,h=imgData.height,o=new ImageData(w,h);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    let sx=x,sy=y;
+    if(type==="mirror")sx=w-1-x;
+    if(type==="flip")sy=h-1-y;
+    const a=(y*w+x)*4,b=(sy*w+sx)*4;
+    for(let c=0;c<4;c++)o.data[b+c]=imgData.data[a+c];
+  }
+  imgData=o;$("canvas").getContext("2d").putImageData(o,0,0);
+}
+function mirror(){transform("mirror")}function flip(){transform("flip")}
+function invert(){if(!imgData)return;for(let i=0;i<imgData.data.length;i+=4){imgData.data[i]=255-imgData.data[i];imgData.data[i+1]=255-imgData.data[i+1];imgData.data[i+2]=255-imgData.data[i+2]}$("canvas").getContext("2d").putImageData(imgData,0,0)}
+function normalize640(){ makeEasyXDesignFile(); }
+
+function getColors(){
+  const data=imgData?.data;if(!data){alert("Design select karein.");return}
+  let dark=0,light=0;for(let i=0;i<data.length;i+=4){const g=(data[i]+data[i+1]+data[i+2])/3;(g<128?dark++:light++)}
+  $("colorInfo").innerHTML=`Detected monochrome distribution: Black ${dark.toLocaleString()} px, White ${light.toLocaleString()} px`;
+}
+document.querySelectorAll(".color-box").forEach(x=>x.onclick=()=>x.classList.toggle("active"));
+
+$("split").addEventListener("change",()=>{$("splitInfo").textContent=`Split Factor ${$("split").value}. Output picks/hooks will be transformed before packing.`});
+
+function initFingers(){
+  let s="";
+  for(let f=1;f<=6;f++)s+=`<div class="range-card"><b>F${f}</b><div class="grid"><div><label>Start</label><input id="s${f}" type="number" min="1" value="1"></div><div><label>End</label><input id="e${f}" type="number" min="1" value="1"></div></div><br><button onclick="addRange(${f})">Add Range</button><div id="r${f}" class="range-list"></div></div>`;
+  $("fingerCards").innerHTML=s;
+}
+function addRange(f){const a=+$(`s${f}`).value,b=+$(`e${f}`).value;if(!a||!b||b<a){alert("Start/End range check karein.");return}fingers[f].push({start:a,end:b});drawRanges(f);buildTimeline()}
+function drawRanges(f){$("r"+f).innerHTML=fingers[f].map((r,i)=>`<div class="range-item">Pick ${r.start}–${r.end}<button class="danger" style="padding:3px 7px" onclick="fingers[${f}].splice(${i},1);drawRanges(${f});buildTimeline()">×</button></div>`).join("")}
+function has(f,p){return fingers[f].some(r=>p>=r.start&&p<=r.end)}
+function clearFingers(){fingers={1:[],2:[],3:[],4:[],5:[],6:[]};for(let f=1;f<=6;f++)drawRanges(f);buildTimeline()}
+function buildTimeline(){
+  const max=Math.min(runMeta?.picks||Math.max(1,...Object.values(fingers).flat().map(r=>r.end||1)),2000),body=$("tbody");body.innerHTML="";
+  for(let p=1;p<=max;p++){let tr=document.createElement("tr"),s=`<td>${p}</td>`;for(let f=1;f<=6;f++)s+=`<td>${has(f,p)?"●":""}</td>`;tr.innerHTML=s;body.appendChild(tr)}
+  $("fingerSummary").textContent=Object.values(fingers).flat().length+" ranges configured. Overlap allowed.";
+}
+initFingers();buildTimeline();
+
+function getPattern(w,h){
+  const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");
+  const src=document.createElement("canvas");src.width=imgData.width;src.height=imgData.height;src.getContext("2d").putImageData(imgData,0,0);
+  const fit=$("fit").value,sw=imgData.width,sh=imgData.height;
+  if(fit==="stretch")x.drawImage(src,0,0,w,h);
+  else if(fit==="repeat"){for(let yy=0;yy<h;yy+=sh)for(let xx=0;xx<w;xx+=sw)x.drawImage(src,xx,yy)}
+  else {
+    const scale=fit==="contain"?Math.min(w/sw,h/sh):Math.max(w/sw,h/sh),dw=Math.round(sw*scale),dh=Math.round(sh*scale);
+    x.drawImage(src,Math.round((w-dw)/2),Math.round((h-dh)/2),dw,dh);
+  }
+  const d=x.getImageData(0,0,w,h).data,rows=[];
+  for(let y=0;y<h;y++){const r=new Uint8Array(w);for(let x=0;x<w;x++)r[x]=d[(y*w+x)*4]<128?1:0;rows.push(r)}
+  return rows;
+}
+function applySplit(rows){
+  const factor=+$("split").value||1;if(factor<=1)return rows;
+  const dir=$("splitDir").value,mode=$("splitMode").value;
+  if(dir==="hooks"){
+    const out=rows.map(r=>{const n=new Uint8Array(r.length);for(let x=0;x<r.length;x++){let sx=mode==="interleave"?Math.floor(x/factor)+(x%factor)*Math.ceil(r.length/factor):Math.min(r.length-1,x);n[x]=r[sx]||0}return n});return out;
+  }
+  const out=[];for(let i=0;i<rows.length;i++){if(mode==="interleave"){for(let k=0;k<factor;k++)if(i%factor===k)out.push(rows[i])}else out.push(rows[i])}return out.slice(0,runMeta.picks);
+}
+function pack(rows,hooks,rowBytes){
+  const out=rows.map(r=>new Uint8Array(rowBytes));const msb=$("bitOrder").value==="msb",revH=$("hookDir").value==="reverse";
+  for(let y=0;y<rows.length;y++)for(let x=0;x<hooks;x++){let sx=revH?hooks-1-x:x;let bit=r=>r[Math.max(0,Math.min(r.length-1,r.length-1-sx))]||0;let v=bit();if(v){const bi=Math.floor(x/8),bp=msb?7-x%8:x%8;out[y][bi]|=1<<bp}}
+  if($("pickDir").value==="reverse")out.reverse();
+  return out;
+}
+function buildEP(rows){
+  const meta=runMeta;
+  let header=meta.header;
+  if($("headerSource").value==="reference" && refMeta){
+    if(refMeta.picks===meta.picks && refMeta.rowBytes===meta.rowBytes){
+      header=refMeta.header;
+    }else{
+      throw Error("Reference EP structure does not match the running EP (picks/bytes-per-pick). Running header kept for safety.");
+    }
+  }
+  const b=new Uint8Array(HEADER+meta.picks*meta.rowBytes);b.set(header,0);
+  for(let i=0;i<meta.picks;i++)b.set(rows[i]||new Uint8Array(meta.rowBytes),HEADER+i*meta.rowBytes);
+  return b;
+}
+async function convert(){
+  if(!runMeta){alert("Running EP select karein.");return}
+  if(!imgData){alert("Design select karein.");return}
+  $("convert").disabled=true;$("bar").style.width="0%";
+  const stages=["Preparing for Split...","Converting to Monochrome...","Applying Harness Plan...","Applying Finger Plan...","Building Machine EP...","Completed"];
+  try{
+    for(let i=0;i<stages.length;i++){ $("convertStatus").textContent=stages[i];$("bar").style.width=((i+1)/stages.length*100)+"%";await sleep(350)}
+    let rows=getPattern(runMeta.hooks,runMeta.picks);
+    rows=applySplit(rows);
+    rows=pack(rows,runMeta.hooks,runMeta.rowBytes);
+    outBytes=buildEP(rows);
+    const base=($("design").files[0]?.name||"Design").replace(/\.[^.]+$/,"");
+    outName=`${base}_${runMeta.hooks}H_${runMeta.picks}P.EP`;
+    const hs=$("headerSource").value==="reference" && refMeta ? "Reference EasyX EP" : "Running EP";
+    $("outInfo").innerHTML=`<b>Completed</b><br>${outName}<br>Hooks: ${runMeta.hooks}<br>Picks: ${runMeta.picks}<br>Size: ${outBytes.length} bytes<br><span class="small">Running design rows are not copied. Header source: ${hs}.</span>`;
+    $("download").disabled=false;
+  }catch(e){$("convertStatus").textContent="Conversion error: "+e.message}
+  finally{$("convert").disabled=false}
+}
+function downloadOutput(){if(!outBytes)return;const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([outBytes],{type:"application/octet-stream"}));a.download=outName;a.click()}
+function downloadBMP(){
+  if(!generatedBMP){
+    if(!imgData){alert("पहले EasyX Design File तैयार करें.");return}
+    generatedBMP=make1BitBMPFromData(imgData.data,imgData.width,imgData.height);
+    generatedBMPName=`EasyX_${imgData.width}x${imgData.height}_1bit.bmp`;
+  }
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([generatedBMP],{type:"image/bmp"}));
+  a.download=generatedBMPName;
+  a.click();
+}
+
+function analyzeReference(){
+  if(!refMeta){alert("Successful EasyX EP select karein.");return}
+  $("diag").innerHTML=showMeta(refMeta,"Reference EasyX EP")+
+  `<br><br><b>Header bytes:</b> ${Array.from(refMeta.header).map(x=>x.toString(16).padStart(2,"0")).join(" ")}`;
+}
+
+function saveProject(){
+  const p={version:"V8",machine:{name:$("machineName").value,shuttles:$("shuttles").value,format:$("format").value},runMeta,fingers,settings:{targetWidth:$("targetWidth").value,fit:$("fit").value,threshold:$("threshold").value,split:$("split").value,splitDir:$("splitDir").value,splitMode:$("splitMode").value,headerSource:$("headerSource").value,bitOrder:$("bitOrder").value,hookDir:$("hookDir").value,pickDir:$("pickDir").value,hookOffset:$("hookOffset").value}};
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:"application/json"}));a.download="Electronic_Designing_Project_V8.EDP";a.click();
+}
+function openProject(){$("project").click()}
+function loadProject(e){
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{
+    try{const p=JSON.parse(r.result);$("machineName").value=p.machine?.name||"";$("shuttles").value=p.machine?.shuttles||1;$("format").value=p.machine?.format||"EP";fingers=p.fingers||fingers;
+    const s=p.settings||{};for(const k of ["targetWidth","fit","threshold","split","splitDir","splitMode","headerSource","bitOrder","hookDir","pickDir","hookOffset"])if(s[k]!==undefined)$(k).value=s[k];
+    for(let f=1;f<=6;f++)drawRanges(f);buildTimeline();render();alert("Project settings loaded.");}catch(x){alert("Invalid project file.")}};r.readAsText(f)
+}
+</script>
+</body>
+</html>
