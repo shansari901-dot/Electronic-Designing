@@ -153,7 +153,7 @@ input,select,textarea{width:100%;padding:12px;border:1.5px solid #333;border-rad
       <input id="aiHeight" type="number" min="32" max="2000" value="640">
 
       <button class="btn black" onclick="generateAIDesign()">GENERATE DESIGN</button>
-      <div id="aiStatus" class="status">API key aur prompt डालकर Generate karein.</div>
+      <div id="aiStatus" class="status">API key aur prompt daalkar Generate karein.</div>
       <div id="aiText" class="ai-out"></div>
       <div class="ai-preview"><canvas id="aiCanvas"></canvas></div>
       <button id="aiUse" class="btn hidden" onclick="useAIDesign()">USE THIS DESIGN</button>
@@ -334,7 +334,7 @@ function buildOutput(){
    const sy=Math.floor(y*designMeta.h/picks),base=off+(designMeta.top?sy:designMeta.h-1-sy)*stride;
    for(let x=0;x<hooks;x++){
      const sx=Math.floor(x*designMeta.w/hooks),bit=(designBytes[base+(sx>>3)]>>(7-(sx&7)))&1;
-     if(!bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
+     if(bit)out[34+y*rowBytes+(x>>3)]|=1<<(x&7);
    }
  }
  return out;
