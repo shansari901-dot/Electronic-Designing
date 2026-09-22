@@ -334,7 +334,7 @@ function buildOutput(){
    const sy=Math.floor(y*designMeta.h/picks),base=off+(designMeta.top?sy:designMeta.h-1-sy)*stride;
    for(let x=0;x<hooks;x++){
      const sx=Math.floor(x*designMeta.w/hooks),bit=(designBytes[base+(sx>>3)]>>(7-(sx&7)))&1;
-     if(bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
+     if(!bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
    }
  }
  return out;
