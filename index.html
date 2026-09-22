@@ -122,7 +122,7 @@ input,select,textarea{width:100%;padding:12px;border:1.5px solid #333;border-rad
   <div id="photoTab" class="hidden">
     <section class="card">
       <b>PHOTO → 640 BMP</b>
-      <div class="note" style="margin-top:6px">JPG / PNG / WebP photo ko yahin 640px wide, 1-bit Black & White BMP mein badlein. Phir use seedha Design के liye select kar sakte hain.</div>
+      <div class="note" style="margin-top:6px">JPG / PNG / WebP photo ko yahin 640px wide, 1-bit Black & White BMP mein badlein. Phir use seedha Design ke liye select kar sakte hain.</div>
       <label>PHOTO SELECT</label>
       <input id="photoFile" type="file" accept="image/*">
       <div class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -141,19 +141,19 @@ input,select,textarea{width:100%;padding:12px;border:1.5px solid #333;border-rad
   <div id="aiTab" class="hidden">
     <section class="card">
       <b>AI DESIGN</b>
-      <div class="note" style="margin-top:6px">AI से design pattern बनवाकर उसे 640px 1-bit BMP में तैयार किया जा सकता है.</div>
+      <div class="note" style="margin-top:6px">AI se design pattern banwakar use 640px 1-bit BMP mein taiyar kiya ja sakta hai.</div>
 
       <label>AI API Key</label>
-      <input id="aiKey" type="password" placeholder="API key यहाँ डालें">
+      <input id="aiKey" type="password" placeholder="API key yahan dalein">
 
       <label>Design Prompt</label>
-      <textarea id="aiPrompt" placeholder="उदाहरण: 640px jacquard body design, फूल और बेल pattern, black and white, साफ repeat pattern"></textarea>
+      <textarea id="aiPrompt" placeholder="Udaharan: 640px jacquard body design, phool aur bel pattern, black and white, saaf repeat pattern"></textarea>
 
       <label>Design Height</label>
       <input id="aiHeight" type="number" min="32" max="2000" value="640">
 
       <button class="btn black" onclick="generateAIDesign()">GENERATE DESIGN</button>
-      <div id="aiStatus" class="status">API key और prompt डालकर Generate करें.</div>
+      <div id="aiStatus" class="status">API key aur prompt डालकर Generate karein.</div>
       <div id="aiText" class="ai-out"></div>
       <div class="ai-preview"><canvas id="aiCanvas"></canvas></div>
       <button id="aiUse" class="btn hidden" onclick="useAIDesign()">USE THIS DESIGN</button>
@@ -184,11 +184,11 @@ $('photoFile').addEventListener('change', e=>{
    $('photoInfo').textContent=`Original: ${im.naturalWidth} × ${im.naturalHeight} | Output: 640 × ${h} | 1-bit BMP`;
    $('photoConvert').classList.remove('hidden');$('photoDownload').classList.add('hidden');$('photoUse').classList.add('hidden');photoBMP=null;
  };
- im.onerror=()=>{URL.revokeObjectURL(url);photoImage=null;alert('Photo load नहीं हो सकी.')} ; im.src=url;
+ im.onerror=()=>{URL.revokeObjectURL(url);photoImage=null;alert('Photo load nahi ho saki.')} ; im.src=url;
 });
 
 function convertPhotoToBMP(){
- if(!photoImage){alert('पहले photo select करें.');return}
+ if(!photoImage){alert('Pehle photo select karein.');return}
  const threshold=Math.max(0,Math.min(255,Number($('photoThreshold').value)||128));
  const c=$('photoCanvas'),ctx=c.getContext('2d'),w=640,h=c.height;
  const id=ctx.getImageData(0,0,w,h);photoBMP=make1BitBMPThreshold(id.data,w,h,threshold);photoBMPName='Photo_640.bmp';
@@ -199,7 +199,7 @@ function convertPhotoToBMP(){
 function make1BitBMPThreshold(data,w,h,threshold){
  const row=Math.ceil(w/8),stride=((row+3)>>2)<<2,pix=stride*h,off=62,total=off+pix,b=new Uint8Array(total),v=new DataView(b.buffer);
  b[0]=66;b[1]=77;v.setUint32(2,total,true);v.setUint32(10,off,true);v.setUint32(14,40,true);v.setInt32(18,w,true);v.setInt32(22,-h,true);v.setUint16(26,1,true);v.setUint16(28,1,true);v.setUint32(30,0,true);v.setUint32(34,pix,true);v.setInt32(38,3780,true);v.setInt32(42,3780,true);v.setUint32(46,2,true);v.setUint32(50,0,true);b.set([0,0,0,0,255,255,255,0],54);
- for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,g=.299*data[i]+.587*data[i+1]+.114*data[i+2];if(g<threshold)b[off+y*stride+(x>>3)]|=1<<(7-(x&7));}
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,g=.299*data[i]+.587*data[i+1]+.114*data[i+2];if(g>=threshold)b[off+y*stride+(x>>3)]|=1<<(7-(x&7));}
  return b;
 }
 
@@ -217,7 +217,7 @@ function bytesToBase64(bytes){let s='';const chunk=0x8000;for(let i=0;i<bytes.le
 function base64ToBytes(s){const bin=atob(s),b=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)b[i]=bin.charCodeAt(i);return b}
 
 function savedRuns(){try{return JSON.parse(localStorage.getItem('ed_running_files')||'[]')}catch(e){return []}}
-function saveRuns(list){try{localStorage.setItem('ed_running_files',JSON.stringify(list.slice(0,10)))}catch(e){alert('Running file save नहीं हो सका। Browser storage full हो सकता है.')}}
+function saveRuns(list){try{localStorage.setItem('ed_running_files',JSON.stringify(list.slice(0,10)))}catch(e){alert('Running file save nahi ho saka.')}}
 
 function renderSavedRuns(){
  const list=savedRuns();
@@ -261,7 +261,7 @@ function updatePlanStats(){
 }
 
 function createPlan(){
- if(!runningMeta){alert('पहले Running File select करें.');return}
+ if(!runningMeta){alert('Pehle Running File select karein.');return}
  if(!$('machine').value.trim())$('machine').value='Machine';
  plan=true;$('setup').classList.add('hidden');$('plans').classList.remove('hidden');
  $('planName').textContent=$('machine').value;$('planRadio').checked=true;$('selectMsg').textContent='Plan Selected';updatePlanStats();
@@ -304,8 +304,8 @@ function renderColors(){
 }
 function selectColor(i){colors[i].selected=!colors[i].selected;renderColors()}
 function moveColor(i){
- const action=prompt('1 = ऊपर, 2 = नीचे, 3 = select/deselect');
- if(action==='1'&&i>0){[colors[i-1],colors[i]]=[colors[i],colors[i-1]}
+ const action=prompt('1 = Upar, 2 = Niche, 3 = Select/Deselect');
+ if(action==='1'&&i>0){[colors[i-1],colors[i]]=[colors[i],colors[i-1]]}
  else if(action==='2'&&i<colors.length-1){[colors[i+1],colors[i]]=[colors[i],colors[i+1]]}
  else if(action==='3'){colors[i].selected=!colors[i].selected}
  renderColors()
@@ -334,8 +334,7 @@ function buildOutput(){
    const sy=Math.floor(y*designMeta.h/picks),base=off+(designMeta.top?sy:designMeta.h-1-sy)*stride;
    for(let x=0;x<hooks;x++){
      const sx=Math.floor(x*designMeta.w/hooks),bit=(designBytes[base+(sx>>3)]>>(7-(sx&7)))&1;
-     // EasyX / Machine format ke mutabiq binary mapping theek ki gayi hai
-     if(!bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
+     if(bit)out[34+y*rowBytes+(x>>3)]|=1<<(7-(x&7));
    }
  }
  return out;
@@ -346,9 +345,9 @@ function downloadOutput(){if(!outputBytes)return;const blob=new Blob([outputByte
 /* AI DESIGN */
 async function generateAIDesign(){
  const key=$('aiKey').value.trim(),prompt=$('aiPrompt').value.trim(),h=Math.max(32,Math.min(2000,Number($('aiHeight').value)||640));
- if(!key){alert('AI API Key डालें.');return}
- if(!prompt){alert('Design prompt लिखें.');return}
- $('aiStatus').textContent='AI design तैयार कर रहा है...';$('aiText').textContent='';$('aiUse').classList.add('hidden');
+ if(!key){alert('AI API Key dalein.');return}
+ if(!prompt){alert('Design prompt likhein.');return}
+ $('aiStatus').textContent='AI design taiyar kar raha hai...';$('aiText').textContent='';$('aiUse').classList.add('hidden');
  const system='Create a textile/jacquard design as SVG. Return ONLY valid SVG markup, no markdown and no explanation. Canvas width must be exactly 640 and height must be '+h+'. Use only black (#000000) and white (#ffffff), solid shapes only, no gradients, no external images, and make the pattern clean and suitable for conversion to a 1-bit BMP.';
  try{
    const resp=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent',{
@@ -359,11 +358,11 @@ async function generateAIDesign(){
    if(!resp.ok)throw Error(data?.error?.message||'AI request failed');
    const text=data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
    const svg=extractSVG(text);
-   if(!svg)throw Error('AI ने valid SVG design नहीं दिया.');
+   if(!svg)throw Error('AI ne valid SVG design nahi diya.');
    $('aiText').textContent='AI design generated.';
    const blob=new Blob([svg],{type:'image/svg+xml'});const url=URL.createObjectURL(blob);const im=new Image();
-   im.onload=()=>{const c=$('aiCanvas');c.width=640;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,640,h);ctx.drawImage(im,0,0,640,h);URL.revokeObjectURL(url);const id=ctx.getImageData(0,0,640,h);aiBMP=make1BitBMP(id.data,640,h);aiBMPName='AI_Design_640.bmp';$('aiUse').classList.remove('hidden');$('aiStatus').textContent='Design तैयार है.'};
-   im.onerror=()=>{URL.revokeObjectURL(url);throw Error('AI SVG render नहीं हुआ.')};im.src=url;
+   im.onload=()=>{const c=$('aiCanvas');c.width=640;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,640,h);ctx.drawImage(im,0,0,640,h);URL.revokeObjectURL(url);const id=ctx.getImageData(0,0,640,h);aiBMP=make1BitBMP(id.data,640,h);aiBMPName='AI_Design_640.bmp';$('aiUse').classList.remove('hidden');$('aiStatus').textContent='Design taiyar hai.'};
+   im.onerror=()=>{URL.revokeObjectURL(url);throw Error('AI SVG render nahi hua.')};im.src=url;
  }catch(e){$('aiStatus').textContent='AI Error: '+e.message}
 }
 
@@ -372,13 +371,13 @@ function extractSVG(text){
 }
 
 function make1BitBMP(data,w,h){
- const row=Math.ceil(w/8),stride=((row+3)>>2)<<2,pix=stride*h,off=62,total=off+pix,b=new Uint8Array(total),v=new DataView(b.buffer);b[0]=66;b[1]=77;v.setUint32(2,total,true);v.setUint32(10,off,true);v.setUint32(14,40,true);v.setInt32(18,w,true);v.setInt32(22,-h,true);v.setUint16(26,1,true);v.setUint16(28,1,true);v.setUint32(30,0,true);v.setUint32(34,pix,true);v.setInt32(38,3780,true);v.setInt32(42,3780,true);v.setUint32(46,2,true);v.setUint32(50,0,true);b.set([0,0,0,0,255,255,255,0],54);for(let y=0;y<h;y++){for(let x=0;x<w;x++){const i=(y*w+x)*4,g=.299*data[i]+.587*data[i+1]+.114*data[i+2];if(g<128)b[off+y*stride+(x>>3)]|=1<<(7-(x&7))}}return b;
+ const row=Math.ceil(w/8),stride=((row+3)>>2)<<2,pix=stride*h,off=62,total=off+pix,b=new Uint8Array(total),v=new DataView(b.buffer);b[0]=66;b[1]=77;v.setUint32(2,total,true);v.setUint32(10,off,true);v.setUint32(14,40,true);v.setInt32(18,w,true);v.setInt32(22,-h,true);v.setUint16(26,1,true);v.setUint16(28,1,true);v.setUint32(30,0,true);v.setUint32(34,pix,true);v.setInt32(38,3780,true);v.setInt32(42,3780,true);v.setUint32(46,2,true);v.setUint32(50,0,true);b.set([0,0,0,0,255,255,255,0],54);for(let y=0;y<h;y++){for(let x=0;x<w;x++){const i=(y*w+x)*4,g=.299*data[i]+.587*data[i+1]+.114*data[i+2];if(g>=128)b[off+y*stride+(x>>3)]|=1<<(7-(x&7))}}return b;
 }
 
 function useAIDesign(){
  if(!aiBMP)return;
  designBytes=aiBMP;designFile=null;designMeta={w:640,h:Math.abs(new DataView(aiBMP.buffer).getInt32(22,true)),off:62,stride:((Math.ceil(640/8)+3)>>2)<<2,top:true};
- $('designName').textContent='Selected: '+aiBMPName;$('aiStatus').textContent='AI design अब Design में selected है.';showBMP(aiBMP,designMeta);showTab('designTab');
+ $('designName').textContent='Selected: '+aiBMPName;$('aiStatus').textContent='AI design ab Design mein selected hai.';showBMP(aiBMP,designMeta);showTab('designTab');
  if(!plan)window.scrollTo({top:0,behavior:'smooth'});else $('plans').scrollIntoView({behavior:'smooth'});
 }
 </script>
